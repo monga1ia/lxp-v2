@@ -417,6 +417,7 @@ const index = () => {
                     <Card className="mb-2">
                         <Card.Body className="p-3">
                             <p className="mb-2 modal-select-title">{t("curriculum.grade")}</p>
+                            {console.log(grades)}
                             <Select
                                 clearable
                                 searchable

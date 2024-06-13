@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import message from 'modules/message'
 // import 'semantic-ui-css'
-import 'semantic-ui-css/semantic.min.css'
-import { Modal } from 'semantic-ui-react'
+// import 'semantic-ui-css/semantic.min.css'
+// import { Modal } from 'semantic-ui-react'
+import { Modal } from 'react-bootstrap'
 import React, { useEffect } from 'react'
 import ImageModal from 'utils/imageModal'
 import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
-import { NDropdown as Dropdown } from 'widgets/Dropdown'
+import { Dropdown } from "react-bootstrap";
+import Select from 'modules/Form/Select'
+// import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import CloseIcon from '@mui/icons-material/Close';
+// import 'main.css'
 
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
@@ -39,6 +43,12 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             value: 'F',
             text: translations(locale).female,
         }
+    ])
+
+    const [selecterDummy, setSelecterDummy] = useState([
+        {value: "1", refId: "refId", gid: "2323", text: "text 1"},
+        {value: "2", refId: "refId2", gid: "232", text: "text 2"},
+        {value: "3", refId: "refId3", gid: "23", text: "text 3"},
     ])
 
     const handleSubmit = () => {
@@ -132,7 +142,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
         const rows = [...gradeRows]
         if (value) {
             const option = options?.find(option => option?.value == value)
-            option.disabled = true
+            // option.disabled = true
             rows[index].subjectOptions = option?.subjects
             rows[index].grade = value
         } else {
@@ -173,20 +183,20 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
     return (
         <Modal
-            size='large'
             dimmer='blurring'
-            open={true}
-            onClose={onClose}
-            className='react-modal overflow-modal'
+            show={true}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={onClose}
+            // className='react-modal overflow-modal'
             centered
         >
-            <div className="header" locale={locale}>
-                {translations(locale)?.teacher?.title}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="content">
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.teacher?.add_teacher}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className="row mt-4">
                     <div className="col-3 d-flex flex-column align-items-center" style={{ gap: 10 }}>
                         <img
@@ -220,7 +230,14 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.role}*
                             </label>
                             <div className="col-8">
-                                <Dropdown
+                                <Select
+                                    clearable
+                                    searchable
+                                    value={teacher?.role}
+                                    options={selecterDummy}
+                                    onChange={(e, data) => handleChange('role', e)}
+                                />
+                                {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.select + '-'}
                                     fluid
                                     selection
@@ -231,7 +248,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.role}
                                     options={roleOptions}
                                     onChange={(e, data) => handleChange('role', data?.value)}
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -340,7 +357,14 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.teacher?.gender}*
                             </label>
                             <div className="col-8">
-                                <Dropdown
+                                <Select
+                                    clearable
+                                    searchable
+                                    value={teacher?.gender}
+                                    options={selecterDummy}
+                                    onChange={(e, data) => handleChange('gender', e)}
+                                />
+                                {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
                                     fluid
                                     selection
@@ -351,7 +375,16 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                />
+                                >
+                                    <Dropdown.Toggle id="dropdown-basic" className='form-control'>
+                                        Dropdown Button
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu className='form-control'>
+                                        <Dropdown.Item href="#/action-1">Option 1</Dropdown.Item>
+                                        <Dropdown.Item href="#/action-2">Option 2</Dropdown.Item>
+                                        <Dropdown.Item href="#/action-3">Option 3</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -359,7 +392,14 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.school}*
                             </label>
                             <div className="col-8">
-                                <Dropdown
+                                <Select
+                                    clearable
+                                    searchable
+                                    options={selecterDummy}
+                                    value={teacher?.grade}
+                                    onChange={(e, data) => handleChange('grade', e)}
+                                />
+                                {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
                                     fluid
                                     selection
@@ -370,7 +410,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.grade}
                                     options={gradeOptions}
                                     onChange={(e, data) => handleChange('grade', data?.value)}
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -394,7 +434,14 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                         {index == 0 && translations(locale)?.teacher?.subjects}
                                     </label>
                                     <div className="col-3">
-                                        <Dropdown
+                                        <Select
+                                            clearable
+                                            searchable
+                                            value={el?.grade}
+                                            options={selecterDummy}
+                                            onChange={(e, data) => handleRowGradeChange(index, e, data?.options)}
+                                        />
+                                        {/* <Dropdown
                                             placeholder={'-' + translations(locale)?.err?.select_class + '-'}
                                             fluid
                                             selection
@@ -406,10 +453,17 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={el?.grade}
                                             options={gradeSubjectOptions}
                                             onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
-                                        />
+                                        /> */}
                                     </div>
                                     <div className="col-5 p-0 d-flex align-items-center">
-                                        <Dropdown
+                                        <Select
+                                            clearable
+                                            searchable
+                                            options={selecterDummy}
+                                            value={el?.subjects}
+                                            onChange={(e, data) => handleRowSubjectsChange(index, e)}
+                                        />
+                                        {/* <Dropdown
                                             placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
                                             fluid
                                             selection
@@ -423,7 +477,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={el?.subjects}
                                             options={el?.subjectOptions}
                                             onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
-                                        />
+                                        /> */}
                                         <div className={index != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
@@ -445,47 +499,45 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         }
                     </div>
                 </div>
-                <div className="modal-footer justify-content-center">
-                    {/* <div className="m-portlet__foot text-center"> */}
-                        <button 
-                            onClick={onClose}
-                            className="btn m-btn--pill btn-link margin-right-5"
-                        >
-                            {translations(locale)?.back}        
-                        </button>
-                        <button
-                            onClick={handleSubmit}
-                            className="btn m-btn--pill btn-success text-uppercase"
-                        >
-                            {translations(locale)?.save}
-                        </button>
-                    {/* </div> */}
-                </div>
-                {
-                    viewImageModal &&
-                    <ImageModal
-                        onClose={() => setViewImageModal(false)}
-                        onSubmit={handleAvatarUpload}
-                    />
-                }
-                {
-                    viewForceCreateModal &&
-                    <ForceCreateModal
-                        onClose={() => setViewForceCreateModal(false)}
-                        onSubmit={handleForceCreate}
-                        message={forceCreateMessage}
-                    />
-                }
-                {
-                    loading &&
-                    <>
-                        <div className="blockUI blockOverlay" />
-                        <div className="blockUI blockMsg blockPage">
-                            <div className="m-loader m-loader--brand m-loader--lg" />
-                        </div>
-                    </>
-                }
-            </div>
+            </Modal.Body>
+            <Modal.Footer className="text-center">
+                <button 
+                    onClick={onClose}
+                    className="btn m-btn--pill btn-link margin-right-5"
+                >
+                    {translations(locale)?.back}        
+                </button>
+                <button
+                    onClick={handleSubmit}
+                    className="btn m-btn--pill btn-success text-uppercase"
+                >
+                    {translations(locale)?.save}
+                </button>
+            </Modal.Footer>
+            {
+                viewImageModal &&
+                <ImageModal
+                    onClose={() => setViewImageModal(false)}
+                    onSubmit={handleAvatarUpload}
+                />
+            }
+            {
+                viewForceCreateModal &&
+                <ForceCreateModal
+                    onClose={() => setViewForceCreateModal(false)}
+                    onSubmit={handleForceCreate}
+                    message={forceCreateMessage}
+                />
+            }
+            {
+                loading &&
+                <>
+                    <div className="blockUI blockOverlay" />
+                    <div className="blockUI blockMsg blockPage">
+                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    </div>
+                </>
+            }
         </Modal>
     )
 }
