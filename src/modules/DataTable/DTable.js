@@ -79,7 +79,7 @@ const CustomToggleList = ({
     handleClose,
 }) => (
     <>
-        <Button
+        <button
             ref={anchorRef}
             size="small"
             aria-controls={open ? "split-button-menu" : undefined}
@@ -87,19 +87,17 @@ const CustomToggleList = ({
             aria-label="select merge strategy"
             aria-haspopup="menu"
             onClick={handleToggle}
+            className="btn m-btn--icon m-btn--icon-only btn-primary br-03 mx-1"
             style={{
-                backgroundColor: "#ff5b1d",
-                border: "none",
-                width: "33px",
-                height: "33px",
-                minWidth: "unset",
-                alignItems: "center",
-                marginRight: "0.5rem",
-                color: "white",
+                width: '33px',
+                height: '33px',
+                justifyContent: 'center',
+                display: 'inline-flex',
+                alignItems: 'center'
             }}
         >
             <i className="la la-columns" style={{ fontSize: "22px" }} />
-        </Button>
+        </button>
         <Popper
             open={open}
             anchorEl={anchorRef.current}
@@ -945,6 +943,27 @@ const DTable = ({
         setOpen(false);
     };
 
+    const customHandleToggleColumnVisibility = (dataField) => {
+        const updateHiddenProperty = (column) => {
+            if (column.hidden === undefined) {
+                return true;
+            } else {
+                return !column.hidden;
+            }
+        };
+
+        const newState = localColumns.map((column) => {
+            if (column.dataField === dataField) {
+                return {
+                    ...column,
+                    hidden: updateHiddenProperty(column)
+                };
+            }
+            return column;
+        });
+
+        setLocalColumns(newState || []);
+    };
     return (
         <PaginationProvider pagination={paginationFactory(pgOptions)}>
             {({ paginationProps, paginationTableProps }) => {
@@ -1020,10 +1039,13 @@ const DTable = ({
                                                             <ReactToPrint
                                                                 trigger={() => (
                                                                     <button
-                                                                        className="btn m-btn--icon m-btn--icon-only btn-info br-03 mx-1"
+                                                                        className="btn m-btn--icon m-btn--icon-only btn-primary br-03 mx-1"
                                                                         style={{
                                                                             width: '33px',
                                                                             height: '33px',
+                                                                            justifyContent: 'center',
+                                                                            display: 'inline-flex',
+                                                                            alignItems: 'center'
                                                                         }}
                                                                     >
                                                                         <i
@@ -1045,8 +1067,6 @@ const DTable = ({
                                                             <div
                                                                 style={{
                                                                     display: 'inline-block',
-                                                                    marginLeft: '0.25rem',
-                                                                    marginRight: '0.25rem',
                                                                 }}
                                                             >
                                                                 <CustomToggleList

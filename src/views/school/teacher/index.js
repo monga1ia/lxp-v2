@@ -8,17 +8,23 @@ import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import AddTeacherModal from './modals/addTeacher';
 // import EditTeacherModal from './modals/editTeacher';
-import Select from 'modules/Form/Select';
 import DeleteModal from 'modules/DeleteModal';
 import TabComponent from 'components/tab/Tab';
+import DTable from 'modules/DataTable/DTable';
 import { useTranslation } from 'react-i18next';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import GroupRegisterModal from 'views/groups/components/GroupRegisterModal';
 import ViewModal from 'views/adminQuestion/modal/ViewModal';
-import GroupTable from 'views/groups/components/GroupTable';
-import { fetchRequest } from '../../../utils/fetchRequest';
+import { translations } from 'utils/translations';
 import message from '../../../modules/message'
-import { groupCreate, groupDelete, groupIndex, groupView } from '../../../utils/fetchRequest/Urls';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
+import PreviewTwoToneIcon from '@mui/icons-material/PreviewTwoTone'
+import LockResetTwoToneIcon from '@mui/icons-material/LockResetTwoTone'
+import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
+import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone'
+import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone'
+import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone'
+import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
+import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
 
 const tableIndex = ['groups_index_table_index'];
 const gradeIndex = ['groups_index_grade_index'];
@@ -28,52 +34,31 @@ const MainGroup = () => {
     const history = useHistory();
     const { selectedSchool } = useSelector(state => state.schoolData);
 
-    const [showAddModal, setShowAddModal] = useState(false);
+    const locale="mn"
+
     const [showViewModal, setShowViewModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const [groupData, setGroupData] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const [curriculums, setCurriculums] = useState([]);
-    const [grades, setGrades] = useState([]);
-    const [schools, setSchools] = useState([]);
-
-    const [tableData, setTableData] = useState([]);
+    const [tableData, setTableData] = useState([{code: "23232", firstName: "asdfsdf"}]);
     const [totalCount, setTotalCount] = useState(0);
-    const [gradeId, setGradeId] = useState(secureLocalStorage?.getItem(gradeIndex) || null);
-    const [subjectId, setSubjectId] = useState(null);
-    const [statusId, setStatusId] = useState(null);
 
     const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
     const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
+    const [selectedTabData, setSelectedTabData] = useState('active')
+
 
     const handleAddTeacher = () => {
         setShowAddTeacherModal(true)
     }
+    const handleTabChange = (e, data) => {
+        console.log( e, data)
+        setSelectedTabData(data)
+    }
 
-    const [filterGrades, setFilterGrades] = useState([]);
-    const [filterSubjects, setFilterSubjects] = useState([]);
-    const [filterStatuses] = useState([
-        {
-            value: 'active',
-            text: t('menu.active'),
-            code: 'active'
-        },
-        {
-            value: 'inactive',
-            text: t('menu.inActive'),
-            code: 'inactive'
-        }
-    ]);
-
-    const [page, setPage] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).page : 1);
-    const [pageSize, setPageSize] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).pageSize : 10);
-    const [search, setSearch] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).search : '');
-    const [order, setOrder] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).order : 'desc');
-    const [sort, setSort] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).sort : 'createdDate');
-
-    const title = t('menu.mainGroup');
+    const title = t('teacher.title');
     const description = "E-learning";
 
     const breadcrumbs = [
@@ -81,163 +66,6 @@ const MainGroup = () => {
         { to: "groups/index", text: title }
     ];
 
-    const init = (params) => {
-        setLoading(true)
-        fetchRequest(groupIndex, 'POST', params)
-            .then((res) => {
-                if (res.success) {
-                    const { groups, grades, subjects, totalCount } = res
-                    if (grades && grades.length > 0) {
-                        setFilterGrades(grades.map(grade => ({ value: grade.id, text: grade.name })))
-                    }
-
-                    if (subjects && subjects.length > 0) {
-                        setFilterSubjects(subjects.map(subject => ({ value: subject.id, text: subject.name })))
-                    }
-
-                    setTableData(groups)
-                    setTotalCount(totalCount)
-                } else {
-                    message(res.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(t('errorMessage.title'));
-                setLoading(false)
-            })
-    }
-
-    useEffect(() => {
-        let params = {
-            school: selectedSchool.id,
-            grade: gradeId,
-            subject: subjectId,
-            status: statusId,
-            page,
-            pageSize,
-            search,
-            sort,
-            order
-        }
-
-        init(params)
-    }, [])
-
-    const onCreateButton = () => {
-        let params = {
-            school: selectedSchool.id,
-        }
-
-        setLoading(true)
-        fetchRequest(groupCreate, 'POST', params)
-            .then((res) => {
-                if (res.success) {
-                    const curriculumList = res.curriculums;
-                    const gradeList = res.grades;
-                    const schoolList = res.schools;
-
-                    if (curriculumList && curriculumList.length) {
-                        setCurriculums(curriculumList.map(curriculum => ({ value: curriculum.id, text: curriculum.name, code: curriculum.code })))
-                    }
-
-                    if (gradeList && gradeList.length) {
-                        setGrades(gradeList.map(grade => ({ value: grade.id, text: grade.name, code: grade.code })))
-                    }
-
-                    if (schoolList && schoolList.length) {
-                        setSchools(schoolList.map(school => ({ value: school.id, text: school.name, grades: school.schoolGrades })))
-                    }
-
-                    setShowAddModal(true)
-                } else {
-                    message(res.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(t('errorMessage.title'));
-                setLoading(false)
-            })
-    }
-
-    const onSubmit = (params) => {
-        setLoading(true)
-        fetchRequest(groupCreate, 'POST', params)
-            .then((res) => {
-                if (res.success) {
-                    setShowAddModal(false)
-                    history.push({
-                        pathname: '/groups/edit',
-                        state: {
-                            id: res.id,
-                        }
-                    })
-                } else {
-                    message(res.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(t('errorMessage.title'));
-                setLoading(false)
-            })
-    }
-
-    const onView = (id) => {
-        setLoading(true)
-        fetchRequest(groupView, 'POST', { group: id })
-            .then((res) => {
-                if (res.success) {
-                    setShowViewModal(true)
-                    setGroupData(res?.groupData)
-                } else {
-                    message(res.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(t('errorMessage.title'));
-                setLoading(false)
-            })
-    }
-
-    const handleDelete = () => {
-        setLoading(true)
-        fetchRequest(groupDelete, 'POST', { group: selectedGroupId })
-            .then((res) => {
-                if (res.success) {
-                    let params = {
-                        school: selectedSchool.id,
-                        grade: gradeId,
-                        subject: subjectId,
-                        status: statusId,
-                        page,
-                        pageSize,
-                        search,
-                        sort,
-                        order
-                    }
-            
-                    init(params)
-                    setShowDeleteModal(false)
-                    message(res.message, true)
-                    setLoading(false)
-                } else {
-                    message(res.message)
-                    setLoading(false)
-                }
-            })
-            .catch(() => {
-                message(t('errorMessage.title'));
-                setLoading(false)
-            })
-    }
-
-    const onDelete = (id) => {
-        setSelectedGroupId(id)
-        setShowDeleteModal(true)
-    }
 
     const closeModal = () => {
         setShowAddTeacherModal(false)
@@ -245,103 +73,261 @@ const MainGroup = () => {
         setSelectedGroupId(null)
     }
 
-    const handleDropdownChange = (value, type) => {
-        if (type == 'grade') {
-            setGradeId(value)
-            secureLocalStorage?.setItem(gradeIndex, value);
-            setFilterSubjects([])
-        } else if (type == 'subject') {
-            setSubjectId(value)
-        } else if (type == 'status') {
-            setStatusId(value)
+
+    const activeColumns = [
+        {
+            dataField: 'avatar',
+            text: translations(locale)?.teacher?.photo,
+            sort: true,
+            width: 40,
+            align: 'center',
+            formatter: (cell) =>
+                <img className='img-responsive img-circle'
+                     src={cell || '/img/profile/placeholder.jpg'}
+                     width={40} height={40} alt='profile picture'
+                     onError={(e) => {
+                         e.target.onError = null
+                         e.target.src = '/img/profile/avatar.png'
+                     }}
+                />
+        },
+        {
+            dataField: 'code',
+            text: translations(locale)?.teacher?.code,
+            sort: true
+        },
+        {
+            dataField: 'lastName',
+            text: translations(locale)?.teacher?.lastname,
+            sort: true
+        },
+        {
+            dataField: 'firstName',
+            text: translations(locale)?.teacher?.name,
+            sort: true,
+            formatter: (cell, row) =>
+                <span
+                    className='underline'
+                    onClick={() => handleContextMenuClick(row?.id, 'view')}
+                >
+                    {cell}
+                </span>
+        },
+        {
+            dataField: 'title',
+            text: translations(locale)?.teacher?.teacher_title,
+            sort: true
+        },
+        {
+            dataField: 'username',
+            text: translations(locale)?.teacher?.login_name,
+            sort: true
+        },
+        {
+            dataField: 'contact',
+            text: translations(locale)?.teacher?.phone_number,
+            sort: true
+        },
+        {
+            dataField: 'registrationNumber',
+            text: translations(locale)?.register_number,
+            sort: true
+        },
+        {
+            dataField: 'subjectNames',
+            text: translations(locale)?.teacher?.subjects,
+            sort: false
+        },
+        {
+            dataField: 'className',
+            text: translations(locale)?.teacher?.teacher_class,
+            sort: false
+        },
+    ]
+
+    const otherColumns = [
+        {
+            dataField: 'avatar',
+            text: translations(locale)?.teacher?.photo,
+            sort: false,
+            width: 40,
+            align: 'center',
+            formatter: (cell) =>
+                <img className='img-responsive img-circle'
+                     src={cell || '/img/profile/placeholder.jpg'}
+                     width={40} height={40} alt='profile picture'
+                />
+        },
+        {
+            dataField: 'code',
+            text: translations(locale)?.teacher?.code,
+            sort: true
+        },
+        {
+            dataField: 'lastName',
+            text: translations(locale)?.teacher?.lastname,
+            sort: true
+        },
+        {
+            dataField: 'firstName',
+            text: translations(locale)?.teacher?.name,
+            sort: true,
+            formatter: (cell, row) =>
+                <span
+                    className='underline'
+                    onClick={() => handleContextMenuClick(row?.id, 'view')}
+                >
+                    {cell}
+                </span>
+        },
+        {
+            dataField: 'title',
+            text: translations(locale)?.teacher?.teacher_title,
+            sort: true
+        },
+        {
+            dataField: 'username',
+            text: translations(locale)?.teacher?.login_name,
+            sort: true
+        },
+        {
+            dataField: 'subjectNames',
+            text: translations(locale)?.teacher?.subjects,
+            sort: false
+        },
+        {
+            dataField: 'className',
+            text: translations(locale)?.teacher?.teacher_class,
+            sort: false
+        },
+    ]
+
+    const activeContextMenus = [
+        {
+            key: 'view',
+            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.view,
+        },
+        {
+            key: 'edit',
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '1.8rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.edit
+        },
+        {
+            key: 'delete',
+            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.delete
+        },
+        {
+            key: 'statusChange',
+            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.teacher?.change_status
+        },
+        {
+            key: 'loginNameChange',
+            icon: <SettingsApplicationsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.teacher?.change_login_name,
+        },
+        {
+            key: 'passwordReset',
+            icon: <LockResetTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.teacher?.change_password,
+        },
+        {
+            key: 'roleChange',
+            icon: <ManageAccountsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.manage_roles,
+        },
+        {
+            key: 'infoChange',
+            icon: <ImportContactsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.insert_information,
+        },
+    ]
+
+    const otherContextMenus = [
+        {
+            key: 'view',
+            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.view,
+        },
+        {
+            key: 'edit',
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '1.8rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.edit
+        },
+        {
+            key: 'delete',
+            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.delete
+        },
+        {
+            key: 'statusChange',
+            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: translations(locale)?.teacher?.change_status
+        },
+    ]
+
+    const handleContextMenuClick = (id, key) => {
+        if (id && key) {
+            setSelectedTableDataId(id)
+            if (key === 'view') {
+                setShowViewModal(true)
+            } else if (key === 'edit') {
+                navigate('/school/teachers/edit', {state: {id}})
+            } else if (key === 'delete') {
+                setShowDeleteModal(true)
+            } else if (key === 'passwordReset') {
+                setShowPasswordResetModal(true)
+            } else if (key === 'statusChange') {
+                setStatusChangeModal(true)
+            } else if (key === 'loginNameChange') {
+                setShowLoginNameChangeModal(true)
+            } else if (key === 'roleChange') {
+                setShowRoleChangeModal(true)
+            } else if (key === 'infoChange') {
+                setShowInfoChangeModal(true)
+            }
         }
+    }
 
-        setPage(1);
-
-        let params = {
-            school: selectedSchool.id,
-            grade: type == 'grade' ? value : gradeId,
-            subject: type == 'subject' ? value : subjectId,
-            status: type == 'status' ? value : statusId,
+    const config = {
+        excelExport: true,
+        printButton: true,
+        columnButton: true,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${translations(locale)?.teacher_title}`,
+        defaultSort: [{
+            dataField: 'firstName',
+            order: 'asc'
+        }],
+        defaultPageOptions: {
             page: 1,
-            pageSize,
-            search,
-            sort,
-            order
+            sizePerPage: 10,
         }
-
-        init(params)
     }
-
-    const handleClearAll = () => {
-        setGradeId(null)
-        setSubjectId(null)
-        setStatusId(null)
-    }
-
-    const onSearchButton = () => {
-        let params = {
-            school: selectedSchool.id,
-            grade: gradeId,
-            subject: subjectId,
-            status: statusId,
-            page,
-            pageSize,
-            search,
-            sort,
-            order
-        }
-
-        init(params)
-    }
-
-    const onInteraction = (object) => {
-        if (object.search) {
-            setPage(object.page);
-            setPageSize(object.pageSize);
-            setSearch(object.search);
-            setOrder(object.order)
-            setSort(object.sort)
-
-            secureLocalStorage?.setItem(tableIndex, object);
-
-            let params = {
-                school: selectedSchool.id,
-                grade: gradeId,
-                subject: subjectId,
-                status: statusId,
-                page: search == object.search ? object.page : 1,
-                pageSize: object.pageSize,
-                search: object.search,
-                sort: object.sort,
-                order: object.order
-            }
-
-            init(params)
+    const [columns, setColumns] = useState(activeColumns)
+    const [contextMenus, setContextMenus] = useState(activeContextMenus)
+    useEffect(() => {
+        if (selectedTabData == 'active') {
+            tableData?.forEach(el => {
+                el.contextMenuKeys = el.isMobile ? 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, infoChange' : 'view, edit, delete, statusChange, loginNameChange, roleChange, infoChange'
+            })
+            setColumns(activeColumns)
+            setContextMenus(activeContextMenus)
         } else {
-            setPage(object.page);
-            setPageSize(object.pageSize);
-            setSearch(object.search);
-            setOrder(object.order)
-            setSort(object.sort)
-
-            secureLocalStorage?.setItem(tableIndex, object);
-
-            let params = {
-                school: selectedSchool.id,
-                grade: gradeId,
-                subject: subjectId,
-                status: statusId,
-                page: object.page,
-                pageSize: object.pageSize,
-                search: object.search,
-                sort: object.sort,
-                order: object.order
+            if (selectedTabData === 'deleted') {
+                tableData?.forEach(el => {
+                    el.contextMenuKeys = 'view, statusChange'
+                })
+            } else {
+                tableData?.forEach(el => {
+                    el.contextMenuKeys = 'view, edit, delete, statusChange'
+                })
             }
-
-            init(params)
+            setColumns(otherColumns)
+            setContextMenus(otherContextMenus)
         }
-    }
+    }, [selectedTabData, tableData])
 
     return (
         <>
@@ -375,7 +361,85 @@ const MainGroup = () => {
                     </Button>
                     <Card className="mb-5">
                         <Card.Body>
-                            <GroupTable
+                            <TabComponent
+                                onChange={(e, data) => handleTabChange(e, data)}
+                                tabs={[
+                                    {
+                                        code: "active",
+                                        title: "Ажиллаж байгаа",
+                                        children: (
+                                            <DTable
+                                                remote
+                                                config={config}
+                                                locale={locale}
+                                                data={tableData}
+                                                columns={columns}
+                                                individualContextMenus
+                                                contextMenus={contextMenus}
+                                                onContextMenuItemClick={handleContextMenuClick}
+                                                // onInteraction={onUserInteraction}
+                                                totalDataSize={totalCount}
+                                            />
+                                        )
+
+                                    },
+                                    {
+                                        code: "absent",
+                                        title: "Чөлөөтэй байгаа",
+                                        children: (
+                                            <DTable
+                                                remote
+                                                config={config}
+                                                locale={locale}
+                                                data={tableData}
+                                                columns={columns}
+                                                individualContextMenus
+                                                contextMenus={contextMenus}
+                                                onContextMenuItemClick={handleContextMenuClick}
+                                                // onInteraction={onUserInteraction}
+                                                totalDataSize={totalCount}
+                                            />
+                                        )
+                                    },
+                                    {
+                                        code: "leave",
+                                        title: "Ажлаас гарсан",
+                                        children: (
+                                            <DTable
+                                                remote
+                                                config={config}
+                                                locale={locale}
+                                                data={tableData}
+                                                columns={columns}
+                                                individualContextMenus
+                                                contextMenus={contextMenus}
+                                                onContextMenuItemClick={handleContextMenuClick}
+                                                // onInteraction={onUserInteraction}
+                                                totalDataSize={totalCount}
+                                            />
+                                        )
+                                    },
+                                    {
+                                        code: "deleted",
+                                        title: "Устгагдсан",
+                                        children: (
+                                            <DTable
+                                                remote
+                                                config={config}
+                                                locale={locale}
+                                                data={tableData}
+                                                columns={columns}
+                                                individualContextMenus
+                                                contextMenus={contextMenus}
+                                                onContextMenuItemClick={handleContextMenuClick}
+                                                // onInteraction={onUserInteraction}
+                                                totalDataSize={totalCount}
+                                            />
+                                        )
+                                    }
+                                ]}
+                            />
+                            {/* <GroupTable
                                 tableData={tableData}
                                 totalCount={totalCount}
                                 onInteraction={onInteraction}
@@ -384,20 +448,11 @@ const MainGroup = () => {
                                 search={search}
                                 onView={onView}
                                 onDelete={onDelete}
-                            />
+                            /> */}
                         </Card.Body>
                     </Card>
                 </Col>
             </Row>
-            <GroupRegisterModal
-                show={showAddModal}
-                onClose={() => setShowAddModal(false)}
-                onSubmit={onSubmit}
-                curriculums={curriculums}
-                schoolId={selectedSchool.id}
-                grades={grades}
-                schools={schools}
-            />
             {
                 loading &&
                 <>
