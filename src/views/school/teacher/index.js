@@ -3,12 +3,14 @@ import { Row, Col, Card, Button } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import TreeView from 'modules/TreeView';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
+import AddTeacherModal from './modals/addTeacher';
+// import EditTeacherModal from './modals/editTeacher';
 import Select from 'modules/Form/Select';
 import DeleteModal from 'modules/DeleteModal';
 import { useTranslation } from 'react-i18next';
-import FilterIcon from 'cs-line-icons/custom/FilterIcon';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import GroupRegisterModal from 'views/groups/components/GroupRegisterModal';
 import ViewModal from 'views/adminQuestion/modal/ViewModal';
@@ -343,58 +345,23 @@ const MainGroup = () => {
             </div>
             
             <Row className="">
-                <Col className="pr-0" xl="4" xxl="3">
-                    <h2 className="small-title">{t('exam.filter')}</h2>
+                <Col className="pr-0" xl="3" xxl="2">
                     <Card className="mb-5">
                         <Card.Body>
-                            <p className="mb-2 modal-select-title label-style">{t('exam.level')}*</p>
-                            <Select
-                                onChange={(e) => handleDropdownChange(e, 'grade')}
-                                value={gradeId}
-                                searchable
-                                clearable
-                                options={filterGrades}
+                            <TreeView
                             />
-                            <p className="my-2 modal-select-title label-style">Судлагдахуун*</p>
-                            <Select
-                                onChange={(e) => handleDropdownChange(e, 'subject')}
-                                value={subjectId}
-                                searchable
-                                clearable
-                                options={filterSubjects}
-                            />
-                            <p className="my-2 modal-select-title label-style">Төлөв</p>
-                            <Select
-                                onChange={(e) => handleDropdownChange(e, 'status')}
-                                value={statusId}
-                                searchable
-                                clearable
-                                options={filterStatuses}
-                            />
-                            <div className="col-12 text-center mb-2">
-                                <button type='button' onClick={handleClearAll} className="btn btn-link clear-button cursor-pointer">{t('action.clear').toUpperCase()}</button>
-                            </div>
-                            <div className="col-12 text-center">
-                                <button type='button' onClick={onSearchButton} className='filter-button btn w-100 d-flex flex-row justify-content-between cursor-pointer'>
-                                    <FilterIcon />
-                                    <span style={{ position: 'relative', top: 1 , right: 13 }}>
-                                        {t('common.search').toUpperCase()}
-                                    </span>
-                                    <div />
-                                </button>
-                            </div>
                         </Card.Body>
                     </Card>
                 </Col>
 
-                <Col xl="8" xxl="9">
+                <Col xl="9" xxl="10">
                     <Button
                         onClick={onCreateButton}
                         variant="primary"
                         className="mb-2 add-button text-uppercase"
                     >
                         <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                        {t('menu.createGroup')}
+                        {t('common.register')}
                     </Button>
                     <Card className="mb-5">
                         <Card.Body>

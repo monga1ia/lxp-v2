@@ -175,6 +175,7 @@ export const TRANSLATIONS_MN = {
         studentCount: "Сурагчдын тоо",
         classCode: "Ангийн код",
         image: "Зураг",
+        register: "Бүртгэх",
         teacherPosition: "Албан тушаал",
         teacherLesson: "Заадаг хичээл",
         all: "Бүгд",

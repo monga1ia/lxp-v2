@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import message from 'Src/message'
-import SubHeader from 'Src/SubHeader'
 import React, { useEffect } from 'react'
 import { Modal } from 'semantic-ui-react'
 import ImageModal from 'Utilities/imageModal'
@@ -9,11 +8,9 @@ import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'Utilities/fetchRequest'
 import { translations } from 'Utilities/translations'
 import { NDropdown as Dropdown } from 'Widgets/Dropdown'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
 
 const EditTeacherModal = ({onClose, onSubmit, data}) => {
-    const navigate = useNavigate()
 
     const teacherId = data
     console.log(teacherId?.state?.id)

@@ -1,19 +1,15 @@
 import { useState } from 'react'
-import message from 'Src/message'
+import message from 'modules/message'
 import { Modal } from 'semantic-ui-react'
 import React, { useEffect } from 'react'
-import ImageModal from 'Utilities/imageModal'
+import ImageModal from 'utils/imageModal'
 import ForceCreateModal from './forceCreate'
-import { schoolTeacherSubmit } from 'Utilities/url'
-import { useNavigate } from 'react-router-dom'
 import secureLocalStorage from 'react-secure-storage'
-import { fetchRequest } from 'Utilities/fetchRequest'
-import { translations } from 'Utilities/translations'
+import { translations } from 'utils/translations'
 import { NDropdown as Dropdown } from 'Widgets/Dropdown'
 import CloseIcon from '@mui/icons-material/Close';
 
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
-    const navigate = useNavigate()
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
@@ -43,86 +39,69 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
         }
     ])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(schoolTeacherSubmit, 'POST')
-            .then((res) => {
-                if (res.success) {
-                    const { roleLists, gradeWithSubjects, grades } = res.data
-                    setRoleOptions(roleLists || [])
-                    setGradeSubjectOptions(gradeWithSubjects || [])
-                    setGradeOptions(grades || [])
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
-
     const handleSubmit = () => {
         if (validateFields()) {
-            setLoading(true)
-            const params = {
-                ...teacher,
-                subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
-                submit: 1,
-                menu: 'teacher'
-            }
-            fetchRequest(schoolTeacherSubmit, 'POST', params)
-                .then((res) => {
-                    if (res.success) {
-                        if (res.data.isForce) {
-                            setViewForceCreateModal(true)
-                            setForceCreateMessage(res.data.message)
-                        } else {
-                            message(res.data.message, true)
-                            onSubmit()
-                            // console.log({...params, ...res.data.user})
-                            onClose()
-                        }
-                    } else {
-                        message(res.data.message)
-                    }
-                    setLoading(false)
-                })
-                .catch(() => {
-                    message(translations(locale)?.err?.error_occurred)
-                    setLoading(false)
-                })
+            console.log("success")
+            // setLoading(true)
+            // const params = {
+            //     ...teacher,
+            //     subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
+            //     submit: 1,
+            //     menu: 'teacher'
+            // }
+            // fetchRequest(schoolTeacherSubmit, 'POST', params)
+            //     .then((res) => {
+            //         if (res.success) {
+            //             if (res.data.isForce) {
+            //                 setViewForceCreateModal(true)
+            //                 setForceCreateMessage(res.data.message)
+            //             } else {
+            //                 message(res.data.message, true)
+            //                 onSubmit()
+            //                 // console.log({...params, ...res.data.user})
+            //                 onClose()
+            //             }
+            //         } else {
+            //             message(res.data.message)
+            //         }
+            //         setLoading(false)
+            //     })
+            //     .catch(() => {
+            //         message(translations(locale)?.err?.error_occurred)
+            //         setLoading(false)
+            //     })
+        } else {
+            console.log("error")
         }
     }
 
-    const handleForceCreate = () => {
-        if (validateFields()) {
-            setLoading(true)
-            const params = {
-                ...teacher,
-                subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
-                submit: 1,
-                forceSave: 1,
-                menu: 'teacher'
-            }
-            fetchRequest(schoolTeacherSubmit, 'POST', params)
-                .then((res) => {
-                    if (res.success) {
-                        message(res.data.message, true)
-                        onSubmit()
-                        onClose()
-                    } else {
-                        message(res.data.message)
-                    }
-                    setLoading(false)
-                })
-                .catch(() => {
-                    message(translations(locale)?.err?.error_occurred)
-                    setLoading(false)
-                })
-        }
-    }
+    // const handleForceCreate = () => {
+    //     if (validateFields()) {
+    //         setLoading(true)
+    //         const params = {
+    //             ...teacher,
+    //             subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
+    //             submit: 1,
+    //             forceSave: 1,
+    //             menu: 'teacher'
+    //         }
+    //         fetchRequest(schoolTeacherSubmit, 'POST', params)
+    //             .then((res) => {
+    //                 if (res.success) {
+    //                     message(res.data.message, true)
+    //                     onSubmit()
+    //                     onClose()
+    //                 } else {
+    //                     message(res.data.message)
+    //                 }
+    //                 setLoading(false)
+    //             })
+    //             .catch(() => {
+    //                 message(translations(locale)?.err?.error_occurred)
+    //                 setLoading(false)
+    //             })
+    //     }
+    // }
 
     const handleChange = (name, value) => {
         setTeacher({ ...teacher, [name]: value })
