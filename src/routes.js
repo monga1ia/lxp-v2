@@ -38,6 +38,12 @@ const onlineExam = {
     // analysis: lazy(() => import("views/onlineExam/analysis/Analysis")),
 };
 
+const school = {
+    teacher: lazy(() => import("views/school/teacher/index")),
+    worker: lazy(() => import("views/school/worker/index")),
+    group: lazy(() => import("views/school/group/index"))
+}
+
 const adminQuestion = {
     // question bank
     questions: lazy(() => import("views/adminQuestion/index")),
@@ -209,6 +215,31 @@ const routesAndMenuItems = {
                 //     component: dashboards.groupDetails,
                 //     menuHidden: true,
                 // }
+            ],
+        }, 
+        {
+            path: `${appRoot}/school`,
+            label: "menu.school",
+            icon: "home-garage",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/school/teacher`,
+            subs: [
+                {
+                    path: "/teacher",
+                    label: "menu.teacher",
+                    component: school.teacher,
+                },
+                {
+                    path: "/worker",
+                    label: "menu.worker",
+                    component: school.worker,
+                },
+                {
+                    path: "/group",
+                    label: "menu.group",
+                    component: school.group,
+                }
             ],
         },
         {

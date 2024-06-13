@@ -651,6 +651,7 @@ export const TRANSLATIONS_MN = {
         openQuestion: 'Асуултад нээлттэй хариулна',
     },
     menu: {
+
         active: "Идэвхтэй",
         examName: "Сорилын нэр",
         examTemplate: "Сорилын загвар",
@@ -733,6 +734,7 @@ export const TRANSLATIONS_MN = {
         studyPlan: 'Суралцах төлөвлөгөө',
         task: "Даалгавар",
         tasks: "Даалгаврууд",
+        teacher: "Багш",
         parent: "Харьяалах меню",
         position: "Меню байршил",
         generalPerformance: "Ерөнхий гүйцэтгэл",
@@ -747,7 +749,8 @@ export const TRANSLATIONS_MN = {
         wrongCount: "Буруу хариулсан тоо",
         omittedStudent: "Хоосон илгээсэн сурагч",
         omittedCount: "Хоосон илгээсэн тоо",
-        onlineLesson: "Цахим хичээл"
+        onlineLesson: "Цахим хичээл",
+        worker: "Ажилтан",
     },
     movement: {
         admission: "Элсэлт",
