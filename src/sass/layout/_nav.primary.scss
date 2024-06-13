@@ -17,13 +17,14 @@ html[data-placement="vertical"] {
     background-size: cover;
     width: var(--nav-size);
     background-position: center;
-    background-image: linear-gradient(
-      160deg,
-      var(--gradient-1),
-      var(--gradient-1),
-      var(--gradient-2),
-      var(--gradient-3)
-    );
+    background-color: white;
+    // background-image: linear-gradient(
+    //   160deg,
+    //   var(--gradient-1),
+    //   var(--gradient-1),
+    //   var(--gradient-2),
+    //   var(--gradient-3)
+    // );
 
     .nav-shadow {
       width: 100%;
@@ -69,7 +70,7 @@ html[data-placement="vertical"] {
           position: relative;
 
           a {
-            color: var(--light-text);
+            color: #868aa8;
           }
 
           .icon {
@@ -121,7 +122,7 @@ html[data-placement="vertical"] {
       }
 
       & > li > a {
-        color: var(--light-text);
+        color: #868aa8;
         font-size: 18px;
         padding: 0.25rem 0.5rem;
         transition: opacity var(--transition-time);
@@ -134,7 +135,7 @@ html[data-placement="vertical"] {
       .notification-dot {
         width: 3px;
         height: 3px;
-        background: var(--light-text);
+        background: #868aa8;
         top: -2px;
         right: 0;
       }
@@ -165,7 +166,7 @@ html[data-placement="vertical"] {
         }
 
         .name {
-          color: var(--light-text);
+          color: #868aa8;
           line-height: 1;
         }
       }
@@ -612,13 +613,13 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
           a {
             border-radius: var(--border-radius-lg);
             width: 100%;
-            color: var(--light-text);
+            color: #868aa8;
             //transition: color var(--transition-time);
             margin-bottom: 0.1rem;
             margin-top: 0.1rem;
 
             .icon {
-              color: var(--light-text);
+              color: #868aa8;
             }
 
             &.active {
@@ -628,7 +629,7 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
 
             &:hover {
               background: rgba(var(--light-text-rgb), 0.1);
-              color: var(--light-text);
+              color: #868aa8;
             }
           }
         }
@@ -691,7 +692,7 @@ html[data-placement="horizontal"][data-dimension="mobile"] {
 
       & > a,
       & > .dropdown > a {
-        color: var(--light-text);
+        color: #868aa8;
         padding: 0.25rem 0.5rem;
         height: 100%;
         align-items: center;
@@ -983,8 +984,8 @@ Arrows collapse for vertical menu
       position: absolute;
       width: 5px;
       height: 5px;
-      border-top: 1px solid var(--light-text);
-      border-right: 1px solid var(--light-text);
+      border-top: 1px solid #868aa8;
+      border-right: 1px solid #868aa8;
       transform: rotate(45deg);
       bottom: initial;
       top: 14px;
@@ -1012,8 +1013,8 @@ Arrows collapse for horizontal menu
       content: "";
       width: 5px;
       height: 5px;
-      border-top: 1px solid var(--light-text);
-      border-right: 1px solid var(--light-text);
+      border-top: 1px solid #868aa8;
+      border-right: 1px solid #868aa8;
       transform: rotate(45deg);
       order: 3;
       margin-left: 5px;
@@ -1323,11 +1324,11 @@ html[data-navcolor="dark"] {
   }
 
   .nav-container .menu-container .menu > li > a {
-    color: var(--light-text);
+    color: #868aa8;
   }
 
   .nav-container .language-switch-container .language-button {
-    color: var(--light-text) !important;
+    color: #868aa8 !important;
     &:hover {
       background: rgba(255, 255, 255, 0.05) !important;
     }
@@ -1335,26 +1336,26 @@ html[data-navcolor="dark"] {
 
   .nav-container .mobile-buttons-container > a,
   .nav-container .mobile-buttons-container > .dropdown > a {
-    color: var(--light-text) !important;
+    color: #868aa8 !important;
     &:hover {
       background: rgba(255, 255, 255, 0.05) !important;
     }
   }
 
   .nav-container .menu-icons > li > a {
-    color: var(--light-text);
+    color: #868aa8;
   }
 
   .nav-container .menu-container .menu > li > a .icon {
-    color: var(--light-text);
+    color: #868aa8;
   }
 
   .nav-container .user-container .user .name {
-    color: var(--light-text);
+    color: #868aa8;
   }
 
   .nav-container .menu-container .menu a.active .label::after {
-    background: var(--light-text);
+    background: #868aa8;
   }
 
   .nav-container .menu-container .menu ul {
@@ -1362,7 +1363,7 @@ html[data-navcolor="dark"] {
   }
 
   .nav-container .menu-container .menu a {
-    color: var(--light-text) !important;
+    color: #868aa8 !important;
     &.active,
     &:hover {
       background: rgba(255, 255, 255, 0.05) !important;

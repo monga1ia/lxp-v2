@@ -1,19 +1,12 @@
 import { useState } from 'react'
 import message from 'modules/message'
-// import 'semantic-ui-css'
-// import 'semantic-ui-css/semantic.min.css'
-// import { Modal } from 'semantic-ui-react'
 import { Modal } from 'react-bootstrap'
 import React, { useEffect } from 'react'
 import ImageModal from 'utils/imageModal'
 import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
-import { Dropdown } from "react-bootstrap";
 import Select from 'modules/Form/Select'
-// import { NDropdown as Dropdown } from 'widgets/Dropdown'
-import CloseIcon from '@mui/icons-material/Close';
-// import 'main.css'
 
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
 

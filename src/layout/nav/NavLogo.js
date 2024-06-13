@@ -17,7 +17,7 @@ const NavLogo = () => {
                     </Link>
                     :
                     <Link to={DEFAULT_PATHS.APP}>
-                        <img src='/img/logo/eschool-logo-solid-light_1_300x75.png' alt="student-logo" width='150px' height='36px' />
+                        <img src='/img/logo/eschool-logo-black-wordless.png' alt="student-logo" width='150px' height='36px' />
                     </Link>
             }
         </div>

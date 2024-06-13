@@ -7,7 +7,7 @@ import TreeView from 'modules/TreeView';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import AddTeacherModal from './modals/addTeacher';
-// import EditTeacherModal from './modals/editTeacher';
+import EditTeacherModal from './modals/editTeacher';
 import DeleteModal from 'modules/DeleteModal';
 import TabComponent from 'components/tab/Tab';
 import DTable from 'modules/DataTable/DTable';
@@ -274,7 +274,8 @@ const MainGroup = () => {
             if (key === 'view') {
                 setShowViewModal(true)
             } else if (key === 'edit') {
-                navigate('/school/teachers/edit', {state: {id}})
+                setShowEditTeacherModal(true)
+                // navigate('/school/teachers/edit', {state: {id}})
             } else if (key === 'delete') {
                 setShowDeleteModal(true)
             } else if (key === 'passwordReset') {
@@ -487,6 +488,13 @@ const MainGroup = () => {
             {
                 showAddTeacherModal &&
                 <AddTeacherModal
+                    onClose={closeModal}
+                />
+            }
+            {console.log(showEditTeacherModal)}
+            {
+                showEditTeacherModal &&
+                <EditTeacherModal
                     onClose={closeModal}
                 />
             }

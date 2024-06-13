@@ -48,7 +48,7 @@ const NavIconMenu = () => {
                 <ul className="list-unstyled list-inline text-center menu-icons">
                     <li className="list-inline-item">
                             <a href={"https://helpcenter.eschool.mn/sys-auth?p=LMS&t=" + eToken} target='_blank' title='Help center'>
-                                <img src='/img/icon/ic_helpcenter.png' style={{
+                                <img src='/img/icon/ic_helpcenterGray.png' style={{
                                     width: 18
                                 }}/>
                             </a>

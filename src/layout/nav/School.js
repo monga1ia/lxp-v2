@@ -104,6 +104,7 @@ const Schools = () => {
                     <div className='d-flex align-items-center mb-3'>
                         <div className='pt-1' style={{
                             maxHeight: 50,
+                            color: "#868aa8",
                             overflow: 'hidden'
                         }}>
                             {`${selectedSchool && selectedSchool?.id ? selectedSchool.name : t('common.selectSchool')} \u003E`}

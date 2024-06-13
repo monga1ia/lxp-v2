@@ -1,14 +1,11 @@
 import { useState } from 'react'
-import message from 'Src/message'
+import message from 'modules/message'
 import React, { useEffect } from 'react'
-import { Modal } from 'semantic-ui-react'
-import ImageModal from 'Utilities/imageModal'
-import { schoolTeacherEdit } from 'Utilities/url'
+import { Modal } from 'react-bootstrap'
+import ImageModal from 'utils/imageModal'
 import secureLocalStorage from 'react-secure-storage'
-import { fetchRequest } from 'Utilities/fetchRequest'
-import { translations } from 'Utilities/translations'
-import { NDropdown as Dropdown } from 'Widgets/Dropdown'
-import CloseIcon from '@mui/icons-material/Close';
+import { translations } from 'utils/translations'
+import Select from 'modules/Form/Select'
 
 const EditTeacherModal = ({onClose, onSubmit, data}) => {
 
@@ -44,64 +41,41 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
         }
     }, [])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(schoolTeacherEdit, 'POST', { teacher: teacherId?.state?.id, menu: 'teacher' })
-            .then((res) => {
-                if (res.success) {
-                    const { roleLists, gradeWithSubjects, grades, teacherData } = res.data
-                    setRoleOptions(roleLists || [])
-                    setGradeOptions(grades || [])
-                    setTeacher({ ...teacherData, grade: teacherData?.gradeId } || {})
-                    teacherData?.subjects?.map(subject => { gradeWithSubjects?.map(option => { if (option.value == subject.grade) option.disabled = true }) })
-
-                    const gradeRows = (gradeWithSubjects || []).map(obj => {
-                        obj.visible = obj?.teacherSubjects?.length > 0;
-                        return obj;
-                    });
-                    setGradeSubjectOptions(gradeRows)
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
 
     const handleSubmit = () => {
         if (validateFields()) {
-            setLoading(true)
-            const subjectList = gradeSubjectOptions.map(el => {
-                if (el && el.visible) {
-                    return { grade: el.value, subjects: el.teacherSubjects?.map(obj => el.value + '_s_' + obj) }
-                }
-            });
+            console.log('success')
+            // setLoading(true)
+            // const subjectList = gradeSubjectOptions.map(el => {
+            //     if (el && el.visible) {
+            //         return { grade: el.value, subjects: el.teacherSubjects?.map(obj => el.value + '_s_' + obj) }
+            //     }
+            // });
 
-            const params = {
-                ...teacher,
-                subjects: JSON.stringify(subjectList),
-                submit: 1,
-                teacher: teacherId?.state?.id,
-                photo: teacher?.avatar?.startsWith('data') ? teacher?.avatar : null
-            }
-            fetchRequest(schoolTeacherEdit, 'POST', params)
-                .then((res) => {
-                    if (res.success) {
-                        message(res.data.message, true)
-                        onSubmit()
-                        onClose()
-                    } else {
-                        message(res.data.message)
-                    }
-                    setLoading(false)
-                })
-                .catch(() => {
-                    message(translations(locale)?.err?.error_occurred)
-                    setLoading(false)
-                })
+            // const params = {
+            //     ...teacher,
+            //     subjects: JSON.stringify(subjectList),
+            //     submit: 1,
+            //     teacher: teacherId?.state?.id,
+            //     photo: teacher?.avatar?.startsWith('data') ? teacher?.avatar : null
+            // }
+            // fetchRequest(schoolTeacherEdit, 'POST', params)
+            //     .then((res) => {
+            //         if (res.success) {
+            //             message(res.data.message, true)
+            //             onSubmit()
+            //             onClose()
+            //         } else {
+            //             message(res.data.message)
+            //         }
+            //         setLoading(false)
+            //     })
+            //     .catch(() => {
+            //         message(translations(locale)?.err?.error_occurred)
+            //         setLoading(false)
+            //     })
+        } else{
+            console.log('fail')
         }
     }
 
@@ -203,11 +177,11 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
 
     return (
         <Modal
-            size='large'
+            size='xl'
             dimmer='blurring'
-            open={true}
+            show={true}
             onClose={onClose}
-            className='react-modal overflow-modal'
+            aria-labelledby="contained-modal-title-vcenter"
             centered
         >
             <div className="header" locale={locale}>
