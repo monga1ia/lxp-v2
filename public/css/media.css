@@ -1,0 +1,179 @@
+@media only screen and (max-width: 430px) {
+    #loginForm {
+        width: 340px;
+    }
+    .login-recover-button {
+        width: 340px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    #loginForm {
+        width: 330px;
+    }
+    .login-recover-button {
+        width: 330px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    #loginForm {
+        width: 320px;
+    }
+    .login-recover-button {
+        width: 320px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #loginForm {
+        width: 310px;
+    }
+    .login-recover-button {
+        width: 310px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    #loginForm {
+        width: 300px;
+    }
+    .login-recover-button {
+        width: 300px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    #loginForm {
+        width: 290px;
+    }
+    .login-recover-button {
+        width: 290px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    #loginForm {
+        width: 280px;
+    }
+    .login-recover-button {
+        width: 280px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    #loginForm {
+        width: 270px;
+    }
+    .login-recover-button {
+        width: 270px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    #loginForm {
+        width: 260px;
+    }
+    .login-recover-button {
+        width: 260px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    #loginForm {
+        width: 250px;
+    }
+    .login-recover-button {
+        width: 250px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    #loginForm {
+        width: 240px;
+    }
+    .login-recover-button {
+        width: 240px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    #loginForm {
+        width: 230px;
+    }
+    .login-recover-button {
+        width: 230px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 310px) {
+    #loginForm {
+        width: 220px;
+    }
+    .login-recover-button {
+        width: 220px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    #loginForm {
+        width: 210px;
+    }
+    .login-recover-button {
+        width: 210px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 290px) {
+    #loginForm {
+        width: 200;
+    }
+    .login-recover-button {
+        width: 200px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    #loginForm {
+        width: 190px;
+    }
+    .login-recover-button {
+        width: 190px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 270px) {
+    #loginForm {
+        width: 180px;
+    }
+    .login-recover-button {
+        width: 180px;
+        white-space: break-spaces;
+    }
+}
+
+@media only screen and (max-width: 260px) {
+    #loginForm {
+        width: 170px;
+    }
+    .login-recover-button {
+        width: 170px;
+        white-space: break-spaces;
+    }
+}

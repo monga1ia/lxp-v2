@@ -1,0 +1,50 @@
+// Date picker overrides
+.react-datepicker__input-container {
+  span {
+    display: none;
+  }
+}
+
+.react-datepicker {
+  .react-datepicker__day-names {
+    display: flex;
+  }
+
+  .react-datepicker__week {
+    display: flex;
+
+    .react-datepicker__day {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .react-datepicker__aria-live {
+    display: none;
+  }
+
+  .react-datepicker__navigation {
+    border: 1px solid gray;
+    border-radius: 6px;
+    margin-bottom: 8px;
+
+    &.react-datepicker__navigation--previous {
+      margin-right: 6px;
+    }
+  }
+}
+
+.date-picker-range-container {
+  display: flex;
+}
+
+.react-datepicker-with-icon {
+  border: 1px solid #ccc !important;
+  border-left: 0 !important;
+  height: 38px;
+  background: #f4f5f8;
+  width: 42px;
+  border-right: 0 !important;
+}
+
+// ======================

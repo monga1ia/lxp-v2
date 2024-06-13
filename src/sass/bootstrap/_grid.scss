@@ -1,0 +1,25 @@
+/*
+*
+* Grid
+*
+* Bootstrap auto column fix.
+*
+*/
+
+.col,
+.col-sm,
+.col-md,
+.col-lg,
+.col-xl {
+  min-width: 0;
+}
+
+@media (min-width: 1200px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: unset;
+  }
+}

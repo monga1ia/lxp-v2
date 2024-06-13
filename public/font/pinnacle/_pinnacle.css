@@ -1,0 +1,41 @@
+@font-face {
+	font-family: 'PinnacleRegular';
+	src: url('Pinnacle-Regular.eot');
+	src: url('Pinnacle-Regular.eot?#iefix') format('embedded-opentype'),
+	url('Pinnacle-Regular.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'PinnacleLight';
+	src: url('Pinnacle-Light.eot');
+	src: url('Pinnacle-Light.eot?#iefix') format('embedded-opentype'),
+	url('Pinnacle-Light.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'PinnacleBold';
+	src: url('Pinnacle-Bold.eot');
+	src: url('Pinnacle-Bold.eot?#iefix') format('embedded-opentype'),
+		url('Pinnacle-Bold.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'PinnacleMedium';
+	src: url('Pinnacle-Medium.eot');
+	src: url('Pinnacle-Medium.eot?#iefix') format('embedded-opentype'),
+	url('Pinnacle-Medium.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'PinnacleDemiBold';
+	src: url('Pinnacle-DemiBold.eot');
+	src: url('Pinnacle-DemiBold.eot?#iefix') format('embedded-opentype'),
+	url('Pinnacle-DemiBold.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'PinnacleExtraBold';
+	src: url('Pinnacle-ExtraBold.eot');
+	src: url('Pinnacle-ExtraBold.eot?#iefix') format('embedded-opentype'),
+	url('Pinnacle-ExtraBold.woff') format('woff');
+}

@@ -1,0 +1,198 @@
+.react-bootstrap-table table {
+  table-layout: auto !important;
+}
+
+.react-bootstrap-table thead tr {
+  text-transform: uppercase;
+}
+.react-bootstrap-table thead tr th {
+  color: #575962;
+  font-size: 12px;
+  font-weight: 700;
+  word-break: keep-all;
+  white-space: nowrap;
+
+  // &.sortable {
+  //   border: none;
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
+
+  span::before {
+    color: var(--primary) !important;
+  }
+
+  span::after {
+    color: var(--primary) !important;
+  }
+}
+
+.react-bootstrap-table tbody tr td {
+  color: #575962;
+  font-weight: 400;
+  font-size: 14px;
+}
+table.custom-dt {
+  > thead {
+    > tr {
+      > td,
+      th {
+        border: 1px solid #ebedf2;
+        background: #fff;
+      }
+    }
+  }
+  > tbody {
+    > tr {
+      > td,
+      th {
+        border: 1px solid #ebedf2;
+        background: #fff;
+      }
+    }
+  }
+}
+
+.custom-size-per-page {
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  > button {
+    background-color: #fff !important;
+    color: #4e4e4e !important;
+  }
+}
+
+.dt-cm-wrapper {
+  padding: 5px 0 5px 0;
+  position: absolute;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 1px 10px 0 rgba(145, 155, 192, 0.3);
+  z-index: 100000;
+  > .dt-cm-item {
+    &:first-of-type {
+      //padding-top: 5px;
+    }
+    &:last-of-type {
+      //padding-bottom: 5px;
+    }
+  }
+}
+.dt-cm-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 1.5rem 5px 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &:hover {
+    //color: rgb(42, 69, 217);
+    cursor: pointer;
+    background: rgba(255, 73, 0, 0.2);
+  }
+}
+
+tr.dt-drag-hover-top {
+  > td {
+    border-top: 2px solid blue !important;
+  }
+}
+
+tr.dt-drag-hover-bottom {
+  > td {
+    border-bottom: 2px solid blue !important;
+  }
+}
+
+.dt-cm-item-icon {
+  margin-right: 0.5rem;
+  color: #1e1e2d;
+  font-size: 25px;
+}
+.dt-cm-item-icon-18 {
+  margin-right: 0.5rem;
+  color: #1e1e2d;
+  font-size: 18px;
+}
+.dt-cm-item-icon-19 {
+  margin-right: 0.5rem;
+  color: #1e1e2d;
+  font-size: 19px;
+}
+.dt-cm-item-icon-20 {
+  margin-right: 0.5rem;
+  color: #1e1e2d;
+  font-size: 20px;
+}
+.height-0 {
+  height: 0;
+}
+
+.btn-pagination {
+  &.active {
+    background-color: var(--primary) !important;
+    color: white !important;
+  }
+
+  &.arrow-button {
+    background-color: rgb(var(--primary-rgb), 0.2) !important;
+  }
+
+  i {
+    color: var(--primary);
+  }
+}
+/***************** datatable pagination link css **************/
+.pagination-link a {
+  font-family: Mulish !important;
+  /*box-shadow: 0 1px 10px rgb(0 0 0 / 15%) !important;*/
+  background: #ffd5c8;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  display: flex;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: black !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pagination-link a.btn-white {
+  background: white !important;
+}
+
+.pagination-link a.btn-white:hover {
+  background: rgba(255, 73, 0, 0.8) !important;
+}
+
+.pagination-link a i {
+  position: relative;
+  bottom: 2px;
+  right: 0;
+  top: 0;
+}
+
+.pagination-link a.active {
+  color: #fff !important;
+  background-color: rgba(255, 73, 0, 0.8) !important;
+}
+
+.btn-pagination {
+  color: #ff4900 !important;
+}
+
+.btn-pagination:hover {
+  color: #fff;
+  background-color: rgba(255, 73, 0, 0.8);
+}
+
+.custom-dt tr.dtable-selected td {
+  background-color: rgba(255, 73, 0, 0.1)
+}
+
+/***************** datatable pagination link css **************/

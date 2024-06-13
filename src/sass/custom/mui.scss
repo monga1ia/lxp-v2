@@ -1,0 +1,33 @@
+// Material UI custom class overrides
+button.MuiTab-root {
+  font-family: var(--font-heading);
+  text-transform: inherit !important;
+  font-size: 14px !important;
+  padding: 12px 32px 12px 32px !important;
+
+  &.Mui-selected {
+    font-weight: 700 !important;
+    color: var(--primary) !important;
+  }
+}
+
+.MuiTreeItem-content {
+  border-radius: 6px;
+
+  &.Mui-selected {
+    background-color: #ebedf2;
+  }
+
+  .MuiTreeItem-label {
+    font-size: 14px !important;
+    color: #505050;
+  }
+}
+
+.ck.ck-editor {
+  // max-width: 650px;
+
+  .ck-content {
+    min-height: 200px;
+  }
+}
