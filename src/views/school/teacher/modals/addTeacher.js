@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import message from 'modules/message'
+// import 'semantic-ui-css'
+import 'semantic-ui-css/semantic.min.css'
 import { Modal } from 'semantic-ui-react'
 import React, { useEffect } from 'react'
 import ImageModal from 'utils/imageModal'
 import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
-import { NDropdown as Dropdown } from 'Widgets/Dropdown'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import CloseIcon from '@mui/icons-material/Close';
 
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
@@ -189,10 +191,10 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                     <div className="col-3 d-flex flex-column align-items-center" style={{ gap: 10 }}>
                         <img
                             className="img-responsive img-circle"
-                            src={teacher?.photo || '/images/placeholder.jpg'}
+                            src={teacher?.photo || '/img/profile/placeholder.jpg'}
                             onError={(e) => {
                                 e.target.onError = null
-                                e.target.src = '/images/avatar.png'
+                                e.target.src = '/img/profile/avatar.png'
                             }}
                             width={150}
                             height={150}

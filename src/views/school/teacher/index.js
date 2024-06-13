@@ -10,6 +10,7 @@ import AddTeacherModal from './modals/addTeacher';
 // import EditTeacherModal from './modals/editTeacher';
 import Select from 'modules/Form/Select';
 import DeleteModal from 'modules/DeleteModal';
+import TabComponent from 'components/tab/Tab';
 import { useTranslation } from 'react-i18next';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import GroupRegisterModal from 'views/groups/components/GroupRegisterModal';
@@ -43,6 +44,14 @@ const MainGroup = () => {
     const [gradeId, setGradeId] = useState(secureLocalStorage?.getItem(gradeIndex) || null);
     const [subjectId, setSubjectId] = useState(null);
     const [statusId, setStatusId] = useState(null);
+
+    const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
+    const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
+
+    const handleAddTeacher = () => {
+        setShowAddTeacherModal(true)
+    }
+
     const [filterGrades, setFilterGrades] = useState([]);
     const [filterSubjects, setFilterSubjects] = useState([]);
     const [filterStatuses] = useState([
@@ -231,6 +240,7 @@ const MainGroup = () => {
     }
 
     const closeModal = () => {
+        setShowAddTeacherModal(false)
         setShowDeleteModal(false)
         setSelectedGroupId(null)
     }
@@ -356,7 +366,7 @@ const MainGroup = () => {
 
                 <Col xl="9" xxl="10">
                     <Button
-                        onClick={onCreateButton}
+                        onClick={handleAddTeacher}
                         variant="primary"
                         className="mb-2 add-button text-uppercase"
                     >
@@ -418,6 +428,12 @@ const MainGroup = () => {
                     <br />
                     {t('warning.delete_confirmation_description')}
                 </DeleteModal>
+            }
+            {
+                showAddTeacherModal &&
+                <AddTeacherModal
+                    onClose={closeModal}
+                />
             }
         </>
     );
