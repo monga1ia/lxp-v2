@@ -6,14 +6,20 @@ import { useSelector } from 'react-redux';
 import TreeView from 'modules/TreeView';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import AddTeacherModal from './modals/addTeacher';
-import EditTeacherModal from './modals/editTeacher';
-import DeleteModal from 'modules/DeleteModal';
+
 import TabComponent from 'components/tab/Tab';
 import DTable from 'modules/DataTable/DTable';
 import { useTranslation } from 'react-i18next';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import ViewModal from 'views/adminQuestion/modal/ViewModal';
+import ViewModal from './modals/view'
+import DeleteModal from 'utils/deleteModal';
+import AddTeacherModal from './modals/addTeacher';
+import EditTeacherModal from './modals/editTeacher';
+// import RoleChangeModal from './modals/roleChange'
+// import InfoChangeModal from './modals/infoChange';
+import StatusChangeModal from './modals/statusChange'
+// import PasswordResetModal from './modals/passwordReset'
+// import LoginNameChangeModal from './modals/loginNameChange'
 import { translations } from 'utils/translations';
 import message from '../../../modules/message'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
@@ -36,8 +42,6 @@ const MainGroup = () => {
 
     const locale="mn"
 
-    const [showViewModal, setShowViewModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const [groupData, setGroupData] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -48,10 +52,21 @@ const MainGroup = () => {
     const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
     const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
     const [selectedTabData, setSelectedTabData] = useState('active')
+    const [showViewModal, setShowViewModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showRoleChangeModal, setShowRoleChangeModal] = useState(false)
+    const [showInfoChangeModal, setShowInfoChangeModal] = useState(false)
+    const [showStatusChangeModal, setStatusChangeModal] = useState(false)
+    const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
+    const [showLoginNameChangeModal, setShowLoginNameChangeModal] = useState(false)
 
+    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
 
     const handleAddTeacher = () => {
         setShowAddTeacherModal(true)
+    }
+    const handleEditTeacher = () => {
+        console.log('edited')
     }
     const handleTabChange = (e, data) => {
         console.log( e, data)
@@ -69,8 +84,17 @@ const MainGroup = () => {
 
     const closeModal = () => {
         setShowAddTeacherModal(false)
+        setShowEditTeacherModal(false)
         setShowDeleteModal(false)
         setSelectedGroupId(null)
+        setShowViewModal(false)
+        setShowDeleteModal(false)
+        setStatusChangeModal(false)
+        setSelectedTableDataId(null)
+        setShowRoleChangeModal(false)
+        setShowInfoChangeModal(false)
+        setShowPasswordResetModal(false)
+        setShowLoginNameChangeModal(false)
     }
 
 
@@ -269,8 +293,9 @@ const MainGroup = () => {
     ]
 
     const handleContextMenuClick = (id, key) => {
-        if (id && key) {
-            setSelectedTableDataId(id)
+        if (key) {
+            // console.log(key)
+            // setSelectedTableDataId(id)
             if (key === 'view') {
                 setShowViewModal(true)
             } else if (key === 'edit') {
@@ -330,6 +355,14 @@ const MainGroup = () => {
         }
     }, [selectedTabData, tableData])
 
+    const handleDelete = () => {
+        console.log('delete')
+    }
+
+    const handleStatusChange = () => {
+        console.log('statusChange')
+    }
+
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -353,7 +386,7 @@ const MainGroup = () => {
 
                 <Col xl="9" xxl="10">
                     <Button
-                        onClick={handleAddTeacher}
+                        onClick={() => setShowAddTeacherModal(true)}
                         variant="primary"
                         className="mb-2 add-button text-uppercase"
                     >
@@ -440,16 +473,6 @@ const MainGroup = () => {
                                     }
                                 ]}
                             />
-                            {/* <GroupTable
-                                tableData={tableData}
-                                totalCount={totalCount}
-                                onInteraction={onInteraction}
-                                page={page}
-                                pageSize={pageSize}
-                                search={search}
-                                onView={onView}
-                                onDelete={onDelete}
-                            /> */}
                         </Card.Body>
                     </Card>
                 </Col>
@@ -465,18 +488,60 @@ const MainGroup = () => {
                 </>
             }
             {
-                showViewModal && groupData &&
+                // selectedTableDataId &&
+                showViewModal && 
                 <ViewModal
-                    onClose={() => setShowViewModal(false)}
-                    event={groupData}
+                    id={selectedTableDataId}
+                    onClose={closeModal}
                 />
             }
+            {/* {
+                showPasswordResetModal && selectedTableDataId &&
+                <PasswordResetModal
+                    onClose={closeModal}
+                    onSubmit={handlePasswordReset}
+                />
+            } */}
             {
-                showDeleteModal && selectedGroupId &&
+                // selectedTableDataId &&
+                showStatusChangeModal && 
+                <StatusChangeModal
+                    onClose={closeModal}
+                    onSubmit={handleStatusChange}
+                    teacher={selectedTableDataId}
+                />
+            }
+            {/* {
+                showLoginNameChangeModal && selectedTableDataId &&
+                <LoginNameChangeModal
+                    onClose={closeModal}
+                    onSubmit={handleLoginNameChange}
+                />
+            } */}
+            {/* {
+                showRoleChangeModal && selectedTableDataId &&
+                <RoleChangeModal
+                    onClose={closeModal}
+                    onSubmit={handleRoleChange}
+                    teacher={selectedTableDataId}
+                />
+            } */}
+            {/* {
+                showInfoChangeModal && selectedTableDataId &&
+                <InfoChangeModal
+                    onClose={closeModal}
+                    onSubmit={handleInfoChange}
+                    teacher={selectedTableDataId}
+                />
+            } */}
+            {
+                // selectedGroupId &&
+                showDeleteModal && 
                 <DeleteModal
                     show={showDeleteModal}
                     onClose={closeModal}
                     onDelete={handleDelete}
+                    locale={locale}
                     title={t('warning.delete')}
                 >
                     {t('warning.delete_confirmation')}
@@ -489,13 +554,14 @@ const MainGroup = () => {
                 showAddTeacherModal &&
                 <AddTeacherModal
                     onClose={closeModal}
+                    onSubmit={handleAddTeacher}
                 />
             }
-            {console.log(showEditTeacherModal)}
             {
                 showEditTeacherModal &&
                 <EditTeacherModal
                     onClose={closeModal}
+                    onSubmit={handleEditTeacher}
                 />
             }
         </>

@@ -1,9 +1,8 @@
-// import message from 'Src/message'
 import message from 'modules/message'
 import React, { useState } from 'react'
 import ReactCrop from 'react-image-crop'
-import { Modal } from 'semantic-ui-react'
-import CloseIcon from '@mui/icons-material/Close'
+import { Modal } from 'react-bootstrap'
+import 'react-image-crop/dist/ReactCrop.css'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 
@@ -160,22 +159,23 @@ const ImageModal = ({ onClose, onSubmit }) => {
 
     return (
         <Modal
-            size={'tiny'}
-            dimmer={'blurring'}
-            open={true}
-            className="react-modal overflow-modal"
+            size='lg'
+            dimmer='blurring'
+            show={true}
+            onHide={onClose}
+            aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <div className="header">
-                {translations(locale)?.insert_photo}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="content">
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.insert_photo}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <label
                     htmlFor="fileInput"
                     className="button-green-custom"
+                    style={{marginBottom: '0.2rem'}}
                 >
                     {translations(locale)?.upload_photo_button_label}
                 </label>
@@ -226,8 +226,8 @@ const ImageModal = ({ onClose, onSubmit }) => {
                         </div>
                     </>
                 }
-            </div>
-            <div className="actions modal-footer ">
+            </Modal.Body>
+            <Modal.Footer>
                 <div className="col-12 text-center">
                     <button
                         className="btn m-btn--pill m-btn--air btn-link margin-right-5"
@@ -242,7 +242,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
                         {translations(locale)?.insert_photo}
                     </button>
                 </div>
-            </div>
+            </Modal.Footer>
         </Modal>
     )
 }

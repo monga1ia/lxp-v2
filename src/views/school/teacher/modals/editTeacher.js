@@ -18,9 +18,9 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
 
     const [teacher, setTeacher] = useState({})
 
-    const [roleOptions, setRoleOptions] = useState([])
-    const [gradeOptions, setGradeOptions] = useState([])
-    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([])
+    const [roleOptions, setRoleOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    const [gradeOptions, setGradeOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
 
     const [updateView, setUpdateView] = useState(false)
 
@@ -34,12 +34,12 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             text: translations(locale).female,
         }
     ])
-    useEffect(() => {
-        if (!teacherId?.state?.id) {
-            message(translations(locale)?.course_select_teacher)
-            navigate('/school/teachers', { replace: true })
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!teacherId?.state?.id) {
+    //         message(translations(locale)?.course_select_teacher)
+    //         navigate('/school/teachers', { replace: true })
+    //     }
+    // }, [])
 
 
     const handleSubmit = () => {
@@ -180,25 +180,24 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             size='xl'
             dimmer='blurring'
             show={true}
-            onClose={onClose}
+            onHide={onClose}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <div className="header" locale={locale}>
-                {translations(locale)?.teacher?.edit}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="content">
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.teacher?.edit}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className="row mt-4">
                     <div className="col-3 d-flex flex-column align-items-center" style={{ gap: 10 }}>
                         <img
                             className="img-responsive img-circle"
-                            src={teacher?.avatar || '/images/placeholder.jpg'}
+                            src={teacher?.avatar || '/img/profile/placeholder.jpg'}
                             onError={(e) => {
                                 e.target.onError = null
-                                e.target.src = '/images/avatar.png'
+                                e.target.src = '/img/profile/avatar.png'
                             }}
                             width={150}
                             height={150}
@@ -224,7 +223,14 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.role}*
                             </label>
                             <div className="col-8">
-                                <Dropdown
+                                <Select
+                                    clearable
+                                    searchable
+                                    options={roleOptions}
+                                    value={teacher?.roleId}
+                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
+                                />
+                                {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.select + '-'}
                                     fluid
                                     selection
@@ -235,7 +241,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.roleId}
                                     options={roleOptions}
                                     disabled
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -344,7 +350,14 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.teacher?.gender}*
                             </label>
                             <div className="col-8">
-                                <Dropdown
+                                <Select
+                                    clearable
+                                    searchable
+                                    options={genderOptions}
+                                    value={teacher?.gender}
+                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
+                                />
+                                {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
                                     fluid
                                     selection
@@ -355,7 +368,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -363,7 +376,14 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.school}*
                             </label>
                             <div className="col-8">
-                                <Dropdown
+                                <Select
+                                    clearable
+                                    searchable
+                                    options={gradeOptions}
+                                    value={teacher?.grade}
+                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
+                                />
+                                {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
                                     fluid
                                     selection
@@ -374,7 +394,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.grade}
                                     options={gradeOptions}
                                     onChange={(e, data) => handleChange('grade', data?.value)}
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -399,7 +419,14 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                         {s === 0 && translations(locale)?.teacher?.subjects}
                                     </label>
                                     <div className="col-3">
-                                        <Dropdown
+                                        <Select
+                                            clearable
+                                            searchable
+                                            options={gradeOptions}
+                                            value={gradeSubjectObj?.value}
+                                            onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
+                                        />
+                                        {/* <Dropdown
                                             placeholder={'-' + translations(locale)?.err?.select_class + '-'}
                                             fluid
                                             selection
@@ -411,10 +438,17 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={gradeSubjectObj?.value}
                                             options={gradeOptions}
                                             onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
-                                        />
+                                        /> */}
                                     </div>
                                     <div className="col-5 p-0 d-flex align-items-center">
-                                        <Dropdown
+                                        <Select
+                                            clearable
+                                            searchable
+                                            options={gradeOptions}
+                                            value={gradeSubjectObj?.value}
+                                            onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
+                                        />
+                                        {/* <Dropdown
                                             placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
                                             fluid
                                             selection
@@ -428,7 +462,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={gradeSubjectObj?.teacherSubjects?.map(obj => gradeSubjectObj?.value + '_s_' + obj) || []}
                                             options={gradeSubjectObj?.subjects}
                                             onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
-                                        />
+                                        /> */}
                                         <div className={s != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
@@ -450,8 +484,8 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                         }
                     </div>
                 </div>
-            </div>
-            <div className="modal-footer justify-content-center">
+            </Modal.Body>
+            <Modal.Footer className="text-center">
                 <button
                     onClick={onClose}
                     className="btn m-btn--pill btn-link margin-right-5"
@@ -464,7 +498,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                 >
                     {translations(locale)?.save}
                 </button>
-            </div>
+            </Modal.Footer>
             {
                 viewImageModal &&
                 <ImageModal
