@@ -367,6 +367,7 @@ table.viewTeacherTable>tr>th {
 
 .viewTeacherModal>div>div>table>tbody>tr>th {
     border: none;
+    padding: 1px;
 }
 
 /***************** modal css end **************/
@@ -421,6 +422,10 @@ table.viewTeacherTable>tr>th {
     border-top: none;
     border-right: none;
     border-bottom: 2px solid #ff4900;
+}
+
+.largeModalSelectMultiple {
+    width: 10rem;
 }
 
 /***************** card css end **************/
@@ -622,8 +627,11 @@ table.viewTeacherTable>tr>th {
 .no-wrap span:nth-child(1){
     display: none;
 }
-
-
+.align-items-center {
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important
+}
 .btn {
     display: inline-block;
     font-weight: 400;
@@ -634,7 +642,7 @@ table.viewTeacherTable>tr>th {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     padding: .528rem 0.8125rem;
     font-size: 0.8125rem;
     line-height: 1.25;

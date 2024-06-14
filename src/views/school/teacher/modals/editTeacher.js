@@ -10,7 +10,6 @@ import Select from 'modules/Form/Select'
 const EditTeacherModal = ({onClose, onSubmit, data}) => {
 
     const teacherId = data
-    console.log(teacherId?.state?.id)
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
@@ -80,6 +79,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
     }
 
     const handleChange = (name, value) => {
+        console.log(teacher)
         setTeacher({ ...teacher, [name]: value })
     }
 
@@ -227,6 +227,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     clearable
                                     searchable
                                     options={roleOptions}
+                                    disabled={true}
                                     value={teacher?.roleId}
                                     // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
@@ -355,7 +356,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     searchable
                                     options={genderOptions}
                                     value={teacher?.gender}
-                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
+                                    onChange={(e, data) => handleChange('gender', e)}
                                 />
                                 {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
@@ -381,6 +382,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     searchable
                                     options={gradeOptions}
                                     value={teacher?.grade}
+                                    onChange={(e) => handleChange('grade', e)}
                                     // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
                                 {/* <Dropdown
@@ -444,6 +446,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                         <Select
                                             clearable
                                             searchable
+                                            multiple={true}
                                             options={gradeOptions}
                                             value={gradeSubjectObj?.value}
                                             onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
@@ -463,7 +466,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             options={gradeSubjectObj?.subjects}
                                             onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
                                         /> */}
-                                        <div className={s != 0 ? 'visible' : 'invisible'}>
+                                        <div style={{marginLeft: "2.6rem"}} className={s != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
                                             </button>
@@ -476,7 +479,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                             gradeSubjectOptions?.length > 0 &&
                             <div className="form-group m-form__group row">
                                 <div className="col p-0 d-flex justify-content-end align-items-center">
-                                    <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                    <button onClick={addGradeRow} className='btn btn-outline-primary m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                         <i className="la la-plus" />
                                     </button>
                                 </div>

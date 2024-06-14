@@ -42,11 +42,9 @@ const MainGroup = () => {
 
     const locale="mn"
 
-    const [selectedGroupId, setSelectedGroupId] = useState(null);
-    const [groupData, setGroupData] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const [tableData, setTableData] = useState([{code: "23232", firstName: "asdfsdf"}]);
+    const [tableData, setTableData] = useState([{id: 11, code: "23232", firstName: "asdfsdf"}, {id: 12, code: "2322", firstName: "asasdfsdf"}]);
     const [totalCount, setTotalCount] = useState(0);
 
     const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
@@ -86,7 +84,6 @@ const MainGroup = () => {
         setShowAddTeacherModal(false)
         setShowEditTeacherModal(false)
         setShowDeleteModal(false)
-        setSelectedGroupId(null)
         setShowViewModal(false)
         setShowDeleteModal(false)
         setStatusChangeModal(false)
@@ -293,14 +290,13 @@ const MainGroup = () => {
     ]
 
     const handleContextMenuClick = (id, key) => {
-        if (key) {
-            // console.log(key)
-            // setSelectedTableDataId(id)
+        console.log(id, key)
+        if (id && key) {
+            setSelectedTableDataId(id)
             if (key === 'view') {
                 setShowViewModal(true)
             } else if (key === 'edit') {
                 setShowEditTeacherModal(true)
-                // navigate('/school/teachers/edit', {state: {id}})
             } else if (key === 'delete') {
                 setShowDeleteModal(true)
             } else if (key === 'passwordReset') {

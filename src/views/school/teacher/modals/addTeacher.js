@@ -21,7 +21,8 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
     const [roleOptions, setRoleOptions] = useState([])
     const [gradeOptions, setGradeOptions] = useState([])
-    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([])
+    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+
     const [gradeRows, setGradeRows] = useState([{
         grade: null,
         subjects: [],
@@ -431,7 +432,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             clearable
                                             searchable
                                             value={el?.grade}
-                                            options={selecterDummy}
+                                            options={gradeSubjectOptions}
                                             onChange={(e, data) => handleRowGradeChange(index, e, data?.options)}
                                         />
                                         {/* <Dropdown
@@ -452,7 +453,8 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                         <Select
                                             clearable
                                             searchable
-                                            options={selecterDummy}
+                                            multiple={true}
+                                            options={gradeSubjectOptions}
                                             value={el?.subjects}
                                             onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                         />
@@ -471,7 +473,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             options={el?.subjectOptions}
                                             onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
                                         /> */}
-                                        <div className={index != 0 ? 'visible' : 'invisible'}>
+                                        <div style={{marginLeft: "2.6rem"}} className={index != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
                                             </button>
@@ -484,7 +486,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             gradeSubjectOptions?.length > gradeRows?.length &&
                             <div className="form-group m-form__group row">
                                 <div className="col p-0 d-flex justify-content-end align-items-center">
-                                    <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                    <button onClick={addGradeRow} className='btn btn-outline-primary m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                         <i className="la la-plus" />
                                     </button>
                                 </div>

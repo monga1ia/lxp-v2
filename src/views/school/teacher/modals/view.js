@@ -9,7 +9,7 @@ const view = ({ onClose, id }) => {
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
-    const [teacher, setTeacher] = useState({})
+    const [teacher, setTeacher] = useState({subjects: '1,3'})
 
     return (
         <Modal

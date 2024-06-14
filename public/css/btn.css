@@ -114,3 +114,194 @@
 .imageActionButtons>button:last-of-type {
     margin-left: 3px;
 }
+
+.btn-outline-info {
+    color: #ff5b1d;
+    background-color: transparent;
+    background-image: none;
+    border-color: #ff5b1d
+}
+
+.btn-outline-info:hover {
+    color: #fff;
+    background-color: #ff5b1d;
+    border-color: #ff5b1d
+}
+
+.btn-outline-info.focus, .btn-outline-info:focus {
+    -webkit-box-shadow: 0 0 0 .2rem #ff5b1d;
+    box-shadow: 0 0 0 .2rem #ff5b1d;
+}
+
+.btn-outline-info.disabled, .btn-outline-info:disabled {
+    color: #fff;
+    background-color: transparent
+}
+
+.btn-outline-info:not(:disabled):not(.disabled).active, .btn-outline-info:not(:disabled):not(.disabled):active, .show > .btn-outline-info.dropdown-toggle {
+    color: #fff;
+    background-color: #ff5b1d;
+    border-color: #ff5b1d
+}
+
+.btn-outline-info:not(:disabled):not(.disabled).active:focus, .btn-outline-info:not(:disabled):not(.disabled):active:focus, .show > .btn-outline-info.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 .2rem #ff5b1d;
+    box-shadow: 0 0 0 .2rem #ff5b1d;
+}
+
+.m-btn--icon > span {
+    display: table
+}
+
+.m-btn--icon > span > i {
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 0
+}
+
+.m-btn--icon > span [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon > span [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.3rem
+}
+
+.m-btn--icon > span [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon > span [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1.1rem
+}
+
+.m-btn--icon > span [class*=" flaticon-"], .m-btn--icon > span [class^=flaticon-] {
+    font-size: 1.3rem
+}
+
+.m-btn--icon > span > span {
+    padding-left: .5em;
+    display: table-cell;
+    vertical-align: middle
+}
+
+.m-btn--icon.m-btn--icon-right > span > span {
+    padding-left: 0;
+    padding-right: .6em
+}
+
+.m-btn--icon.m-btn--icon-only {
+    display: inline-block;
+    position: relative;
+    padding: 0 !important;
+    width: 33px;
+    height: 33px
+}
+
+.m-btn--icon.m-btn--icon-only > i {
+    line-height: 0;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+}
+
+.m-btn--icon.m-btn--icon-only [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--icon-only [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.3rem
+}
+
+.m-btn--icon.m-btn--icon-only [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--icon-only [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1.1rem
+}
+
+.m-btn--icon.m-btn--icon-only [class*=" flaticon-"], .m-btn--icon.m-btn--icon-only [class^=flaticon-] {
+    font-size: 1.3rem
+}
+
+.m-btn--icon.m-btn--icon-only.th-btn-pill {
+    border-radius: 100%
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--icon-only.btn, .m-btn--icon.m-btn--icon-only.btn-lg {
+    width: 43px;
+    height: 43px
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--icon-only.btn [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .btn-group-lg > .m-btn--icon.m-btn--icon-only.btn [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--icon-only.btn-lg [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--icon-only.btn-lg [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.5rem
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--icon-only.btn [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .btn-group-lg > .m-btn--icon.m-btn--icon-only.btn [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--icon-only.btn-lg [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--icon-only.btn-lg [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1.3rem
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--icon-only.btn [class*=" flaticon-"], .btn-group-lg > .m-btn--icon.m-btn--icon-only.btn [class^=flaticon-], .m-btn--icon.m-btn--icon-only.btn-lg [class*=" flaticon-"], .m-btn--icon.m-btn--icon-only.btn-lg [class^=flaticon-] {
+    font-size: 1.5rem
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--icon-only.btn, .m-btn--icon.m-btn--icon-only.btn-sm {
+    width: 30px;
+    height: 30px
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--icon-only.btn [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .btn-group-sm > .m-btn--icon.m-btn--icon-only.btn [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--icon-only.btn-sm [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--icon-only.btn-sm [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.1rem
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--icon-only.btn [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .btn-group-sm > .m-btn--icon.m-btn--icon-only.btn [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--icon-only.btn-sm [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--icon-only.btn-sm [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1rem
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--icon-only.btn [class*=" flaticon-"], .btn-group-sm > .m-btn--icon.m-btn--icon-only.btn [class^=flaticon-], .m-btn--icon.m-btn--icon-only.btn-sm [class*=" flaticon-"], .m-btn--icon.m-btn--icon-only.btn-sm [class^=flaticon-] {
+    font-size: 1.1rem
+}
+
+.m-btn--icon.m-btn--custom > span [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--custom > span [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.3rem
+}
+
+.m-btn--icon.m-btn--custom > span [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--custom > span [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1.1rem
+}
+
+.m-btn--icon.m-btn--custom > span [class*=" flaticon-"], .m-btn--icon.m-btn--custom > span [class^=flaticon-] {
+    font-size: 1.3rem
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--custom.btn > span [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .btn-group-lg > .m-btn--icon.m-btn--custom.btn > span [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--custom.btn-lg > span [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--custom.btn-lg > span [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.5rem
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--custom.btn > span [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .btn-group-lg > .m-btn--icon.m-btn--custom.btn > span [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--custom.btn-lg > span [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--custom.btn-lg > span [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1.2rem
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--custom.btn > span [class*=" flaticon-"], .btn-group-lg > .m-btn--icon.m-btn--custom.btn > span [class^=flaticon-], .m-btn--icon.m-btn--custom.btn-lg > span [class*=" flaticon-"], .m-btn--icon.m-btn--custom.btn-lg > span [class^=flaticon-] {
+    font-size: 1.5rem
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--custom.btn > span [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .btn-group-sm > .m-btn--icon.m-btn--custom.btn > span [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--custom.btn-sm > span [class*=" la-"]:not(.la-2x):not(.la-3x):not(.la-4x), .m-btn--icon.m-btn--custom.btn-sm > span [class^=la-]:not(.la-2x):not(.la-3x):not(.la-4x) {
+    font-size: 1.1rem
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--custom.btn > span [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .btn-group-sm > .m-btn--icon.m-btn--custom.btn > span [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--custom.btn-sm > span [class*=" fa-"]:not(.fa-2x):not(.fa-3x):not(.fa-4x), .m-btn--icon.m-btn--custom.btn-sm > span [class^=fa-]:not(.fa-2x):not(.fa-3x):not(.fa-4x) {
+    font-size: 1rem
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--custom.btn > span [class*=" flaticon-"], .btn-group-sm > .m-btn--icon.m-btn--custom.btn > span [class^=flaticon-], .m-btn--icon.m-btn--custom.btn-sm > span [class*=" flaticon-"], .m-btn--icon.m-btn--custom.btn-sm > span [class^=flaticon-] {
+    font-size: 1.1rem
+}
+
+.m-btn--icon.m-btn--custom.m-btn--icon-only {
+    width: 40px;
+    height: 40px
+}
+
+.btn-group-lg > .m-btn--icon.m-btn--custom.m-btn--icon-only.btn, .m-btn--icon.m-btn--custom.m-btn--icon-only.btn-lg {
+    width: 50px;
+    height: 50px
+}
+
+.btn-group-sm > .m-btn--icon.m-btn--custom.m-btn--icon-only.btn, .m-btn--icon.m-btn--custom.m-btn--icon-only.btn-sm {
+    width: 30px;
+    height: 30px
+}
+
+.m-btn--icon.btn-block > span {
+    text-align: center;
+    margin: 0 auto
+}
