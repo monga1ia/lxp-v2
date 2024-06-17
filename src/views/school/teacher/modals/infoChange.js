@@ -1,13 +1,10 @@
-import message from 'Src/message'
+import message from 'modules/message'
 import draftToHtml from 'draftjs-to-html'
-import { Modal } from 'semantic-ui-react'
 import { Editor } from 'react-draft-wysiwyg'
+import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { fetchRequest } from 'Utilities/fetchRequest'
-import { translations } from 'Utilities/translations'
-import { schoolTeacherInfoChange } from 'Utilities/url'
+import { translations } from 'utils/translations'
 import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 const infoChange = ({ onClose, onSubmit, teacher }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -15,30 +12,35 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
 
     const [teacherData, setTeacherData] = useState([])
     const [info, setInfo] = useState(EditorState.createEmpty())
-
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(schoolTeacherInfoChange, 'POST', { teacher })
-            .then((res) => {
-                if (res.success) {
-                    const { info, teacherInfo } = res?.data
-                    const blocksFromHTML = convertFromHTML(info);
-                    const content = ContentState.createFromBlockArray(
-                        blocksFromHTML.contentBlocks,
-                        blocksFromHTML.entityMap
-                    );
-                    setInfo(EditorState.createWithContent((content)))
-                    setTeacherData(teacherInfo || {})
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
+    // const blocksFromHTML = convertFromHTML(info);
+    // const content = ContentState.createFromBlockArray(
+    //     blocksFromHTML.contentBlocks,
+    //     blocksFromHTML.entityMap
+    // );
+    // setInfo(EditorState.createWithContent((content)))
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolTeacherInfoChange, 'POST', { teacher })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { info, teacherInfo } = res?.data
+    //                 const blocksFromHTML = convertFromHTML(info);
+    //                 const content = ContentState.createFromBlockArray(
+    //                     blocksFromHTML.contentBlocks,
+    //                     blocksFromHTML.entityMap
+    //                 );
+    //                 setInfo(EditorState.createWithContent((content)))
+    //                 setTeacherData(teacherInfo || {})
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleSave = () => {
         onSubmit({ info: draftToHtml(convertToRaw(info?.getCurrentContent())) })
@@ -47,28 +49,27 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
     return (
         <Modal
             centered
-            open={true}
-            size='small'
-            onClose={onClose}
+            show={true}
+            onHide={onClose}
+            size='lg'
             dimmer='blurring'
-            className="react-modal overflow-modal"
+            aria-labelledby="contained-modal-title-vcenter"
         >
-            <div className="header">
-                {translations(locale)?.teacher?.info_add}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="content">
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.teacher?.info_add}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className="viewTeacherModal">
                     <div className="row form-group">
                         <div className="col-4">
                             <img
-                                src={teacherData?.avatar || '/images/avatar.png'}
+                                src={teacherData?.avatar || '/img/profile/placeholder.jpg'}
                                 alt={`photo of ${teacher?.firstName}`}
                                 onError={(e) => {
                                     e.target.onError = null
-                                    e.target.src = '/images/avatar.png'
+                                    e.target.src = '/img/profile/avatar.png'
                                 }}
                             />
                         </div>
@@ -131,8 +132,8 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                         locale: locale,
                     }}
                 />
-            </div>
-            <div className="actions modal-footer">
+            </Modal.Body>
+            <Modal.Footer className="text-center">
                 <div className='text-center w-100'>
                     <button
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
@@ -147,7 +148,7 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                         {translations(locale)?.save}
                     </button>
                 </div>
-            </div>
+            </Modal.Footer>
             {
                 loading &&
                 <>

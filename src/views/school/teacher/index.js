@@ -14,10 +14,10 @@ import ViewModal from './modals/view'
 import DeleteModal from 'utils/deleteModal';
 import AddTeacherModal from './modals/addTeacher';
 import EditTeacherModal from './modals/editTeacher';
-// import RoleChangeModal from './modals/roleChange'
-// import InfoChangeModal from './modals/infoChange';
+import RoleChangeModal from './modals/roleChange'
+import InfoChangeModal from './modals/infoChange';
 import StatusChangeModal from './modals/statusChange'
-// import PasswordResetModal from './modals/passwordReset'
+import PasswordResetModal from './modals/passwordReset'
 import LoginNameChangeModal from './modals/loginNameChange'
 import { translations } from 'utils/translations';
 import message from '../../../modules/message'
@@ -331,7 +331,7 @@ const MainGroup = () => {
     useEffect(() => {
         if (selectedTabData == 'active') {
             tableData?.forEach(el => {
-                el.contextMenuKeys = el.isMobile ? 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, infoChange' : 'view, edit, delete, statusChange, loginNameChange, roleChange, infoChange'
+                el.contextMenuKeys = 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, infoChange'
             })
             setColumns(activeColumns)
             setContextMenus(activeContextMenus)
@@ -360,6 +360,18 @@ const MainGroup = () => {
 
     const handleLoginNameChange = loginNames => {
         console.log('loginNameChange')
+    }
+    
+    const handleRoleChange = roles => {
+        console.log('roleChange')
+    }
+
+    const handleInfoChange = param => {
+        console.log('infoChange')
+    }
+
+    const handlePasswordReset = (password, passwordRepeat) => {
+        console.log('passwordReset')
     }
 
     return (
@@ -487,23 +499,21 @@ const MainGroup = () => {
                 </>
             }
             {
-                // selectedTableDataId &&
-                showViewModal && 
+                showViewModal && selectedTableDataId &&
                 <ViewModal
                     id={selectedTableDataId}
                     onClose={closeModal}
                 />
             }
-            {/* {
+            {
                 showPasswordResetModal && selectedTableDataId &&
                 <PasswordResetModal
                     onClose={closeModal}
                     onSubmit={handlePasswordReset}
                 />
-            } */}
+            }
             {
-                // selectedTableDataId &&
-                showStatusChangeModal && 
+                showStatusChangeModal && selectedTableDataId && 
                 <StatusChangeModal
                     onClose={closeModal}
                     onSubmit={handleStatusChange}
@@ -511,29 +521,28 @@ const MainGroup = () => {
                 />
             }
             {
-                //  selectedTableDataId &&
-                showLoginNameChangeModal &&
+                showLoginNameChangeModal && selectedTableDataId && 
                 <LoginNameChangeModal
                     onClose={closeModal}
                     onSubmit={handleLoginNameChange}
                 />
             }
-            {/* {
+            {
                 showRoleChangeModal && selectedTableDataId &&
                 <RoleChangeModal
                     onClose={closeModal}
                     onSubmit={handleRoleChange}
                     teacher={selectedTableDataId}
                 />
-            } */}
-            {/* {
+            }
+            {
                 showInfoChangeModal && selectedTableDataId &&
                 <InfoChangeModal
                     onClose={closeModal}
                     onSubmit={handleInfoChange}
                     teacher={selectedTableDataId}
                 />
-            } */}
+            }
             {
                 // selectedGroupId &&
                 showDeleteModal && 

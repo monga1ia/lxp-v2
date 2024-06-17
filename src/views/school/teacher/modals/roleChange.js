@@ -1,38 +1,36 @@
 import message from 'modules/message'
-import { Modal } from 'semantic-ui-react'
+import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { fetchRequest } from 'Utilities/fetchRequest'
-import { translations } from 'Utilities/translations'
-import { schoolTeacherRoleChange } from 'Utilities/url'
-import { NDropdown as Dropdown } from 'Widgets/Dropdown'
+import { translations } from 'utils/translations'
+import Select from 'modules/Form/Select'
 
 const roleChange = ({ onClose, onSubmit, teacher }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
     const [selectedRoles, setSelectedRoles] = useState([])
-    const [roleOptions, setRoleOptions] = useState([])
+    const [roleOptions, setRoleOptions] = useState([{value: '121', text: '123123'}, {value: '23123', text: 'text2'}])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(schoolTeacherRoleChange, 'POST', { teacher })
-            .then((res) => {
-                if (res.success) {
-                    const { roles, roleIds } = res?.data
-                    setRoleOptions(roles || [])
-                    setSelectedRoles(roleIds || [])
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolTeacherRoleChange, 'POST', { teacher })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { roles, roleIds } = res?.data
+    //                 setRoleOptions(roles || [])
+    //                 setSelectedRoles(roleIds || [])
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleSave = () => {
         if (!selectedRoles.length) return message(translations(locale)?.err?.fill_all_fields)
@@ -42,25 +40,31 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
     return (
         <Modal
             centered
-            open={true}
-            size='small'
-            onClose={onClose}
+            show={true}
+            onHide={onClose}
+            size='xl'
             dimmer='blurring'
-            className="react-modal overflow-modal"
+            aria-labelledby="contained-modal-title-vcenter"
         >
-            <div className="header">
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                 {translations(locale)?.manage_roles}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="content">
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className="form-group m-form__group row">
                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
                         {translations(locale)?.role}*
                     </label>
                     <div className="col-5">
-                        <Dropdown
+                        <Select
+                            multiple={true}
+                            additionPosition='bottom'
+                            value={selectedRoles}
+                            options={roleOptions}
+                            onChange={(data) => setSelectedRoles(data)}
+                        />
+                        {/* <Dropdown
                             placeholder={'-' + translations(locale)?.select + '-'}
                             fluid
                             selection
@@ -71,11 +75,11 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                             value={selectedRoles}
                             options={roleOptions}
                             onChange={(e, data) => setSelectedRoles(data?.value)}
-                        />
+                        /> */}
                     </div>
                 </div>
-            </div>
-            <div className="actions modal-footer">
+            </Modal.Body>
+            <Modal.Footer className="text-center">
                 <div className='text-center w-100'>
                     <button
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
@@ -90,7 +94,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                         {translations(locale)?.save}
                     </button>
                 </div>
-            </div>
+            </Modal.Footer>
             {
                 loading &&
                 <>

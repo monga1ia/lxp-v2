@@ -1,10 +1,9 @@
-import message from 'Src/message'
+import message from 'modules/message'
 import React, { useState } from 'react'
-import { Modal } from 'semantic-ui-react'
+import { Modal } from 'react-bootstrap'
 import { Col, Row } from 'react-bootstrap'
-import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'Utilities/translations'
+import { translations } from 'utils/translations'
 
 const passwordReset = ({ onClose, onSubmit }) => {
 
@@ -28,20 +27,20 @@ const passwordReset = ({ onClose, onSubmit }) => {
 
     return (
         <Modal
-            dimmer='blurring'
-            open={true}
-            onClose={onClose}
-            className="react-modal overflow-modal"
             centered
+            show={true}
+            onHide={onClose}
+            size='xl'
+            dimmer='blurring'
+            aria-labelledby="contained-modal-title-vcenter"
         >
-            <div className="header">
-                {translations(locale)?.teacher?.change_password}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="content">
-                <p style={{ color: '#848691' }} className='fs-11 pb-4 pl-4'>{translations(locale)?.teacher?.change_password_description}</p>
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.teacher?.change_password}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p style={{ color: '#848691', fontSize: '0.8937rem' }} className='pb-4 pl-4'>{translations(locale)?.teacher?.change_password_description}</p>
                 <Row className='form-group'>
                     <Col className='text-right'>
                         <label className="text-right label-pinnacle-bold col-form-label">
@@ -80,8 +79,8 @@ const passwordReset = ({ onClose, onSubmit }) => {
                     </Col>
                     <Col md={2} />
                 </Row>
-            </div>
-            <div className="actions modal-footer ">
+            </Modal.Body>
+            <Modal.Footer className="text-center">
                 <div className="col-12 text-center">
                     <button
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
@@ -96,7 +95,7 @@ const passwordReset = ({ onClose, onSubmit }) => {
                         {translations(locale)?.save}
                     </button>
                 </div>
-            </div>
+            </Modal.Footer>
         </Modal>
     )
 }
