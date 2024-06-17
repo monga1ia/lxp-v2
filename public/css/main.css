@@ -1217,6 +1217,17 @@ table.viewTeacherTable>tr>th {
     color: #ff4900
 }
 
+.label-pinnacle-bold {
+    font-family: 'PinnacleBold' !important;
+    color: #575962 !important;
+    font-size: 12px !important;
+}
+
+.label-pinnacle-regular {
+    font-family: 'PinnacleRegular';
+    color: #575962;
+}
+
 .display-4 {
     font-family: var(--font);
     font-size: 32px;

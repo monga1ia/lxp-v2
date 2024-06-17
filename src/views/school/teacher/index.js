@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import TreeView from 'modules/TreeView';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-
 import TabComponent from 'components/tab/Tab';
 import DTable from 'modules/DataTable/DTable';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +18,7 @@ import EditTeacherModal from './modals/editTeacher';
 // import InfoChangeModal from './modals/infoChange';
 import StatusChangeModal from './modals/statusChange'
 // import PasswordResetModal from './modals/passwordReset'
-// import LoginNameChangeModal from './modals/loginNameChange'
+import LoginNameChangeModal from './modals/loginNameChange'
 import { translations } from 'utils/translations';
 import message from '../../../modules/message'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
@@ -359,6 +358,10 @@ const MainGroup = () => {
         console.log('statusChange')
     }
 
+    const handleLoginNameChange = loginNames => {
+        console.log('loginNameChange')
+    }
+
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -507,13 +510,14 @@ const MainGroup = () => {
                     teacher={selectedTableDataId}
                 />
             }
-            {/* {
-                showLoginNameChangeModal && selectedTableDataId &&
+            {
+                //  selectedTableDataId &&
+                showLoginNameChangeModal &&
                 <LoginNameChangeModal
                     onClose={closeModal}
                     onSubmit={handleLoginNameChange}
                 />
-            } */}
+            }
             {/* {
                 showRoleChangeModal && selectedTableDataId &&
                 <RoleChangeModal
