@@ -37,8 +37,5 @@ node_modules/
 .history/*
 
 yarn.lock
-/public/css/styles.css
-/public/css/styles.css.map
-
-/src/utils/fetchRequest/index.js
-src/utils/fetchRequest/index.js
+# /public/css/styles.css
+# /public/css/styles.css.map
