@@ -136,87 +136,87 @@ const routesAndMenuItems = {
             redirect: true,
             to: `${appRoot}/groups/index`,
         },
-        {
-            path: `${appRoot}/dashboard`,
-            icon: "grid-1",
-            label: "dashboard.title",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/dashboard/exam`,
-            subs: [
-                {
-                    path: "/exam",
-                    label: "dashboard.exam",
-                    component: dashboards.exam,
-                }
-            ],
-        },
-        {
-            path: `${appRoot}/admin-question`,
-            icon: "grid-1",
-            label: "adminQuestion.title",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/admin-question/index`,
-            subs: [
-                {
-                    path: "/index",
-                    label: "adminQuestion.questionBank",
-                    component: adminQuestion.questions,
-                }
-            ],
-        },
-        {
-            path: `${appRoot}/curriculum`,
-            icon: "home-garage",
-            label: "curriculum.plan",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/curriculum/dashboard`,
-            subs: [
-                {
-                    path: "/dashboard",
-                    label: "curriculum.dashboard",
-                    component: curriculum.dashboard,
-                },
-                {
-                    path: "/plan",
-                    label: "menu.curriculum",
-                    component: curriculum.curriculumPlan,
-                },
-                // {
-                //     path: "/goal",
-                //     label: "menu.curriculumLearningObjectives",
-                //     component: curriculum.curriculumPlan,
-                // },
-                // {
-                //     path: "/method",
-                //     label: "menu.method",
-                //     component: curriculum.curriculumPlan,
-                // }
-            ],
-        },
-        {
-            path: `${appRoot}/groups`,
-            icon: "home-garage",
-            label: "menu.mainGroup",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/groups/index`,
-            subs: [
-                {
-                    path: "/index",
-                    label: "menu.mainGroup",
-                    component: dashboards.mainGroup,
-                }
-                // {
-                //     path: "/edit",
-                //     label: "menu.mainGroup",
-                //     component: dashboards.groupDetails,
-                //     menuHidden: true,
-                // }
-            ],
-        }, 
+        // {
+        //     path: `${appRoot}/dashboard`,
+        //     icon: "grid-1",
+        //     label: "dashboard.title",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/dashboard/exam`,
+        //     subs: [
+        //         {
+        //             path: "/exam",
+        //             label: "dashboard.exam",
+        //             component: dashboards.exam,
+        //         }
+        //     ],
+        // },
+        // {
+        //     path: `${appRoot}/admin-question`,
+        //     icon: "grid-1",
+        //     label: "adminQuestion.title",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/admin-question/index`,
+        //     subs: [
+        //         {
+        //             path: "/index",
+        //             label: "adminQuestion.questionBank",
+        //             component: adminQuestion.questions,
+        //         }
+        //     ],
+        // },
+        // {
+        //     path: `${appRoot}/curriculum`,
+        //     icon: "home-garage",
+        //     label: "curriculum.plan",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/curriculum/dashboard`,
+        //     subs: [
+        //         {
+        //             path: "/dashboard",
+        //             label: "curriculum.dashboard",
+        //             component: curriculum.dashboard,
+        //         },
+        //         {
+        //             path: "/plan",
+        //             label: "menu.curriculum",
+        //             component: curriculum.curriculumPlan,
+        //         },
+        //         // {
+        //         //     path: "/goal",
+        //         //     label: "menu.curriculumLearningObjectives",
+        //         //     component: curriculum.curriculumPlan,
+        //         // },
+        //         // {
+        //         //     path: "/method",
+        //         //     label: "menu.method",
+        //         //     component: curriculum.curriculumPlan,
+        //         // }
+        //     ],
+        // },
+        // {
+        //     path: `${appRoot}/groups`,
+        //     icon: "home-garage",
+        //     label: "menu.mainGroup",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/groups/index`,
+        //     subs: [
+        //         {
+        //             path: "/index",
+        //             label: "menu.mainGroup",
+        //             component: dashboards.mainGroup,
+        //         }
+        //         // {
+        //         //     path: "/edit",
+        //         //     label: "menu.mainGroup",
+        //         //     component: dashboards.groupDetails,
+        //         //     menuHidden: true,
+        //         // }
+        //     ],
+        // }, 
         {
             path: `${appRoot}/school`,
             label: "menu.school",
@@ -242,103 +242,103 @@ const routesAndMenuItems = {
                 }
             ],
         },
-        {
-            path: `${appRoot}/online-exam`,
-            label: "menu.onlineExam",
-            icon: "quiz",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/online-exam/questions`,
-            subs: [
-                {
-                    path: "/questions",
-                    label: "menu.question",
-                    component: onlineExam.questions,
-                },
-                {
-                    path: "/template",
-                    label: "menu.examTemplate",
-                    component: onlineExam.examTemplate,
-                },
-                {
-                    path: "/exam",
-                    label: "menu.exam",
-                    component: onlineExam.exam,
-                },
-                {
-                    path: "/print-exam",
-                    label: "onlineExam.examPrint",
-                    component: onlineExam.examPrint,
-                }
-            ],
-        },
-        {
-            path: `${appRoot}/onlineLesson`,
-            label: "menu.onlineLesson",
-            icon: "book-open",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/onlineLesson/lesson`,
-            subs: [
-                {
-                    path: "/lesson",
-                    label: "subject.subjects",
-                    component: onlineLesson.lesson,
-                },
-                {
-                    path: "/report",
-                    label: "menu.report",
-                    component: onlineLesson.report,
-                    hideInMenu: true,
-                    menuHidden: true
-                },
-                {
-                    path: "/report-user",
-                    label: "menu.report",
-                    component: onlineLesson.reportUser,
-                    hideInMenu: true,
-                    menuHidden: true
-                },
-                {
-                    path: "/report-syllabus",
-                    label: "menu.report",
-                    component: onlineLesson.reportSyllabus,
-                    hideInMenu: true,
-                    menuHidden: true
-                },
-                {
-                    path: "/setting",
-                    label: "setting.title",
-                    component: onlineLesson.setting,
-                }
-            ],
-        },
-        {
-            path: `${appRoot}/webinar`,
-            icon: "grid-1",
-            label: "webinar.title",
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/webinar/index`,
-            hideInMenu: true,
-            subs: [
-                {
-                    path: "/index",
-                    label: "webinar.title",
-                    component: webinar.index,
-                }
-            ],
-        },
-        {
-            path: `${appRoot}/podcast/index`,
-            icon: "grid-1",
-            label: "podcast.title",
-            // exact: true,
-            // redirect: true,
-            // to: `${appRoot}/webinar/index`,
-            hideInMenu: false,
-            component: podcast.index,
-        },
+        // {
+        //     path: `${appRoot}/online-exam`,
+        //     label: "menu.onlineExam",
+        //     icon: "quiz",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/online-exam/questions`,
+        //     subs: [
+        //         {
+        //             path: "/questions",
+        //             label: "menu.question",
+        //             component: onlineExam.questions,
+        //         },
+        //         {
+        //             path: "/template",
+        //             label: "menu.examTemplate",
+        //             component: onlineExam.examTemplate,
+        //         },
+        //         {
+        //             path: "/exam",
+        //             label: "menu.exam",
+        //             component: onlineExam.exam,
+        //         },
+        //         {
+        //             path: "/print-exam",
+        //             label: "onlineExam.examPrint",
+        //             component: onlineExam.examPrint,
+        //         }
+        //     ],
+        // },
+        // {
+        //     path: `${appRoot}/onlineLesson`,
+        //     label: "menu.onlineLesson",
+        //     icon: "book-open",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/onlineLesson/lesson`,
+        //     subs: [
+        //         {
+        //             path: "/lesson",
+        //             label: "subject.subjects",
+        //             component: onlineLesson.lesson,
+        //         },
+        //         {
+        //             path: "/report",
+        //             label: "menu.report",
+        //             component: onlineLesson.report,
+        //             hideInMenu: true,
+        //             menuHidden: true
+        //         },
+        //         {
+        //             path: "/report-user",
+        //             label: "menu.report",
+        //             component: onlineLesson.reportUser,
+        //             hideInMenu: true,
+        //             menuHidden: true
+        //         },
+        //         {
+        //             path: "/report-syllabus",
+        //             label: "menu.report",
+        //             component: onlineLesson.reportSyllabus,
+        //             hideInMenu: true,
+        //             menuHidden: true
+        //         },
+        //         {
+        //             path: "/setting",
+        //             label: "setting.title",
+        //             component: onlineLesson.setting,
+        //         }
+        //     ],
+        // },
+        // {
+        //     path: `${appRoot}/webinar`,
+        //     icon: "grid-1",
+        //     label: "webinar.title",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/webinar/index`,
+        //     hideInMenu: true,
+        //     subs: [
+        //         {
+        //             path: "/index",
+        //             label: "webinar.title",
+        //             component: webinar.index,
+        //         }
+        //     ],
+        // },
+        // {
+        //     path: `${appRoot}/podcast/index`,
+        //     icon: "grid-1",
+        //     label: "podcast.title",
+        //     // exact: true,
+        //     // redirect: true,
+        //     // to: `${appRoot}/webinar/index`,
+        //     hideInMenu: false,
+        //     component: podcast.index,
+        // },
         {
             path: `${appRoot}/webinar/add`,
             component: webinar.add,

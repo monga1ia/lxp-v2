@@ -623,13 +623,16 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
             }
 
             &.active {
-              background: rgba(var(--light-text-rgb), 0.1);
+              background: #FF5B1D44;
+              color: #FF5B1D;
+              font-weight: 800;
               @include shadow-basic();
             }
 
             &:hover {
-              background: rgba(var(--light-text-rgb), 0.1);
-              color: #868aa8;
+              background: #FF5B1D33;
+              color: #FF5B1D;
+              // color: #868aa8;
             }
           }
         }
