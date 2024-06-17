@@ -4,17 +4,18 @@ import ViewModal from './modals/view'
 import React, { useEffect } from 'react'
 import { Tab } from 'semantic-ui-react'
 import HtmlHead from 'components/html-head/HtmlHead';
+import TabComponent from 'components/tab/Tab';
 import DTable from 'modules/DataTable/DTable'
-// import DeleteModal from 'Utilities/deleteModal'
-// import RoleChangeModal from './modal/roleChange'
-// import StatusChangeModal from './modal/statusChange'
-// import SetTeacherModal from './modal/setTeacher'
+import DeleteModal from 'utils/deleteModal'
+import RoleChangeModal from './modals/roleChange'
+import StatusChangeModal from './modals/statusChange'
+import SetTeacherModal from './modals/setTeacher'
 // import { Link, useNavigate } from 'react-router-dom'
 import secureLocalStorage from 'react-secure-storage'
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import { translations } from 'utils/translations'
-// import PasswordResetModal from './modal/passwordReset'
-// import LoginNameChangeModal from './modal/loginNameChange'
+import PasswordResetModal from './modals/passwordReset'
+import LoginNameChangeModal from './modals/loginNameChange'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import PreviewTwoToneIcon from '@mui/icons-material/PreviewTwoTone'
 import LockResetTwoToneIcon from '@mui/icons-material/LockResetTwoTone'
@@ -26,7 +27,8 @@ import SchoolIcon from '@mui/icons-material/School'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
 // import { schoolStaffDelete, schoolStaffIndex, schoolStaffLoginNameChange, schoolStaffPasswordReset, schoolStaffRoleChange, schoolStaffStatusChange } from 'Utilities/url'
-import EditTeacherModal from '../teacher/modals/editTeacher'
+import EditWorkerModal from './modals/editWorker'
+import AddWorkerModal from './modals/addWorker'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const tableIndex = 'school_employee_table_index';
@@ -40,10 +42,10 @@ const index = () => {
     const [loading, setLoading] = useState(false)
 
     const [tabData, setTabData] = useState([])
-    const [selectedTabData, setSelectedTabData] = useState(secureLocalStorage?.getItem(localeSelectedTab) || {})
+    const [selectedTabData, setSelectedTabData] = useState(secureLocalStorage?.getItem(localeSelectedTab) || 'active')
 
     const [columns, setColumns] = useState([])
-    const [tableData, setTableData] = useState([])
+    const [tableData, setTableData] = useState([{id: 11, code: "23232", firstName: "asdfsdf"}, {id: 12, code: "2322", firstName: "asasdfsdf"}])
     const [totalCount, setTotalCount] = useState(0);
     const [contextMenus, setContextMenus] = useState([])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
@@ -52,7 +54,8 @@ const index = () => {
     const [showViewModal, setShowViewModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showRoleChangeModal, setShowRoleChangeModal] = useState(false)
-    const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
+    const [showAddWorkerModal, setShowAddWorkerModal] = useState(false)
+    const [showEditWorkerModal, setShowEditWorkerModal] = useState(false)
     const [showSetTeacherModal, setShowSetTeacherModal] = useState(false)
     const [showStatusChangeModal, setStatusChangeModal] = useState(false)
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
@@ -84,11 +87,11 @@ const index = () => {
             formatter: (cell) =>
                 <img
                     className='img-responsive img-circle'
-                    src={cell || '/images/avatar.png'}
+                    src={cell || '/img/profile/avatar.png'}
                     width={40} height={40} alt='profile picture'
                     onError={(e) => {
                         e.target.onError = null
-                        e.target.src = '/images/avatar.png'
+                        e.target.src = '/img/profile/avatar.png'
                     }}
                 />
         },
@@ -146,11 +149,11 @@ const index = () => {
             formatter: (cell) =>
                 <img
                     className='img-responsive img-circle'
-                    src={cell || '/images/avatar.png'}
+                    src={cell || '/img/profile/avatar.png'}
                     width={40} height={40} alt='profile picture'
                     onError={(e) => {
                         e.target.onError = null
-                        e.target.src = '/images/avatar.png'
+                        e.target.src = '/img/profile/avatar.png'
                     }}
                 />
         },
@@ -312,8 +315,9 @@ const index = () => {
     }, [tabData])
 
     useEffect(() => {
-        if (selectedTabData?.code?.toLowerCase() == 'active') {
-            tableData?.forEach(el => { el.contextMenuKeys = el.isMobile ? 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, setTeacher' : 'view, edit, delete, statusChange, loginNameChange, roleChange, setTeacher' })
+        console.log(selectedTabData)
+        if (selectedTabData == 'active') {
+            tableData?.forEach(el => { el.contextMenuKeys = el.isMobile ? 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, setTeacher' : 'view, edit, delete, statusChange, passwordReset, loginNameChange, roleChange, setTeacher' })
             setColumns(activeColumns)
             setContextMenus(activeContextMenus)
         } else {
@@ -344,12 +348,13 @@ const index = () => {
     }
 
     const handleContextMenuClick = (id, key) => {
+        console.log(id, key)
         if (id && key) {
             setSelectedTableDataId(id)
             if (key === 'view') {
                 setShowViewModal(true)
             } else if (key === 'edit') {
-                setShowEditTeacherModal(true)
+                setShowEditWorkerModal(true)
                 // navigate('/school/staffs/edit', { state: { id } })
             } else if (key === 'delete') {
                 setShowDeleteModal(true)
@@ -367,7 +372,7 @@ const index = () => {
         }
     }
 
-    const handleTabChange = data => {
+    const handleTabChange = (e, data) => {
         const newTableState = {
             page: 1,
             search: '',
@@ -375,10 +380,10 @@ const index = () => {
             sort: tableState.sort,
             order: tableState.order
         }
-
-        setSelectedTabData({ ...data?.panes?.[data?.activeIndex] })
+        // console.log(data)
+        setSelectedTabData(data)
         setTableState(newTableState)
-        setTableData([]);
+        // setTableData([]);
         secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
         secureLocalStorage?.setItem(tableIndex, newTableState);
         
@@ -391,7 +396,8 @@ const index = () => {
         setStatusChangeModal(false)
         setSelectedTableDataId(null)
         setShowRoleChangeModal(false)
-        setShowEditTeacherModal(false)
+        setShowAddWorkerModal(false)
+        setShowEditWorkerModal(false)
         setShowPasswordResetModal(false)
         setShowLoginNameChangeModal(false)
     }
@@ -435,48 +441,82 @@ const index = () => {
             <div className="m-content">
                 <div className="row">
                     <div className="col">
-                        <button
-                            onClick={()=>setShowEditTeacherModal(true)}
-                            className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
-                        >
-                            <AddCircleOutlineRoundedIcon />
-                            <span className='ml-2'>{translations(locale)?.action?.register}</span>
-                        </button>
-                        {/* <Link
-                            to='/school/staffs/create'
-                            className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
-                        >
-                            <AddCircleOutlineRoundedIcon />
-                            <span className='ml-2'>{translations(locale)?.action?.register}</span>
-                        </Link> */}
-                        <div className="m-portlet tab ">
-                            <div className='m-portlet__head'>
-                                <Tab
-                                    activeIndex={selectedTabData?.index}
-                                    renderActiveOnly
-                                    menu={{ secondary: true, pointing: true, className: 'primaryColor' }}
-                                    className="no-shadow"
-                                    onTabChange={(e, data) => handleTabChange(data)}
-                                    panes={tabData}
-                                />
-                            </div>
-                            <div className="m-portlet__body">
-                                <Tab.Pane attached={false}>
-                                    <DTable
-                                        remote
-                                        locale={locale}
-                                        config={config}
-                                        data={tableData}
-                                        columns={columns}
-                                        individualContextMenus
-                                        contextMenus={contextMenus}
-                                        onContextMenuItemClick={handleContextMenuClick}
-                                        onInteraction={onUserInteraction}
-                                        totalDataSize={totalCount}
+                    <Button
+                        onClick={()=>setShowAddWorkerModal(true)}
+                        variant="primary"
+                        className="mb-2 add-button text-uppercase"
+                    >
+                        <AddCircleOutlineRoundedIcon />
+                        <span className='ml-2'>{translations(locale)?.action?.register}</span>
+                    </Button>
+                    <Card className="mb-5">
+                        <Card.Body>
+                            <div className="m-portlet tab ">
+                                <div className="m-portlet__body">
+                                    <TabComponent
+                                        onChange={(e, data) => handleTabChange(e, data)}
+                                        tabs={[
+                                            {
+                                                code: "active",
+                                                title: "Ажиллаж байгаа",
+                                                children: (
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                )
+
+                                            },
+                                            {
+                                                code: "absent",
+                                                title: "Чөлөөтэй байгаа",
+                                                children: (
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                )
+                                            },
+                                            {
+                                                code: "leave",
+                                                title: "Ажлаас гарсан",
+                                                children: (
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                )
+                                            },
+                                        ]}
                                     />
-                                </Tab.Pane>
+                                </div>
                             </div>
-                        </div>
+                            </Card.Body>
+                        </Card>
                     </div>
                 </div>
             </div>
@@ -550,12 +590,19 @@ const index = () => {
                     user={selectedTableDataId}
                 />
             }
-            {/* {
-                showEditTeacherModal && selectedTableDataId &&
-                <EditTeacherModal
+            {
+                showAddWorkerModal &&
+                <AddWorkerModal
+                    onClose={closeModal}
+
+                />
+            }
+            {
+                showEditWorkerModal && selectedTableDataId &&
+                <EditWorkerModal
                     onClose={closeModal}
                 />
-            } */}
+            }
         </div>
     )
 }

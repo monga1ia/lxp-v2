@@ -12,7 +12,7 @@
     color: #c4c5d6;
     background-color: transparent;
     background-image: none;
-    border-color: #c4c5d6
+    border: 1px solid #c4c5d6 !important;
 }
 
 .btn-outline-metal:hover {

@@ -16,7 +16,7 @@ const view = ({ onClose, id }) => {
             centered
             show={true}
             onHide={onClose}
-            size='sm'
+            size='lg'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
         >
@@ -29,10 +29,10 @@ const view = ({ onClose, id }) => {
                 <div className="viewTeacherModal">
                     <div className="row form-group">
                         <div className="col-4">
-                            <img src={staff?.avatar || '/images/avatar.png'} alt={`photo of ${staff?.firstName}`}
+                            <img src={staff?.avatar || '/img/profile/avatar.png'} alt={`photo of ${staff?.firstName}`}
                                 onError={(e) => {
                                     e.target.onError = null,
-                                        e.target.src = '/images/avatar.png'
+                                        e.target.src = '/img/profile/avatar.png'
                                 }}
                             />
                         </div>
@@ -69,15 +69,13 @@ const view = ({ onClose, id }) => {
                     </div>
                 </div>
             </Modal.Body>
-            <Modal.Footer className="text-center">
-                <div className="col-12 text-center">
-                    <button
-                        className="btn m-btn--pill btn-outline-metal"
-                        onClick={onClose}
-                    >
-                        {translations(locale)?.close?.toUpperCase()}
-                    </button>
-                </div>
+            <Modal.Footer className=" col-12 text-center">
+                <button
+                    className="btn m-btn--pill btn-outline-metal"
+                    onClick={onClose}
+                >
+                    {translations(locale)?.close?.toUpperCase()}
+                </button>
             </Modal.Footer>
             {
                 loading &&

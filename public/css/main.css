@@ -2101,6 +2101,14 @@ table.viewTeacherTable>tr>th {
     content: 'Цуцлах'
 }
 
+.visible {
+    visibility: visible !important
+}
+
+.invisible {
+    visibility: hidden !important
+}
+
 .public-DraftStyleDefault-block {
     margin: 1em 0;
 }

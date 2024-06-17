@@ -449,7 +449,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
                                         /> */}
                                     </div>
-                                    <div className="col-5 p-0 d-flex align-items-center">
+                                    <div className="col-5 p-0 align-items-center">
                                         <Select
                                             clearable
                                             searchable

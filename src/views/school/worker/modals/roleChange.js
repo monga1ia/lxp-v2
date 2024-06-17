@@ -15,7 +15,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
 
     // useEffect(() => {
     //     setLoading(true)
-    //     fetchRequest(schoolTeacherRoleChange, 'POST', { teacher })
+    //     fetchRequest(schoolStaffRoleChange, 'POST', { employee: teacher })
     //         .then((res) => {
     //             if (res.success) {
     //                 const { roles, roleIds } = res?.data
@@ -80,20 +80,18 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                 </div>
             </Modal.Body>
             <Modal.Footer className="text-center">
-                <div className='text-center w-100'>
-                    <button
-                        className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                        onClick={onClose}
-                    >
-                        {translations(locale)?.back}
-                    </button>
-                    <button
-                        className="btn m-btn--pill btn-success m-btn--wide"
-                        onClick={handleSave}
-                    >
-                        {translations(locale)?.save}
-                    </button>
-                </div>
+                <button
+                    className="btn m-btn--pill btn-link m-btn m-btn--custom"
+                    onClick={onClose}
+                >
+                    {translations(locale)?.back}
+                </button>
+                <button
+                    className="btn m-btn--pill btn-success m-btn--wide"
+                    onClick={handleSave}
+                >
+                    {translations(locale)?.save}
+                </button>
             </Modal.Footer>
             {
                 loading &&
