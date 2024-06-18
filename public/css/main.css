@@ -750,6 +750,15 @@ table.viewTeacherTable>tr>th {
 .padding-15 {
     padding: 15px !important;
 }
+.padding-30 {
+    padding: 30px !important;
+}
+.padding-45 {
+    padding: 45px !important;
+}
+.padding-60 {
+    padding: 60px !important;
+}
 @media only screen and (min-width: 1700px) {
     .cal-width.col-xxl-9 {
         width: 76% !important;

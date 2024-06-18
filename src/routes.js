@@ -44,6 +44,77 @@ const school = {
     group: lazy(() => import("views/school/group/index"))
 }
 
+const esis = {
+    employee: lazy(() => import("views/esis/employee/index")),
+    class: lazy(() => import("views/esis/class/index")),
+    student: lazy(() => import("views/esis/student/index")),
+    curriculum: lazy(() => import("views/esis/curriculum/index")),
+    attendance: lazy(() => import("views/esis/attendance/index"))
+}
+
+const newsFeed = {
+    newsFeed: lazy(() => import("views/newsFeed/newsFeed/index")),
+    config: lazy(() => import("views/newsFeed/config/index")),
+}
+
+const group = {
+    attendance: lazy(() => import("views/class/attendance/index")),
+    student: lazy(() => import("views/class/student/index")),
+    parents: lazy(() => import("views/class/parents/index")),
+    timetable: lazy(() => import("views/class/timetable/index")),
+    calendar: lazy(() => import("views/class/calendar/index")),
+    exams: lazy(() => import("views/class/exams/index")),
+    results: lazy(() => import("views/class/results/index")),
+    reports: lazy(() => import("views/class/reports/index")),
+}
+
+const template = {
+    exams: lazy(() => import("views/template/exams/index")),
+    skills: lazy(() => import("views/template/skills/index")),
+}
+
+const movement = {
+    in: lazy(() => import("views/movement/in/index")),
+    out: lazy(() => import("views/movement/out/index")),
+    between: lazy(() => import("views/movement/between/index")),
+    up: lazy(() => import("views/movement/up/index")),
+}
+
+const manager = {
+    groups: lazy(() => import("views/manager/groups/index")),
+    excuses: lazy(() => import("views/manager/excuses/index")),
+    clubs: lazy(() => import("views/manager/clubs/index")),
+    timetable: lazy(() => import("views/manager/timetable/index")),
+    transcript: lazy(() => import("views/manager/transcript/index")),
+    classGroups: lazy(() => import("views/manager/classGroups/index")),
+    detention: lazy(() => import("views/manager/detention/index")),
+    curriculum: lazy(() => import("views/manager/curriculum/index")),
+}
+
+const teacher = {
+    today: lazy(() => import("views/teacher/today/index")),
+    timetable: lazy(() => import("views/teacher/timetable/index")),
+    journals: lazy(() => import("views/teacher/journals/index")),
+    excuses: lazy(() => import("views/teacher/excuses/index")),
+    onlineLessons: lazy(() => import("views/teacher/onlineLessons/index")),
+    year: lazy(() => import("views/teacher/year/index")),
+    handToHand: lazy(() => import("views/teacher/handToHand/index")),
+    calendar: lazy(() => import("views/teacher/calendar/index")),
+}
+
+const assessments = {
+    exams: lazy(() => import("views/assessments/exams/index")),
+    finalExams: lazy(() => import("views/assessments/finalExams/index")),
+    skill: lazy(() => import("views/assessments/skill/index")),
+}
+
+const analysis = {
+    exam: lazy(() => import("views/analysis/exam/index")),
+    examTemplate: lazy(() => import("views/analysis/examTemplate/index")),
+    seasonResult: lazy(() => import("views/analysis/seasonResult/index")),
+    scoreboard: lazy(() => import("views/analysis/scoreboard/index")),
+}
+
 const adminQuestion = {
     // question bank
     questions: lazy(() => import("views/adminQuestion/index")),
@@ -136,87 +207,6 @@ const routesAndMenuItems = {
             redirect: true,
             to: `${appRoot}/school/teacher`,
         },
-        // {
-        //     path: `${appRoot}/dashboard`,
-        //     icon: "grid-1",
-        //     label: "dashboard.title",
-        //     exact: true,
-        //     redirect: true,
-        //     to: `${appRoot}/dashboard/exam`,
-        //     subs: [
-        //         {
-        //             path: "/exam",
-        //             label: "dashboard.exam",
-        //             component: dashboards.exam,
-        //         }
-        //     ],
-        // },
-        // {
-        //     path: `${appRoot}/admin-question`,
-        //     icon: "grid-1",
-        //     label: "adminQuestion.title",
-        //     exact: true,
-        //     redirect: true,
-        //     to: `${appRoot}/admin-question/index`,
-        //     subs: [
-        //         {
-        //             path: "/index",
-        //             label: "adminQuestion.questionBank",
-        //             component: adminQuestion.questions,
-        //         }
-        //     ],
-        // },
-        // {
-        //     path: `${appRoot}/curriculum`,
-        //     icon: "home-garage",
-        //     label: "curriculum.plan",
-        //     exact: true,
-        //     redirect: true,
-        //     to: `${appRoot}/curriculum/dashboard`,
-        //     subs: [
-        //         {
-        //             path: "/dashboard",
-        //             label: "curriculum.dashboard",
-        //             component: curriculum.dashboard,
-        //         },
-        //         {
-        //             path: "/plan",
-        //             label: "menu.curriculum",
-        //             component: curriculum.curriculumPlan,
-        //         },
-        //         // {
-        //         //     path: "/goal",
-        //         //     label: "menu.curriculumLearningObjectives",
-        //         //     component: curriculum.curriculumPlan,
-        //         // },
-        //         // {
-        //         //     path: "/method",
-        //         //     label: "menu.method",
-        //         //     component: curriculum.curriculumPlan,
-        //         // }
-        //     ],
-        // },
-        // {
-        //     path: `${appRoot}/groups`,
-        //     icon: "home-garage",
-        //     label: "menu.mainGroup",
-        //     exact: true,
-        //     redirect: true,
-        //     to: `${appRoot}/groups/index`,
-        //     subs: [
-        //         {
-        //             path: "/index",
-        //             label: "menu.mainGroup",
-        //             component: dashboards.mainGroup,
-        //         }
-        //         // {
-        //         //     path: "/edit",
-        //         //     label: "menu.mainGroup",
-        //         //     component: dashboards.groupDetails,
-        //         //     menuHidden: true,
-        //         // }
-        //     ],
-        // }, 
         {
             path: `${appRoot}/school`,
             label: "menu.school",
@@ -240,6 +230,321 @@ const routesAndMenuItems = {
                     label: "menu.group",
                     component: school.group,
                 }
+            ],
+        },
+        {
+            path: `${appRoot}/esis`,
+            label: "menu.esis",
+            icon: "folder",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/esis/employee`,
+            subs: [
+                {
+                    path: "/employee",
+                    label: "menu.employee",
+                    component: esis.employee,
+                },
+                {
+                    path: "/class",
+                    label: "menu.class",
+                    component: esis.class,
+                },
+                {
+                    path: "/student",
+                    label: "menu.student",
+                    component: esis.student,
+                },
+                {
+                    path: "/curriculum",
+                    label: "menu.curriculum",
+                    component: esis.curriculum,
+                },
+                {
+                    path: "/attendance",
+                    label: "menu.attendance",
+                    component: esis.attendance,
+                }
+            ],
+        },
+        {
+            path: `${appRoot}/newsfeed`,
+            label: "menu.newsfeed",
+            icon: "inbox",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/newsfeed`,
+            subs: [
+                {
+                    path: '/index',
+                    label: "menu.employee",
+                    component: newsFeed.newsFeed,
+                },
+                {
+                    path: "/config",
+                    label: "menu.config",
+                    component: newsFeed.config,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/class`,
+            label: "menu.class",
+            icon: "graduation",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/class`,
+            subs: [
+                {
+                    path: '/attendance',
+                    label: "menu.attendance",
+                    component: group.attendance,
+                },
+                {
+                    path: "/student",
+                    label: "menu.student",
+                    component: group.student,
+                },
+                {
+                    path: "/parents",
+                    label: "menu.parents",
+                    component: group.parents,
+                },
+                {
+                    path: "/timetable",
+                    label: "menu.timetable",
+                    component: group.timetable,
+                },
+                {
+                    path: "/calendar",
+                    label: "menu.calendar",
+                    component: group.calendar,
+                },
+                {
+                    path: "/exams",
+                    label: "menu.exams",
+                    component: group.exams,
+                },
+                {
+                    path: "/results",
+                    label: "menu.results",
+                    component: group.results,
+                },
+                {
+                    path: "/reports",
+                    label: "menu.reports",
+                    component: group.reports,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/template`,
+            label: "menu.template",
+            icon: "edit",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/template`,
+            subs: [
+                {
+                    path: '/exams',
+                    label: "menu.exams",
+                    component: template.exams,
+                },
+                {
+                    path: "/skills",
+                    label: "menu.skills",
+                    component: template.skills,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/movement`,
+            label: "menu.movement",
+            icon: "handbag",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/movement`,
+            subs: [
+                {
+                    path: '/in',
+                    label: "menu.in",
+                    component: movement.in,
+                },
+                {
+                    path: "/out",
+                    label: "menu.out",
+                    component: movement.out,
+                },
+                {
+                    path: "/between",
+                    label: "menu.between",
+                    component: movement.between,
+                },
+                {
+                    path: "/up",
+                    label: "menu.up",
+                    component: movement.up,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/manager`,
+            label: "menu.manager",
+            icon: "lecture",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/manager`,
+            subs: [
+                {
+                    path: '/groups',
+                    label: "menu.groups",
+                    component: manager.groups,
+                },
+                {
+                    path: "/excuses",
+                    label: "menu.excuses",
+                    component: manager.excuses,
+                },
+                {
+                    path: "/clubs",
+                    label: "menu.clubs",
+                    component: manager.clubs,
+                },
+                {
+                    path: "/timetable",
+                    label: "menu.timetable",
+                    component: manager.timetable,
+                },
+                {
+                    path: '/groups',
+                    label: "menu.groups",
+                    component: manager.groups,
+                },
+                {
+                    path: "/transcript",
+                    label: "menu.transcript",
+                    component: manager.transcript,
+                },
+                {
+                    path: "/class-groups",
+                    label: "menu.class-groups",
+                    component: manager.classGroups,
+                },
+                {
+                    path: "/detention",
+                    label: "menu.detention",
+                    component: manager.detention,
+                },
+                {
+                    path: "/curriculum",
+                    label: "menu.curriculum",
+                    component: manager.curriculum,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/teacher`,
+            label: "menu.teacher",
+            icon: "presentation",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/teacher`,
+            subs: [
+                {
+                    path: '/today',
+                    label: "menu.today",
+                    component: teacher.today,
+                },
+                {
+                    path: "/timetable",
+                    label: "menu.timetable",
+                    component: teacher.timetable,
+                },
+                {
+                    path: "/journals",
+                    label: "menu.journals",
+                    component: teacher.journals,
+                },
+                {
+                    path: "/excuses",
+                    label: "menu.excuses",
+                    component: teacher.excuses,
+                },
+                {
+                    path: '/online-lessons',
+                    label: "menu.online-lessons",
+                    component: teacher.onlineLessons,
+                },
+                {
+                    path: "/year",
+                    label: "menu.year",
+                    component: teacher.year,
+                },
+                {
+                    path: "/hand-to-hand",
+                    label: "menu.hand-to-hand",
+                    component: teacher.handToHand,
+                },
+                {
+                    path: "/calendar",
+                    label: "menu.calendar",
+                    component: teacher.calendar,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/assessments`,
+            label: "menu.assessments",
+            icon: "folders",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/assessments`,
+            subs: [
+                {
+                    path: '/exams',
+                    label: "menu.exams",
+                    component: assessments.exams,
+                },
+                {
+                    path: "/final-exams",
+                    label: "menu.final-exams",
+                    component: assessments.finalExams,
+                },
+                {
+                    path: "/skill",
+                    label: "menu.skill",
+                    component: assessments.skill,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/analysis`,
+            label: "menu.analysis",
+            icon: "electricity",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/analysis`,
+            subs: [
+                {
+                    path: '/exam',
+                    label: "menu.exam",
+                    component: analysis.exam,
+                },
+                {
+                    path: "/exam-template",
+                    label: "menu.exam-template",
+                    component: analysis.examTemplate,
+                },
+                {
+                    path: "/season-result",
+                    label: "menu.season-result",
+                    component: analysis.seasonResult,
+                },
+                {
+                    path: "/scoreboard",
+                    label: "menu.scoreboard",
+                    component: analysis.scoreboard,
+                },
             ],
         },
         // {

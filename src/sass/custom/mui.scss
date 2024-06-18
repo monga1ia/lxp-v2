@@ -1,12 +1,13 @@
 // Material UI custom class overrides
 button.MuiTab-root {
-  font-family: var(--font-heading);
+  // font-family: var(--font-heading);
   text-transform: inherit !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
+  font-family: PinnacleLight;
   padding: 12px 32px 12px 32px !important;
 
   &.Mui-selected {
-    font-weight: 700 !important;
+    font-family: PinnacleBold !important;
     color: var(--primary) !important;
   }
 }

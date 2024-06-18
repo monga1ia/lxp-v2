@@ -441,82 +441,81 @@ const index = () => {
             <div className="m-content">
                 <div className="row">
                     <div className="col">
-                    <Button
-                        onClick={()=>setShowAddWorkerModal(true)}
-                        variant="primary"
-                        className="mb-2 add-button text-uppercase"
-                    >
-                        <AddCircleOutlineRoundedIcon />
-                        <span className='ml-2'>{translations(locale)?.action?.register}</span>
-                    </Button>
-                    <Card className="mb-5">
-                        <Card.Body>
-                            <div className="m-portlet tab ">
-                                <div className="m-portlet__body">
-                                    <TabComponent
-                                        onChange={(e, data) => handleTabChange(e, data)}
-                                        tabs={[
-                                            {
-                                                code: "active",
-                                                title: "Ажиллаж байгаа",
-                                                children: (
-                                                    <DTable
-                                                        remote
-                                                        config={config}
-                                                        locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
-                                                        individualContextMenus
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={handleContextMenuClick}
-                                                        // onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
-                                                    />
-                                                )
+                        <Button
+                            onClick={()=>setShowAddWorkerModal(true)}
+                            variant="primary"
+                            className="mb-2 add-button text-uppercase"
+                        >
+                            <AddCircleOutlineRoundedIcon />
+                            <span className='ml-2'>{translations(locale)?.action?.register}</span>
+                        </Button>
+                        <div className="mb-5 background-white br-16">
+                            <div className="m-portlet__body">
+                                <TabComponent
+                                    onChange={(e, data) => handleTabChange(e, data)}
+                                    className='padding-30'
 
-                                            },
-                                            {
-                                                code: "absent",
-                                                title: "Чөлөөтэй байгаа",
-                                                children: (
-                                                    <DTable
-                                                        remote
-                                                        config={config}
-                                                        locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
-                                                        individualContextMenus
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={handleContextMenuClick}
-                                                        // onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
-                                                    />
-                                                )
-                                            },
-                                            {
-                                                code: "leave",
-                                                title: "Ажлаас гарсан",
-                                                children: (
-                                                    <DTable
-                                                        remote
-                                                        config={config}
-                                                        locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
-                                                        individualContextMenus
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={handleContextMenuClick}
-                                                        // onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
-                                                    />
-                                                )
-                                            },
-                                        ]}
-                                    />
-                                </div>
+                                    style={{color: 'red'}}
+                                    tabs={[
+                                        {
+                                            code: "active",
+                                            title: "Ажиллаж байгаа",
+                                            children: (
+                                                <DTable
+                                                    remote
+                                                    config={config}
+                                                    locale={locale}
+                                                    data={tableData}
+                                                    columns={columns}
+                                                    individualContextMenus
+                                                    contextMenus={contextMenus}
+                                                    onContextMenuItemClick={handleContextMenuClick}
+                                                    // onInteraction={onUserInteraction}
+                                                    totalDataSize={totalCount}
+                                                />
+                                            )
+
+                                        },
+                                        {
+                                            code: "absent",
+                                            title: "Чөлөөтэй байгаа",
+                                            children: (
+                                                <DTable
+                                                    remote
+                                                    config={config}
+                                                    locale={locale}
+                                                    data={tableData}
+                                                    columns={columns}
+                                                    individualContextMenus
+                                                    contextMenus={contextMenus}
+                                                    onContextMenuItemClick={handleContextMenuClick}
+                                                    // onInteraction={onUserInteraction}
+                                                    totalDataSize={totalCount}
+                                                />
+                                            )
+                                        },
+                                        {
+                                            code: "leave",
+                                            title: "Ажлаас гарсан",
+                                            children: (
+                                                <DTable
+                                                    remote
+                                                    config={config}
+                                                    locale={locale}
+                                                    data={tableData}
+                                                    columns={columns}
+                                                    individualContextMenus
+                                                    contextMenus={contextMenus}
+                                                    onContextMenuItemClick={handleContextMenuClick}
+                                                    // onInteraction={onUserInteraction}
+                                                    totalDataSize={totalCount}
+                                                />
+                                            )
+                                        },
+                                    ]}
+                                />
                             </div>
-                            </Card.Body>
-                        </Card>
+                        </div>
                     </div>
                 </div>
             </div>

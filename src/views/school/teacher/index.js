@@ -404,10 +404,11 @@ const MainGroup = () => {
                         <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                         {t('common.register')}
                     </Button>
-                    <Card className="mb-5">
-                        <Card.Body>
+                    <div className="mb-5 background-white br-16">
+                        <div className="m-portlet__body">
                             <TabComponent
                                 onChange={(e, data) => handleTabChange(e, data)}
+                                className='padding-30'
                                 tabs={[
                                     {
                                         code: "active",
@@ -484,8 +485,8 @@ const MainGroup = () => {
                                     }
                                 ]}
                             />
-                        </Card.Body>
-                    </Card>
+                        </div>
+                    </div>
                 </Col>
             </Row>
             {

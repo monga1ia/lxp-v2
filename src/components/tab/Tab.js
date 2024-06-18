@@ -26,7 +26,7 @@ function a11yProps(index) {
     };
 }
 
-const TabComponent = ({ tabs, selectedTabIndex = 0, onChange = () => { }, borderColor = '', indicatorColor = '', centered = false }) => {
+const TabComponent = ({ tabs, selectedTabIndex = 0, onChange = () => { }, borderColor = '', indicatorColor = '', centered = false, className = '' }) => {
     const [value, setValue] = React.useState(selectedTabIndex);
     
     const handleChange = (event, newValue) => {
@@ -70,6 +70,7 @@ const TabComponent = ({ tabs, selectedTabIndex = 0, onChange = () => { }, border
                                         tab.onPress();
                                     }
                                 }}
+                                style={{fontSize: '0.8937rem'}}
                                 key={index}
                                 label={tab.title}
                                 {...a11yProps(index)}
@@ -80,7 +81,9 @@ const TabComponent = ({ tabs, selectedTabIndex = 0, onChange = () => { }, border
             </Box>
             {tabs.map((tab, index) => (
                 <TabPanel key={index} value={value} index={index}>
-                    {tab.children}
+                    <div className={className}>
+                        {tab.children}
+                    </div>
                 </TabPanel>
             ))}
         </Box>
