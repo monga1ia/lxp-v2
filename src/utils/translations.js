@@ -4754,6 +4754,7 @@ export const translations = (lang) => {
                         }
                     },
                     staff: {
+                        teacher_staff: 'Багш, ажилтан',
                         title: 'Ажилтан',
                         code: 'Ажилтны код',
                         lastName: 'Ажилтны овог',

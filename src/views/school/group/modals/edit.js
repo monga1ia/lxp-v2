@@ -1,34 +1,28 @@
 import { useState } from 'react'
 import message from 'modules/message'
-import { Modal } from 'react-bootstrap'
 import React, { useEffect } from 'react'
+import { Modal } from 'react-bootstrap'
 import ImageModal from 'utils/imageModal'
-import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
-import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import Select from 'modules/Form/Select'
 
-const AddTeacherModal = ({onClose, onSubmit, data}) => {
+const EditGroupModal = ({onClose, onSubmit, data}) => {
+
+    const teacherId = data
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
-
     const [viewImageModal, setViewImageModal] = useState(false)
-    const [viewForceCreateModal, setViewForceCreateModal] = useState(false)
-    const [forceCreateMessage, setForceCreateMessage] = useState('')
 
     const [teacher, setTeacher] = useState({})
 
-    const [roleOptions, setRoleOptions] = useState([])
-    const [gradeOptions, setGradeOptions] = useState([])
+    const [roleOptions, setRoleOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    const [gradeOptions, setGradeOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
 
-    const [gradeRows, setGradeRows] = useState([{
-        grade: null,
-        subjects: [],
-        subjectOptions: []
-    }])
+    const [updateView, setUpdateView] = useState(false)
+
     const [genderOptions] = useState([
         {
             value: 'M',
@@ -39,35 +33,37 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             text: translations(locale).female,
         }
     ])
+    // useEffect(() => {
+    //     if (!teacherId?.state?.id) {
+    //         message(translations(locale)?.course_select_teacher)
+    //         navigate('/school/teachers', { replace: true })
+    //     }
+    // }, [])
 
-    const [selecterDummy, setSelecterDummy] = useState([
-        {value: "1", refId: "refId", gid: "2323", text: "text 1"},
-        {value: "2", refId: "refId2", gid: "232", text: "text 2"},
-        {value: "3", refId: "refId3", gid: "23", text: "text 3"},
-    ])
 
     const handleSubmit = () => {
         if (validateFields()) {
-            console.log("success")
+            console.log('success')
             // setLoading(true)
+            // const subjectList = gradeSubjectOptions.map(el => {
+            //     if (el && el.visible) {
+            //         return { grade: el.value, subjects: el.teacherSubjects?.map(obj => el.value + '_s_' + obj) }
+            //     }
+            // });
+
             // const params = {
             //     ...teacher,
-            //     subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
+            //     subjects: JSON.stringify(subjectList),
             //     submit: 1,
-            //     menu: 'teacher'
+            //     teacher: teacherId?.state?.id,
+            //     photo: teacher?.avatar?.startsWith('data') ? teacher?.avatar : null
             // }
-            // fetchRequest(schoolTeacherSubmit, 'POST', params)
+            // fetchRequest(schoolTeacherEdit, 'POST', params)
             //     .then((res) => {
             //         if (res.success) {
-            //             if (res.data.isForce) {
-            //                 setViewForceCreateModal(true)
-            //                 setForceCreateMessage(res.data.message)
-            //             } else {
-            //                 message(res.data.message, true)
-            //                 onSubmit()
-            //                 // console.log({...params, ...res.data.user})
-            //                 onClose()
-            //             }
+            //             message(res.data.message, true)
+            //             onSubmit()
+            //             onClose()
             //         } else {
             //             message(res.data.message)
             //         }
@@ -77,118 +73,120 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             //         message(translations(locale)?.err?.error_occurred)
             //         setLoading(false)
             //     })
-        } else {
-            console.log("error")
+        } else{
+            console.log('fail')
         }
     }
 
-    // const handleForceCreate = () => {
-    //     if (validateFields()) {
-    //         setLoading(true)
-    //         const params = {
-    //             ...teacher,
-    //             subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
-    //             submit: 1,
-    //             forceSave: 1,
-    //             menu: 'teacher'
-    //         }
-    //         fetchRequest(schoolTeacherSubmit, 'POST', params)
-    //             .then((res) => {
-    //                 if (res.success) {
-    //                     message(res.data.message, true)
-    //                     onSubmit()
-    //                     onClose()
-    //                 } else {
-    //                     message(res.data.message)
-    //                 }
-    //                 setLoading(false)
-    //             })
-    //             .catch(() => {
-    //                 message(translations(locale)?.err?.error_occurred)
-    //                 setLoading(false)
-    //             })
-    //     }
-    // }
-
     const handleChange = (name, value) => {
+        console.log(teacher)
         setTeacher({ ...teacher, [name]: value })
     }
 
     const handleAvatarUpload = params => {
-        setTeacher({ ...teacher, photo: params.image, fileType: params.imageType, })
+        setTeacher({ ...teacher, avatar: params.image, fileType: params.imageType, })
     }
 
     const handleAvatarRemove = () => {
-        setTeacher({ ...teacher, photo: undefined, fileType: undefined, })
+        setTeacher({ ...teacher, avatar: undefined, fileType: undefined, })
     }
 
     const validateFields = () => {
-        if (!teacher?.lastName || !teacher?.firstName || !teacher?.role || !teacher?.code || !teacher?.loginName || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
+        const list = gradeSubjectOptions;
+        let hasError = false
+        if (list?.length > 0) {
+            for (let l = 0; l < list?.length; l++) {
+                if (list[l].visible) {
+                    if (list[l].value) {
+                    } else {
+                        hasError = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!teacher?.lastName || !teacher?.firstName || !teacher?.code || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
             return message(translations(locale).err.fill_all_fields)
-        else if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length)
-            return message(translations(locale).err.fill_all_fields)
-        else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length }))
+        else if (hasError)
             return message(translations(locale).err.fill_all_fields)
         else
             return true
     }
 
     const handleRowGradeChange = (index, value, options) => {
-        const rows = [...gradeRows]
+        const rows = [...gradeSubjectOptions]
+        rows[index].visible = true;
         if (value) {
-            const option = options?.find(option => option?.value == value)
-            // option.disabled = true
-            rows[index].subjectOptions = option?.subjects
-            rows[index].grade = value
+            rows[index].value = value
         } else {
-            const option = options?.find(option => option?.value == rows[index]?.grade)
-            delete option?.disabled
-            rows[index].subjects = []
-            rows[index].subjectOptions = []
-            rows[index].grade = null
+            rows[index].value = null
+            rows[index].teacherSubjects = []
         }
-        setGradeRows(rows)
+        setGradeSubjectOptions(rows)
+
+        setUpdateView(!updateView)
     }
 
-    const handleRowSubjectsChange = (index, value) => {
-        const rows = [...gradeRows]
-        rows[index].subjects = value
-        setGradeRows(rows)
+    const handleRowSubjectsChange = (index, value, list) => {
+        const rows = [...gradeSubjectOptions]
+
+        const selectedList = []
+        for (let l = 0; l < list?.length; l++) {
+            if (value.indexOf(list[l]?.value) > -1) {
+                selectedList.push(list[l].subject)
+            }
+        }
+        rows[index].teacherSubjects = selectedList
+        setGradeSubjectOptions(rows)
     }
 
     const addGradeRow = () => {
-        if (gradeSubjectOptions?.length > gradeRows?.length) {
-            setGradeRows([...gradeRows, {
-                grade: null,
-                subjects: [],
-                subjectOptions: [],
-            }])
+        if (gradeSubjectOptions?.length > 0) {
+            const clone = [...gradeSubjectOptions];
+            let lastVisibleRow = -1;
+            let nonVisiblePrevRow = -1;
+            for (let g = 0; g < clone?.length; g++) {
+                if (clone[g].visible) {
+                    lastVisibleRow = g;
+                } else {
+                    if (nonVisiblePrevRow === -1) {
+                        nonVisiblePrevRow = g;
+                    }
+                }
+            }
+
+            if (lastVisibleRow < gradeSubjectOptions.length - 1) {
+                clone[lastVisibleRow + 1].visible = true;
+            } else {
+                if (nonVisiblePrevRow > -1) {
+                    clone[nonVisiblePrevRow].visible = true;
+                }
+            }
+            setGradeSubjectOptions(clone)
         }
     }
 
     const removeGradeRow = index => {
         if (index != 0) {
-            const rows = [...gradeRows]
-            const option = gradeSubjectOptions?.find(option => option?.value == rows[index].grade)
-            delete option?.disabled
-            rows.splice(index, 1)
-            setGradeRows(rows)
+            const rows = [...gradeSubjectOptions]
+            rows[index].visible = false
+            rows[index].teacherSubjects = []
+            setGradeSubjectOptions(rows)
         }
     }
 
     return (
         <Modal
+            size='xl'
             dimmer='blurring'
             show={true}
-            size="xl"
-            aria-labelledby="contained-modal-title-vcenter"
             onHide={onClose}
-            // className='react-modal overflow-modal'
+            aria-labelledby="contained-modal-title-vcenter"
             centered
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.teacher?.add_teacher}
+                    {translations(locale)?.teacher?.edit}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -196,7 +194,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                     <div className="col-3 d-flex flex-column align-items-center" style={{ gap: 10 }}>
                         <img
                             className="img-responsive img-circle"
-                            src={teacher?.photo || '/img/profile/placeholder.jpg'}
+                            src={teacher?.avatar || '/img/profile/placeholder.jpg'}
                             onError={(e) => {
                                 e.target.onError = null
                                 e.target.src = '/img/profile/avatar.png'
@@ -228,10 +226,10 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 <Select
                                     clearable
                                     searchable
-                                    placeholder={'-' + translations(locale)?.select + '-'}
-                                    value={teacher?.role}
-                                    options={selecterDummy}
-                                    onChange={(e, data) => handleChange('role', e)}
+                                    options={roleOptions}
+                                    disabled={true}
+                                    value={teacher?.roleId}
+                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
                                 {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.select + '-'}
@@ -241,9 +239,9 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     upward={false}
                                     closeOnChange
                                     selectOnBlur={false}
-                                    value={teacher?.role}
+                                    value={teacher?.roleId}
                                     options={roleOptions}
-                                    onChange={(e, data) => handleChange('role', data?.value)}
+                                    disabled
                                 /> */}
                             </div>
                         </div>
@@ -313,7 +311,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     className="form-control"
                                     value={teacher?.loginName || ''}
                                     placeholder={translations(locale)?.teacher?.login_name}
-                                    onChange={(e) => handleChange('loginName', e.target.value)}
+                                    disabled
                                 />
                             </div>
                         </div>
@@ -356,9 +354,8 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 <Select
                                     clearable
                                     searchable
-                                    placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
+                                    options={genderOptions}
                                     value={teacher?.gender}
-                                    options={selecterDummy}
                                     onChange={(e, data) => handleChange('gender', e)}
                                 />
                                 {/* <Dropdown
@@ -372,16 +369,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                >
-                                    <Dropdown.Toggle id="dropdown-basic" className='form-control'>
-                                        Dropdown Button
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className='form-control'>
-                                        <Dropdown.Item href="#/action-1">Option 1</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Option 2</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Option 3</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown> */}
+                                /> */}
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -392,10 +380,10 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 <Select
                                     clearable
                                     searchable
-                                    placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
-                                    options={selecterDummy}
+                                    options={gradeOptions}
                                     value={teacher?.grade}
-                                    onChange={(e, data) => handleChange('grade', e)}
+                                    onChange={(e) => handleChange('grade', e)}
+                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
                                 {/* <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
@@ -426,20 +414,19 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         {
-                            gradeRows?.map((el, index) => (
-                                <div key={index} className="form-group m-form__group row">
+                            gradeSubjectOptions?.map((gradeSubjectObj, s) => {
+                                const renderRow = gradeSubjectObj?.visible || (gradeSubjectObj?.teacherSubjects?.length > 0);
+                                return renderRow && <div key={s} className="form-group m-form__group row">
                                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                        {index == 0 && translations(locale)?.teacher?.subjects}
+                                        {s === 0 && translations(locale)?.teacher?.subjects}
                                     </label>
                                     <div className="col-3">
                                         <Select
                                             clearable
                                             searchable
-                                            style={{height: '100px'}}
-                                            placeholder={'-' + translations(locale)?.timetable?.select_class + '-'}
-                                            value={el?.grade}
-                                            options={gradeSubjectOptions}
-                                            onChange={(e, data) => handleRowGradeChange(index, e, data?.options)}
+                                            options={gradeOptions}
+                                            value={gradeSubjectObj?.value}
+                                            onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
                                         />
                                         {/* <Dropdown
                                             placeholder={'-' + translations(locale)?.err?.select_class + '-'}
@@ -448,11 +435,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             additionPosition='bottom'
                                             upward={false}
                                             closeOnChange
-                                            clearable
+                                            disabled={true}
                                             selectOnBlur={false}
-                                            value={el?.grade}
-                                            options={gradeSubjectOptions}
-                                            onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
+                                            value={gradeSubjectObj?.value}
+                                            options={gradeOptions}
+                                            onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
                                         /> */}
                                     </div>
                                     <div className="col-5 p-0 align-items-center">
@@ -460,12 +447,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             clearable
                                             searchable
                                             multiple={true}
-                                            placeholder={'-' + translations(locale)?.timetable?.select_subject}
-                                            options={gradeSubjectOptions}
-                                            value={el?.subjects}
-                                            onChange={(e, data) => handleRowSubjectsChange(index, e)}
+                                            options={gradeOptions}
+                                            value={gradeSubjectObj?.value}
+                                            onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
                                         />
-                                        <Dropdown
+                                        {/* <Dropdown
                                             placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
                                             fluid
                                             selection
@@ -476,21 +462,21 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             className='mr-2'
                                             clearable
                                             selectOnBlur={false}
-                                            value={el?.subjects}
-                                            options={el?.subjectOptions}
-                                            onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
-                                        />
-                                        <div style={{marginLeft: "2.6rem"}} className={index != 0 ? 'visible' : 'invisible'}>
-                                            <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                            value={gradeSubjectObj?.teacherSubjects?.map(obj => gradeSubjectObj?.value + '_s_' + obj) || []}
+                                            options={gradeSubjectObj?.subjects}
+                                            onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
+                                        /> */}
+                                        <div style={{marginLeft: "2.6rem"}} className={s != 0 ? 'visible' : 'invisible'}>
+                                            <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                            ))
+                            })
                         }
                         {
-                            gradeSubjectOptions?.length > gradeRows?.length &&
+                            gradeSubjectOptions?.length > 0 &&
                             <div className="form-group m-form__group row">
                                 <div className="col p-0 d-flex justify-content-end align-items-center">
                                     <button onClick={addGradeRow} className='btn btn-outline-primary m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
@@ -503,11 +489,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                 </div>
             </Modal.Body>
             <Modal.Footer className="text-center">
-                <button 
+                <button
                     onClick={onClose}
                     className="btn m-btn--pill btn-link margin-right-5"
                 >
-                    {translations(locale)?.back}        
+                    {translations(locale)?.back}
                 </button>
                 <button
                     onClick={handleSubmit}
@@ -524,14 +510,6 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                 />
             }
             {
-                viewForceCreateModal &&
-                <ForceCreateModal
-                    onClose={() => setViewForceCreateModal(false)}
-                    onSubmit={handleForceCreate}
-                    message={forceCreateMessage}
-                />
-            }
-            {
                 loading &&
                 <>
                     <div className="blockUI blockOverlay" />
@@ -544,4 +522,4 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
     )
 }
 
-export default AddTeacherModal
+export default EditGroupModal

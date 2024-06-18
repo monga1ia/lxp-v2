@@ -23,6 +23,7 @@ const Select = ({
     options = [],
     fillArrow = false,
     labelEntity = false,
+    style,
     ...rest
 }) => {
     const { t } = useTranslation();
@@ -104,9 +105,7 @@ const Select = ({
     return (
         <>
             <ReactSelect
-                styles={{
-
-                }}
+                styles={style}
                 className={`eschool-select ${className}`}
                 isDisabled={disabled}
                 isClearable={clearable}
