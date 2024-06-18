@@ -99,7 +99,7 @@ const Nav = () => {
                     !isOrganizationUser && isStudent &&
                     <StudentIconMenu />
                 }
-                <NavMobileButtons />
+                {/* <NavMobileButtons /> */}
             </div>
             <div className="nav-shadow" />
         </div>

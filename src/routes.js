@@ -134,7 +134,7 @@ const routesAndMenuItems = {
             path: DEFAULT_PATHS.APP,
             exact: true,
             redirect: true,
-            to: `${appRoot}/groups/index`,
+            to: `${appRoot}/school/teacher`,
         },
         // {
         //     path: `${appRoot}/dashboard`,

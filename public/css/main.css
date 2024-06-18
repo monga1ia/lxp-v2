@@ -684,7 +684,7 @@ table.viewTeacherTable>tr>th {
 .btn-outline-metal:not(:disabled):not(.disabled).active, .btn-outline-metal:not(:disabled):not(.disabled):active, .show > .btn-outline-metal.dropdown-toggle {
     color: #212529;
     background-color: #c4c5d6;
-    border-color: red
+    border-color: #c4c5d6
 }
 
 .btn-outline-metal:not(:disabled):not(.disabled).active:focus, .btn-outline-metal:not(:disabled):not(.disabled):active:focus, .show > .btn-outline-metal.dropdown-toggle:focus {

@@ -15,8 +15,8 @@ export const USE_MULTI_LANGUAGE = true;
 
 // For detailed information: https://github.com/nfl/react-helmet#reference-guide
 export const REACT_HELMET_PROPS = {
-  defaultTitle: "LMS",
-  titleTemplate: "%s | LMS",
+  defaultTitle: "LXP",
+  titleTemplate: "%s | LXP",
 };
 
 export const DEFAULT_PATHS = {
