@@ -3740,6 +3740,7 @@ export const translations = (lang) => {
                         change_status_staff: 'Ажилтны төлөв өөрчлөх',
                         set_teacher_button_label: 'БАГШ ТӨЛӨВТ ОРУУЛАХ',
                         edit: 'Багш засах',
+                        editInfo: 'Багшийн мэдээлэл засах',
                         select_school_grade: 'Сургуулийн түвшин сонгоно уу',
                         change_phone_number_description: 'Багшийн дугаарыг сольсноор өмнөх дугаараар нэвтрэх боломжгүй болохыг анхаараарай.',
                         change_login_name_description: 'Багшийн нэвтрэх нэрийг сольсноор өмнөх нэвтрэх нэрээр нэвтрэх боломжгүй болохыг анхаараарай.',

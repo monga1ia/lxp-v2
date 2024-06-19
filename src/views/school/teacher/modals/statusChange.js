@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import Select from 'modules/Form/Select'
 
 const statusChange = ({ onClose, onSubmit, teacher }) => {
@@ -38,14 +39,14 @@ const statusChange = ({ onClose, onSubmit, teacher }) => {
                         {translations(locale)?.status}*
                     </label>
                     <div className="col-5">
-                        <Select
+                        {/* <Select
                             clearable
                             searchable
                             options={statusOptions}
                             value={selectedStatus}
                             onChange={(e, data) => setSelectedStatus(data)}
-                        />
-                        {/* <Dropdown
+                        /> */}
+                        <Dropdown
                             fluid
                             selection
                             closeOnChange
@@ -53,7 +54,7 @@ const statusChange = ({ onClose, onSubmit, teacher }) => {
                             options={statusOptions}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
                             placeholder={'-' + translations(locale)?.select + '-'}
-                        /> */}
+                        />
                     </div>
                 </div>
             </Modal.Body>

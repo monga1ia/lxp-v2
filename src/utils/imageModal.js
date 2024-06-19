@@ -162,8 +162,10 @@ const ImageModal = ({ onClose, onSubmit }) => {
             size='lg'
             dimmer='blurring'
             show={true}
+            id='imageModal'
             onHide={onClose}
-            aria-labelledby="contained-modal-title-vcenter"
+            aria-labelledby="contained-modal-title-vcentersdfsd"
+            className='doubleModal'
             centered
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>

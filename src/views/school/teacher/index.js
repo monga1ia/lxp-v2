@@ -43,8 +43,45 @@ const MainGroup = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const [tableData, setTableData] = useState([{id: 11, code: "23232", firstName: "asdfsdf"}, {id: 12, code: "2322", firstName: "asasdfsdf"}]);
+    const [tableData, setTableData] = useState([
+        {id: 11, code: 2323, firstName: "asdfsdf"}, 
+        {id: 12, code: 1232, firstName: "asasdfsdf"}
+    ]);
     const [totalCount, setTotalCount] = useState(0);
+
+    const handleTreeSelect = key => {
+        if (key && key.length > 0) {
+            setSelectedTreeDataId(key[0])
+        }
+    }
+
+    const [treeData, setTreeData] = useState([{
+        title: 'first level',
+        value: '0-0',
+        key: 1,
+        selectable: true,
+        children: [{
+            title: 'second level',
+            value: '0-0-0',
+            key: 2,
+            selectable: true,
+            children: [
+            {
+                title: 'third level',
+                value: '0-0-0-0',
+                key: 31,
+                selectable: true,
+            },
+            {
+                title: 'third_2 level',
+                value: '0-0-0-1',
+                key: 32,
+                selectable: true,
+            },
+            ],
+        }]
+    }])
+    const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
 
     const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
     const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
@@ -78,6 +115,50 @@ const MainGroup = () => {
         { to: "groups/index", text: title }
     ];
 
+    const onUserInteraction = state => {
+        console.log('onUserInteraction')
+        // if (state.page && !secondRender) {
+        //     if (state.search != tableState.search) {
+        //         let cloneData = {
+        //             page: 1,
+        //             pageSize: state.pageSize,
+        //             search: state.search,
+        //             sort: state.sort,
+        //             order: state.order,
+        //             filter: {
+        //                 page: 1,
+        //                 pageSize: state?.filter?.pageSize || 10
+        //             }
+        //         };
+
+        //         setTableState(cloneData)
+
+        //         if (selectedTabData && selectedTabData.code == 'ACTIVE') {
+        //             secureLocalStorage.setItem(localeActiveTableState, cloneData)
+        //         } else if (selectedTabData && selectedTabData.code == 'QUIT') {
+        //             secureLocalStorage.setItem(localeQuitTableState, cloneData)
+        //         } else if (selectedTabData && selectedTabData.code == 'ABSENT') {
+        //             secureLocalStorage.setItem(localeAbsentTableState, cloneData)
+        //         }
+
+        //         init(cloneData, selectedTreeDataId, selectedTabData.code)
+        //     } else {
+        //         setTableState(state)
+
+        //         if (selectedTabData && selectedTabData.code == 'ACTIVE') {
+        //             secureLocalStorage.setItem(localeActiveTableState, state)
+        //         } else if (selectedTabData && selectedTabData.code == 'QUIT') {
+        //             secureLocalStorage.setItem(localeQuitTableState, state)
+        //         } else if (selectedTabData && selectedTabData.code == 'ABSENT') {
+        //             secureLocalStorage.setItem(localeAbsentTableState, state)
+        //         }
+
+        //         init(state, selectedTreeDataId, selectedTabData.code)
+        //     }
+        // } else {
+        //     setSecondRender(false)
+        // }
+    }
 
     const closeModal = () => {
         setShowAddTeacherModal(false)
@@ -230,7 +311,7 @@ const MainGroup = () => {
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '1.8rem !important', color: '#ff5b1d'}}/>,
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
             title: translations(locale)?.edit
         },
         {
@@ -390,6 +471,10 @@ const MainGroup = () => {
                     <Card className="mb-5">
                         <Card.Body>
                             <TreeView
+                                treeData={treeData}
+                                selectedNodes={[selectedTreeDataId]}
+                                onSelect={handleTreeSelect}
+                                defaultExpandAll
                             />
                         </Card.Body>
                     </Card>
@@ -423,7 +508,7 @@ const MainGroup = () => {
                                                 individualContextMenus
                                                 contextMenus={contextMenus}
                                                 onContextMenuItemClick={handleContextMenuClick}
-                                                // onInteraction={onUserInteraction}
+                                                onInteraction={onUserInteraction}
                                                 totalDataSize={totalCount}
                                             />
                                         )
@@ -442,7 +527,7 @@ const MainGroup = () => {
                                                 individualContextMenus
                                                 contextMenus={contextMenus}
                                                 onContextMenuItemClick={handleContextMenuClick}
-                                                // onInteraction={onUserInteraction}
+                                                onInteraction={onUserInteraction}
                                                 totalDataSize={totalCount}
                                             />
                                         )
@@ -460,7 +545,7 @@ const MainGroup = () => {
                                                 individualContextMenus
                                                 contextMenus={contextMenus}
                                                 onContextMenuItemClick={handleContextMenuClick}
-                                                // onInteraction={onUserInteraction}
+                                                onInteraction={onUserInteraction}
                                                 totalDataSize={totalCount}
                                             />
                                         )
@@ -478,7 +563,7 @@ const MainGroup = () => {
                                                 individualContextMenus
                                                 contextMenus={contextMenus}
                                                 onContextMenuItemClick={handleContextMenuClick}
-                                                // onInteraction={onUserInteraction}
+                                                onInteraction={onUserInteraction}
                                                 totalDataSize={totalCount}
                                             />
                                         )

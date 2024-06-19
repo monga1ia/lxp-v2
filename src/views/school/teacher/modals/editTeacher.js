@@ -5,6 +5,7 @@ import { Modal } from 'react-bootstrap'
 import ImageModal from 'utils/imageModal'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import Select from 'modules/Form/Select'
 
 const EditTeacherModal = ({onClose, onSubmit, data}) => {
@@ -186,7 +187,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.teacher?.edit}
+                    {translations(locale)?.teacher?.editInfo}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -217,21 +218,13 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                             {translations(locale)?.profile?.img_delete}
                         </button>
                     </div>
-                    <div className="col-6">
+                    <div className="col-7">
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                                 {translations(locale)?.role}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    options={roleOptions}
-                                    disabled={true}
-                                    value={teacher?.roleId}
-                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
-                                />
-                                {/* <Dropdown
+                                <Dropdown
                                     placeholder={'-' + translations(locale)?.select + '-'}
                                     fluid
                                     selection
@@ -242,7 +235,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.roleId}
                                     options={roleOptions}
                                     disabled
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -351,14 +344,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.teacher?.gender}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    options={genderOptions}
-                                    value={teacher?.gender}
-                                    onChange={(e, data) => handleChange('gender', e)}
-                                />
-                                {/* <Dropdown
+                                <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
                                     fluid
                                     selection
@@ -369,7 +355,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -377,15 +363,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.school}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    options={gradeOptions}
-                                    value={teacher?.grade}
-                                    onChange={(e) => handleChange('grade', e)}
-                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
-                                />
-                                {/* <Dropdown
+                                <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
                                     fluid
                                     selection
@@ -396,7 +374,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.grade}
                                     options={gradeOptions}
                                     onChange={(e, data) => handleChange('grade', data?.value)}
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -421,14 +399,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                         {s === 0 && translations(locale)?.teacher?.subjects}
                                     </label>
                                     <div className="col-3">
-                                        <Select
-                                            clearable
-                                            searchable
-                                            options={gradeOptions}
-                                            value={gradeSubjectObj?.value}
-                                            onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
-                                        />
-                                        {/* <Dropdown
+                                        <Dropdown
                                             placeholder={'-' + translations(locale)?.err?.select_class + '-'}
                                             fluid
                                             selection
@@ -440,18 +411,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={gradeSubjectObj?.value}
                                             options={gradeOptions}
                                             onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
-                                        /> */}
-                                    </div>
-                                    <div className="col-5 p-0 align-items-center">
-                                        <Select
-                                            clearable
-                                            searchable
-                                            multiple={true}
-                                            options={gradeOptions}
-                                            value={gradeSubjectObj?.value}
-                                            onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
                                         />
-                                        {/* <Dropdown
+                                    </div>
+                                    <div className="col-5 d-flex p-0 align-items-center">
+                                        <Dropdown
                                             placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
                                             fluid
                                             selection
@@ -465,7 +428,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={gradeSubjectObj?.teacherSubjects?.map(obj => gradeSubjectObj?.value + '_s_' + obj) || []}
                                             options={gradeSubjectObj?.subjects}
                                             onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
-                                        /> */}
+                                        />
                                         <div style={{marginLeft: "2.6rem"}} className={s != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />

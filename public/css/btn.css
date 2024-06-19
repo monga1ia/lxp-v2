@@ -189,6 +189,30 @@
     background-color: #30C530 !important;
     border-color: #30C530 !important
 }
+.btn-link {
+    font-weight: 400;
+    color: #ff2f1a;
+    background-color: transparent
+}
+
+.btn-link:hover {
+    color: #ff2f1a;
+    text-decoration: underline !important;
+    background-color: transparent;
+    border-color: transparent
+}
+
+.btn-link.focus, .btn-link:focus {
+    text-decoration: underline;
+    border-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.btn-link.disabled, .btn-link:disabled {
+    color: #6c757d;
+    pointer-events: none
+}
 /* 
 .btn-success.focus, .btn-success:focus {
     -webkit-box-shadow: 0 0 0 .2rem rgba(52, 191, 163, .5);

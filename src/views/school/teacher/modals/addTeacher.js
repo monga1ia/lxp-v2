@@ -467,10 +467,12 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             </Modal.Footer>
             {
                 viewImageModal &&
-                <ImageModal
-                    onClose={() => setViewImageModal(false)}
-                    onSubmit={handleAvatarUpload}
-                />
+                <div className='doubleModal'>
+                    <ImageModal
+                        onClose={() => setViewImageModal(false)}
+                        onSubmit={handleAvatarUpload}
+                    />
+                </div>
             }
             {
                 viewForceCreateModal &&

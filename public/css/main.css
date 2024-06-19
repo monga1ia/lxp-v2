@@ -220,9 +220,13 @@ a {
 }
 
 .modal .modal-title {
-    font-size: 0.9rem;
-    color: #ff4900;
+    font-size: 1rem;
+    color: #ff5b1d;
     font-weight: bold;
+}
+.doubleModal {
+    background-color: rgba(0, 0, 0, .6);
+    width: 100vw;
 }
 
 .eschool-checkbox input {
@@ -327,6 +331,19 @@ a {
 .user-menu-wide {
     width: calc(var(--nav-size) - calc(var(--main-spacing-vertical)) - 40px);
     padding: 20px 30px 20px 30px;
+}
+
+div.ui.dropdown.disabled {
+    background-color: #f4f5f8;
+    border-color: #f4f5f8;
+    opacity: unset;
+    color: #6f727d;
+}
+
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown .menu {
+    border-color: #ff5b1d !important;
+    cursor: pointer;
 }
 
 /***************** dropdown css end **************/
@@ -475,6 +492,9 @@ table.viewTeacherTable>tr>th {
 /***************** DTable css **************/
 .react-bootstrap-table table {
     table-layout: unset !important;
+}
+.dtableColumnCheckbox {
+    padding: 9px;
 }
 
 /***************** DTable css end **************/
@@ -2420,107 +2440,107 @@ table.viewTeacherTable>tr>th {
 }
 
 .fs-1 {
-    font-size: 1px !important;
+    font-size: .1rem !important;
 }
 
 .fs-2 {
-    font-size: 2px !important;
+    font-size: .2rem !important;
 }
 
 .fs-3 {
-    font-size: 3px !important;
+    font-size: .3rem !important;
 }
 
 .fs-4 {
-    font-size: 4px !important;
+    font-size: .4rem !important;
 }
 
 .fs-5 {
-    font-size: 5px !important;
+    font-size: .5rem !important;
 }
 
 .fs-6 {
-    font-size: 6px !important;
+    font-size: .6rem !important;
 }
 
 .fs-7 {
-    font-size: 7px !important;
+    font-size: .7rem !important;
 }
 
 .fs-8 {
-    font-size: 8px !important;
+    font-size: .8rem !important;
 }
 
 .fs-9 {
-    font-size: 9px !important;
+    font-size: .9rem !important;
 }
 
 .fs-10 {
-    font-size: 10px !important;
+    font-size: 1.0rem !important;
 }
 
 .fs-11 {
-    font-size: 11px !important;
+    font-size: 1.1rem !important;
 }
 
 .fs-12 {
-    font-size: 12px !important;
+    font-size: 1.2rem !important;
 }
 
 .fs-13 {
-    font-size: 13px !important;
+    font-size: 1.3rem !important;
 }
 
 .fs-14 {
-    font-size: 14px !important;
+    font-size: 1.4rem !important;
 }
 
 .fs-15 {
-    font-size: 15px !important;
+    font-size: 1.5rem !important;
 }
 
 .fs-16 {
-    font-size: 16px !important;
+    font-size: 1.6rem !important;
 }
 
 .fs-17 {
-    font-size: 17px !important;
+    font-size: 1.7rem !important;
 }
 
 .fs-18 {
-    font-size: 18px !important;
+    font-size: 1.8rem !important;
 }
 
 .fs-19 {
-    font-size: 19px !important;
+    font-size: 1.9rem !important;
 }
 
 .fs-20 {
-    font-size: 20px !important;
+    font-size: 2.0rem !important;
 }
 
 .fs-21 {
-    font-size: 21px !important;
+    font-size: 2.1rem !important;
 }
 
 .fs-22 {
-    font-size: 22px !important;
+    font-size: 2.2rem !important;
 }
 
 .fs-23 {
-    font-size: 23px !important;
+    font-size: 2.3rem !important;
 }
 
 .fs-24 {
-    font-size: 24px !important;
+    font-size: 2.4rem !important;
 }
 
 .fs-25 {
-    font-size: 25px !important;
+    font-size: 2.5rem !important;
 }
 
 .fs-35 {
-    font-size: 35px !important;
+    font-size: 3.5rem !important;
 }
 
 .webinar-tab-button-style button:not(active){
@@ -2716,7 +2736,7 @@ table.viewTeacherTable>tr>th {
 .form-control:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #c2c7f3;
+    /* border-color: #c2c7f3; */
     outline: 0;
     -webkit-box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25);
     box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25)
@@ -2743,7 +2763,7 @@ table.viewTeacherTable>tr>th {
 }
 
 .form-control:disabled, .form-control[readonly] {
-    background-color: #e9ecef;
+    background-color: #f4f5f8;
     opacity: 1
 }
 

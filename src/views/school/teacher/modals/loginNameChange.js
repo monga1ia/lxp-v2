@@ -36,7 +36,7 @@ const loginNameChange = ({ onClose, onSubmit }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p style={{ color: '#848691', fontSize: '0.8937rem' }} className='pb-4 pl-4'>{translations(locale)?.teacher?.change_login_name_description}</p>
+                <p style={{ color: '#848691'}} className='fs-11 pb-4 pl-4'>{translations(locale)?.teacher?.change_login_name_description}</p>
                 <Row className='form-group'>
                     <Col className='text-right'>
                         <label className="text-right label-pinnacle-bold col-form-label">

@@ -89,11 +89,14 @@ const CustomToggleList = ({
             onClick={handleToggle}
             className="btn m-btn--icon m-btn--icon-only btn-primary br-03 mx-1"
             style={{
+                backgroundColor: '#ff5b1d',
+                border: 'none',
                 width: '33px',
                 height: '33px',
-                justifyContent: 'center',
-                display: 'inline-flex',
-                alignItems: 'center'
+                minWidth: 'unset',
+                alignItems: 'center',
+                marginRight: '0.5rem',
+                color: 'white'
             }}
         >
             <i className="la la-columns" style={{ fontSize: "22px" }} />
@@ -117,20 +120,27 @@ const CustomToggleList = ({
                     <Paper style={{ padding: "12px 20px" }}>
                         <ClickAwayListener onClickAway={handleClose}>
                             <FormGroup id="split-button-menu">
-                                {columns.map((column, index) => (
-                                    <FormControlLabel
-                                        key={column.dataField}
-                                        control={
-                                            <Checkbox defaultChecked={column.toggle ? false : true} />
-                                        }
-                                        label={column.text}
-                                        onChange={() => onColumnToggle(column.dataField)}
-                                        style={{
-                                            whiteSpace: "nowrap",
-                                            height: 25,
-                                        }}
-                                    />
-                                ))}
+                                {
+                                    columns.map(column => {
+                                        if (column?.dataField === 'dt-row-order-number') return
+                                        return(
+                                            <FormControlLabel
+                                                key={column.dataField}
+                                                control={
+                                                    <div class="dtableColumnCheckbox">
+                                                        <Checkbox defaultChecked={column.toggle ? false : true} />
+                                                    </div>
+                                                }
+                                                label={column.text}
+                                                onChange={() => onColumnToggle(column.dataField)}
+                                                style={{
+                                                    whiteSpace: "nowrap",
+                                                    height: 25,
+                                                }}
+                                            />
+                                        )
+                                    })
+                                }
                             </FormGroup>
                         </ClickAwayListener>
                     </Paper>
@@ -243,12 +253,12 @@ const MyExportCSV = (props) => {
             style={{
                 height: '33px',
                 width: '33px',
-                justifyContent: 'center',
-                display: 'inline-flex',
-                alignItems: 'center'
+                // justifyContent: 'center',
+                // display: 'inline-flex',
+                // alignItems: 'center'
             }}
             onClick={props.excelFileRemote ? handleRemoteExcel : handleClick}
-            className='btn m-btn--icon m-btn--icon-only btn-primary'
+            className='btn m-btn--icon m-btn--icon-only btn-info br-03 mx-1'
         >
             <i
                 className="la-old la-file-excel-o"
@@ -297,6 +307,7 @@ const DTable = ({
     noSelectRow = false,
     expandable = false,
 }) => {
+    const [localColumns, setLocalColumns] = useState(columns || []);
     const { t } = useTranslation();
     const [initialData, setInitialData] = useState([]);
     // const [pageNumber, setPageNumber] = useState(1);
@@ -357,6 +368,10 @@ const DTable = ({
         // sizePerPage: config?.defaultPageOptions?.sizePerPage || sizePerPage,
         // search: config?.defaultPageOptions?.search || '',
     };
+
+    useEffect(() => {
+        setLocalColumns(columns || [])
+    }, [columns])
 
     useEffect(() => {
         if (config.defaultPageOptions) {
@@ -454,7 +469,7 @@ const DTable = ({
         if (searchValue) {
             const val = searchValue.toLowerCase();
             return clone.filter((record) => {
-                for (const column of columns) {
+                for (const column of localColumns) {
                     if (record.hasOwnProperty(column.dataField)) {
                         /// ignoring number type for now!!!.
                         if (
@@ -792,7 +807,7 @@ const DTable = ({
             }
         }
 
-        for (const col of columns) {
+        for (const col of localColumns) {
             if (config.headerFilter) {
                 if (col.filterDisable) {
                     cols.push({
@@ -802,7 +817,7 @@ const DTable = ({
                     cols.push({
                         ...col,
                         filter: textFilter({
-                            placeholder: " ",
+                            placeholder: ' ',
                             onFilter: (filterValue) => {
                                 getUserInteraction({
                                     filter: filterValue,
@@ -1039,13 +1054,13 @@ const DTable = ({
                                                             <ReactToPrint
                                                                 trigger={() => (
                                                                     <button
-                                                                        className="btn m-btn--icon m-btn--icon-only btn-primary br-03 mx-1"
+                                                                        className="btn m-btn--icon m-btn--icon-only btn-info br-03 mx-1"
                                                                         style={{
                                                                             width: '33px',
                                                                             height: '33px',
-                                                                            justifyContent: 'center',
-                                                                            display: 'inline-flex',
-                                                                            alignItems: 'center'
+                                                                            // justifyContent: 'center',
+                                                                            // display: 'inline-flex',
+                                                                            // alignItems: 'center'
                                                                         }}
                                                                     >
                                                                         <i
@@ -1067,6 +1082,8 @@ const DTable = ({
                                                             <div
                                                                 style={{
                                                                     display: 'inline-block',
+                                                                    marginLeft: '0.25rem',
+                                                                    marginRight: '0.25rem',
                                                                 }}
                                                             >
                                                                 <CustomToggleList

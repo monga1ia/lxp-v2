@@ -10,7 +10,7 @@
     --indigo: #6610f2;
     --purple: #6f42c1;
     --pink: #e83e8c;
-    --red: #dc3545;
+    --red: #f4516c;
     --orange: #fd7e14;
     --yellow: #ffc107;
     --green: #28a745;
@@ -73,6 +73,11 @@ progress {
 
 [hidden] {
     display: none !important
+}
+
+label {
+    display: inline-block;
+    margin-bottom: .5rem
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -2747,31 +2752,6 @@ a.btn.disabled, fieldset:disabled a.btn {
 .btn-outline-dark:not(:disabled):not(.disabled).active:focus, .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .show > .btn-outline-dark.dropdown-toggle:focus {
     -webkit-box-shadow: 0 0 0 .2rem rgba(52, 58, 64, .5);
     box-shadow: 0 0 0 .2rem rgba(52, 58, 64, .5)
-}
-
-.btn-link {
-    font-weight: 400;
-    color: #ff2f1a;
-    background-color: transparent
-}
-
-.btn-link:hover {
-    color: #ff2f1a;
-    text-decoration: underline;
-    background-color: transparent;
-    border-color: transparent
-}
-
-.btn-link.focus, .btn-link:focus {
-    text-decoration: underline;
-    border-color: transparent;
-    -webkit-box-shadow: none;
-    box-shadow: none
-}
-
-.btn-link.disabled, .btn-link:disabled {
-    color: #6c757d;
-    pointer-events: none
 }
 
 .btn-group-lg > .btn, .btn-lg {
@@ -10133,9 +10113,10 @@ a.text-dark:focus, a.text-dark:hover {
 } */
 
 .modal .modal-content .modal-header .modal-title {
-    color: #ff4900;
+    color: #ff5b1d;
     font-weight: bold;
-    font-size: 1.2rem
+    font-family: PinnacleBold;
+    font-size: 1.23rem
 }
 
 .modal .modal-content .modal-header .close {
@@ -23636,7 +23617,8 @@ button:active, button:focus {
 }
 
 .btn.btn-outline-danger {
-    color: #f4516c
+    color: #f4516c;
+    border: #f4516c solid 1px
 }
 
 .btn.btn-outline-danger.active, .btn.btn-outline-danger.focus, .btn.btn-outline-danger:focus, .btn.btn-outline-danger:hover:not(:disabled) {
@@ -34711,9 +34693,9 @@ td > .m-checkbox.m-checkbox--single, th > .m-checkbox.m-checkbox--single {
     font-weight: 500
 }
 
-.table.table-striped thead th {
+/* .table.table-striped thead th {
     border: 0
-}
+} */
 
 .table.table-striped tbody td, .table.table-striped tbody th {
     border1: 0

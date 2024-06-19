@@ -1,0 +1,131 @@
+.react-bootstrap-table thead tr {
+    text-transform: uppercase;
+}
+.react-bootstrap-table thead tr th {
+    color: #575962;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+.react-bootstrap-table tbody tr td {
+    color: #575962;
+    font-weight: 500;
+}
+
+table.react-bootstrap-table.custom-dt thead tr td, table.react-bootstrap-table.custom-dt thead tr th {
+    border: 1px solid #ebedf2;
+    background: #fff;
+}
+
+table.react-bootstrap-table.custom-dt tbody tr td, table.react-bootstrap-table.custom-dt thead tr th {
+    border: 1px solid #ebedf2;
+    background: #fff;
+}
+
+.custom-size-per-page {
+    border-radius: 6px;
+}
+.custom-size-per-page button {
+    background-color: #fff !important;
+    color: #575962;
+    font-family: MulishRegular !important;
+}
+
+.dt-cm-wrapper {
+    position: absolute;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 1px 10px 0 rgba(145, 155, 192, 0.3);
+    z-index: 100000;
+}
+
+.dt-cm-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 1.5rem 5px 1rem;
+    font-weight: 500;
+}
+.dt-cm-item span{
+    margin-left: 15px;
+}
+.dt-cm-item svg {
+    position: relative;
+    top: 2px;
+}
+.dt-cm-item:hover {
+    cursor: pointer;
+    background: rgba(255, 73, 0, 0.2);
+}
+
+tr.dt-drag-hover-top td {
+    border-top: 2px solid blue !important;
+}
+
+tr.dt-drag-hover-bottom td {
+    border-bottom: 2px solid blue !important;
+}
+
+.dt-cm-item-icon {
+    margin-right: .5rem;
+    color: #1e1e2d;
+    font-size: 25px;
+}
+.dt-cm-item-icon-18 {
+    margin-right: .5rem;
+    color: #1e1e2d;
+    font-size: 18px;
+}
+.dt-cm-item-icon-19 {
+    margin-right: .5rem;
+    color: #1e1e2d;
+    font-size: 19px;
+}
+.dt-cm-item-icon-20 {
+    margin-right: .5rem;
+    color: #1e1e2d;
+    font-size: 20px;
+}
+.height-0 {
+    height: 0;
+}
+.react-bootstrap-table th.sortable {
+    cursor: pointer;
+}
+.react-bootstrap-table th .order-4:before{
+    color: rgba(255, 91, 29);
+}
+.react-bootstrap-table th .caret-4-asc:before{
+    color: #ff5b1d;
+}
+.react-bootstrap-table th .caret-4-desc:before{
+    color: #ff5b1d;
+}
+.react-bootstrap-table th .order-4:after {
+    color: rgba(255, 91, 29);
+}
+.react-bootstrap-table th .caret-4-asc:after {
+    color: rgba(255, 91, 29);
+}
+.react-bootstrap-table th .caret-4-desc:after {
+    color: #ff5b1d;
+}
+#split-button-menu span:last-child{
+    font-family: MulishRegular !important;
+}
+#split-button-menu svg{
+    color: #ff5b1d !important;
+}
+.react-bs-table-sizePerPage-dropdown ul li a{
+    font-weight: bold;
+    padding: 0.75rem 1.25rem;
+}
+.react-bs-table-sizePerPage-dropdown ul li{
+    padding: unset !important;
+}
+
+.react-bs-table-sizePerPage-dropdown ul li:hover{
+    background: red;
+}
+#pageDropDown {
+    border-color: #ebedf2 !important;
+}

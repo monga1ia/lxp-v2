@@ -151,8 +151,8 @@ textarea.form-control {
 
 .form-control:disabled,
 .form-control[readonly] {
-  background: rgba(var(--separator-rgb), 0.5) !important;
-  border-color: rgba(var(--separator-rgb), 0.5) !important;
+  // background: rgba(var(--separator-rgb), 0.5) !important;
+  // border-color: rgba(var(--separator-rgb), 0.5) !important;
   color: var(--muted);
   -webkit-text-fill-color: var(--muted) !important; // for safari
 }
