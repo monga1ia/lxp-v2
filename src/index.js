@@ -38,6 +38,7 @@ import "./utils/flaticon2/flaticon.css"
 import "./utils/ki/font/ki.css"
 import "./utils/tree/_rc-tree.css";
 import "./utils/pinnacle/_pinnacle.css";
+import "./utils/mulish/_mulish.css";
 import "./utils/splash-screen.css";
 import "./utils/media.css";
 import 'line-awesome/dist/line-awesome/css/line-awesome.min.css';

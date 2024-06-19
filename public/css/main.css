@@ -33,6 +33,25 @@
 
 /* This file is reserved for overriding and extending the template styles. */
 /* // audio player container width fixed */
+html { font-size: 13px; }
+
+body,
+.m-subheader__title,
+.m-nav__link-text,
+.m-portlet__head-caption .m-portlet__head-text,
+.m-portlet__head-title>a,
+.form-control {
+    font-family: MulishRegular !important;
+}
+
+/* body,
+.m-subheader__title,
+.m-nav__link-text,
+.m-portlet__head-caption .m-portlet__head-text,
+.m-portlet__head-title>a,
+.form-control {
+    font-family: MulishRegular !important;
+} */
 
 .student-dummy-white {
     background: white;
@@ -357,7 +376,7 @@ img.img-circle {
 }
 
 .viewTeacherModal>div>div>table {
-    font-size: 0.89376rem;
+    font-size: 1rem;
     color: #7a7a86;
 }
 
@@ -636,15 +655,17 @@ table.viewTeacherTable>tr>th {
     display: inline-block;
     font-weight: 400;
     text-align: center;
+    align-items: center;
+    font-family: PinnacleBold !important;
     white-space: nowrap;
     vertical-align: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    /* border: 1px solid transparent; */
-    padding: .528rem 0.8125rem;
-    font-size: 0.8125rem;
+    border: 1px solid transparent;
+    padding: .65rem 1rem;
+    font-size: 1rem;
     line-height: 1.25;
     border-radius: 0.3076rem;
 }
@@ -2660,6 +2681,84 @@ table.viewTeacherTable>tr>th {
 
 .podcast-forms-style .eschool-select, .podcast-forms-style input.form-control, .podcast-forms-style .eschool-checkbox {
     width: 540px;
+}
+
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .65rem 1rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .form-control {
+        -webkit-transition: none;
+        transition: none
+    }
+}
+
+.form-control::-ms-expand {
+    background-color: transparent;
+    border: 0
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #c2c7f3;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25);
+    box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25)
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #6c757d;
+    opacity: 1
+}
+
+.form-control:-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1
+}
+
+.form-control::-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 1
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.55rem + 2px)
+}
+
+select.form-control:focus::-ms-value {
+    color: #495057;
+    background-color: #fff
+}
+
+.form-control-file, .form-control-range {
+    display: block;
+    width: 100%
 }
 
 .podcast-view-style button.MuiTab-root {

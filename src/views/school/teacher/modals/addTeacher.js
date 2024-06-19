@@ -219,21 +219,13 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             {translations(locale)?.profile?.img_delete}
                         </button>
                     </div>
-                    <div className="col-6">
+                    <div className="col-7">
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                                 {translations(locale)?.role}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    placeholder={'-' + translations(locale)?.select + '-'}
-                                    value={teacher?.role}
-                                    options={selecterDummy}
-                                    onChange={(e, data) => handleChange('role', e)}
-                                />
-                                {/* <Dropdown
+                                <Dropdown
                                     placeholder={'-' + translations(locale)?.select + '-'}
                                     fluid
                                     selection
@@ -242,9 +234,9 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     closeOnChange
                                     selectOnBlur={false}
                                     value={teacher?.role}
-                                    options={roleOptions}
+                                    options={selecterDummy}
                                     onChange={(e, data) => handleChange('role', data?.value)}
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -353,15 +345,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.teacher?.gender}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
-                                    value={teacher?.gender}
-                                    options={selecterDummy}
-                                    onChange={(e, data) => handleChange('gender', e)}
-                                />
-                                {/* <Dropdown
+                                <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
                                     fluid
                                     selection
@@ -372,16 +356,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                >
-                                    <Dropdown.Toggle id="dropdown-basic" className='form-control'>
-                                        Dropdown Button
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className='form-control'>
-                                        <Dropdown.Item href="#/action-1">Option 1</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Option 2</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Option 3</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -389,15 +364,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                 {translations(locale)?.school}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
-                                    options={selecterDummy}
-                                    value={teacher?.grade}
-                                    onChange={(e, data) => handleChange('grade', e)}
-                                />
-                                {/* <Dropdown
+                                <Dropdown
                                     placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
                                     fluid
                                     selection
@@ -408,7 +375,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     value={teacher?.grade}
                                     options={gradeOptions}
                                     onChange={(e, data) => handleChange('grade', data?.value)}
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -432,16 +399,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                         {index == 0 && translations(locale)?.teacher?.subjects}
                                     </label>
                                     <div className="col-3">
-                                        <Select
-                                            clearable
-                                            searchable
-                                            style={{height: '100px'}}
-                                            placeholder={'-' + translations(locale)?.timetable?.select_class + '-'}
-                                            value={el?.grade}
-                                            options={gradeSubjectOptions}
-                                            onChange={(e, data) => handleRowGradeChange(index, e, data?.options)}
-                                        />
-                                        {/* <Dropdown
+                                        <Dropdown
                                             placeholder={'-' + translations(locale)?.err?.select_class + '-'}
                                             fluid
                                             selection
@@ -453,18 +411,9 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             value={el?.grade}
                                             options={gradeSubjectOptions}
                                             onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
-                                        /> */}
-                                    </div>
-                                    <div className="col-5 p-0 align-items-center">
-                                        <Select
-                                            clearable
-                                            searchable
-                                            multiple={true}
-                                            placeholder={'-' + translations(locale)?.timetable?.select_subject}
-                                            options={gradeSubjectOptions}
-                                            value={el?.subjects}
-                                            onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                         />
+                                    </div>
+                                    <div className="col-5 d-flex p-0 align-items-center">
                                         <Dropdown
                                             placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
                                             fluid
@@ -493,7 +442,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             gradeSubjectOptions?.length > gradeRows?.length &&
                             <div className="form-group m-form__group row">
                                 <div className="col p-0 d-flex justify-content-end align-items-center">
-                                    <button onClick={addGradeRow} className='btn btn-outline-primary m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                    <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                         <i className="la la-plus" />
                                     </button>
                                 </div>

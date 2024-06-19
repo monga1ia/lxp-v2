@@ -275,11 +275,10 @@ const index = () => {
                     <div className="col-9">
                         <Button
                             onClick={() => setShowCreateModal(true)}
-                            variant="primary"
-                            className="mb-2 add-button text-uppercase"
+                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                            {translations(locale).action.register}
+                            <AddCircleOutlineRoundedIcon/>
+                            <span className='ml-2'>{translations(locale)?.action?.register}</span>
                         </Button>
                         {/* <Link to='/school/classes/create' className="btn m-btn--pill m-btn--uppercase btn-info d-inline-flex align-items-center mb-3 btn-sm">
                             <AddCircleOutlineRoundedIcon />

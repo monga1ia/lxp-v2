@@ -105,7 +105,7 @@ const Select = ({
     return (
         <>
             <ReactSelect
-                styles={style}
+                styles={style} 
                 className={`eschool-select ${className}`}
                 isDisabled={disabled}
                 isClearable={clearable}

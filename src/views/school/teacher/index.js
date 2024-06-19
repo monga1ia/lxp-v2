@@ -398,8 +398,8 @@ const MainGroup = () => {
                 <Col xl="9" xxl="10">
                     <Button
                         onClick={() => setShowAddTeacherModal(true)}
-                        variant="primary"
-                        className="mb-2 add-button text-uppercase"
+                        // variant="primary"
+                        className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                     >
                         <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                         {t('common.register')}

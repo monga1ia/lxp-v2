@@ -202,26 +202,26 @@ button {
   background-color: var(--quaternary-darker);
 }
 
-.btn-success,
-.btn-success:not(:disabled):not(.disabled):focus,
-.btn-success:not(:disabled):not(.disabled).focus {
-  background-color: var(--success);
-  &:hover {
-    background-color: var(--success-darker);
-  }
-}
+// .btn-success,
+// .btn-success:not(:disabled):not(.disabled):focus,
+// .btn-success:not(:disabled):not(.disabled).focus {
+//   background-color: var(--success);
+//   &:hover {
+//     background-color: var(--success-darker);
+//   }
+// }
 
-.btn-success.disabled,
-.btn-success:disabled {
-  background-color: var(--success);
-}
+// .btn-success.disabled,
+// .btn-success:disabled {
+//   background-color: var(--success);
+// }
 
-.btn-success:not(:disabled):not(.disabled):active,
-.btn-success:not(:disabled):not(.disabled).active,
-.show > .btn-success:not(:disabled):not(.disabled)[data-bs-toggle="dropdown"][aria-expanded="true"],
-.show > .btn-success:not(:disabled):not(.disabled).dropdown-toggle[aria-expanded="true"] {
-  background-color: var(--success-darker);
-}
+// .btn-success:not(:disabled):not(.disabled):active,
+// .btn-success:not(:disabled):not(.disabled).active,
+// .show > .btn-success:not(:disabled):not(.disabled)[data-bs-toggle="dropdown"][aria-expanded="true"],
+// .show > .btn-success:not(:disabled):not(.disabled).dropdown-toggle[aria-expanded="true"] {
+//   background-color: var(--success-darker);
+// }
 
 .btn-white,
 .btn-white:not(:disabled):not(.disabled):focus,
@@ -288,14 +288,14 @@ button {
   background-color: var(--warning-darker);
 }
 
-.btn-info,
-.btn-info:not(:disabled):not(.disabled):focus,
-.btn-info:not(:disabled):not(.disabled).focus {
-  background-color: var(--info);
-  &:hover {
-    background-color: var(--info-darker);
-  }
-}
+// .btn-info,
+// .btn-info:not(:disabled):not(.disabled):focus,
+// .btn-info:not(:disabled):not(.disabled).focus {
+//   background-color: var(--info);
+//   &:hover {
+//     background-color: var(--info-darker);
+//   }
+// }
 
 .btn-info.disabled,
 .btn-info:disabled {
@@ -506,7 +506,6 @@ button {
 }
 
 .btn-outline-primary {
-  box-shadow: inset 0 0 0 1px var(--primary) !important;
   color: var(--primary) !important;
   &:hover {
     color: var(--light-text) !important;
@@ -517,7 +516,6 @@ button {
 
 .btn-outline-primary.disabled,
 .btn-outline-primary:disabled {
-  box-shadow: inset 0 0 0 1px var(--primary) !important;
   background: initial;
   color: var(--primary) !important;
 }
@@ -527,7 +525,6 @@ button {
 .show > .btn-outline-primary:not(:disabled):not(.disabled)[data-bs-toggle="dropdown"][aria-expanded="true"],
 .show > .btn-outline-primary:not(:disabled):not(.disabled).dropdown-toggle[aria-expanded="true"] {
   background-color: var(--primary);
-  box-shadow: inset 0 0 0 1px var(--primary) !important;
   color: var(--light-text) !important;
 }
 
@@ -765,31 +762,31 @@ button {
   color: var(--light-text) !important;
 }
 
-.btn-outline-info {
-  box-shadow: inset 0 0 0 1px var(--info) !important;
-  color: var(--info) !important;
-  &:hover {
-    color: var(--light-text) !important;
-    background-color: var(--info);
-    box-shadow: initial !important;
-  }
-}
+// .btn-outline-info {
+//   box-shadow: inset 0 0 0 1px var(--info) !important;
+//   color: var(--info) !important;
+//   &:hover {
+//     color: var(--light-text) !important;
+//     background-color: var(--info);
+//     box-shadow: initial !important;
+//   }
+// }
 
-.btn-outline-info.disabled,
-.btn-outline-info:disabled {
-  box-shadow: inset 0 0 0 1px var(--info) !important;
-  background: initial;
-  color: var(--info) !important;
-}
+// .btn-outline-info.disabled,
+// .btn-outline-info:disabled {
+//   box-shadow: inset 0 0 0 1px var(--info) !important;
+//   background: initial;
+//   color: var(--info) !important;
+// }
 
-.btn-outline-info:not(:disabled):not(.disabled):active,
-.btn-outline-info:not(:disabled):not(.disabled).active,
-.show > .btn-outline-info:not(:disabled):not(.disabled)[data-bs-toggle="dropdown"][aria-expanded="true"],
-.show > .btn-outline-info:not(:disabled):not(.disabled).dropdown-toggle[aria-expanded="true"] {
-  background-color: var(--info);
-  box-shadow: inset 0 0 0 1px var(--info) !important;
-  color: var(--light-text) !important;
-}
+// .btn-outline-info:not(:disabled):not(.disabled):active,
+// .btn-outline-info:not(:disabled):not(.disabled).active,
+// .show > .btn-outline-info:not(:disabled):not(.disabled)[data-bs-toggle="dropdown"][aria-expanded="true"],
+// .show > .btn-outline-info:not(:disabled):not(.disabled).dropdown-toggle[aria-expanded="true"] {
+//   background-color: var(--info);
+//   box-shadow: inset 0 0 0 1px var(--info) !important;
+//   color: var(--light-text) !important;
+// }
 
 .btn-outline-danger {
   box-shadow: inset 0 0 0 1px var(--danger) !important;
