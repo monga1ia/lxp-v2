@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import Select from 'modules/Form/Select'
 
 const roleChange = ({ onClose, onSubmit, teacher }) => {
@@ -57,14 +58,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                         {translations(locale)?.role}*
                     </label>
                     <div className="col-5">
-                        <Select
-                            multiple={true}
-                            additionPosition='bottom'
-                            value={selectedRoles}
-                            options={roleOptions}
-                            onChange={(data) => setSelectedRoles(data)}
-                        />
-                        {/* <Dropdown
+                        <Dropdown
                             placeholder={'-' + translations(locale)?.select + '-'}
                             fluid
                             selection
@@ -75,7 +69,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                             value={selectedRoles}
                             options={roleOptions}
                             onChange={(e, data) => setSelectedRoles(data?.value)}
-                        /> */}
+                        />
                     </div>
                 </div>
             </Modal.Body>
