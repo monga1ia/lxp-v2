@@ -342,6 +342,13 @@ label {
     max-width: 41.66667%
 }
 
+.col-5s{
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+    max-width: 40%
+}
+
 .col-6 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
@@ -389,6 +396,15 @@ label {
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%
+}
+
+.col-12s {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) / 2) !important;
+    padding-left: calc(var(--bs-gutter-x) / 2) !important;
 }
 
 .order-first {
@@ -1752,6 +1768,13 @@ label {
     border: 0
 }
 
+div.ui.dropdown.disabled {
+    background-color: #f4f5f8;
+    border-color: #f4f5f8;
+    opacity: unset;
+    color: #6f727d;
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -1786,8 +1809,8 @@ label {
     background-color: #fff;
     border-color: #c2c7f3;
     outline: 0;
-    -webkit-box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25);
-    box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25)
+    /* -webkit-box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25);
+    box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25) */
 }
 
 .form-control::-webkit-input-placeholder {
@@ -5276,7 +5299,7 @@ button.close {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1.25rem 1.5rem !important;
     border-bottom: 1px solid #e9ecef;
     border-top-left-radius: .3rem;
     border-top-right-radius: .3rem
@@ -9460,7 +9483,7 @@ a.text-dark:focus, a.text-dark:hover {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
-    content: "";
+    content: "⮟";
     font-size: .8rem;
     line-height: 0;
     vertical-align: middle;
@@ -25249,6 +25272,12 @@ button:active, button:focus {
 
 .m-portlet.m-portlet--bottom-fit {
     margin-bottom: 0
+}
+
+.m-portlet_tab_header {
+    align-items: end;
+    height: 4rem;
+    padding: 0;
 }
 
 .m-portlet .m-portlet__head {

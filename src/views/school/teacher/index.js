@@ -465,115 +465,124 @@ const MainGroup = () => {
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
             </div>
-            
-            <Row className="">
-                <Col className="pr-0" xl="3" xxl="2">
-                    <Card className="mb-5">
-                        <Card.Body>
-                            <TreeView
-                                treeData={treeData}
-                                selectedNodes={[selectedTreeDataId]}
-                                onSelect={handleTreeSelect}
-                                defaultExpandAll
-                            />
-                        </Card.Body>
-                    </Card>
-                </Col>
 
-                <Col xl="9" xxl="10">
-                    <Button
-                        onClick={() => setShowAddTeacherModal(true)}
-                        // variant="primary"
-                        className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
-                    >
-                        <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                        {t('common.register')}
-                    </Button>
-                    <div className="mb-5 background-white br-16">
-                        <div className="m-portlet__body">
-                            <TabComponent
-                                onChange={(e, data) => handleTabChange(e, data)}
-                                className='padding-30'
-                                tabs={[
-                                    {
-                                        code: "active",
-                                        title: "Ажиллаж байгаа",
-                                        children: (
-                                            <DTable
-                                                remote
-                                                config={config}
-                                                locale={locale}
-                                                data={tableData}
-                                                columns={columns}
-                                                individualContextMenus
-                                                contextMenus={contextMenus}
-                                                onContextMenuItemClick={handleContextMenuClick}
-                                                onInteraction={onUserInteraction}
-                                                totalDataSize={totalCount}
-                                            />
-                                        )
-
-                                    },
-                                    {
-                                        code: "absent",
-                                        title: "Чөлөөтэй байгаа",
-                                        children: (
-                                            <DTable
-                                                remote
-                                                config={config}
-                                                locale={locale}
-                                                data={tableData}
-                                                columns={columns}
-                                                individualContextMenus
-                                                contextMenus={contextMenus}
-                                                onContextMenuItemClick={handleContextMenuClick}
-                                                onInteraction={onUserInteraction}
-                                                totalDataSize={totalCount}
-                                            />
-                                        )
-                                    },
-                                    {
-                                        code: "leave",
-                                        title: "Ажлаас гарсан",
-                                        children: (
-                                            <DTable
-                                                remote
-                                                config={config}
-                                                locale={locale}
-                                                data={tableData}
-                                                columns={columns}
-                                                individualContextMenus
-                                                contextMenus={contextMenus}
-                                                onContextMenuItemClick={handleContextMenuClick}
-                                                onInteraction={onUserInteraction}
-                                                totalDataSize={totalCount}
-                                            />
-                                        )
-                                    },
-                                    {
-                                        code: "deleted",
-                                        title: "Устгагдсан",
-                                        children: (
-                                            <DTable
-                                                remote
-                                                config={config}
-                                                locale={locale}
-                                                data={tableData}
-                                                columns={columns}
-                                                individualContextMenus
-                                                contextMenus={contextMenus}
-                                                onContextMenuItemClick={handleContextMenuClick}
-                                                onInteraction={onUserInteraction}
-                                                totalDataSize={totalCount}
-                                            />
-                                        )
-                                    }
-                                ]}
-                            />
+            <div className='m-content'>
+                <Row className=''>
+                    <Col className="pr-0" xl="3" xxl="2">
+                        <div className='m-portlet'>
+                            <div className='m-portlet__body'>
+                                <TreeView
+                                    treeData={treeData}
+                                    selectedNodes={[selectedTreeDataId]}
+                                    onSelect={handleTreeSelect}
+                                    defaultExpandAll
+                                />
+                            </div>
                         </div>
-                    </div>
-                </Col>
-            </Row>
+                    </Col>
+
+                    <Col xl="9" xxl="10">
+                        <Button
+                            onClick={() => setShowAddTeacherModal(true)}
+                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
+                        >
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            {t('common.register')}
+                        </Button>
+                        <div className='m-portlet tab'>
+                            <div className=''>
+                                <TabComponent
+                                    onChange={(e, data) => handleTabChange(e, data)}
+                                    className='m-portlet-header'
+                                    tabs={[
+                                        {
+                                            code: "active",
+                                            title: "Ажиллаж байгаа",
+                                            children: (
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
+                                            )
+
+                                        },
+                                        {
+                                            code: "absent",
+                                            title: "Чөлөөтэй байгаа",
+                                            children: (
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
+                                            )
+                                        },
+                                        {
+                                            code: "leave",
+                                            title: "Ажлаас гарсан",
+                                            children: (
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
+                                            )
+                                        },
+                                        {
+                                            code: "deleted",
+                                            title: "Устгасан",
+                                            children: (
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
+                                            )
+                                        }
+                                    ]}
+                                />
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
             {
                 loading &&
                 <>

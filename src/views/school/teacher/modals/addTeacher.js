@@ -413,7 +413,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
                                         />
                                     </div>
-                                    <div className="col-5 d-flex p-0 align-items-center">
+                                    <div className="col-5s d-flex p-0 align-items-center">
                                         <Dropdown
                                             placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
                                             fluid
@@ -441,7 +441,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         {
                             gradeSubjectOptions?.length > gradeRows?.length &&
                             <div className="form-group m-form__group row">
-                                <div className="col p-0 d-flex justify-content-end align-items-center">
+                                <div className="col-12s d-flex justify-content-end align-items-center">
                                     <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                         <i className="la la-plus" />
                                     </button>

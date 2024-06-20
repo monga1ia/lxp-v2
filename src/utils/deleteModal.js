@@ -18,7 +18,7 @@ const deleteModal = ({ onClose, onDelete, title, locale, children }) => {
                     {title}
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body style={{color: '#212529'}}>
                 {children}
             </Modal.Body>
             <Modal.Footer className='text-center'>

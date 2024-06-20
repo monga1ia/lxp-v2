@@ -31,6 +31,21 @@
     }
 }
 
+@font-face {
+    font-family: LineAwesome;
+    src: url(../fonts/line-awesome/line-awesome.eot?v=1.1.);
+    src: url(../fonts/line-awesome/line-awesome.eot??v=1.1.#iefix) format("embedded-opentype"), url(../fonts/line-awesome/line-awesome.woff2?v=1.1.) format("woff2"), url(../fonts/line-awesome/line-awesome.woff?v=1.1.) format("woff"), url(../fonts/line-awesome/line-awesome.ttf?v=1.1.) format("truetype"), url(../fonts/line-awesome/line-awesome.svg?v=1.1.#fa) format("svg");
+    font-weight: 400;
+    font-style: normal
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: LineAwesome;
+        src: url(../fonts/line-awesome/line-awesome.svg?v=1.1.#fa) format("svg")
+    }
+}
+
 /* This file is reserved for overriding and extending the template styles. */
 /* // audio player container width fixed */
 html { font-size: 13px; }
@@ -204,10 +219,10 @@ a {
     padding: 2px 4px;
 }
 
-.black-color {
+/* .black-color {
     color: #000 !important;
     font-weight: 500;
-}
+} */
 
 .main-color {
     color: #3C358F;
@@ -393,7 +408,7 @@ img.img-circle {
 }
 
 .viewTeacherModal>div>div>table {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #7a7a86;
 }
 
@@ -1147,8 +1162,8 @@ table.viewTeacherTable>tr>th {
 .rdw-option-wrapper {
     border: 1px solid #F1F1F1;
     padding: 5px !important;
-    min-width: 25px;
-    height: 20px;
+    width: 37px;
+    height: 32px;
     border-radius: 2px;
     margin: 0 4px;
     display: flex;
@@ -2703,6 +2718,36 @@ table.viewTeacherTable>tr>th {
     width: 540px;
 }
 
+.ReactCrop {
+    background-color: #000;
+    cursor: crosshair;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.col-form-label {
+    padding-top: calc(.65rem + 1px);
+    padding-bottom: calc(.65rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.25
+}
+
+.col-form-label-lg {
+    padding-top: calc(1rem + 1px);
+    padding-bottom: calc(1rem + 1px);
+    font-size: 1.25rem;
+    line-height: 1.5
+}
+
+.col-form-label-sm {
+    padding-top: calc(.35rem + 1px);
+    padding-bottom: calc(.35rem + 1px);
+    font-size: .875rem;
+    line-height: 1.5
+}
 
 .form-control {
     display: block;
@@ -2710,10 +2755,10 @@ table.viewTeacherTable>tr>th {
     padding: .65rem 1rem;
     font-size: 1rem;
     line-height: 1.25;
-    color: #495057;
+    color: #575962;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid #ced4da;
+    border: 1px solid #ebedf2;
     border-radius: .25rem;
     -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
@@ -2736,10 +2781,10 @@ table.viewTeacherTable>tr>th {
 .form-control:focus {
     color: #495057;
     background-color: #fff;
-    /* border-color: #c2c7f3; */
+    border-color: #ff5b1d;
     outline: 0;
-    -webkit-box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25);
-    box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .25)
+    -webkit-box-shadow: none;
+    box-shadow: none
 }
 
 .form-control::-webkit-input-placeholder {
@@ -3078,4 +3123,10 @@ select.form-control:focus::-ms-value {
 
 .dropdown {
     background-color: transparent;
+}
+
+.underline {
+    text-decoration: underline !important;
+    color: #5867dd !important;
+    cursor: pointer;
 }

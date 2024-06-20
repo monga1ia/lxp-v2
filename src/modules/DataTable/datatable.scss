@@ -54,7 +54,7 @@ table.custom-dt {
 }
 
 .custom-size-per-page {
-  border: 1px solid #dcdcdc;
+  // border: 1px solid #dcdcdc;
   border-radius: 6px;
   > button {
     background-color: #fff !important;
@@ -83,8 +83,9 @@ table.custom-dt {
   display: flex;
   align-items: center;
   padding: 5px 1.5rem 5px 1rem;
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
+  right: 0 !important;
 
   &:hover {
     //color: rgb(42, 69, 217);
