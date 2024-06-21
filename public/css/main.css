@@ -3092,7 +3092,16 @@ select.form-control:focus::-ms-value {
 .form-check-input {
     position: absolute;
     margin-top: .3rem;
-    margin-left: -1.25rem
+    margin-left: -1.25rem;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.form-check-input:checked {
+    background-color: #ff5b1d;
+    border-color: #ff5b1d !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .form-check-input:disabled ~ .form-check-label {

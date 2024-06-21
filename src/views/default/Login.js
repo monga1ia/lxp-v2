@@ -162,31 +162,31 @@ const Login = () => {
                 </div>
                 <div>
                     <form id="loginForm" className="tooltip-end-bottom" onSubmit={handleSubmit}>
-                        <Relative className="mb-3 form-group tooltip-end-bottom font-pinnacle fs-13">
-                            <PhoneIphoneIcon />
+                        <Relative className="mb-3 form-group tooltip-end-bottom font-pinnacle fs-10">
+                            <PhoneIphoneIcon style={{height: '24px', width: '24px'}} />
                             <Input
                                 onWheel={e => e?.target?.blur()}
-                                className='form-control font-pinnacle fs-13 text-medium' type="text" name="username" placeholder={t('common.phoneNumber')} value={values.username} onChange={handleChange} />
+                                className='form-control font-pinnacle fs-10 text-medium' type="text" name="username" placeholder={t('common.phoneNumber')} value={values.username} onChange={handleChange} />
                             {errors.username && touched.username && <div className="d-block invalid-tooltip">{errors.username}</div>}
                         </Relative>
                         <Relative className="mb-3 form-group tooltip-end-bottom font-pinnacle fs-13">
-                            <LockOpenOutlinedIcon />
-                            <Input className='form-control font-pinnacle fs-13 text-medium' type="password" name="password" placeholder={t('auth.password')} value={values.password} onChange={handleChange} />
+                            <LockOpenOutlinedIcon style={{height: '24px', width: '24px'}}/>
+                            <Input className='form-control font-pinnacle fs-10 text-medium' type="password" name="password" placeholder={t('auth.password')} value={values.password} onChange={handleChange} />
                             {errors.password && touched.password && <div className="d-block invalid-tooltip">{errors.password}</div>}
                         </Relative>
                         <CheckboxDiv className="form-check mb-3">
                             <input className="form-check-input" id='rememberMe' type="checkbox" value={values.remember} onChange={handleChange} style={{ borderRadius: '4px' }} />
-                            <label className="form-check-label font-mulish fs-14" htmlFor="rememberMe" style={{ color: '#575962' }}>
+                            <label className="form-check-label font-mulish" htmlFor="rememberMe" style={{ color: '#575962', fontSize: '14px' }}>
                                 {t('auth.rememberMe')}
                             </label>
                         </CheckboxDiv>
-                        <button type="submit" className='btn btn-primary w-100 fw-bold pinnacle-bold' style={{ borderRadius: '8px', height: '40px' }}>
+                        <button type="submit" className='btn btn-info w-100 fw-bold pinnacle-bold' style={{ borderRadius: '8px', height: '40px', fontSize: '12px' }}>
                             {t('auth.login').toUpperCase()}
                         </button>
-                        <button type="button" className='btn btn-outline-primary w-100 fw-bold pinnacle-bold mt-3' style={{ borderRadius: '8px', height: '40px' }} onClick={onHandlerRegistration}>
+                        <button type="button" className='btn btn-outline-info w-100 fw-bold pinnacle-bold mt-3' style={{ borderRadius: '8px', height: '40px', fontSize: '12px' }} onClick={onHandlerRegistration}>
                             {t('auth.signUp').toUpperCase()}
                         </button>
-                        <button type="button" className='btn btn-empty w-100 fw-bold pinnacle-bold mt-3 text-decoration-underline ' style={{ borderRadius: '8px', height: '40px', color: '#ff5b1d' }} onClick={onHandlerConfirmation}>
+                        <button type="button" className='btn btn-empty w-100 fw-bold pinnacle-bold mt-3 text-decoration-underline ' style={{ borderRadius: '8px', height: '40px', color: '#ff5b1d', fontSize: '12px' }} onClick={onHandlerConfirmation}>
                             {t('auth.userConfirm').toUpperCase()}
                         </button>
                         {/* <button type="submit" className='btn btn-info w-100 fw-bold pinnacle-bold' style={{ borderRadius: '8px', height: '40px' }}>
@@ -203,7 +203,7 @@ const Login = () => {
               					</button> */}
                         </div>
                         <div className="d-flex align-items-center flex-column justify-content-between mb-5" style={{ marginTop: '150px' }}>
-                            <button type="button" className='login-recover-button btn btn-outline-danger font-pinnacle fs-14' style={{ borderRadius: '8px' }} onClick={handleForgotPassword}>
+                            <button type="button" className='login-recover-button btn font-pinnacle btn-forgotPass' style={{ borderRadius: '8px' }} onClick={handleForgotPassword}>
                                 {t('auth.clickHereIfYouForgotYourPassword')}
                             </button>
                         </div>
