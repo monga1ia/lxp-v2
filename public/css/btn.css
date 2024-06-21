@@ -337,8 +337,10 @@
 }
 
 .btn-info.focus, .btn-info:focus {
-    -webkit-box-shadow: 0 0 0 .2rem rgba(255, 91, 29, .5);
-    box-shadow: 0 0 0 .2rem rgba(255, 91, 29, .5)
+    background-color: #ff5b1d;
+    border: none;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
 }
 
 .btn-info.disabled, .btn-info:disabled {

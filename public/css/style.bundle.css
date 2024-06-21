@@ -2382,8 +2382,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-info.focus, .btn-info:focus {
-    -webkit-box-shadow: 0 0 0 .2rem rgba(255, 91, 29, .5);
-    box-shadow: 0 0 0 .2rem rgba(255, 91, 29, .5)
+    -webkit-box-shadow: 0 0 0 .2rem rgba(255, 91, 29, .5) !important;
+    box-shadow: 0 0 0 .2rem rgba(255, 91, 29, .5) !important
 }
 
 .btn-info.disabled, .btn-info:disabled {

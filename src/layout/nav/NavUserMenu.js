@@ -185,7 +185,29 @@ const NavUserMenu = () => {
     return (
         <Dropdown as="div" bsPrefix="user-container d-flex" onToggle={onToggle} show={showingNavMenu === MENU_NAME} drop="down">
             <Dropdown.Toggle as={NavUserMenuDropdownToggle} user={person} />
-            
+            <Dropdown.Menu
+                as={NavUserMenuDropdownMenu}
+                className="dropdown-menu dropdown-menu-end user-menu user-menu-wide"
+                popperConfig={{
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: () => {
+                                    if (placement === MENU_PLACEMENT.Horizontal) {
+                                        return [0, 7];
+                                    }
+                                    if (window.innerWidth < 768) {
+                                        return [-84, 7];
+                                    }
+
+                                    return [-78, 7];
+                                },
+                            },
+                        },
+                    ],
+                }}
+            />
         </Dropdown>
     );
 };
