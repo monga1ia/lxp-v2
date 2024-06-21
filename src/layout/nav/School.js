@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-// import { NavLink } from 'react-router-dom';
-import { Dropdown } from 'react-bootstrap';
+// import { Dropdown } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
-// import { SearchRounded } from '@mui/icons-material';
 import classNames from 'classnames';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-// import { MENU_PLACEMENT } from 'constants.js';
-// import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { layoutShowingNavMenu } from 'layout/layoutSlice';
 import showMessage from "../../modules/message";
 import { setLoading, setSelectedSchool } from '../../utils/redux/action';
+import { Dropdown } from 'semantic-ui-react';
 
 // const MENU_NAME = 'Schools';
 const Schools = () => {
@@ -19,25 +16,18 @@ const Schools = () => {
     const { t } = useTranslation();
 
     const {
-        // placementStatus: { view: placement },
         behaviourStatus: { behaviourHtmlData },
         attrMobile,
         attrMenuAnimate,
     } = useSelector((state) => state.menu);
+
     const { color } = useSelector((state) => state.settings);
     const { isStudent = false, isOrganizationUser = false} = useSelector(state => state.person)
     const { schools, selectedSchool } = useSelector((state) => state.schoolData);
-    // const { showingNavMenu } = useSelector((state) => state.layout);
     const [searchValue, setSearchValue] = useState('');
 
-    // const onToggle = (status, event) => {
-    //     if (event && event.stopPropagation) event.stopPropagation();
-    //     else if (event && event.originalEvent && event.originalEvent.stopPropagation) event.originalEvent.stopPropagation();
-    //     dispatch(layoutShowingNavMenu(status ? MENU_NAME : ''));
-    // };
     useEffect(() => {
         dispatch(layoutShowingNavMenu(''));
-        // eslint-disable-next-line
     }, [attrMenuAnimate, behaviourHtmlData, attrMobile, color]);
 
     useEffect(() => {
@@ -157,72 +147,58 @@ const Schools = () => {
         })
     );
 
-    if (isOrganizationUser) {
-        return (
-            <Dropdown
-                style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
-            >
-                <Dropdown.Toggle as={SchoolsDropdownToggle} />
-                <Dropdown.Menu
-                    className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
-                    style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
-                    as={SchoolsDropdownMenu}
-                // popperConfig={{
-                //     modifiers: [
-                //         {
-                //             name: 'offset',
-                //             options: {
-                //                 offset: () => {
-                //                     if (placement === MENU_PLACEMENT.Horizontal) {
-                //                         return [0, 7];
-                //                     }
-                //                     if (window.innerWidth < 768) {
-                //                         return [-168, 7];
-                //                     }
-                //                     return [-162, 7];
-                //                 },
-                //             },
-                //         },
-                //     ],
-                // }}
-                />
-            </Dropdown>
-        );
-    } else {
-        if (schools && schools.length > 0 && !isStudent) {
-            return (
-                <Dropdown
-                    style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
-                >
-                    <Dropdown.Toggle as={SchoolsDropdownToggle} />
-                    <Dropdown.Menu
-                        className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
-                        style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
-                        as={SchoolsDropdownMenu}
-                    // popperConfig={{
-                    //     modifiers: [
-                    //         {
-                    //             name: 'offset',
-                    //             options: {
-                    //                 offset: () => {
-                    //                     if (placement === MENU_PLACEMENT.Horizontal) {
-                    //                         return [0, 7];
-                    //                     }
-                    //                     if (window.innerWidth < 768) {
-                    //                         return [-168, 7];
-                    //                     }
-                    //                     return [-162, 7];
-                    //                 },
-                    //             },
-                    //         },
-                    //     ],
-                    // }}
+    return (
+        <div style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}>
+            {/* <div
+                className='m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-left m-dropdown--align-push'
+                aria-expanded='true' style={{ marginLeft: '20px', width: '180px' }}>
+                    <Dropdown
+                        fluid
+                        search
+                        selection
+                        closeOnChange
+                        selectOnBlur={false}
+                        options={schoolOptions}
+                        className='header-select'
+                        value={selectedSchool?.value}
+                        onChange={(e, data) => onSchoolChange(data?.value)}
+                        placeholder={t(lang)?.err?.select_school}
                     />
-                </Dropdown>
-            );
-        } else {
-            return <></>;
-        }
-    }
+            </div> */}
+            <div
+                className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
+                style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
+            >
+                <OverlayScrollbarsComponent
+                    style={{ maxHeight: 250 }}
+                    options={{
+                        overflowBehavior: {
+                            x: "hidden",
+                            y: "scroll"
+                        },
+                        scrollbars: {
+                            visibility: "auto",
+                            autoHide: "never",
+                            dragScrolling: false,
+                            clickScrolling: false,
+                            touchSupport: true,
+                            snapHandle: false
+                        },
+                    }}
+                >
+                    {/* <ul className="list-unstyled border-last-none">
+                        {schools && schools.map((schoolObj) => (
+                            searchValue && searchValue.length > 0
+                                ?
+                                schoolObj.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+                                renderData(schoolObj)
+                                :
+                                renderData(schoolObj)
+                        ))}
+                    </ul> */}
+                </OverlayScrollbarsComponent>
+            </div>
+        </div>
+    )
 };
 export default React.memo(Schools);

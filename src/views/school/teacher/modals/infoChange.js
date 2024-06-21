@@ -4,9 +4,13 @@ import { Editor } from 'react-draft-wysiwyg'
 import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
 import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
+import { useTranslation } from "react-i18next";
+
 const infoChange = ({ onClose, onSubmit, teacher }) => {
+    
+    const { t } = useTranslation();
+
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
@@ -37,7 +41,7 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t(locale)?.err?.error_occurred)
     //             setLoading(false)
     //         })
     // }, [])
@@ -57,7 +61,7 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.teacher?.info_add}
+                    {t(locale)?.teacher?.info_add}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -77,23 +81,23 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.code}:</td>
+                                        <td>{t(locale)?.teacher?.code}:</td>
                                         <th>{teacherData?.code || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.new_lastname}:</td>
+                                        <td>{t(locale)?.teacher?.new_lastname}:</td>
                                         <th>{teacherData?.lastName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.new_name}:</td>
+                                        <td>{t(locale)?.teacher?.new_name}:</td>
                                         <th>{teacherData?.firstName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.phone_number}:</td>
+                                        <td>{t(locale)?.teacher?.phone_number}:</td>
                                         <th>{teacherData?.contact || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="vertical">{translations(locale)?.teacher?.subjects}:</td>
+                                        <td className="vertical">{t(locale)?.teacher?.subjects}:</td>
                                         <th>
                                             {
                                                 teacherData?.subjectNames?.split(',')?.map((el, key) =>
@@ -139,13 +143,13 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
-                        {translations(locale)?.back}
+                        {t(locale)?.back}
                     </button>
                     <button
                         className="btn m-btn--pill btn-success m-btn--wide"
                         onClick={handleSave}
                     >
-                        {translations(locale)?.save}
+                        {t(locale)?.save}
                     </button>
                 </div>
             </Modal.Footer>

@@ -2,11 +2,14 @@ import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect, useRef } from 'react'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
 import Select from 'modules/Form/Select'
 import {cloneDeep} from "lodash";
+import { useTranslation } from "react-i18next";
 
 const setTeacher = ({ onClose, onSubmit, user }) => {
+    
+    const { t } = useTranslation();
+
     const mainGradeRef = useRef()
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
@@ -44,7 +47,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t(locale)?.err?.error_occurred)
         //         setLoading(false)
         //     })
     }
@@ -145,27 +148,27 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.add_teacher_role}
+                    {t(locale)?.add_teacher_role}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="form-group m-form__group row">
                     <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                        {translations(locale)?.teacher?.teacher_title}*
+                        {t(locale)?.teacher?.teacher_title}*
                     </label>
                     <div className="col-8">
                         <input
                             type="text"
                             className="form-control"
                             value={userTitle || ''}
-                            placeholder={translations(locale)?.teacher?.insert_teacher_title}
+                            placeholder={t(locale)?.teacher?.insert_teacher_title}
                             onChange={(e) => handleChange(e.target.value)}
                         />
                     </div>
                 </div>
                 <div className="form-group m-form__group row">
                     <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                        {translations(locale)?.school}*
+                        {t(locale)?.school}*
                     </label>
                     <div className="col-8">
                         <Select
@@ -176,7 +179,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                         />
                         {/* <Dropdown
                             ref={mainGradeRef}
-                            placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
+                            placeholder={'-' + t(locale)?.teacher?.select_school + '-'}
                             fluid
                             selection
                             additionPosition='bottom'
@@ -194,7 +197,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                     gradeRows?.map((el, index) => (
                         <div key={index} className="form-group m-form__group row">
                             <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                                {index == 0 && translations(locale)?.teacher?.subjects}
+                                {index == 0 && t(locale)?.teacher?.subjects}
                             </label>
                             <div className="col-3">
                                 <Select
@@ -204,7 +207,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                                     onchange={(e, data) => handleRowGradeChange(index, data)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + translations(locale)?.err?.select_class + '-'}
+                                    placeholder={'-' + t(locale)?.err?.select_class + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -226,7 +229,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                                     onchange={(e, data) => handleRowGradeChange(index, data)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
+                                    placeholder={'-' + t(locale)?.absent?.select_subject + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -269,13 +272,13 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                     onClick={onClose}
                 >
-                    {translations(locale)?.back}
+                    {t(locale)?.back}
                 </button>
                 <button
                     className="btn m-btn--pill btn-success m-btn--wide"
                     onClick={handleSave}
                 >
-                    {translations(locale)?.save}
+                    {t(locale)?.save}
                 </button>
             </Modal.Footer>
             {

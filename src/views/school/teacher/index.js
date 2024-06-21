@@ -8,7 +8,6 @@ import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import TabComponent from 'components/tab/Tab';
 import DTable from 'modules/DataTable/DTable';
-import { useTranslation } from 'react-i18next';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import ViewModal from './modals/view'
 import DeleteModal from 'utils/deleteModal';
@@ -19,7 +18,6 @@ import InfoChangeModal from './modals/infoChange';
 import StatusChangeModal from './modals/statusChange'
 import PasswordResetModal from './modals/passwordReset'
 import LoginNameChangeModal from './modals/loginNameChange'
-import { translations } from 'utils/translations';
 import message from '../../../modules/message'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import PreviewTwoToneIcon from '@mui/icons-material/PreviewTwoTone'
@@ -30,31 +28,33 @@ import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone'
 import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone'
 import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
+import { useTranslation } from "react-i18next";
+
 
 const tableIndex = ['groups_index_table_index'];
 const gradeIndex = ['groups_index_grade_index'];
 
 const MainGroup = () => {
-    const { t } = useTranslation();
-    const history = useHistory();
-    const { selectedSchool } = useSelector(state => state.schoolData);
 
     const locale="mn"
-
+    const { t } = useTranslation();
+    const history = useHistory();
     const [loading, setLoading] = useState(false);
 
+    const { selectedSchool } = useSelector(state => state.schoolData);
+
+    const title = t('teacher.title');
+    const description = "E-learning";
+    const breadcrumbs = [
+        { to: "", text: "Home" },
+        { to: "school/teacher", text: title }
+    ];
+
+    const [totalCount, setTotalCount] = useState(0);
     const [tableData, setTableData] = useState([
         {id: 11, code: 2323, firstName: "asdfsdf"}, 
         {id: 12, code: 1232, firstName: "asasdfsdf"}
     ]);
-    const [totalCount, setTotalCount] = useState(0);
-
-    const handleTreeSelect = key => {
-        if (key && key.length > 0) {
-            setSelectedTreeDataId(key[0])
-        }
-    }
-
     const [treeData, setTreeData] = useState([{
         title: 'first level',
         value: '0-0',
@@ -81,39 +81,251 @@ const MainGroup = () => {
             ],
         }]
     }])
-    const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
 
-    const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
-    const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
+    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
+    const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
     const [selectedTabData, setSelectedTabData] = useState('active')
+
     const [showViewModal, setShowViewModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showRoleChangeModal, setShowRoleChangeModal] = useState(false)
     const [showInfoChangeModal, setShowInfoChangeModal] = useState(false)
     const [showStatusChangeModal, setStatusChangeModal] = useState(false)
+    const [showAddTeacherModal, setShowAddTeacherModal] = useState(false)
+    const [showEditTeacherModal, setShowEditTeacherModal] = useState(false)
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
     const [showLoginNameChangeModal, setShowLoginNameChangeModal] = useState(false)
 
-    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
+    const config = {
+        excelExport: true,
+        printButton: true,
+        columnButton: true,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t(locale)?.teacher_title}`,
+        defaultSort: [{
+            dataField: 'firstName',
+            order: 'asc'
+        }],
+        defaultPageOptions: {
+            page: 1,
+            sizePerPage: 10,
+        }
+    }
 
-    const handleAddTeacher = () => {
-        setShowAddTeacherModal(true)
+    const activeColumns = [
+        {
+            dataField: 'avatar',
+            text: t(locale)?.teacher?.photo,
+            sort: true,
+            width: 40,
+            align: 'center',
+            formatter: (cell) =>
+                <img className='img-responsive img-circle'
+                     src={cell || '/img/profile/placeholder.jpg'}
+                     width={40} height={40} alt='profile picture'
+                     onError={(e) => {
+                         e.target.onError = null
+                         e.target.src = '/img/profile/avatar.png'
+                     }}
+                />
+        },
+        {
+            dataField: 'code',
+            text: t(locale)?.teacher?.code,
+            sort: true
+        },
+        {
+            dataField: 'lastName',
+            text: t(locale)?.teacher?.lastname,
+            sort: true
+        },
+        {
+            dataField: 'firstName',
+            text: t(locale)?.teacher?.name,
+            sort: true,
+            formatter: (cell, row) =>
+                <span
+                    className='underline'
+                    onClick={() => handleContextMenuClick(row?.id, 'view')}
+                >
+                    {cell}
+                </span>
+        },
+        {
+            dataField: 'title',
+            text: t(locale)?.teacher?.teacher_title,
+            sort: true
+        },
+        {
+            dataField: 'username',
+            text: t(locale)?.teacher?.login_name,
+            sort: true
+        },
+        {
+            dataField: 'contact',
+            text: t(locale)?.teacher?.phone_number,
+            sort: true
+        },
+        {
+            dataField: 'registrationNumber',
+            text: t(locale)?.register_number,
+            sort: true
+        },
+        {
+            dataField: 'subjectNames',
+            text: t(locale)?.teacher?.subjects,
+            sort: false
+        },
+        {
+            dataField: 'className',
+            text: t(locale)?.teacher?.teacher_class,
+            sort: false
+        },
+    ]
+
+    const otherColumns = [
+        {
+            dataField: 'avatar',
+            text: t(locale)?.teacher?.photo,
+            sort: false,
+            width: 40,
+            align: 'center',
+            formatter: (cell) =>
+                <img className='img-responsive img-circle'
+                     src={cell || '/img/profile/placeholder.jpg'}
+                     width={40} height={40} alt='profile picture'
+                />
+        },
+        {
+            dataField: 'code',
+            text: t(locale)?.teacher?.code,
+            sort: true
+        },
+        {
+            dataField: 'lastName',
+            text: t(locale)?.teacher?.lastname,
+            sort: true
+        },
+        {
+            dataField: 'firstName',
+            text: t(locale)?.teacher?.name,
+            sort: true,
+            formatter: (cell, row) =>
+                <span
+                    className='underline'
+                    onClick={() => handleContextMenuClick(row?.id, 'view')}
+                >
+                    {cell}
+                </span>
+        },
+        {
+            dataField: 'title',
+            text: t(locale)?.teacher?.teacher_title,
+            sort: true
+        },
+        {
+            dataField: 'username',
+            text: t(locale)?.teacher?.login_name,
+            sort: true
+        },
+        {
+            dataField: 'subjectNames',
+            text: t(locale)?.teacher?.subjects,
+            sort: false
+        },
+        {
+            dataField: 'className',
+            text: t(locale)?.teacher?.teacher_class,
+            sort: false
+        },
+    ]
+
+    const activeContextMenus = [
+        {
+            key: 'view',
+            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.view,
+        },
+        {
+            key: 'edit',
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.edit
+        },
+        {
+            key: 'delete',
+            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.delete
+        },
+        {
+            key: 'statusChange',
+            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.teacher?.change_status
+        },
+        {
+            key: 'loginNameChange',
+            icon: <SettingsApplicationsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.teacher?.change_login_name,
+        },
+        {
+            key: 'passwordReset',
+            icon: <LockResetTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.teacher?.change_password,
+        },
+        {
+            key: 'roleChange',
+            icon: <ManageAccountsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.manage_roles,
+        },
+        {
+            key: 'infoChange',
+            icon: <ImportContactsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.insert_information,
+        },
+    ]
+
+    const otherContextMenus = [
+        {
+            key: 'view',
+            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.view,
+        },
+        {
+            key: 'edit',
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.edit
+        },
+        {
+            key: 'delete',
+            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.delete
+        },
+        {
+            key: 'statusChange',
+            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t(locale)?.teacher?.change_status
+        },
+    ]
+
+    const [columns, setColumns] = useState(activeColumns)
+    const [contextMenus, setContextMenus] = useState(activeContextMenus)
+
+    const handleTreeSelect = key => {
+        if (key && key.length > 0) {
+            setSelectedTreeDataId(key[0])
+        }
     }
-    const handleEditTeacher = () => {
-        console.log('edited')
-    }
+    
     const handleTabChange = (e, data) => {
         console.log( e, data)
         setSelectedTabData(data)
     }
 
-    const title = t('teacher.title');
-    const description = "E-learning";
+    const handleAddTeacher = () => {
+        setShowAddTeacherModal(true)
+    }
 
-    const breadcrumbs = [
-        { to: "", text: "Home" },
-        { to: "groups/index", text: title }
-    ];
+    const handleEditTeacher = () => {
+        console.log('edited')
+    }
 
     const onUserInteraction = state => {
         console.log('onUserInteraction')
@@ -160,215 +372,6 @@ const MainGroup = () => {
         // }
     }
 
-    const closeModal = () => {
-        setShowAddTeacherModal(false)
-        setShowEditTeacherModal(false)
-        setShowDeleteModal(false)
-        setShowViewModal(false)
-        setShowDeleteModal(false)
-        setStatusChangeModal(false)
-        setSelectedTableDataId(null)
-        setShowRoleChangeModal(false)
-        setShowInfoChangeModal(false)
-        setShowPasswordResetModal(false)
-        setShowLoginNameChangeModal(false)
-    }
-
-
-    const activeColumns = [
-        {
-            dataField: 'avatar',
-            text: translations(locale)?.teacher?.photo,
-            sort: true,
-            width: 40,
-            align: 'center',
-            formatter: (cell) =>
-                <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
-                     width={40} height={40} alt='profile picture'
-                     onError={(e) => {
-                         e.target.onError = null
-                         e.target.src = '/img/profile/avatar.png'
-                     }}
-                />
-        },
-        {
-            dataField: 'code',
-            text: translations(locale)?.teacher?.code,
-            sort: true
-        },
-        {
-            dataField: 'lastName',
-            text: translations(locale)?.teacher?.lastname,
-            sort: true
-        },
-        {
-            dataField: 'firstName',
-            text: translations(locale)?.teacher?.name,
-            sort: true,
-            formatter: (cell, row) =>
-                <span
-                    className='underline'
-                    onClick={() => handleContextMenuClick(row?.id, 'view')}
-                >
-                    {cell}
-                </span>
-        },
-        {
-            dataField: 'title',
-            text: translations(locale)?.teacher?.teacher_title,
-            sort: true
-        },
-        {
-            dataField: 'username',
-            text: translations(locale)?.teacher?.login_name,
-            sort: true
-        },
-        {
-            dataField: 'contact',
-            text: translations(locale)?.teacher?.phone_number,
-            sort: true
-        },
-        {
-            dataField: 'registrationNumber',
-            text: translations(locale)?.register_number,
-            sort: true
-        },
-        {
-            dataField: 'subjectNames',
-            text: translations(locale)?.teacher?.subjects,
-            sort: false
-        },
-        {
-            dataField: 'className',
-            text: translations(locale)?.teacher?.teacher_class,
-            sort: false
-        },
-    ]
-
-    const otherColumns = [
-        {
-            dataField: 'avatar',
-            text: translations(locale)?.teacher?.photo,
-            sort: false,
-            width: 40,
-            align: 'center',
-            formatter: (cell) =>
-                <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
-                     width={40} height={40} alt='profile picture'
-                />
-        },
-        {
-            dataField: 'code',
-            text: translations(locale)?.teacher?.code,
-            sort: true
-        },
-        {
-            dataField: 'lastName',
-            text: translations(locale)?.teacher?.lastname,
-            sort: true
-        },
-        {
-            dataField: 'firstName',
-            text: translations(locale)?.teacher?.name,
-            sort: true,
-            formatter: (cell, row) =>
-                <span
-                    className='underline'
-                    onClick={() => handleContextMenuClick(row?.id, 'view')}
-                >
-                    {cell}
-                </span>
-        },
-        {
-            dataField: 'title',
-            text: translations(locale)?.teacher?.teacher_title,
-            sort: true
-        },
-        {
-            dataField: 'username',
-            text: translations(locale)?.teacher?.login_name,
-            sort: true
-        },
-        {
-            dataField: 'subjectNames',
-            text: translations(locale)?.teacher?.subjects,
-            sort: false
-        },
-        {
-            dataField: 'className',
-            text: translations(locale)?.teacher?.teacher_class,
-            sort: false
-        },
-    ]
-
-    const activeContextMenus = [
-        {
-            key: 'view',
-            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.view,
-        },
-        {
-            key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.edit
-        },
-        {
-            key: 'delete',
-            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.delete
-        },
-        {
-            key: 'statusChange',
-            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.teacher?.change_status
-        },
-        {
-            key: 'loginNameChange',
-            icon: <SettingsApplicationsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.teacher?.change_login_name,
-        },
-        {
-            key: 'passwordReset',
-            icon: <LockResetTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.teacher?.change_password,
-        },
-        {
-            key: 'roleChange',
-            icon: <ManageAccountsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.manage_roles,
-        },
-        {
-            key: 'infoChange',
-            icon: <ImportContactsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.insert_information,
-        },
-    ]
-
-    const otherContextMenus = [
-        {
-            key: 'view',
-            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.view,
-        },
-        {
-            key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.edit
-        },
-        {
-            key: 'delete',
-            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.delete
-        },
-        {
-            key: 'statusChange',
-            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: translations(locale)?.teacher?.change_status
-        },
-    ]
-
     const handleContextMenuClick = (id, key) => {
         console.log(id, key)
         if (id && key) {
@@ -393,22 +396,6 @@ const MainGroup = () => {
         }
     }
 
-    const config = {
-        excelExport: true,
-        printButton: true,
-        columnButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${translations(locale)?.teacher_title}`,
-        defaultSort: [{
-            dataField: 'firstName',
-            order: 'asc'
-        }],
-        defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
-        }
-    }
-    const [columns, setColumns] = useState(activeColumns)
-    const [contextMenus, setContextMenus] = useState(activeContextMenus)
     useEffect(() => {
         if (selectedTabData == 'active') {
             tableData?.forEach(el => {
@@ -453,6 +440,20 @@ const MainGroup = () => {
 
     const handlePasswordReset = (password, passwordRepeat) => {
         console.log('passwordReset')
+    }
+
+    const closeModal = () => {
+        setShowAddTeacherModal(false)
+        setShowEditTeacherModal(false)
+        setShowDeleteModal(false)
+        setShowViewModal(false)
+        setShowDeleteModal(false)
+        setStatusChangeModal(false)
+        setSelectedTableDataId(null)
+        setShowRoleChangeModal(false)
+        setShowInfoChangeModal(false)
+        setShowPasswordResetModal(false)
+        setShowLoginNameChangeModal(false)
     }
 
     return (

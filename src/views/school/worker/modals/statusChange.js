@@ -4,9 +4,12 @@ import Select from 'modules/Form/Select'
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
+import { useTranslation } from "react-i18next";
 
 const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
+
+    const { t } = useTranslation();
+
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
@@ -34,13 +37,13 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t(locale)?.err?.error_occurred)
     //             setLoading(false)
     //         })
     // }, [])
 
     const handleSave = () => {
-        if (!selectedStatus) return message(translations(locale)?.err?.fill_all_fields)
+        if (!selectedStatus) return message(t(locale)?.err?.fill_all_fields)
         onSubmit(selectedStatus)
     }
 
@@ -55,13 +58,13 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.teacher?.change_status_staff}
+                    {t(locale)?.teacher?.change_status_staff}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="form-group m-form__group row">
                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                        {translations(locale)?.status}*
+                        {t(locale)?.status}*
                     </label>
                     <div className="col-5">
                         <Select
@@ -78,7 +81,7 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
                             value={selectedStatus}
                             options={statusOptions}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
-                            placeholder={'-' + translations(locale)?.select + '-'}
+                            placeholder={'-' + t(locale)?.select + '-'}
                         /> */}
                     </div>
                 </div>
@@ -88,13 +91,13 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                     onClick={onClose}
                 >
-                    {translations(locale)?.back}
+                    {t(locale)?.back}
                 </button>
                 <button
                     className="btn m-btn--pill btn-success m-btn--wide"
                     onClick={handleSave}
                 >
-                    {translations(locale)?.teacher?.change_status_staff}
+                    {t(locale)?.teacher?.change_status_staff}
                 </button>
             </Modal.Footer>
             {

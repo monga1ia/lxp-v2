@@ -4,9 +4,11 @@ import ReactCrop from 'react-image-crop'
 import { Modal } from 'react-bootstrap'
 import 'react-image-crop/dist/ReactCrop.css'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
+import { useTranslation } from "react-i18next";
 
 const ImageModal = ({ onClose, onSubmit }) => {
+
+    const { t } = useTranslation();
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [image, setImage] = useState(null)
@@ -35,12 +37,12 @@ const ImageModal = ({ onClose, onSubmit }) => {
         if (file) {
             let imageSize = file.size;
             if (imageSize > acceptedSize) {
-                message(translations(locale).err.image_size_error);
+                message(t('err.image_size_error'));
                 return false;
             }
             let imageType = file.type;
             if (!acceptedType.includes(imageType)) {
-                message(translations(locale).err.image_type_error);
+                message(t('err.image_type_error'));
                 return false;
             }
             return true;
@@ -153,7 +155,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
             })
             onClose()
         } else {
-            message(translations(locale)?.error_crop_button)
+            message(t('error_crop_button'))
         }
     }
 
@@ -170,7 +172,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.insert_photo}
+                    {t(locale)?.insert_photo}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -179,7 +181,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
                     className="button-green-custom"
                     style={{marginBottom: '0.2rem'}}
                 >
-                    {translations(locale)?.upload_photo_button_label}
+                    {t(locale)?.upload_photo_button_label}
                 </label>
                 <input
                     type="file"
@@ -199,19 +201,19 @@ const ImageModal = ({ onClose, onSubmit }) => {
                                 className="button-green-custom"
                                 onClick={handleCrop}
                             >
-                                {translations(locale)?.crop}
+                                {t(locale)?.crop}
                             </button>
                             <button
                                 className="button-green-custom"
                                 onClick={handleUndo}
                             >
-                                {translations(locale)?.undo}
+                                {t(locale)?.undo}
                             </button>
                             <button
                                 className="button-green-custom"
                                 onClick={handleRemove}
                             >
-                                {translations(locale)?.delete}
+                                {t(locale)?.delete}
                             </button>
                         </div>
                         <div
@@ -235,13 +237,13 @@ const ImageModal = ({ onClose, onSubmit }) => {
                         className="btn m-btn--pill m-btn--air btn-link margin-right-5"
                         onClick={onClose}
                     >
-                        {translations(locale)?.back}
+                        {t(locale)?.back}
                     </button>
                     <button
                         onClick={handleSave}
                         className="btn m-btn--pill btn-success"
                     >
-                        {translations(locale)?.insert_photo}
+                        {t(locale)?.insert_photo}
                     </button>
                 </div>
             </Modal.Footer>

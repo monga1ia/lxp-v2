@@ -2,9 +2,12 @@ import React from 'react'
 import { Modal } from 'semantic-ui-react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
+import { useTranslation } from "react-i18next";
 
 const forceCreate = ({ onClose, onSubmit, message }) => {
+    
+    const { t } = useTranslation();
+
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     return (
         <Modal
@@ -16,7 +19,7 @@ const forceCreate = ({ onClose, onSubmit, message }) => {
             centered
         >
             <div className="header">
-                {translations(locale)?.addRole}
+                {t(locale)?.addRole}
                 <button type="button" className="close" aria-label="Close" onClick={onClose} >
                     <CloseIcon />
                 </button>
@@ -32,13 +35,13 @@ const forceCreate = ({ onClose, onSubmit, message }) => {
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
-                        {translations(locale)?.no}
+                        {t(locale)?.no}
                     </button>
                     <button
                         className="btn m-btn--pill btn-success m-btn--wide"
                         onClick={onSubmit}
                     >
-                        {translations(locale)?.yes}
+                        {t(locale)?.yes}
                     </button>
                 </div>
             </div>

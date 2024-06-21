@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom';
-
-import {translations} from "Utilities/translations";
-
+import { useTranslation } from "react-i18next";
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import MomentLocaleUtils, {
   formatDate,
   parseDate
 } from 'react-day-picker/moment';
+
+const { t } = useTranslation();
 
 class DatePickerInput extends Component {
 
@@ -71,7 +71,7 @@ class DatePickerInput extends Component {
         return (
             <div style={{ height: this.state.containerHeight }}>
                 <DayPickerInput
-                    placeholder={translations(this.state.locale).datePickerPlaceholder || ''}
+                    placeholder={t(this.state.locale).datePickerPlaceholder || ''}
                     onDayChange={(day, a, input) => this.onDateChange(day, a, input)}
                     value={dateVal}
                     hideOnDayClick={true}

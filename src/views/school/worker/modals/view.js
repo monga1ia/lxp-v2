@@ -3,10 +3,12 @@ import { Modal } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
+import { useTranslation } from "react-i18next";
 
 const view = ({ onClose, id }) => {
 
+    const { t } = useTranslation();
+    
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
     const [staff, setStaff] = useState({})
@@ -22,7 +24,7 @@ const view = ({ onClose, id }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.teacher?.view}
+                    {t(locale)?.teacher?.view}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -40,27 +42,27 @@ const view = ({ onClose, id }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>{translations(locale)?.status}:</td>
+                                        <td>{t(locale)?.status}:</td>
                                         <th>{staff?.status || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.role}:</td>
+                                        <td>{t(locale)?.role}:</td>
                                         <th>{staff?.role || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.staff?.code}:</td>
+                                        <td>{t(locale)?.staff?.code}:</td>
                                         <th>{staff?.code || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.new_lastname}:</td>
+                                        <td>{t(locale)?.teacher?.new_lastname}:</td>
                                         <th>{staff?.lastName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.new_name}:</td>
+                                        <td>{t(locale)?.teacher?.new_name}:</td>
                                         <th>{staff?.firstName}</th>
                                     </tr>
                                     <tr>
-                                        <td>{translations(locale)?.teacher?.phone_number}:</td>
+                                        <td>{t(locale)?.teacher?.phone_number}:</td>
                                         <th>{staff?.contacts}</th>
                                     </tr>
                                 </tbody>
@@ -74,7 +76,7 @@ const view = ({ onClose, id }) => {
                     className="btn m-btn--pill btn-outline-metal"
                     onClick={onClose}
                 >
-                    {translations(locale)?.close?.toUpperCase()}
+                    {t(locale)?.close?.toUpperCase()}
                 </button>
             </Modal.Footer>
             {

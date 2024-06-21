@@ -13,7 +13,6 @@ import SetTeacherModal from './modals/setTeacher'
 // import { Link, useNavigate } from 'react-router-dom'
 import secureLocalStorage from 'react-secure-storage'
 import { Row, Col, Card, Button } from 'react-bootstrap';
-import { translations } from 'utils/translations'
 import PasswordResetModal from './modals/passwordReset'
 import LoginNameChangeModal from './modals/loginNameChange'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
@@ -29,6 +28,7 @@ import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplica
 // import { schoolStaffDelete, schoolStaffIndex, schoolStaffLoginNameChange, schoolStaffPasswordReset, schoolStaffRoleChange, schoolStaffStatusChange } from 'Utilities/url'
 import EditWorkerModal from './modals/editWorker'
 import AddWorkerModal from './modals/addWorker'
+import { useTranslation } from "react-i18next";
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const tableIndex = 'school_employee_table_index';
@@ -36,7 +36,9 @@ const localeSelectedTab = 'school_employee_tab_data';
 
 const index = () => {
 
-    const title = translations('staff.title')
+    const { t } = useTranslation();
+    
+    const title = t(locale)?.worker?.title
     const description = "E-learning";
 
     const [loading, setLoading] = useState(false)
@@ -80,7 +82,7 @@ const index = () => {
     const activeColumns = [
         {
             dataField: "avatar",
-            text: translations(locale)?.teacher?.photo,
+            text: t(locale)?.teacher?.photo,
             sort: true,
             width: 40,
             align: 'center',
@@ -97,17 +99,17 @@ const index = () => {
         },
         {
             dataField: "code",
-            text: translations(locale)?.staff?.code,
+            text: t(locale)?.staff?.code,
             sort: true
         },
         {
             dataField: "lastName",
-            text: translations(locale)?.staff?.lastName,
+            text: t(locale)?.staff?.lastName,
             sort: true
         },
         {
             dataField: "firstName",
-            text: translations(locale)?.staff?.firstName,
+            text: t(locale)?.staff?.firstName,
             sort: true,
             formatter: (cell, row) =>
                 <span
@@ -119,22 +121,22 @@ const index = () => {
         },
         {
             dataField: "title",
-            text: translations(locale)?.teacher?.teacher_title,
+            text: t(locale)?.teacher?.teacher_title,
             sort: true
         },
         {
             dataField: "username",
-            text: translations(locale)?.teacher?.login_name,
+            text: t(locale)?.teacher?.login_name,
             sort: true
         },
         {
             dataField: "contact",
-            text: translations(locale)?.phoneNumber,
+            text: t(locale)?.phoneNumber,
             sort: true,
         },
         {
             dataField: 'registrationNumber',
-            text: translations(locale)?.register_number,
+            text: t(locale)?.register_number,
             sort: true
         },
     ]
@@ -142,7 +144,7 @@ const index = () => {
     const otherColumns = [
         {
             dataField: "avatar",
-            text: translations(locale)?.teacher?.photo,
+            text: t(locale)?.teacher?.photo,
             sort: true,
             width: 40,
             align: 'center',
@@ -159,17 +161,17 @@ const index = () => {
         },
         {
             dataField: "code",
-            text: translations(locale)?.staff?.code,
+            text: t(locale)?.staff?.code,
             sort: true
         },
         {
             dataField: "lastName",
-            text: translations(locale)?.staff?.lastName,
+            text: t(locale)?.staff?.lastName,
             sort: true
         },
         {
             dataField: "firstName",
-            text: translations(locale)?.staff?.firstName,
+            text: t(locale)?.staff?.firstName,
             sort: true,
             formatter: (cell, row) =>
                 <span
@@ -181,12 +183,12 @@ const index = () => {
         },
         {
             dataField: "title",
-            text: translations(locale)?.teacher?.teacher_title,
+            text: t(locale)?.teacher?.teacher_title,
             sort: true
         },
         {
             dataField: "username",
-            text: translations(locale)?.teacher?.login_name,
+            text: t(locale)?.teacher?.login_name,
             sort: true
         },
     ]
@@ -195,42 +197,42 @@ const index = () => {
         {
             key: 'view',
             icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.view,
+            title: t(locale)?.view,
         },
         {
             key: 'edit',
             icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.edit
+            title: t(locale)?.edit
         },
         {
             key: 'delete',
             icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.delete
+            title: t(locale)?.delete
         },
         {
             key: 'statusChange',
             icon: <CameraFrontTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.teacher?.change_status_staff
+            title: t(locale)?.teacher?.change_status_staff
         },
         {
             key: 'loginNameChange',
             icon: <SettingsApplicationsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.teacher?.change_login_name_staff,
+            title: t(locale)?.teacher?.change_login_name_staff,
         },
         {
             key: 'passwordReset',
             icon: <LockResetTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.teacher?.change_password_staff,
+            title: t(locale)?.teacher?.change_password_staff,
         },
         {
             key: 'roleChange',
             icon: <ManageAccountsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.manage_roles,
+            title: t(locale)?.manage_roles,
         },
         {
             key: 'setTeacher',
             icon: <SchoolIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.add_teacher_role,
+            title: t(locale)?.add_teacher_role,
         },
     ]
 
@@ -238,22 +240,22 @@ const index = () => {
         {
             key: 'view',
             icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.view,
+            title: t(locale)?.view,
         },
         {
             key: 'edit',
             icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.edit
+            title: t(locale)?.edit
         },
         {
             key: 'delete',
             icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.delete
+            title: t(locale)?.delete
         },
         {
             key: 'statusChange',
             icon: <CameraFrontTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale)?.teacher?.change_status_staff
+            title: t(locale)?.teacher?.change_status_staff
         },
     ]
 
@@ -261,7 +263,7 @@ const index = () => {
         excelExport: true,
         printButton: true,
         columnButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${translations(locale)?.staff?.title}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t(locale)?.staff?.title}`,
         defaultSort: [{
             dataField: tableState?.sort || 'firstName',
             order: tableState?.order || 'asc'
@@ -301,7 +303,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t(locale)?.err?.error_occurred)
         //         setLoading(false)
         //     })
     }
@@ -447,7 +449,7 @@ const index = () => {
                             className="mb-2 add-button text-uppercase"
                         >
                             <AddCircleOutlineRoundedIcon />
-                            <span className='ml-2'>{translations(locale)?.action?.register}</span>
+                            <span className='ml-2'>{t(locale)?.action?.register}</span>
                         </Button>
                         <div className="mb-5 background-white br-16">
                             <div className="m-portlet__body">
@@ -534,12 +536,12 @@ const index = () => {
                     onClose={closeModal}
                     onDelete={handleDelete}
                     locale={locale}
-                    title={translations(locale).delete}
+                    title={t(locale).delete}
                 >
-                    {translations(locale).delete_confirmation}
+                    {t(locale).delete_confirmation}
                     <br />
                     <br />
-                    {translations(locale).delete_confirmation_description}
+                    {t(locale).delete_confirmation_description}
                 </DeleteModal>
             }
             {

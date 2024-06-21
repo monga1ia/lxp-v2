@@ -1,8 +1,10 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import { translations } from './translations'
+import { useTranslation } from "react-i18next";
 
 const deleteModal = ({ onClose, onDelete, title, locale, children }) => {
+    
+    const { t } = useTranslation();
 
     return (
         <Modal
@@ -26,13 +28,13 @@ const deleteModal = ({ onClose, onDelete, title, locale, children }) => {
                     onClick={onClose}
                     className="btn btn-link margin-right-5"
                 >
-                    {translations(locale)?.back}
+                    {t('back')}
                 </button>
                 <button
                     onClick={onDelete}
                     className="btn m-btn--pill btn-danger"
                 >
-                    {translations(locale)?.delete}
+                    {t('delete')}
                 </button>
             </Modal.Footer>
         </Modal >

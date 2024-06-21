@@ -5,12 +5,13 @@ import React, { useEffect } from 'react'
 import ImageModal from 'utils/imageModal'
 import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
-import Select from 'modules/Form/Select'
+import { useTranslation } from "react-i18next";
 
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
+    const { t } = useTranslation();
+    
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
@@ -32,11 +33,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
     const [genderOptions] = useState([
         {
             value: 'M',
-            text: translations(locale).male,
+            text: t(locale).male,
         },
         {
             value: 'F',
-            text: translations(locale).female,
+            text: t(locale).female,
         }
     ])
 
@@ -74,7 +75,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             //         setLoading(false)
             //     })
             //     .catch(() => {
-            //         message(translations(locale)?.err?.error_occurred)
+            //         message(t(locale)?.err?.error_occurred)
             //         setLoading(false)
             //     })
         } else {
@@ -104,7 +105,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
     //                 setLoading(false)
     //             })
     //             .catch(() => {
-    //                 message(translations(locale)?.err?.error_occurred)
+    //                 message(t(locale)?.err?.error_occurred)
     //                 setLoading(false)
     //             })
     //     }
@@ -124,11 +125,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
     const validateFields = () => {
         if (!teacher?.lastName || !teacher?.firstName || !teacher?.role || !teacher?.code || !teacher?.loginName || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
-            return message(translations(locale).err.fill_all_fields)
+            return message(t(locale).err.fill_all_fields)
         else if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length)
-            return message(translations(locale).err.fill_all_fields)
+            return message(t(locale).err.fill_all_fields)
         else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length }))
-            return message(translations(locale).err.fill_all_fields)
+            return message(t(locale).err.fill_all_fields)
         else
             return true
     }
@@ -188,7 +189,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {translations(locale)?.teacher?.add_teacher}
+                    {t(locale)?.teacher?.add_teacher}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -209,24 +210,24 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             className="btn m-btn--pill btn-outline-primary"
                             style={{ width: 150 }}
                         >
-                            {translations(locale)?.teacher?.change_photo}
+                            {t(locale)?.teacher?.change_photo}
                         </button>
                         <button
                             onClick={handleAvatarRemove}
                             className="btn m-btn--pill btn-outline-danger "
                             style={{ width: 150 }}
                         >
-                            {translations(locale)?.profile?.img_delete}
+                            {t(locale)?.profile?.img_delete}
                         </button>
                     </div>
                     <div className="col-7">
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.role}*
+                                {t(locale)?.role}*
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + translations(locale)?.select + '-'}
+                                    placeholder={'-' + t(locale)?.select + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -241,91 +242,91 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.code}*
+                                {t(locale)?.teacher?.code}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.code || ''}
-                                    placeholder={translations(locale)?.teacher?.code}
+                                    placeholder={t(locale)?.teacher?.code}
                                     onChange={(e) => handleChange('code', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.new_lastname}*
+                                {t(locale)?.teacher?.new_lastname}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.lastName || ''}
-                                    placeholder={translations(locale)?.teacher?.new_lastname_placeholder}
+                                    placeholder={t(locale)?.teacher?.new_lastname_placeholder}
                                     onChange={(e) => handleChange('lastName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.new_name}*
+                                {t(locale)?.teacher?.new_name}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.firstName || ''}
-                                    placeholder={translations(locale)?.teacher?.new_name_placeholder}
+                                    placeholder={t(locale)?.teacher?.new_name_placeholder}
                                     onChange={(e) => handleChange('firstName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.register_number}
+                                {t(locale)?.register_number}
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.registrationNumber || ''}
-                                    placeholder={translations(locale)?.register_number}
+                                    placeholder={t(locale)?.register_number}
                                     onChange={(e) => handleChange('registrationNumber', e?.target?.value?.toString()?.toUpperCase()?.replace(/\s/g, ''))}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.login_name}*
+                                {t(locale)?.teacher?.login_name}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.loginName || ''}
-                                    placeholder={translations(locale)?.teacher?.login_name}
+                                    placeholder={t(locale)?.teacher?.login_name}
                                     onChange={(e) => handleChange('loginName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.studentBook?.email}
+                                {t(locale)?.studentBook?.email}
                             </label>
                             <div className="col-8">
                                 <input
                                     type="email"
                                     className="form-control"
                                     value={teacher?.email || ''}
-                                    placeholder={translations(locale)?.e_mail}
+                                    placeholder={t(locale)?.e_mail}
                                     onChange={(e) => handleChange('email', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.phone_number}*
+                                {t(locale)?.teacher?.phone_number}*
                             </label>
                             <div className="col-8">
                                 <input
@@ -333,7 +334,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     max={99999999}
                                     className="form-control"
                                     value={teacher?.phoneNumber || ''}
-                                    placeholder={translations(locale)?.teacher?.phone_number}
+                                    placeholder={t(locale)?.teacher?.phone_number}
                                     onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                     inputMode="numeric"
                                 />
@@ -342,11 +343,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.gender}*
+                                {t(locale)?.teacher?.gender}*
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + translations(locale)?.teacher?.select_gender + '-'}
+                                    placeholder={'-' + t(locale)?.teacher?.select_gender + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -361,11 +362,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.school}*
+                                {t(locale)?.school}*
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + translations(locale)?.teacher?.select_school + '-'}
+                                    placeholder={'-' + t(locale)?.teacher?.select_school + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -380,14 +381,14 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {translations(locale)?.teacher?.teacher_title}*
+                                {t(locale)?.teacher?.teacher_title}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.title || ''}
-                                    placeholder={translations(locale)?.teacher?.insert_teacher_title}
+                                    placeholder={t(locale)?.teacher?.insert_teacher_title}
                                     onChange={(e) => handleChange('title', e.target.value)}
                                 />
                             </div>
@@ -396,11 +397,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             gradeRows?.map((el, index) => (
                                 <div key={index} className="form-group m-form__group row">
                                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                        {index == 0 && translations(locale)?.teacher?.subjects}
+                                        {index == 0 && t(locale)?.teacher?.subjects}
                                     </label>
                                     <div className="col-3">
                                         <Dropdown
-                                            placeholder={'-' + translations(locale)?.err?.select_class + '-'}
+                                            placeholder={'-' + t(locale)?.err?.select_class + '-'}
                                             fluid
                                             selection
                                             additionPosition='bottom'
@@ -415,7 +416,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     </div>
                                     <div className="col-5s d-flex p-0 align-items-center">
                                         <Dropdown
-                                            placeholder={'-' + translations(locale)?.absent?.select_subject + '-'}
+                                            placeholder={'-' + t(locale)?.absent?.select_subject + '-'}
                                             fluid
                                             selection
                                             additionPosition='bottom'
@@ -456,13 +457,13 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                     onClick={onClose}
                     className="btn m-btn--pill btn-link margin-right-5"
                 >
-                    {translations(locale)?.back}        
+                    {t(locale)?.back}        
                 </button>
                 <button
                     onClick={handleSubmit}
                     className="btn m-btn--pill btn-success text-uppercase"
                 >
-                    {translations(locale)?.save}
+                    {t(locale)?.save}
                 </button>
             </Modal.Footer>
             {

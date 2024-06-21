@@ -587,7 +587,7 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
       order: 3;
       margin-top: 2rem;
       margin-bottom: 1rem;
-      width: 16rem;
+      width: 19.6923rem;
       margin-left: 1rem;
       margin-right: 1rem;
 
@@ -595,8 +595,8 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
         width: 100%;
         margin-left: 0;
         margin-right: 0;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 1.2308rem;
+        padding-right: 1.2308rem;
         cursor: pointer;
 
         ul {
@@ -642,14 +642,14 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
           padding: 0;
 
           a {
-            padding: 0.75rem 1rem;
+            padding: 0.9231rem 1.2308rem;
           }
         }
 
         /* Only sub level li items - sub menu items */
         & > li li {
           a {
-            padding: 0.5rem 1rem;
+            padding: 0.6154rem 1.2308rem;
           }
 
           ul {
@@ -873,7 +873,7 @@ html[data-placement="vertical"][data-behaviour="unpinned"][data-menu-animate="sh
   transition-property: width;
   .nav-content {
     .menu-container {
-      width: 16rem;
+      width: 19.6923rem;
       margin-left: 1rem;
       margin-right: 1rem;
       overflow-x: hidden;
@@ -952,26 +952,26 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
       > .os-scrollbar
       > .os-scrollbar-track
       > .os-scrollbar-handle {
-      background: rgba(var(--light-text-rgb), 0.3);
+      background: rgba(255, 93, 27, 0.3);
     }
 
     &.os-theme-dark
       > .os-scrollbar:hover
       > .os-scrollbar-track
       > .os-scrollbar-handle {
-      background: rgba(var(--light-text-rgb), 0.4);
+      background: rgba(255, 93, 27, 0.4);
     }
 
     &.os-theme-dark
       > .os-scrollbar
       > .os-scrollbar-track
       > .os-scrollbar-handle.active {
-      background: rgba(var(--light-text-rgb), 0.4);
+      background: rgba(255, 93, 27, 0.4);
     }
 
     &.os-theme-dark > .os-scrollbar > .os-scrollbar-track,
     .os-theme-light > .os-scrollbar > .os-scrollbar-track {
-      background: rgba(var(--light-text-rgb), 0.1);
+      background: rgba(255, 93, 27, 0.1);
     }
   }
 }

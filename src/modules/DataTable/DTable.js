@@ -1196,7 +1196,7 @@ const DTable = ({
                                                     } of ${paginationProps.totalSize} results`}
                                             </div>
                                     }
-                                    {/* <div style={{color: '#000', fontWeight: 500}}>{`${translations(locale).action.total} ${paginationProps.totalSize} ${translations(locale).action.value}`}</div> */}
+                                    {/* <div style={{color: '#000', fontWeight: 500}}>{`${t(locale).action.total} ${paginationProps.totalSize} ${t(locale).action.value}`}</div> */}
                                 </div>
                                 <PaginationLinks paginationProps={paginationProps} />
                             </div>
