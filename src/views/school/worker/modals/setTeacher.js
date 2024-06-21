@@ -2,7 +2,7 @@ import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect, useRef } from 'react'
 import secureLocalStorage from 'react-secure-storage'
-import Select from 'modules/Form/Select'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import {cloneDeep} from "lodash";
 import { useTranslation } from "react-i18next";
 
@@ -171,13 +171,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                         {t('school')}*
                     </label>
                     <div className="col-8">
-                        <Select
-                            clearable
-                            value={selectedGrade}
-                            options={mainGradeOptions}
-                            onchange={(e, data) => onGradeChange(e)}
-                        />
-                        {/* <Dropdown
+                        <Dropdown
                             ref={mainGradeRef}
                             placeholder={'-' + t('teacher.select_school + '-'')}
                             fluid
@@ -190,7 +184,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                             value={selectedGrade}
                             options={mainGradeOptions}
                             onChange={(e, data) => onGradeChange(data?.value)}
-                        /> */}
+                        />
                     </div>
                 </div>
                 {
@@ -200,14 +194,8 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                                 {index == 0 && t('teacher.subjects')}
                             </label>
                             <div className="col-3">
-                                <Select
-                                    clearable
-                                    value={el?.grade}
-                                    options={gradeOptions}
-                                    onchange={(e, data) => handleRowGradeChange(index, data)}
-                                />
-                                {/* <Dropdown
-                                    placeholder={'-' + t('err.select_class + '-'')}
+                                <Dropdown
+                                    placeholder={'-' + t('err.select_class') + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -218,18 +206,11 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                                     value={el?.grade}
                                     options={getRowGrades(gradeOptions || [])}
                                     onChange={(e, data) => handleRowGradeChange(index, data?.value)}
-                                /> */}
+                                />
                             </div>
                             <div className="col-5 p-0 d-flex align-items-center">
-                                <Select
-                                    // searchable = {true}
-                                    // className='mr-2'
-                                    value={el?.subjects}
-                                    options={el?.subjectOptions}
-                                    onchange={(e, data) => handleRowGradeChange(index, data)}
-                                />
-                                {/* <Dropdown
-                                    placeholder={'-' + t('absent.select_subject + '-'')}
+                                <Dropdown
+                                    placeholder={'-' + t('absent.select_subject') + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -242,7 +223,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                                     value={el?.subjects}
                                     options={el?.subjectOptions}
                                     onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
-                                /> */}
+                                />
                                 <div style={{marginLeft: "2.6rem"}} className={index != 0 ? 'visible' : 'invisible'}>
                                     <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                         <i className="la la-close" />

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import ImageModal from 'utils/imageModal'
 import secureLocalStorage from 'react-secure-storage'
-import Select from 'modules/Form/Select'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
 const EditWorkerModal = ({onClose, onSubmit, data}) => {
@@ -143,26 +143,18 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                                 {t('role')}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    options={roleOptions}
-                                    disabled={true}
-                                    value={staff?.roleId}
-                                    // onChange={(e, data) => handleRowSubjectsChange(index, e)}
-                                />
-                                {/* <Dropdown
-                                    placeholder={'-' + t('select + '-'')}
+                                <Dropdown
+                                    placeholder={'-' + t('select') + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
                                     upward={false}
                                     closeOnChange
                                     selectOnBlur={false}
-                                    value={teacher?.roleId}
+                                    value={staff?.roleId}
                                     options={roleOptions}
                                     disabled
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -271,25 +263,18 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                                 {t('teacher.gender')}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    options={genderOptions}
-                                    value={staff?.gender}
-                                    onChange={(e, data) => handleChange('gender', e)}
-                                />
-                                {/* <Dropdown
-                                    placeholder={'-' + t('teacher.select_gender + '-'')}
+                                <Dropdown
+                                    placeholder={'-' + t('teacher.select_gender') + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
                                     upward={false}
                                     closeOnChange
                                     selectOnBlur={false}
-                                    value={teacher?.gender}
+                                    value={staff?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">

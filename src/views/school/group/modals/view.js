@@ -102,7 +102,7 @@ const view = ({ onClose, id }) => {
                     className="btn m-btn--pill btn-outline-metal"
                     onClick={closeModal}
                 >
-                    {t('close.toUpperCase')()}
+                    {t('close').toUpperCase()}
                 </button>
             </Modal.Footer>
             {

@@ -1082,7 +1082,7 @@ const DTable = ({
                                                             <div
                                                                 style={{
                                                                     display: 'inline-block',
-                                                                    marginLeft: '0.25rem',
+                                                                    marginLeft: '0.05769rem',
                                                                     marginRight: '0.25rem',
                                                                 }}
                                                             >

@@ -21,6 +21,7 @@ import LockResetTwoToneIcon from '@mui/icons-material/LockResetTwoTone'
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone'
 import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone'
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import SchoolIcon from '@mui/icons-material/School'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
@@ -38,8 +39,12 @@ const index = () => {
 
     const { t } = useTranslation();
     
-    const title = t('worker.title')
+    const title = t('staff.title')
     const description = "E-learning";
+    const breadcrumbs = [
+        { to: "", text: "Home" },
+        { to: "school/worker", text: title }
+    ];
 
     const [loading, setLoading] = useState(false)
 
@@ -73,11 +78,6 @@ const index = () => {
             order: 'asc',
         }
     );
-
-    const breadcrumbs = [
-        { to: "", text: "Home" },
-        { to: "groups/index", text: title }
-    ];
     
     const activeColumns = [
         {
@@ -201,7 +201,7 @@ const index = () => {
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('edit')
         },
         {
@@ -244,7 +244,7 @@ const index = () => {
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('edit')
         },
         {
@@ -445,36 +445,36 @@ const index = () => {
                     <div className="col">
                         <Button
                             onClick={()=>setShowAddWorkerModal(true)}
-                            variant="primary"
-                            className="mb-2 add-button text-uppercase"
+                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <AddCircleOutlineRoundedIcon />
-                            <span className='ml-2'>{t('action.register')}</span>
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            {t('action.register')}
                         </Button>
-                        <div className="mb-5 background-white br-16">
-                            <div className="m-portlet__body">
+                        <div className='m-portlet tab'>
+                            <div className=''>
                                 <TabComponent
                                     onChange={(e, data) => handleTabChange(e, data)}
-                                    className='padding-30'
-
+                                    className='m-portlet-header'
                                     style={{color: 'red'}}
                                     tabs={[
                                         {
                                             code: "active",
                                             title: "Ажиллаж байгаа",
                                             children: (
-                                                <DTable
-                                                    remote
-                                                    config={config}
-                                                    locale={locale}
-                                                    data={tableData}
-                                                    columns={columns}
-                                                    individualContextMenus
-                                                    contextMenus={contextMenus}
-                                                    onContextMenuItemClick={handleContextMenuClick}
-                                                    // onInteraction={onUserInteraction}
-                                                    totalDataSize={totalCount}
-                                                />
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
                                             )
 
                                         },
@@ -482,36 +482,40 @@ const index = () => {
                                             code: "absent",
                                             title: "Чөлөөтэй байгаа",
                                             children: (
-                                                <DTable
-                                                    remote
-                                                    config={config}
-                                                    locale={locale}
-                                                    data={tableData}
-                                                    columns={columns}
-                                                    individualContextMenus
-                                                    contextMenus={contextMenus}
-                                                    onContextMenuItemClick={handleContextMenuClick}
-                                                    // onInteraction={onUserInteraction}
-                                                    totalDataSize={totalCount}
-                                                />
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
                                             )
                                         },
                                         {
                                             code: "leave",
                                             title: "Ажлаас гарсан",
                                             children: (
-                                                <DTable
-                                                    remote
-                                                    config={config}
-                                                    locale={locale}
-                                                    data={tableData}
-                                                    columns={columns}
-                                                    individualContextMenus
-                                                    contextMenus={contextMenus}
-                                                    onContextMenuItemClick={handleContextMenuClick}
-                                                    // onInteraction={onUserInteraction}
-                                                    totalDataSize={totalCount}
-                                                />
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        config={config}
+                                                        locale={locale}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={handleContextMenuClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
                                             )
                                         },
                                     ]}

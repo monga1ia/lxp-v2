@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import Select from 'modules/Form/Select'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
 const roleChange = ({ onClose, onSubmit, teacher }) => {
@@ -60,15 +60,8 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                         {t('role')}*
                     </label>
                     <div className="col-5">
-                        <Select
-                            multiple={true}
-                            additionPosition='bottom'
-                            value={selectedRoles}
-                            options={roleOptions}
-                            onChange={(data) => setSelectedRoles(data)}
-                        />
-                        {/* <Dropdown
-                            placeholder={'-' + t('select + '-'')}
+                        <Dropdown
+                            placeholder={'-' + t('select') + '-'}
                             fluid
                             selection
                             multiple
@@ -78,7 +71,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                             value={selectedRoles}
                             options={roleOptions}
                             onChange={(e, data) => setSelectedRoles(data?.value)}
-                        /> */}
+                        />
                     </div>
                 </div>
             </Modal.Body>

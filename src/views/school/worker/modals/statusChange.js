@@ -1,8 +1,7 @@
 import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
-import Select from 'modules/Form/Select'
 import React, { useEffect, useState } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 
@@ -67,22 +66,15 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
                         {t('status')}*
                     </label>
                     <div className="col-5">
-                        <Select
-                            clearable
-                            searchable
-                            options={statusOptions}
-                            value={selectedStatus}
-                            onChange={(e, data) => setSelectedStatus(e)}
-                        />
-                        {/* <Dropdown
+                        <Dropdown
                             fluid
                             selection
                             closeOnChange
                             value={selectedStatus}
                             options={statusOptions}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
-                            placeholder={'-' + t('select + '-'')}
-                        /> */}
+                            placeholder={'-' + t('select') + '-'}
+                        />
                     </div>
                 </div>
             </Modal.Body>

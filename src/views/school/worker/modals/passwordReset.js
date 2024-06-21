@@ -43,7 +43,7 @@ const passwordReset = ({ onClose, onSubmit }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p style={{ color: '#848691', fontSize: '0.8937rem'  }} className='pb-4 pl-4'>{t('teacher.change_password_description_staff')}</p>
+                <p style={{ color: '#848691' }} className='fs-11 pb-4 pl-4'>{t('teacher.change_password_description_staff')}</p>
                 <Row className='form-group'>
                     <Col className='text-right'>
                         <label className="text-right label-pinnacle-bold col-form-label">

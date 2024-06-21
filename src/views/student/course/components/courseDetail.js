@@ -102,7 +102,7 @@ export default function StudentCourseInfo() {
 
     useEffect(() => {
         if (location?.state?.activeDetail) {
-            onHandlerItem(location?.state?.activeDetail, parseInt(location?.state?.activeParentIndex?.split('_')[0]), parseInt(location?.state?.activeParentIndex?.split('_')[1]), (parseInt(location?.state?.activeIndex.split('_')[2])), location?.state?.componentType)
+            onHandlerItem(location?.state?.activeDetail, parseInt(location?.state?.activeParentIndex?.split('_')[0]), parseInt(location?.state?.activeParentIndex?.split('_')[1]), (parseInt(location?.state?.activeIndex?.split('_')[2])), location?.state?.componentType)
         }
     }, []);
 

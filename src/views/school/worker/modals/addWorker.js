@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap'
 import React, { useEffect } from 'react'
 import ImageModal from 'utils/imageModal'
 import secureLocalStorage from 'react-secure-storage'
-import Select from 'modules/Form/Select'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
 const AddWorkerModal = ({onClose, onSubmit, data}) => {
@@ -17,7 +17,7 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
     const [viewImageModal, setViewImageModal] = useState(false)
 
     const [staff, setStaff] = useState({})
-
+    const [roleOptions, setRoleOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
 
     const [gradeRows, setGradeRows] = useState([{
@@ -144,31 +144,24 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
                             {t('profile.img_delete')}
                         </button>
                     </div>
-                    <div className="col-6">
+                    <div className="col-7">
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                                 {t('role')}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    value={staff?.role}
-                                    options={selecterDummy}
-                                    onChange={(e, data) => handleChange('role', e)}
-                                />
-                                {/* <Dropdown
-                                    placeholder={'-' + t('select + '-'')}
+                                <Dropdown
+                                    placeholder={'-' + t('select') + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
                                     upward={false}
                                     closeOnChange
                                     selectOnBlur={false}
-                                    value={teacher?.role}
+                                    value={staff?.role}
                                     options={roleOptions}
                                     onChange={(e, data) => handleChange('role', data?.value)}
-                                /> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
@@ -277,34 +270,18 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
                                 {t('teacher.gender')}*
                             </label>
                             <div className="col-8">
-                                <Select
-                                    clearable
-                                    searchable
-                                    value={staff?.gender}
-                                    options={selecterDummy}
-                                    onChange={(e, data) => handleChange('gender', e)}
-                                />
-                                {/* <Dropdown
-                                    placeholder={'-' + t('teacher.select_gender + '-'')}
+                                <Dropdown
+                                    placeholder={'-' + t('teacher.select_gender') + '-'}
                                     fluid
                                     selection
                                     additionPosition='bottom'
                                     upward={false}
                                     closeOnChange
                                     selectOnBlur={false}
-                                    value={teacher?.gender}
+                                    value={staff?.gender}
                                     options={genderOptions}
                                     onChange={(e, data) => handleChange('gender', data?.value)}
-                                >
-                                    <Dropdown.Toggle id="dropdown-basic" className='form-control'>
-                                        Dropdown Button
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className='form-control'>
-                                        <Dropdown.Item href="#/action-1">Option 1</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Option 2</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Option 3</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown> */}
+                                />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
