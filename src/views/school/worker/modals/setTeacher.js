@@ -11,20 +11,20 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
     const { t } = useTranslation();
 
     const mainGradeRef = useRef()
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
-    const [loading, setLoading] = useState(false)
 
-    const [userTitle, setUserTitle] = useState('')
     const [selectedGrade, setSelectedGrade] = useState(null)
+    const [userTitle, setUserTitle] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [updateView, setUpdateView] = useState(false)
+
     const [mainGradeOptions, setMainGradeOptions] = useState([])
+    const [disabledGradeIds, setDisabledGradeIds] = useState([])
     const [gradeOptions, setGradeOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeRows, setGradeRows] = useState([{
         grade: null,
         subjects: [],
         subjectOptions: []
     }])
-    const [disabledGradeIds, setDisabledGradeIds] = useState([])
-    const [updateView, setUpdateView] = useState(false)
 
     const handleSave = () => {
         console.log('submitSetTeacher')
@@ -51,6 +51,34 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
         //         setLoading(false)
         //     })
     }
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolStaffToTeacher, 'POST', { employee: user })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const gradeList = res?.data?.grades
+    //                 setMainGradeOptions(cloneDeep(gradeList))
+    //                 setGradeOptions([...gradeList])
+
+    //                 setGradeRows([{
+    //                     grade: null,
+    //                     subjects: [],
+    //                     subjectOptions: []
+    //                 }])
+
+    //                 setUpdateView(!updateView)
+    //             } else {
+    //                 message(res.data.message)
+    //                 onClose();
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleRowSubjectsChange = (index, value) => {
         const rows = [...gradeRows]

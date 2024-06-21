@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 const passwordReset = ({ onClose, onSubmit }) => {
 
     const { t } = useTranslation();
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     
     const [password, setPassword] = useState({})
 

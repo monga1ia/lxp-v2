@@ -3,6 +3,7 @@ import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
 import React, { useEffect } from 'react'
 import ImageModal from 'utils/imageModal'
+import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
@@ -10,22 +11,20 @@ import { useTranslation } from "react-i18next";
 const AddWorkerModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
-    
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
-
     const [viewImageModal, setViewImageModal] = useState(false)
+    const [viewForceCreateModal, setViewForceCreateModal] = useState(false)
+    const [forceCreateMessage, setForceCreateMessage] = useState('')
 
     const [staff, setStaff] = useState({})
-    const [roleOptions, setRoleOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
-    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
 
+    const [roleOptions, setRoleOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeRows, setGradeRows] = useState([{
         grade: null,
         subjects: [],
         subjectOptions: []
     }])
-    const [genderOptions] = useState([
+    const [genderOptions, setGenderOptions] = useState([
         {
             value: 'M',
             text: t('male'),
@@ -36,11 +35,23 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
         }
     ])
 
-    const [selecterDummy, setSelecterDummy] = useState([
-        {value: "1", refId: "refId", gid: "2323", text: "text 1"},
-        {value: "2", refId: "refId2", gid: "232", text: "text 2"},
-        {value: "3", refId: "refId3", gid: "23", text: "text 3"},
-    ])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolStaffSubmit, 'POST')
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { roleLists } = res.data
+    //                 setRoleOptions(roleLists)
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(t('err.error_occurred'))
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleSubmit = () => {
         if (validateFields()) {
@@ -78,6 +89,27 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
         }
     }
 
+    const handleForceCreate = () => {
+        console.log('handleForceCreate')
+        // if (validateFields()) {
+        //     setLoading(true)
+        //     fetchRequest(schoolStaffSubmit, 'POST', { ...staff, submit: 1, forceSave: 1, menu: 'staff' })
+        //         .then((res) => {
+        //             if (res.success) {
+        //                 message(res.data.message, true)
+        //                 navigate('/school/staffs')
+        //             } else {
+        //                 message(res.data.message)
+        //             }
+        //             setLoading(false)
+        //         })
+        //         .catch(() => {
+        //             message(t('err.error_occurred'))
+        //             setLoading(false)
+        //         })
+        // }
+    }
+
     const handleChange = (name, value) => {
         setStaff({ ...staff, [name]: value })
     }
@@ -91,11 +123,7 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
     }
 
     const validateFields = () => {
-        if (!staff?.lastName || !staff?.firstName || !staff?.role || !staff?.code || !staff?.loginName || !staff?.phoneNumber || !staff?.gender || !staff?.title || !staff?.grade)
-            return message(t('err.fill_all_fields'))
-        else if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length)
-            return message(t('err.fill_all_fields'))
-        else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length }))
+        if (!staff?.lastName || !staff?.firstName || !staff?.role || !staff?.code || !staff?.loginName || !staff?.phoneNumber || !staff?.gender || !staff?.title)
             return message(t('err.fill_all_fields'))
         else
             return true
@@ -113,7 +141,7 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('teacher.add_teacher')}
+                    {t('action.edit')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -322,14 +350,14 @@ const AddWorkerModal = ({onClose, onSubmit, data}) => {
                     onSubmit={handleAvatarUpload}
                 />
             }
-            {/* {
+            {
                 viewForceCreateModal &&
                 <ForceCreateModal
                     onClose={() => setViewForceCreateModal(false)}
                     onSubmit={handleForceCreate}
                     message={forceCreateMessage}
                 />
-            } */}
+            }
             {
                 loading &&
                 <>

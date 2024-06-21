@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 const view = ({ onClose, id }) => {
 
     const { t } = useTranslation();
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
     const [teacher, setTeacher] = useState({subjects: '1,3'})
 
@@ -25,7 +24,7 @@ const view = ({ onClose, id }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t(err.error_occurred))
     //             setLoading(false)
     //         })
     // }, [])

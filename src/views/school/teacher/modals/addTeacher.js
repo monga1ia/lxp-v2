@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
     const [loading, setLoading] = useState(false)
     const [viewImageModal, setViewImageModal] = useState(false)

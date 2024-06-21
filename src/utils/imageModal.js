@@ -9,8 +9,7 @@ import { useTranslation } from "react-i18next";
 const ImageModal = ({ onClose, onSubmit }) => {
 
     const { t } = useTranslation();
-
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+    
     const [image, setImage] = useState(null)
     const [croppedImage, setCroppedImage] = useState(null)
     const [isCropped, setIsCropped] = useState(false)

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const forceCreate = ({ onClose, onSubmit, message }) => {
     
     const { t } = useTranslation();
-    
+
     return (
         <Modal
             dimmer='blurring'

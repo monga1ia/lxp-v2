@@ -9,9 +9,28 @@ const view = ({ onClose, id }) => {
 
     const { t } = useTranslation();
     
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
     const [staff, setStaff] = useState({})
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolStaffView, 'POST', { 
+    //         employee: id 
+    //     })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { employeeData } = res.data
+    //                 setStaff(employeeData)
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     return (
         <Modal

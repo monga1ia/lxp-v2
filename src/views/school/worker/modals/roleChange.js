@@ -9,8 +9,6 @@ import { useTranslation } from "react-i18next";
 const roleChange = ({ onClose, onSubmit, teacher }) => {
     
     const { t } = useTranslation();
-
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
     const [selectedRoles, setSelectedRoles] = useState([])

@@ -331,22 +331,140 @@ const index = () => {
 
     const handleDelete = () => {
         console.log('delete')
+        // setLoading(true)
+        // fetchRequest(schoolStaffDelete, 'POST', { 
+        //     employee: selectedTableDataId, 
+        //     status: selectedTabData?.id,
+        //     page: tableState?.page || 1,
+        //     pageSize: tableState?.pageSize || 10,
+        //     search: tableState?.search || '',
+        //     sort: tableState?.sort || 'firstName',
+        //     order: tableState?.order || 'asc',
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             const { employees, totalCount } = res.data
+        //             setTableData(employees || [])
+        //             setTotalCount(totalCount)
+        //             message(res.data.message, res.data.success)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handlePasswordReset = (password, passwordRepeat) => {
         console.log('handlePassReset')
+        // setLoading(true)
+        // fetchRequest(schoolStaffPasswordReset, 'POST', { 
+        //     employee: selectedTableDataId, 
+        //     password, passwordRepeat 
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.data.success)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleStatusChange = status => {
         console.log('statusChangeHandler')
+        // setLoading(true)
+        // fetchRequest(schoolStaffStatusChange, 'POST', { 
+        //     employee: selectedTableDataId, 
+        //     status, 
+        //     submit: 1, 
+        //     menu: 'staff', 
+        //     tab: selectedTabData?.id,
+        //     page: tableState?.page || 1,
+        //     pageSize: tableState?.pageSize || 10,
+        //     search: tableState?.search || '',
+        //     sort: tableState?.sort || 'firstName',
+        //     order: tableState?.order || 'asc',
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             const { employees, totalCount } = res?.data
+        //             setTableData(employees)
+        //             setTotalCount(totalCount)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleRoleChange = roles => {
         console.log('handleRoleChange')
+        // setLoading(true)
+        // fetchRequest(schoolStaffRoleChange, 'POST', { 
+        //     employee: selectedTableDataId, 
+        //     roles: JSON.stringify(roles), submit: 1 
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleLoginNameChange = loginNames => {
         console.log('handleLoginNameChange')
+        // setLoading(true)
+        // fetchRequest(schoolStaffLoginNameChange, 'POST', { 
+        //     ...loginNames, 
+        //     employee: selectedTableDataId,
+        //     tab: selectedTabData?.id,
+        //     page: tableState?.page || 1,
+        //     pageSize: tableState?.pageSize || 10,
+        //     search: tableState?.search || '',
+        //     sort: tableState?.sort || 'firstName',
+        //     order: tableState?.order || 'asc',
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             const { employees, totalCount } = res?.data
+        //             setTableData(employees)
+        //             setTotalCount(totalCount)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleContextMenuClick = (id, key) => {
@@ -397,6 +515,7 @@ const index = () => {
         setShowDeleteModal(false)
         setStatusChangeModal(false)
         setSelectedTableDataId(null)
+        setShowSetTeacherModal(false)
         setShowRoleChangeModal(false)
         setShowAddWorkerModal(false)
         setShowEditWorkerModal(false)
@@ -405,29 +524,30 @@ const index = () => {
     }
 
     const onUserInteraction = (object) => {
-        if(object.page){
-            if(!firstRender){
-                setFirstRender(true);
-            } else {
-                if(object.search){
-                    let cloneData = {
-                        page: 1,
-                        pageSize: object.pageSize,
-                        search: object.search,
-                        sort: object.sort,
-                        order: object.order,
-                    }
+        console.log('onUserInteraction')
+        // if(object.page){
+        //     if(!firstRender){
+        //         setFirstRender(true);
+        //     } else {
+        //         if(object.search){
+        //             let cloneData = {
+        //                 page: 1,
+        //                 pageSize: object.pageSize,
+        //                 search: object.search,
+        //                 sort: object.sort,
+        //                 order: object.order,
+        //             }
     
-                    secureLocalStorage?.setItem(tableIndex, cloneData);
-                    setTableState(cloneData);
-                    init(selectedTabData, cloneData)
-                } else {
-                    secureLocalStorage?.setItem(tableIndex, object);
-                    setTableState(object);
-                    init(selectedTabData, object)
-                }
-            }
-        }
+        //             secureLocalStorage?.setItem(tableIndex, cloneData);
+        //             setTableState(cloneData);
+        //             init(selectedTabData, cloneData)
+        //         } else {
+        //             secureLocalStorage?.setItem(tableIndex, object);
+        //             setTableState(object);
+        //             init(selectedTabData, object)
+        //         }
+        //     }
+        // }
     };
 
     return (
@@ -471,7 +591,7 @@ const index = () => {
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
-                                                        // onInteraction={onUserInteraction}
+                                                        onInteraction={onUserInteraction}
                                                         totalDataSize={totalCount}
                                                     />
                                                 </div>
@@ -492,7 +612,7 @@ const index = () => {
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
-                                                        // onInteraction={onUserInteraction}
+                                                        onInteraction={onUserInteraction}
                                                         totalDataSize={totalCount}
                                                     />
                                                 </div>
@@ -512,7 +632,7 @@ const index = () => {
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
-                                                        // onInteraction={onUserInteraction}
+                                                        onInteraction={onUserInteraction}
                                                         totalDataSize={totalCount}
                                                     />
                                                 </div>

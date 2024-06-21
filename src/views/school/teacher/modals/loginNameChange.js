@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 const loginNameChange = ({ onClose, onSubmit }) => {
     
     const { t } = useTranslation();
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
     const [loginNames, setLoginNames] = useState({})
 

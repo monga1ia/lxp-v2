@@ -10,7 +10,6 @@ import { useTranslation } from "react-i18next";
 const EditTeacherModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
     const teacherData = data
 
@@ -186,7 +185,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('teacher.editInfo')}
+                    {t('action.edit')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

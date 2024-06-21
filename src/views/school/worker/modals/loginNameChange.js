@@ -2,16 +2,12 @@ import message from 'modules/message'
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Col, Row } from 'react-bootstrap'
-import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 
 const loginNameChange = ({ onClose, onSubmit }) => {
     
     const { t } = useTranslation();
-
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
-
     const [loginNames, setLoginNames] = useState({})
 
     const handleInputChange = (name, value) => {

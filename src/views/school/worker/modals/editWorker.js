@@ -10,11 +10,9 @@ import { useTranslation } from "react-i18next";
 const EditWorkerModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
-    
-    const staffId = data
-
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+    const [staffData, setStaffData] = useState(data)
     const [loading, setLoading] = useState(false)
+    const [updateView, setUpdateView] = useState(false)
     const [viewImageModal, setViewImageModal] = useState(false)
 
     const [staff, setStaff] = useState({})
@@ -22,9 +20,6 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
     const [roleOptions, setRoleOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeOptions, setGradeOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
-
-    const [updateView, setUpdateView] = useState(false)
-
     const [genderOptions] = useState([
         {
             value: 'M',
@@ -35,6 +30,32 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
             text: t('female'),
         }
     ])
+
+    // useEffect(() => {
+    //     if (!location?.state?.id) {
+    //         message(translations(locale)?.staff?.select)
+    //         navigate('/school/staffs', { replace: true })
+    //     }
+    // }, [])
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolStaffEdit, 'POST', { teacher: location?.state?.id, menu: 'staff' })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { roleLists, teacherData } = res.data
+    //                 setRoleOptions(roleLists || [])
+    //                 setStaff(teacherData || {})
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
 
     const handleSubmit = () => {
@@ -74,25 +95,16 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
     }
 
     const validateFields = () => {
-        const list = gradeSubjectOptions;
-        let hasError = false
-        if (list?.length > 0) {
-            for (let l = 0; l < list?.length; l++) {
-                if (list[l].visible) {
-                    if (list[l].value) {
-                    } else {
-                        hasError = true;
-                        break;
-                    }
-                }
-            }
+        if (!staff?.lastName || !staff?.firstName || !staff?.code || !staff?.phoneNumber || !staff?.gender || !staff?.title) {
+            return message(translations(locale).err.fill_all_fields)
         }
-        if (!staff?.lastName || !staff?.firstName || !staff?.code || !staff?.phoneNumber || !staff?.gender || !staff?.title || !staff?.grade)
-            return message(t('err.fill_all_fields'))
-        else if (hasError)
-            return message(t('err.fill_all_fields'))
-        else
+        else {
+            staff.isTeacher = 0
+            if (staff?.avatar?.startsWith('data')) {
+                staff.photo = staff.avatar
+            }
             return true
+        }
     }
 
     return (

@@ -8,8 +8,7 @@ import { useTranslation } from "react-i18next";
 const view = ({ onClose, id }) => {
 
     const { t } = useTranslation();
-    
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+
     const [loading, setLoading] = useState(false)
     const [teacher, setTeacher] = useState({subjects: '1,3'})
 

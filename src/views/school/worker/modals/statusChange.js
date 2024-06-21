@@ -9,7 +9,6 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
 
     const { t } = useTranslation();
 
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
     const [selectedStatus, setSelectedStatus] = useState(null)

@@ -10,7 +10,6 @@ const passwordReset = ({ onClose, onSubmit }) => {
 
     const { t } = useTranslation();
     
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [password, setPassword] = useState({})
 
     const handleInputChange = (name, value) => {

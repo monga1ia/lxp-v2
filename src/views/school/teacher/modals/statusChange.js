@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 const statusChange = ({ onClose, onSubmit, teacher }) => {
 
     const { t } = useTranslation();
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
     const [selectedStatus, setSelectedStatus] = useState(null)
@@ -28,7 +27,7 @@ const statusChange = ({ onClose, onSubmit, teacher }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err?.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])

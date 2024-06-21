@@ -18,7 +18,6 @@ import ViewModal from './modals/view'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import { useTranslation } from "react-i18next";
 
-const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const localStorageSelectedTree = 'school_classes_selected_tree_index'
 const localeActiveTableState = 'school_classes_table_index'
 
