@@ -70,8 +70,8 @@ const ListItems = ({councils = [], selectedTab = null, onSave = {}, accordionAct
                                         <img className="profile" alt={'council_' + index} src={obj.logo ? obj.logo : 'https://lxp-test.eschool.mn/images/placeholder.jpg'} width={120} height={120} style={{borderRadius: 6}}/>
                                         <div className="fs-13 ms-3">
                                             <span className='d-block main-color fs-18 mb-3' style={{fontWeight: 700}} onClick={(e) => onHandlerNameClick(e, obj)}>{obj?.name?.toUpperCase() || '-'}</span>
-                                            <span className='d-block black-color fs-16' style={{fontWeight: 400}}>{t('council.totalCount') + ': ' + (obj?.totalStudentCount || '-')}</span>
-                                            <span className='d-inline black-color fs-16' style={{fontWeight: 400}}>{t('council.openTotalCount') + ': '} <div className='red-color d-inline'>{(obj?.recruitingStudentCount || '-')}</div></span>
+                                            <span className='d-block black-color fs-16' style={{fontWeight: 400}}>{t('council.totalCount') + ': ' + (obj.totalStudentCount || '-')}</span>
+                                            <span className='d-inline black-color fs-16' style={{fontWeight: 400}}>{t('council.openTotalCount') + ': '} <div className='red-color d-inline'>{(obj.recruitingStudentCount || '-')}</div></span>
                                         </div>
                                     </div>
                                 </li>

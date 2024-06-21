@@ -100,7 +100,7 @@ const MainGroup = () => {
         excelExport: true,
         printButton: true,
         columnButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t(locale)?.teacher_title}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('teacher_title')}`,
         defaultSort: [{
             dataField: 'firstName',
             order: 'asc'
@@ -111,10 +111,44 @@ const MainGroup = () => {
         }
     }
 
+    const [tableState, setTableState] = useState(
+        selectedTabData?.code == 'ACTIVE'
+            ?
+            secureLocalStorage.getItem(localeActiveTableState)
+                ?
+                secureLocalStorage.getItem(localeActiveTableState)
+                :
+                {
+                    filter: {},
+                    page: 1,
+                    pageSize: 10,
+                    search: '',
+                    sort: 'firstName',
+                    order: 'asc'
+                }
+            :
+            selectedTabData?.code == 'QUIT'
+                ?
+                secureLocalStorage.getItem(localeQuitTableState)
+                :
+                selectedTabData?.code == 'ABSENT'
+                    ?
+                    secureLocalStorage.getItem(localeAbsentTableState)
+                    :
+                    {
+                        filter: {},
+                        page: 1,
+                        pageSize: 10,
+                        search: '',
+                        sort: 'firstName',
+                        order: 'asc'
+                    }
+    )
+    
     const activeColumns = [
         {
             dataField: 'avatar',
-            text: t(locale)?.teacher?.photo,
+            text: t('teacher.photo'),
             sort: true,
             width: 40,
             align: 'center',
@@ -130,17 +164,17 @@ const MainGroup = () => {
         },
         {
             dataField: 'code',
-            text: t(locale)?.teacher?.code,
+            text: t('teacher.code'),
             sort: true
         },
         {
             dataField: 'lastName',
-            text: t(locale)?.teacher?.lastname,
+            text: t('teacher.lastname'),
             sort: true
         },
         {
             dataField: 'firstName',
-            text: t(locale)?.teacher?.name,
+            text: t('teacher.name'),
             sort: true,
             formatter: (cell, row) =>
                 <span
@@ -152,32 +186,32 @@ const MainGroup = () => {
         },
         {
             dataField: 'title',
-            text: t(locale)?.teacher?.teacher_title,
+            text: t('teacher.teacher_title'),
             sort: true
         },
         {
             dataField: 'username',
-            text: t(locale)?.teacher?.login_name,
+            text: t('teacher.login_name'),
             sort: true
         },
         {
             dataField: 'contact',
-            text: t(locale)?.teacher?.phone_number,
+            text: t('teacher.phone_number'),
             sort: true
         },
         {
             dataField: 'registrationNumber',
-            text: t(locale)?.register_number,
+            text: t('register_number'),
             sort: true
         },
         {
             dataField: 'subjectNames',
-            text: t(locale)?.teacher?.subjects,
+            text: t('teacher.subjects'),
             sort: false
         },
         {
             dataField: 'className',
-            text: t(locale)?.teacher?.teacher_class,
+            text: t('teacher.teacher_class'),
             sort: false
         },
     ]
@@ -185,7 +219,7 @@ const MainGroup = () => {
     const otherColumns = [
         {
             dataField: 'avatar',
-            text: t(locale)?.teacher?.photo,
+            text: t('teacher.photo'),
             sort: false,
             width: 40,
             align: 'center',
@@ -197,17 +231,17 @@ const MainGroup = () => {
         },
         {
             dataField: 'code',
-            text: t(locale)?.teacher?.code,
+            text: t('teacher.code'),
             sort: true
         },
         {
             dataField: 'lastName',
-            text: t(locale)?.teacher?.lastname,
+            text: t('teacher.lastname'),
             sort: true
         },
         {
             dataField: 'firstName',
-            text: t(locale)?.teacher?.name,
+            text: t('teacher.name'),
             sort: true,
             formatter: (cell, row) =>
                 <span
@@ -219,22 +253,22 @@ const MainGroup = () => {
         },
         {
             dataField: 'title',
-            text: t(locale)?.teacher?.teacher_title,
+            text: t('teacher.teacher_title'),
             sort: true
         },
         {
             dataField: 'username',
-            text: t(locale)?.teacher?.login_name,
+            text: t('teacher.login_name'),
             sort: true
         },
         {
             dataField: 'subjectNames',
-            text: t(locale)?.teacher?.subjects,
+            text: t('teacher.subjects'),
             sort: false
         },
         {
             dataField: 'className',
-            text: t(locale)?.teacher?.teacher_class,
+            text: t('teacher.teacher_class'),
             sort: false
         },
     ]
@@ -243,42 +277,42 @@ const MainGroup = () => {
         {
             key: 'view',
             icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.view,
+            title: t('view'),
         },
         {
             key: 'edit',
             icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.edit
+            title: t('edit')
         },
         {
             key: 'delete',
             icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.delete
+            title: t('delete')
         },
         {
             key: 'statusChange',
             icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.teacher?.change_status
+            title: t('teacher.change_status')
         },
         {
             key: 'loginNameChange',
             icon: <SettingsApplicationsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.teacher?.change_login_name,
+            title: t('teacher.change_login_name'),
         },
         {
             key: 'passwordReset',
             icon: <LockResetTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.teacher?.change_password,
+            title: t('teacher.change_password'),
         },
         {
             key: 'roleChange',
             icon: <ManageAccountsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.manage_roles,
+            title: t('manage_roles'),
         },
         {
             key: 'infoChange',
             icon: <ImportContactsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.insert_information,
+            title: t('insert_information'),
         },
     ]
 
@@ -286,37 +320,92 @@ const MainGroup = () => {
         {
             key: 'view',
             icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.view,
+            title: t('view'),
         },
         {
             key: 'edit',
             icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.edit
+            title: t('edit')
         },
         {
             key: 'delete',
             icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.delete
+            title: t('delete')
         },
         {
             key: 'statusChange',
             icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-            title: t(locale)?.teacher?.change_status
+            title: t('teacher.change_status')
         },
     ]
 
     const [columns, setColumns] = useState(activeColumns)
     const [contextMenus, setContextMenus] = useState(activeContextMenus)
 
+    const closeModal = () => {
+        setShowAddTeacherModal(false)
+        setShowEditTeacherModal(false)
+        setShowDeleteModal(false)
+        setShowViewModal(false)
+        setShowDeleteModal(false)
+        setStatusChangeModal(false)
+        setSelectedTableDataId(null)
+        setShowRoleChangeModal(false)
+        setShowInfoChangeModal(false)
+        setShowPasswordResetModal(false)
+        setShowLoginNameChangeModal(false)
+    }
+    
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
             setSelectedTreeDataId(key[0])
+            // secureLocalStorage.setItem(localStorageSelectedTree, key[0])
+
+            // let cloneData = {
+            //     page: 1,
+            //     pageSize: tableState.pageSize,
+            //     search: tableState.search,
+            //     order: tableState?.order,
+            //     sort: tableState?.sort,
+            //     filter: {
+            //         page: 1,
+            //         pageSize: tableState?.filter?.pageSize || 10
+            //     }
+            // };
+
+            // if (selectedTabData && selectedTabData.code == 'ACTIVE') {
+            //     secureLocalStorage.setItem(localeActiveTableState, cloneData)
+            // } else if (selectedTabData && selectedTabData.code == 'QUIT') {
+            //     secureLocalStorage.setItem(localeQuitTableState, cloneData)
+            // } else if (selectedTabData && selectedTabData.code == 'ABSENT') {
+            //     secureLocalStorage.setItem(localeAbsentTableState, cloneData)
+            // }
+
+            // setTableState(cloneData)
+
+            // init(cloneData, key[0], selectedTabData.code)
         }
     }
     
     const handleTabChange = (e, data) => {
         console.log( e, data)
         setSelectedTabData(data)
+        // setSelectedTabData({...data?.panes?.[data?.activeIndex]})
+        // secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
+
+        // let selectedTableState = null;
+        // if (data?.panes?.[data?.activeIndex] && data?.panes?.[data?.activeIndex]?.code == 'ACTIVE') {
+        //     setTableState(secureLocalStorage.getItem(localeActiveTableState))
+        //     selectedTableState = secureLocalStorage.getItem(localeActiveTableState)
+        // } else if (data?.panes?.[data?.activeIndex]?.code == 'QUIT') {
+        //     setTableState(secureLocalStorage.getItem(localeQuitTableState))
+        //     selectedTableState = secureLocalStorage.getItem(localeQuitTableState)
+        // } else if (data?.panes?.[data?.activeIndex]?.code == 'ABSENT') {
+        //     setTableState(secureLocalStorage.getItem(localeAbsentTableState))
+        //     selectedTableState = secureLocalStorage.getItem(localeAbsentTableState)
+        // }
+
+        // init(selectedTableState, selectedTreeDataId, data?.panes?.[data?.activeIndex]?.code)
     }
 
     const handleAddTeacher = () => {
@@ -418,42 +507,254 @@ const MainGroup = () => {
         }
     }, [selectedTabData, tableData])
 
+    // useEffect(() => {
+    //     if (treeData.length && !selectedTreeDataId.length) {
+    //         setSelectedTreeDataId(treeData?.[0]?.key)
+    //     }
+    // }, [treeData])
+
+    // useEffect(() => {
+    //     if (tabData.length && !selectedTabData?.id) {
+    //         setSelectedTabData(tabData?.[0])
+
+    //         tabData.forEach(element => {
+    //             if (element.code == 'ACTIVE') {
+    //                 if (!secureLocalStorage.getItem(localeActiveTableState)) {
+    //                     secureLocalStorage.setItem(localeActiveTableState, {
+    //                             filter: {},
+    //                             page: 1,
+    //                             pageSize: 10,
+    //                             search: '',
+    //                             sort: 'firstName',
+    //                             order: 'asc'
+    //                         }
+    //                     )
+    //                 }
+    //             } else if (element.code == 'QUIT') {
+    //                 if (!secureLocalStorage.getItem(localeQuitTableState)) {
+    //                     secureLocalStorage.setItem(localeQuitTableState, {
+    //                             filter: {},
+    //                             page: 1,
+    //                             pageSize: 10,
+    //                             search: '',
+    //                             sort: 'firstName',
+    //                             order: 'asc'
+    //                         }
+    //                     )
+    //                 }
+    //             } else if (element.code == 'ABSENT') {
+    //                 if (!secureLocalStorage.getItem(localeAbsentTableState)) {
+    //                     secureLocalStorage.setItem(localeAbsentTableState, {
+    //                             filter: {},
+    //                             page: 1,
+    //                             pageSize: 10,
+    //                             search: '',
+    //                             sort: 'firstName',
+    //                             order: 'asc'
+    //                         }
+    //                     )
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [tabData])
+
+    // const init = (pagination, gradeId, statusCode) => {
+    //     setLoading(true)
+    //     fetchRequest(schoolTeacherInit, 'POST', {
+    //         status: statusCode,
+    //         grade: gradeId,
+    //         filter: pagination?.filter,
+    //         order: pagination?.order,
+    //         sort: pagination?.sort,
+    //         page: pagination?.page,
+    //         pageSize: pagination?.pageSize,
+    //         search: pagination?.search,
+    //     })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const {teachers, statuses, grades, totalCount} = res.data
+    //                 setTreeData(grades || [])
+    //                 setTableData(teachers || [])
+    //                 setTabData(statuses?.map((el, index) => ({
+    //                     index: index,
+    //                     menuItem: el.name,
+    //                     code: el.code,
+    //                     id: el.id
+    //                 })) || [])
+    //                 setTotalCount(totalCount || 0)
+    //                 if (!firstRender) setLoading(false)
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }
+
     const handleDelete = () => {
         console.log('delete')
+        // setLoading(true)
+        // fetchRequest(schoolTeacherDelete, 'POST', {
+        //     teacher: selectedTableDataId,
+        //     grade: selectedTreeDataId,
+        //     status: selectedTabData?.code,
+        //     filter: tableState?.filter,
+        //     order: tableState?.order,
+        //     sort: tableState?.sort,
+        //     page: tableState?.page,
+        //     pageSize: tableState?.pageSize,
+        //     search: tableState?.search,
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.data.success)
+        //             const {teachers, totalCount} = res.data
+        //             setTableData(teachers || [])
+        //             setTotalCount(totalCount || 0)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleStatusChange = () => {
         console.log('statusChange')
+        // setLoading(true)
+        // fetchRequest(schoolTeacherStatusChange, 'POST', {
+        //     teacher: selectedTableDataId,
+        //     status,
+        //     submit: 1,
+        //     menu: 'teacher',
+        //     tab: selectedTabData?.id,
+        //     grade: selectedTreeDataId,
+        //     filter: tableState?.filter,
+        //     order: tableState?.order,
+        //     sort: tableState?.sort,
+        //     page: tableState?.page,
+        //     pageSize: tableState?.pageSize,
+        //     search: tableState?.search,
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             const {teachers, totalCount} = res?.data
+        //             setTableData(teachers || [])
+        //             setTotalCount(totalCount || 0)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleLoginNameChange = loginNames => {
         console.log('loginNameChange')
+        // setLoading(true)
+        // fetchRequest(schoolTeacherLoginNameChange, 'POST', {
+        //     ...loginNames,
+        //     teacher: selectedTableDataId,
+        //     menu: 'teacher',
+        //     tab: selectedTabData?.id,
+        //     grade: selectedTreeDataId,
+        //     filter: tableState?.filter,
+        //     order: tableState?.order,
+        //     sort: tableState?.sort,
+        //     page: tableState?.page,
+        //     pageSize: tableState?.pageSize,
+        //     search: tableState?.search,
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             const {teachers, totalCount} = res?.data
+        //             setTableData(teachers || [])
+        //             setTotalCount(totalCount || 0)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
     
     const handleRoleChange = roles => {
         console.log('roleChange')
+        // setLoading(true)
+        // fetchRequest(schoolTeacherRoleChange, 'POST', {
+        //     teacher: selectedTableDataId,
+        //     roles: JSON.stringify(roles),
+        //     submit: 1
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleInfoChange = param => {
         console.log('infoChange')
+        // setLoading(true)
+        // fetchRequest(schoolTeacherInfoChange, 'POST', {...param, teacher: selectedTableDataId, submit: 1})
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handlePasswordReset = (password, passwordRepeat) => {
         console.log('passwordReset')
-    }
-
-    const closeModal = () => {
-        setShowAddTeacherModal(false)
-        setShowEditTeacherModal(false)
-        setShowDeleteModal(false)
-        setShowViewModal(false)
-        setShowDeleteModal(false)
-        setStatusChangeModal(false)
-        setSelectedTableDataId(null)
-        setShowRoleChangeModal(false)
-        setShowInfoChangeModal(false)
-        setShowPasswordResetModal(false)
-        setShowLoginNameChangeModal(false)
+        // setLoading(true)
+        // fetchRequest(schoolTeacherPasswordReset, 'POST', {teacher: selectedTableDataId, password, passwordRepeat})
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.data.success)
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     return (
@@ -488,7 +789,7 @@ const MainGroup = () => {
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                            {t('common.register')}
+                            {t('action.register')}
                         </Button>
                         <div className='m-portlet tab'>
                             <div className=''>
@@ -498,7 +799,7 @@ const MainGroup = () => {
                                     tabs={[
                                         {
                                             code: "active",
-                                            title: "Ажиллаж байгаа",
+                                            title: t('teacher.working'),
                                             children: (
                                                 <div className='m-portlet__body'>
                                                     <DTable
@@ -519,7 +820,7 @@ const MainGroup = () => {
                                         },
                                         {
                                             code: "absent",
-                                            title: "Чөлөөтэй байгаа",
+                                            title: t('teacher.absent'),
                                             children: (
                                                 <div className='m-portlet__body'>
                                                     <DTable
@@ -539,7 +840,7 @@ const MainGroup = () => {
                                         },
                                         {
                                             code: "leave",
-                                            title: "Ажлаас гарсан",
+                                            title: t('teacher.not_working'),
                                             children: (
                                                 <div className='m-portlet__body'>
                                                     <DTable
@@ -559,7 +860,7 @@ const MainGroup = () => {
                                         },
                                         {
                                             code: "deleted",
-                                            title: "Устгасан",
+                                            title: t('teacher.deleted'),
                                             children: (
                                                 <div className='m-portlet__body'>
                                                     <DTable

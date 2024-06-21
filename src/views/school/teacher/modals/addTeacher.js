@@ -11,36 +11,32 @@ import { useTranslation } from "react-i18next";
 const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
-    
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
-    const [loading, setLoading] = useState(false)
 
+    const [loading, setLoading] = useState(false)
     const [viewImageModal, setViewImageModal] = useState(false)
     const [viewForceCreateModal, setViewForceCreateModal] = useState(false)
-    const [forceCreateMessage, setForceCreateMessage] = useState('')
 
     const [teacher, setTeacher] = useState({})
-
     const [roleOptions, setRoleOptions] = useState([])
     const [gradeOptions, setGradeOptions] = useState([])
+    const [forceCreateMessage, setForceCreateMessage] = useState('')
     const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
-
     const [gradeRows, setGradeRows] = useState([{
         grade: null,
         subjects: [],
         subjectOptions: []
     }])
-    const [genderOptions] = useState([
+    const [genderOptions, setGenderOptions] = useState([
         {
             value: 'M',
-            text: t(locale).male,
+            text: t('male'),
         },
         {
             value: 'F',
-            text: t(locale).female,
+            text: t('female'),
         }
     ])
-
     const [selecterDummy, setSelecterDummy] = useState([
         {value: "1", refId: "refId", gid: "2323", text: "text 1"},
         {value: "2", refId: "refId2", gid: "232", text: "text 2"},
@@ -75,7 +71,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             //         setLoading(false)
             //     })
             //     .catch(() => {
-            //         message(t(locale)?.err?.error_occurred)
+            //         message(t('err.error_occurred'))
             //         setLoading(false)
             //     })
         } else {
@@ -105,7 +101,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
     //                 setLoading(false)
     //             })
     //             .catch(() => {
-    //                 message(t(locale)?.err?.error_occurred)
+    //                 message(t('err.error_occurred'))
     //                 setLoading(false)
     //             })
     //     }
@@ -125,11 +121,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
 
     const validateFields = () => {
         if (!teacher?.lastName || !teacher?.firstName || !teacher?.role || !teacher?.code || !teacher?.loginName || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
-            return message(t(locale).err.fill_all_fields)
+            return message(t('err.fill_all_fields'))
         else if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length)
-            return message(t(locale).err.fill_all_fields)
+            return message(t('err.fill_all_fields'))
         else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length }))
-            return message(t(locale).err.fill_all_fields)
+            return message(t('err.fill_all_fields'))
         else
             return true
     }
@@ -189,7 +185,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.teacher?.add_teacher}
+                    {t('teacher.add_teacher')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -210,24 +206,24 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             className="btn m-btn--pill btn-outline-primary"
                             style={{ width: 150 }}
                         >
-                            {t(locale)?.teacher?.change_photo}
+                            {t('teacher.change_photo')}
                         </button>
                         <button
                             onClick={handleAvatarRemove}
                             className="btn m-btn--pill btn-outline-danger "
                             style={{ width: 150 }}
                         >
-                            {t(locale)?.profile?.img_delete}
+                            {t('profile.img_delete')}
                         </button>
                     </div>
                     <div className="col-7">
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.role}*
+                                {t('role')}*
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + t(locale)?.select + '-'}
+                                    placeholder={'-' + t('select + '-'')}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -242,91 +238,91 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.code}*
+                                {t('teacher.code')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.code || ''}
-                                    placeholder={t(locale)?.teacher?.code}
+                                    placeholder={t('teacher.code')}
                                     onChange={(e) => handleChange('code', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.new_lastname}*
+                                {t('teacher.new_lastname')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.lastName || ''}
-                                    placeholder={t(locale)?.teacher?.new_lastname_placeholder}
+                                    placeholder={t('teacher.new_lastname_placeholder')}
                                     onChange={(e) => handleChange('lastName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.new_name}*
+                                {t('teacher.new_name')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.firstName || ''}
-                                    placeholder={t(locale)?.teacher?.new_name_placeholder}
+                                    placeholder={t('teacher.new_name_placeholder')}
                                     onChange={(e) => handleChange('firstName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.register_number}
+                                {t('register_number')}
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.registrationNumber || ''}
-                                    placeholder={t(locale)?.register_number}
+                                    placeholder={t('register_number')}
                                     onChange={(e) => handleChange('registrationNumber', e?.target?.value?.toString()?.toUpperCase()?.replace(/\s/g, ''))}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.login_name}*
+                                {t('teacher.login_name')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.loginName || ''}
-                                    placeholder={t(locale)?.teacher?.login_name}
+                                    placeholder={t('teacher.login_name')}
                                     onChange={(e) => handleChange('loginName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.studentBook?.email}
+                                {t('studentBook.email')}
                             </label>
                             <div className="col-8">
                                 <input
                                     type="email"
                                     className="form-control"
                                     value={teacher?.email || ''}
-                                    placeholder={t(locale)?.e_mail}
+                                    placeholder={t('e_mail')}
                                     onChange={(e) => handleChange('email', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.phone_number}*
+                                {t('teacher.phone_number')}*
                             </label>
                             <div className="col-8">
                                 <input
@@ -334,7 +330,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     max={99999999}
                                     className="form-control"
                                     value={teacher?.phoneNumber || ''}
-                                    placeholder={t(locale)?.teacher?.phone_number}
+                                    placeholder={t('teacher.phone_number')}
                                     onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                     inputMode="numeric"
                                 />
@@ -343,11 +339,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.gender}*
+                                {t('teacher.gender')}*
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + t(locale)?.teacher?.select_gender + '-'}
+                                    placeholder={'-' + t('teacher.select_gender + '-'')}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -362,11 +358,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.school}*
+                                {t('school')}*
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + t(locale)?.teacher?.select_school + '-'}
+                                    placeholder={'-' + t('teacher.select_school + '-'')}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -381,14 +377,14 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.teacher_title}*
+                                {t('teacher.teacher_title')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={teacher?.title || ''}
-                                    placeholder={t(locale)?.teacher?.insert_teacher_title}
+                                    placeholder={t('teacher.insert_teacher_title')}
                                     onChange={(e) => handleChange('title', e.target.value)}
                                 />
                             </div>
@@ -397,11 +393,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             gradeRows?.map((el, index) => (
                                 <div key={index} className="form-group m-form__group row">
                                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                        {index == 0 && t(locale)?.teacher?.subjects}
+                                        {index == 0 && t('teacher.subjects')}
                                     </label>
                                     <div className="col-3">
                                         <Dropdown
-                                            placeholder={'-' + t(locale)?.err?.select_class + '-'}
+                                            placeholder={'-' + t('err.select_class + '-'')}
                                             fluid
                                             selection
                                             additionPosition='bottom'
@@ -416,7 +412,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     </div>
                                     <div className="col-5s d-flex p-0 align-items-center">
                                         <Dropdown
-                                            placeholder={'-' + t(locale)?.absent?.select_subject + '-'}
+                                            placeholder={'-' + t('absent.select_subject + '-'')}
                                             fluid
                                             selection
                                             additionPosition='bottom'
@@ -457,13 +453,13 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                     onClick={onClose}
                     className="btn m-btn--pill btn-link margin-right-5"
                 >
-                    {t(locale)?.back}        
+                    {t('back')}        
                 </button>
                 <button
                     onClick={handleSubmit}
                     className="btn m-btn--pill btn-success text-uppercase"
                 >
-                    {t(locale)?.save}
+                    {t('save')}
                 </button>
             </Modal.Footer>
             {

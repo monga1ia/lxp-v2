@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 const roleChange = ({ onClose, onSubmit, teacher }) => {
     
     const { t } = useTranslation();
-
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
@@ -30,13 +29,13 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(t(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
 
     const handleSave = () => {
-        if (!selectedRoles.length) return message(t(locale)?.err?.fill_all_fields)
+        if (!selectedRoles.length) return message(t('err.fill_all_fields'))
         onSubmit(selectedRoles)
     }
 
@@ -51,17 +50,17 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                {t(locale)?.manage_roles}
+                {t('manage_roles')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="form-group m-form__group row">
                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                        {t(locale)?.role}*
+                        {t('role')}*
                     </label>
                     <div className="col-5">
                         <Dropdown
-                            placeholder={'-' + t(locale)?.select + '-'}
+                            placeholder={'-' + t('select + '-'')}
                             fluid
                             selection
                             multiple
@@ -81,13 +80,13 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
-                        {t(locale)?.back}
+                        {t('back')}
                     </button>
                     <button
                         className="btn m-btn--pill btn-success m-btn--wide"
                         onClick={handleSave}
                     >
-                        {t(locale)?.save}
+                        {t('save')}
                     </button>
                 </div>
             </Modal.Footer>

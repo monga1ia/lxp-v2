@@ -37,13 +37,13 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(t(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
 
     const handleSave = () => {
-        if (!selectedStatus) return message(t(locale)?.err?.fill_all_fields)
+        if (!selectedStatus) return message(t('err.fill_all_fields'))
         onSubmit(selectedStatus)
     }
 
@@ -58,13 +58,13 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.teacher?.change_status_staff}
+                    {t('teacher.change_status_staff')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="form-group m-form__group row">
                     <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                        {t(locale)?.status}*
+                        {t('status')}*
                     </label>
                     <div className="col-5">
                         <Select
@@ -81,7 +81,7 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
                             value={selectedStatus}
                             options={statusOptions}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
-                            placeholder={'-' + t(locale)?.select + '-'}
+                            placeholder={'-' + t('select + '-'')}
                         /> */}
                     </div>
                 </div>
@@ -91,13 +91,13 @@ const statusChange = ({ onClose, onSubmit, teacher, tableState }) => {
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                     onClick={onClose}
                 >
-                    {t(locale)?.back}
+                    {t('back')}
                 </button>
                 <button
                     className="btn m-btn--pill btn-success m-btn--wide"
                     onClick={handleSave}
                 >
-                    {t(locale)?.teacher?.change_status_staff}
+                    {t('teacher.change_status_staff')}
                 </button>
             </Modal.Footer>
             {

@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 const forceCreate = ({ onClose, onSubmit, message }) => {
     
     const { t } = useTranslation();
-
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+    
     return (
         <Modal
             size='small'
@@ -19,7 +19,7 @@ const forceCreate = ({ onClose, onSubmit, message }) => {
             centered
         >
             <div className="header">
-                {t(locale)?.addRole}
+                {t('addRole')}
                 <button type="button" className="close" aria-label="Close" onClick={onClose} >
                     <CloseIcon />
                 </button>
@@ -35,13 +35,13 @@ const forceCreate = ({ onClose, onSubmit, message }) => {
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
-                        {t(locale)?.no}
+                        {t('no')}
                     </button>
                     <button
                         className="btn m-btn--pill btn-success m-btn--wide"
                         onClick={onSubmit}
                     >
-                        {t(locale)?.yes}
+                        {t('yes')}
                     </button>
                 </div>
             </div>

@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 const passwordReset = ({ onClose, onSubmit }) => {
 
     const { t } = useTranslation();
-    
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+    
     const [password, setPassword] = useState({})
 
     const handleInputChange = (name, value) => {
@@ -18,11 +18,11 @@ const passwordReset = ({ onClose, onSubmit }) => {
 
     const handleClick = () => {
         if (!password?.new || !password?.repeat) {
-            return message(t(locale)?.err?.fill_all_fields)
+            return message(t('err.fill_all_fields'))
         } else if (password?.new.length < 4) {
-            return message(t(locale)?.password_length_error)
+            return message(t('password_length_error'))
         } else if (password?.new !== password?.repeat) {
-            return message(t(locale)?.password_re_enter_mismatch)
+            return message(t('password_re_enter_mismatch'))
         }
         onSubmit(password.new, password.repeat)
     }
@@ -38,15 +38,15 @@ const passwordReset = ({ onClose, onSubmit }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.teacher?.change_password}
+                    {t('teacher.change_password')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p style={{ color: '#848691' }} className='fs-11 pb-4 pl-4'>{t(locale)?.teacher?.change_password_description}</p>
+                <p style={{ color: '#848691' }} className='fs-11 pb-4 pl-4'>{t('teacher.change_password_description')}</p>
                 <Row className='form-group'>
                     <Col className='text-right'>
                         <label className="text-right label-pinnacle-bold col-form-label">
-                            {t(locale)?.new_password}*
+                            {t('new_password')}*
                         </label>
                     </Col>
                     <Col>
@@ -55,7 +55,7 @@ const passwordReset = ({ onClose, onSubmit }) => {
                             className="form-control"
                             value={password?.new || ''}
                             name='new'
-                            placeholder={t(locale)?.password}
+                            placeholder={t('password')}
                             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                             autoComplete='new-password'
                         />
@@ -65,7 +65,7 @@ const passwordReset = ({ onClose, onSubmit }) => {
                 <Row className='form-group'>
                     <Col className='text-right'>
                         <label className="text-right label-pinnacle-bold col-form-label">
-                            {t(locale)?.re_enter_new_password}*
+                            {t('re_enter_new_password')}*
                         </label>
                     </Col>
                     <Col>
@@ -74,7 +74,7 @@ const passwordReset = ({ onClose, onSubmit }) => {
                             className="form-control"
                             value={password?.repeat || ''}
                             name='repeat'
-                            placeholder={t(locale)?.password}
+                            placeholder={t('password')}
                             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                             autoComplete='new-password'
                         />
@@ -88,13 +88,13 @@ const passwordReset = ({ onClose, onSubmit }) => {
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
-                        {t(locale)?.back}
+                        {t('back')}
                     </button>
                     <button
                         className="btn m-btn--pill btn-success m-btn--wide"
                         onClick={handleClick}
                     >
-                        {t(locale)?.save}
+                        {t('save')}
                     </button>
                 </div>
             </Modal.Footer>

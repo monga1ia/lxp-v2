@@ -28,11 +28,11 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
     const [genderOptions] = useState([
         {
             value: 'M',
-            text: t(locale).male,
+            text: t('male'),
         },
         {
             value: 'F',
-            text: t(locale).female,
+            text: t('female'),
         }
     ])
 
@@ -52,7 +52,7 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
             //         setLoading(false)
             //     })
             //     .catch(() => {
-            //         message(t(locale)?.err?.error_occurred)
+            //         message(t('err.error_occurred'))
             //         setLoading(false)
             //     })
         } else{
@@ -88,9 +88,9 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
             }
         }
         if (!staff?.lastName || !staff?.firstName || !staff?.code || !staff?.phoneNumber || !staff?.gender || !staff?.title || !staff?.grade)
-            return message(t(locale).err.fill_all_fields)
+            return message(t('err.fill_all_fields'))
         else if (hasError)
-            return message(t(locale).err.fill_all_fields)
+            return message(t('err.fill_all_fields'))
         else
             return true
     }
@@ -106,7 +106,7 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.staff?.title}
+                    {t('staff.title')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -127,20 +127,20 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                             className="btn m-btn--pill btn-outline-primary"
                             style={{ width: 150 }}
                         >
-                            {t(locale)?.teacher?.change_photo}
+                            {t('teacher.change_photo')}
                         </button>
                         <button
                             onClick={handleAvatarRemove}
                             className="btn m-btn--pill btn-outline-danger "
                             style={{ width: 150 }}
                         >
-                            {t(locale)?.profile?.img_delete}
+                            {t('profile.img_delete')}
                         </button>
                     </div>
                     <div className="col-6">
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.role}*
+                                {t('role')}*
                             </label>
                             <div className="col-8">
                                 <Select
@@ -152,7 +152,7 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                                     // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + t(locale)?.select + '-'}
+                                    placeholder={'-' + t('select + '-'')}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -167,91 +167,91 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.staff?.code}*
+                                {t('staff.code')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={staff?.code || ''}
-                                    placeholder={t(locale)?.staff?.code}
+                                    placeholder={t('staff.code')}
                                     onChange={(e) => handleChange('code', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.new_lastname}*
+                                {t('teacher.new_lastname')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={staff?.lastName || ''}
-                                    placeholder={t(locale)?.teacher?.new_lastname_placeholder}
+                                    placeholder={t('teacher.new_lastname_placeholder')}
                                     onChange={(e) => handleChange('lastName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.new_name}*
+                                {t('teacher.new_name')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={staff?.firstName || ''}
-                                    placeholder={t(locale)?.teacher?.new_name_placeholder}
+                                    placeholder={t('teacher.new_name_placeholder')}
                                     onChange={(e) => handleChange('firstName', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.register_number}
+                                {t('register_number')}
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={staff?.registrationNumber || ''}
-                                    placeholder={t(locale)?.register_number}
+                                    placeholder={t('register_number')}
                                     onChange={(e) => handleChange('registrationNumber', e?.target?.value?.toString()?.toUpperCase()?.replace(/\s/g, ''))}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.login_name}*
+                                {t('teacher.login_name')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={staff?.loginName || ''}
-                                    placeholder={t(locale)?.teacher?.login_name}
+                                    placeholder={t('teacher.login_name')}
                                     disabled
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.studentBook?.email}
+                                {t('studentBook.email')}
                             </label>
                             <div className="col-8">
                                 <input
                                     type="email"
                                     className="form-control"
                                     value={staff?.email || ''}
-                                    placeholder={t(locale)?.e_mail}
+                                    placeholder={t('e_mail')}
                                     onChange={(e) => handleChange('email', e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.phone_number}*
+                                {t('teacher.phone_number')}*
                             </label>
                             <div className="col-8">
                                 <input
@@ -259,7 +259,7 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                                     max={99999999}
                                     className="form-control"
                                     value={staff?.phoneNumber || ''}
-                                    placeholder={t(locale)?.teacher?.phone_number}
+                                    placeholder={t('teacher.phone_number')}
                                     onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                     inputMode="numeric"
                                 />
@@ -268,7 +268,7 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.gender}*
+                                {t('teacher.gender')}*
                             </label>
                             <div className="col-8">
                                 <Select
@@ -279,7 +279,7 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                                     onChange={(e, data) => handleChange('gender', e)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + t(locale)?.teacher?.select_gender + '-'}
+                                    placeholder={'-' + t('teacher.select_gender + '-'')}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -294,14 +294,14 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t(locale)?.teacher?.teacher_title}*
+                                {t('teacher.teacher_title')}*
                             </label>
                             <div className="col-8">
                                 <input
                                     type="text"
                                     className="form-control"
                                     value={staff?.title || ''}
-                                    placeholder={t(locale)?.teacher?.insert_teacher_title}
+                                    placeholder={t('teacher.insert_teacher_title')}
                                     onChange={(e) => handleChange('title', e.target.value)}
                                 />
                             </div>
@@ -314,13 +314,13 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                     onClick={onClose}
                     className="btn m-btn--pill btn-link margin-right-5"
                 >
-                    {t(locale)?.back}
+                    {t('back')}
                 </button>
                 <button
                     onClick={handleSubmit}
                     className="btn m-btn--pill btn-success text-uppercase"
                 >
-                    {t(locale)?.save}
+                    {t('save')}
                 </button>
             </Modal.Footer>
             {

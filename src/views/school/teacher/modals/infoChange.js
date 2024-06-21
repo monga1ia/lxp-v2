@@ -10,7 +10,6 @@ import { useTranslation } from "react-i18next";
 const infoChange = ({ onClose, onSubmit, teacher }) => {
     
     const { t } = useTranslation();
-
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
@@ -41,7 +40,7 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(t(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
@@ -61,7 +60,7 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.teacher?.info_add}
+                    {t('teacher.info_add')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -81,23 +80,23 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.code}:</td>
+                                        <td>{t('teacher.code')}:</td>
                                         <th>{teacherData?.code || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.new_lastname}:</td>
+                                        <td>{t('teacher.new_lastname')}:</td>
                                         <th>{teacherData?.lastName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.new_name}:</td>
+                                        <td>{t('teacher.new_name')}:</td>
                                         <th>{teacherData?.firstName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.phone_number}:</td>
+                                        <td>{t('teacher.phone_number')}:</td>
                                         <th>{teacherData?.contact || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="vertical">{t(locale)?.teacher?.subjects}:</td>
+                                        <td className="vertical">{t('teacher.subjects')}:</td>
                                         <th>
                                             {
                                                 teacherData?.subjectNames?.split(',')?.map((el, key) =>
@@ -143,13 +142,13 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                         className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
-                        {t(locale)?.back}
+                        {t('back')}
                     </button>
                     <button
                         className="btn m-btn--pill btn-success m-btn--wide"
                         onClick={handleSave}
                     >
-                        {t(locale)?.save}
+                        {t('save')}
                     </button>
                 </div>
             </Modal.Footer>

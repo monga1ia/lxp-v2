@@ -24,7 +24,7 @@ const view = ({ onClose, id }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.teacher?.view}
+                    {t('teacher.view')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -44,31 +44,31 @@ const view = ({ onClose, id }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>{t(locale)?.status}:</td>
+                                        <td>{t('status')}:</td>
                                         <th>{teacher?.status || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.role}:</td>
+                                        <td>{t('role')}:</td>
                                         <th>{teacher?.role || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.school}:</td>
+                                        <td>{t('school')}:</td>
                                         <th>{teacher?.grade || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.code}:</td>
+                                        <td>{t('teacher.code')}:</td>
                                         <th>{teacher?.code || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.new_lastname}:</td>
+                                        <td>{t('teacher.new_lastname')}:</td>
                                         <th>{teacher?.lastName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.new_name}:</td>
+                                        <td>{t('teacher.new_name')}:</td>
                                         <th>{teacher?.firstName || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="vertical">{t(locale)?.teacher?.teacher_class}:</td>
+                                        <td className="vertical">{t('teacher.teacher_class')}:</td>
                                         <th>
                                             {
                                                 teacher.classes?.split(',')?.map((el, key) =>
@@ -78,11 +78,11 @@ const view = ({ onClose, id }) => {
                                         </th>
                                     </tr>
                                     <tr>
-                                        <td>{t(locale)?.teacher?.phone_number}:</td>
+                                        <td>{t('teacher.phone_number')}:</td>
                                         <th>{teacher?.contacts || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="vertical">{t(locale)?.teacher?.subjects}:</td>
+                                        <td className="vertical">{t('teacher.subjects')}:</td>
                                         <th>
                                             {
                                                 teacher?.subjects?.split(',')?.map((el, key) =>
@@ -102,7 +102,7 @@ const view = ({ onClose, id }) => {
                     className="btn m-btn--pill btn-outline-metal"
                     onClick={closeModal}
                 >
-                    {t(locale).close.toUpperCase()}
+                    {t('close.toUpperCase')()}
                 </button>
             </Modal.Footer>
             {

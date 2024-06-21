@@ -26,7 +26,7 @@ const index = () => {
     
     const { t } = useTranslation();
 
-    const title = t(locale).group.title
+    const title = t('group.title')
     const description = "E-learning";
 
     const breadcrumbs = [
@@ -64,17 +64,17 @@ const index = () => {
         {
             key: 'EDIT',
             icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
-            title: t(locale).edit || ""
+            title: t('edit') || ""
         },
         {
             key: 'DELETE',
             icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale).delete || ""
+            title: t('delete') || ""
         },
         {
             key: 'ESIS_CLEAR',
             icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale).esis.clearClass || ""
+            title: t('esis.clearClass') || ""
         },
     ]
 
@@ -167,17 +167,17 @@ const index = () => {
     const columns = [
         {
             dataField: "class",
-            text: t(locale).group.title || "",
+            text: t('group.title') || "",
             sort: true,
         },
         {
             dataField: "teacherLastName",
-            text: t(locale).teacher.lastname || "",
+            text: t('teacher.lastname') || "",
             sort: true
         },
         {
             dataField: "teacherFirstName",
-            text: t(locale).teacher.name || "",
+            text: t('teacher.name') || "",
             sort: true,
             formatter: (cell, row) => {
                 if (cell) {
@@ -189,29 +189,29 @@ const index = () => {
         },
         {
             dataField: "studentCount",
-            text: t(locale).group.student_count || "",
+            text: t('group.student_count') || "",
             sort: true,
             align: "right",
         },
         {
             dataField: "scoreType",
-            text: t(locale).group.score_type || "",
+            text: t('group.score_type') || "",
             sort: true,
         },
         {
             dataField: "shift",
-            text: t(locale).group.school_shift || "",
+            text: t('group.school_shift') || "",
             sort: true,
 
         },
         {
             dataField: "room",
-            text: t(locale).group.classroom || "",
+            text: t('group.classroom') || "",
             sort: true,
         },
         {
             dataField: "esisGroupId",
-            text: t(locale).esis.classCode || "",
+            text: t('esis.classCode') || "",
             hidden: true,
             sort: false,
         }
@@ -259,7 +259,7 @@ const index = () => {
             </div>
             {/* <SubHeader
                 locale={locale}
-                title={t(locale).group.title || null}
+                title={t('group.title || null')}
             /> */}
             <div className="m-content">
                 <div className="row">
@@ -281,11 +281,11 @@ const index = () => {
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <AddCircleOutlineRoundedIcon/>
-                            <span className='ml-2'>{t(locale)?.action?.register}</span>
+                            <span className='ml-2'>{t('action.register')}</span>
                         </Button>
                         {/* <Link to='/school/classes/create' className="btn m-btn--pill m-btn--uppercase btn-info d-inline-flex align-items-center mb-3 btn-sm">
                             <AddCircleOutlineRoundedIcon />
-                            <span className="ml-2">{t(locale).action.register || null}</span>
+                            <span className="ml-2">{t('action.register || null}</span')>
                         </Link> */}
                         <div className="mb-5 background-white br-16">
                             <div className="padding-30">
@@ -325,19 +325,19 @@ const index = () => {
                     onClose={closeModal}
                     onDelete={deleteClass}
                     locale={locale}
-                    title={t(locale).delete}
+                    title={t('delete')}
                 >
-                    {t(locale).delete_confirmation}
+                    {t('delete_confirmation')}
                     <br />
                     <br />
-                    {t(locale).delete_confirmation_description}
+                    {t('delete_confirmation_description')}
                 </DeleteModal>
                     // <div className="content">
                     //     <p>
-                    //         {t(locale).delete_confirmation}
+                    //         {t('delete_confirmation')}
                     //         <br />
                     //         <br />
-                    //         {t(locale).delete_confirmation_description}
+                    //         {t('delete_confirmation_description')}
                     //     </p>
                     // </div>
             }

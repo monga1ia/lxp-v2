@@ -38,7 +38,7 @@ const index = () => {
 
     const { t } = useTranslation();
     
-    const title = t(locale)?.worker?.title
+    const title = t('worker.title')
     const description = "E-learning";
 
     const [loading, setLoading] = useState(false)
@@ -82,7 +82,7 @@ const index = () => {
     const activeColumns = [
         {
             dataField: "avatar",
-            text: t(locale)?.teacher?.photo,
+            text: t('teacher.photo'),
             sort: true,
             width: 40,
             align: 'center',
@@ -99,17 +99,17 @@ const index = () => {
         },
         {
             dataField: "code",
-            text: t(locale)?.staff?.code,
+            text: t('staff.code'),
             sort: true
         },
         {
             dataField: "lastName",
-            text: t(locale)?.staff?.lastName,
+            text: t('staff.lastName'),
             sort: true
         },
         {
             dataField: "firstName",
-            text: t(locale)?.staff?.firstName,
+            text: t('staff.firstName'),
             sort: true,
             formatter: (cell, row) =>
                 <span
@@ -121,22 +121,22 @@ const index = () => {
         },
         {
             dataField: "title",
-            text: t(locale)?.teacher?.teacher_title,
+            text: t('teacher.teacher_title'),
             sort: true
         },
         {
             dataField: "username",
-            text: t(locale)?.teacher?.login_name,
+            text: t('teacher.login_name'),
             sort: true
         },
         {
             dataField: "contact",
-            text: t(locale)?.phoneNumber,
+            text: t('phoneNumber'),
             sort: true,
         },
         {
             dataField: 'registrationNumber',
-            text: t(locale)?.register_number,
+            text: t('register_number'),
             sort: true
         },
     ]
@@ -144,7 +144,7 @@ const index = () => {
     const otherColumns = [
         {
             dataField: "avatar",
-            text: t(locale)?.teacher?.photo,
+            text: t('teacher.photo'),
             sort: true,
             width: 40,
             align: 'center',
@@ -161,17 +161,17 @@ const index = () => {
         },
         {
             dataField: "code",
-            text: t(locale)?.staff?.code,
+            text: t('staff.code'),
             sort: true
         },
         {
             dataField: "lastName",
-            text: t(locale)?.staff?.lastName,
+            text: t('staff.lastName'),
             sort: true
         },
         {
             dataField: "firstName",
-            text: t(locale)?.staff?.firstName,
+            text: t('staff.firstName'),
             sort: true,
             formatter: (cell, row) =>
                 <span
@@ -183,12 +183,12 @@ const index = () => {
         },
         {
             dataField: "title",
-            text: t(locale)?.teacher?.teacher_title,
+            text: t('teacher.teacher_title'),
             sort: true
         },
         {
             dataField: "username",
-            text: t(locale)?.teacher?.login_name,
+            text: t('teacher.login_name'),
             sort: true
         },
     ]
@@ -197,42 +197,42 @@ const index = () => {
         {
             key: 'view',
             icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.view,
+            title: t('view'),
         },
         {
             key: 'edit',
             icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.edit
+            title: t('edit')
         },
         {
             key: 'delete',
             icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.delete
+            title: t('delete')
         },
         {
             key: 'statusChange',
             icon: <CameraFrontTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.teacher?.change_status_staff
+            title: t('teacher.change_status_staff')
         },
         {
             key: 'loginNameChange',
             icon: <SettingsApplicationsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.teacher?.change_login_name_staff,
+            title: t('teacher.change_login_name_staff'),
         },
         {
             key: 'passwordReset',
             icon: <LockResetTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.teacher?.change_password_staff,
+            title: t('teacher.change_password_staff'),
         },
         {
             key: 'roleChange',
             icon: <ManageAccountsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.manage_roles,
+            title: t('manage_roles'),
         },
         {
             key: 'setTeacher',
             icon: <SchoolIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.add_teacher_role,
+            title: t('add_teacher_role'),
         },
     ]
 
@@ -240,22 +240,22 @@ const index = () => {
         {
             key: 'view',
             icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.view,
+            title: t('view'),
         },
         {
             key: 'edit',
             icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.edit
+            title: t('edit')
         },
         {
             key: 'delete',
             icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.delete
+            title: t('delete')
         },
         {
             key: 'statusChange',
             icon: <CameraFrontTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t(locale)?.teacher?.change_status_staff
+            title: t('teacher.change_status_staff')
         },
     ]
 
@@ -263,7 +263,7 @@ const index = () => {
         excelExport: true,
         printButton: true,
         columnButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t(locale)?.staff?.title}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('staff.title')}`,
         defaultSort: [{
             dataField: tableState?.sort || 'firstName',
             order: tableState?.order || 'asc'
@@ -303,7 +303,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(t(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -449,7 +449,7 @@ const index = () => {
                             className="mb-2 add-button text-uppercase"
                         >
                             <AddCircleOutlineRoundedIcon />
-                            <span className='ml-2'>{t(locale)?.action?.register}</span>
+                            <span className='ml-2'>{t('action.register')}</span>
                         </Button>
                         <div className="mb-5 background-white br-16">
                             <div className="m-portlet__body">
@@ -536,12 +536,12 @@ const index = () => {
                     onClose={closeModal}
                     onDelete={handleDelete}
                     locale={locale}
-                    title={t(locale).delete}
+                    title={t('delete')}
                 >
-                    {t(locale).delete_confirmation}
+                    {t('delete_confirmation')}
                     <br />
                     <br />
-                    {t(locale).delete_confirmation_description}
+                    {t('delete_confirmation_description')}
                 </DeleteModal>
             }
             {

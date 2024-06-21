@@ -172,7 +172,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t(locale)?.insert_photo}
+                    {t('insert_photo')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -181,7 +181,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
                     className="button-green-custom"
                     style={{marginBottom: '0.2rem'}}
                 >
-                    {t(locale)?.upload_photo_button_label}
+                    {t('upload_photo_button_label')}
                 </label>
                 <input
                     type="file"
@@ -201,19 +201,19 @@ const ImageModal = ({ onClose, onSubmit }) => {
                                 className="button-green-custom"
                                 onClick={handleCrop}
                             >
-                                {t(locale)?.crop}
+                                {t('crop')}
                             </button>
                             <button
                                 className="button-green-custom"
                                 onClick={handleUndo}
                             >
-                                {t(locale)?.undo}
+                                {t('undo')}
                             </button>
                             <button
                                 className="button-green-custom"
                                 onClick={handleRemove}
                             >
-                                {t(locale)?.delete}
+                                {t('delete')}
                             </button>
                         </div>
                         <div
@@ -237,13 +237,13 @@ const ImageModal = ({ onClose, onSubmit }) => {
                         className="btn m-btn--pill m-btn--air btn-link margin-right-5"
                         onClick={onClose}
                     >
-                        {t(locale)?.back}
+                        {t('back')}
                     </button>
                     <button
                         onClick={handleSave}
                         className="btn m-btn--pill btn-success"
                     >
-                        {t(locale)?.insert_photo}
+                        {t('insert_photo')}
                     </button>
                 </div>
             </Modal.Footer>
