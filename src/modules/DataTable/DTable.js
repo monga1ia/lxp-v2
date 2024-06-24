@@ -73,7 +73,6 @@ const CustomToggleList = ({
     anchorRef,
     columns,
     onColumnToggle,
-    toggles,
     handleToggle,
     open,
     handleClose,
@@ -128,7 +127,7 @@ const CustomToggleList = ({
                                                 key={column.dataField}
                                                 control={
                                                     <div class="dtableColumnCheckbox">
-                                                        <Checkbox defaultChecked={column.toggle ? false : true} />
+                                                        <Checkbox defaultChecked={column.hidden ? false : true} />
                                                     </div>
                                                 }
                                                 label={column.text}

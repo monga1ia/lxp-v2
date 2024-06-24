@@ -4688,7 +4688,8 @@ i.icon.delete.calendar:before {
     content: "\f273"
 }
 
-i.delete.icon:before {
+.ui.label > i.delete.icon:before {
+    font-family: Dropdown !important;
     content: "\f00d"
 }
 
@@ -18547,12 +18548,12 @@ select.ui.dropdown {
 }
 
 .ui.multiple.search.dropdown > .text {
-    display: inline-block;
-    position: absolute;
+    display: flex;
+    /* position: absolute; */
     top: 0;
     left: 0;
     padding: inherit;
-    margin: .45238095em 0 .45238095em .64285714em;
+    margin: .226190475em 0 0 0;
     line-height: 1.21428571em
 }
 
@@ -18561,10 +18562,10 @@ select.ui.dropdown {
 }
 
 .ui.multiple.search.dropdown > input.search {
-    position: static;
+    position: absolute;
     padding: 0;
     max-width: 100%;
-    margin: .45238095em 0 .45238095em .64285714em;
+    margin: .64285714em 0 .45238095em .64285714em;
     width: 2.2em;
     line-height: 1.21428571em
 }

@@ -409,7 +409,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
                                         />
                                     </div>
-                                    <div className="col-5s d-flex p-0 align-items-center">
+                                    <div className="col-5 d-flex p-0 align-items-center">
                                         <Dropdown
                                             placeholder={'-' + t('absent.select_subject') + ' - '}
                                             fluid
@@ -425,7 +425,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             options={el?.subjectOptions}
                                             onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
                                         />
-                                        <div style={{marginLeft: "2.6rem"}} className={index != 0 ? 'visible' : 'invisible'}>
+                                        <div style={{ paddingRight: '0.71rem'}} className={index != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
                                             </button>

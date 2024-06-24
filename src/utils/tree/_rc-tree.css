@@ -1,127 +1,142 @@
 .rc-tree {
     margin: 0;
-    border: 1px solid transparent;
 }
-.rc-tree-focused:not(.rc-tree-active-focused) {
-    border-color: cyan;
-}
+
 .rc-tree .rc-tree-treenode {
-    display: flex;
     margin: 0;
     padding: 0;
-    line-height: 24px;
-    /*white-space: nowrap; old*/
-    white-space: break-spaces;
+    line-height: 20px;
+    white-space: nowrap;
     list-style: none;
     outline: 0;
+    cursor: pointer;
 }
-.rc-tree .rc-tree-treenode .draggable {
+
+.rc-tree [role="treeitem"] .draggable {
     color: #333;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
     /* Required to make elements draggable in old WebKit */
+
     -khtml-user-drag: element;
     -webkit-user-drag: element;
 }
-.rc-tree .rc-tree-treenode.drop-container > .draggable::after {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    box-shadow: inset 0 0 0 2px red;
-    content: "";
+
+.rc-tree .rc-tree-treenode.drag-over > .draggable {
+    color: white;
+    background-color: #316ac5;
+    border: 1px #316ac5 solid;
+    opacity: 0.8;
 }
-.rc-tree .rc-tree-treenode.drop-container ~ .rc-tree-treenode {
-    border-left: 2px solid chocolate;
+
+.rc-tree .rc-tree-treenode.drag-over-gap-top > .draggable {
+    border-top: 2px blue solid;
 }
-.rc-tree .rc-tree-treenode.drop-target {
-    background-color: yellowgreen;
+
+.rc-tree .rc-tree-treenode.drag-over-gap-bottom > .draggable {
+    border-bottom: 2px blue solid;
 }
-.rc-tree .rc-tree-treenode.drop-target ~ .rc-tree-treenode {
-    border-left: none;
-}
+
 .rc-tree .rc-tree-treenode.filter-node > .rc-tree-node-content-wrapper {
     color: #a60000 !important;
     font-weight: bold !important;
 }
+
 .rc-tree .rc-tree-treenode ul {
     margin: 0;
     padding: 0 0 0 18px;
 }
-.rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
-    position: relative;
-    /*display: inline-block; old*/
-    display: inline-table; /* new*/
-    height: 24px;
+
+.rc-tree [role="treeitem"] .rc-tree-node-content-wrapper {
+    display: inline-block;
+    height: 17px;
     margin: 0;
-    padding: 0;
+    padding: 1px 3px 0 0;
     text-decoration: none;
     vertical-align: top;
     cursor: pointer;
 }
+
 .rc-tree .rc-tree-treenode span.rc-tree-switcher,
 .rc-tree .rc-tree-treenode span.rc-tree-checkbox,
 .rc-tree .rc-tree-treenode span.rc-tree-iconEle {
     display: inline-block;
-    width: 19px;
+    width: 24px;
     height: 24px;
     margin-right: 2px;
-    line-height: 16px;
-    vertical-align: -0.125em;
+    line-height: 24px;
+    vertical-align: middle;
     background-color: transparent;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAAB9CAYAAAFsYfVBAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAT1SURBVHjatJBRCoAwDENfh5fOCXLs+CMy58ApmK/Qlr6QSsKTNgBJAAHK9u2oVj41FtTjLuqxbTYcc73PJOlE934p+CdcJGX0lQRJ2J5W8U/jsV1Hhur2WcbtAAAA//+UU0EKwDAIs2xP66P02JOvysM8ucNoJxtMexBUgsYQU1Bj5li7qratCelF7xU172xxOKNf4qSyX345qOoDCI+3RBMROsyMAMzmAEC9dwIwbpj7Cmb+5CUl5942OQSP5EJdAAAA//+slcEKACAIQyv6/2/u1JiiRjWhixqkexoSCGJIvol7WgjZVHwN5/VLvO4nsiB9llBdlJczmsCwPKiE7qDt/HMEQFtW/WF2K7+kHKxeViSDLYvNQkrTp8iPH1bRk5CTitYopmvsry0AAAD//+RXUQrAIAit6GheqhN07O0nw5mWgYOgD9lmMPKp76nLTzpzAkAopXzeAcB2E0lldrv4HGBdbuITDge2NRkdSpaykVYlb5GQQaPpk/vMowKGSb7jZSnOklMjJc1Ph5Mw0xZNj2qtMWvrDM0KO48DgVvJ+Hfx8mtAjgkVeIoZBxwxSXSDYqWONrQE2tbWZSo2IcViOKpG35HirQZMbRNB4wA+eC74ez3lCZObG/AcenwBAAD//+yY2wrAIAxDGfj/v+yeHIK9JLM6cfoeUNrYkzb0qACg9GQoC019TehFrEVNPVRRdhpRmm6gm8ZrW/VI8mjMCiiRpYKbtZ4TQuPm2c2q/inGN/oe1b4ozXHN2vZFjrj50SmM1lD/iJW7pBUfqglbmISWBrQeVRpK48GyBtDRmmPfXvuiTqE15SJZsfDlpLgn2dd5k9WUrYDX9WpYAV2DaY5rthx6ToNSmuTR1z+HHmHdYUNvGWa9AQAA///smcEOwyAMQxUp///L22WbJgTBzoCW4Z56iRpw8AvpfRJ5DW27d5XZl3BHPt6bkC3zkRkf3ttZr5DGrpSmOyQ9ykfUjygRhDWQh8wcW7135EH2EUuclSbuKLMr24DWO/VkZNoHemWxtqT5tVgh6K0AoKAni1ciR8xHouPVmo/AMc4e9wSloRgn/kyElM5Y/XeMd1YUraYkNboD1RhP2LlVdsQS8li1WEl6GiEjJD1brBkwQTGfDo0ssuExclYlstWVEzoB50Avuiashl60KkFP0BP0lIgSEfQEvRnQs4Q846GXnI/+MfQ03rxrIk8AAAD//+yd3Q7CIAxGg9n7vzJeaZZl4PoHFA/XaOeX0vYstH5ugVeDw6o+G9WDYV2HIBT0DkIJPnjLuOrSDx/tIS0RqsATpO9JUwhSejWHIsOmWq/df6DFQyzxYptYs0xFREGEIAiCIAiya9q1wJ2iW1L1ndngzqOwWyL/n/Ff0jDxpKSvCkGa+0d5jQXuNK9Af+2vDp42De4ioG86Ox3WB3zawypZqwTViKCWDpSAOwozBEEQBEGQeXWIeI2qQaLsRHlIDd4fZueIdsGbCZ1fxPfs2ep5lsSO+3y+6w/3oGeFHTFRn+drpiyxhwVVb7DqTTwVXuVyPTKt/eEx5GZAr0uW8M460VmmCKN8WcWOu4e0XFHyBxgz7VCpIgiCIEhKuHs44W24ndFwJ02Tw+0Adw24Uw132RnuWMAdcAfcAXfAHaU7giAIcAfcAXfA3QZw93etZN0jE3kNErhLDndcy6QwQxDReg8AkAsFqBE6Mu4AAAAASUVORK5CYII=');
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAABgCAMAAABblVsaAAAAgVBMVEUAAAAEAAAECgK5ubkEBAR1dns4ODgAAADbwFZ+fn49PT3bwFZ4eHjbwFbbwFbbwFbbwFbbwFbbwFb///+5ubkzMzPt7e14eHjbwFb4KChcY3AzrAD9/PwCNrBVV1v39vfy9PKAgolGbUOvr+OluaXT09Tf3+B/f7h9fX2YmZiop6mxPEN/AAAAE3RSTlMACRb+Qf5aJuuAW/7vrM58RicUOtWEAAAAAx1JREFUeNrt2otyojAYhmE8W63dthx+Dyzquq5r7/8Cl59CUQaCCWZN0u+dUZnJWMszMBDAu3PUedzsyKsEQACKA6BZARCAkgHQrAAIQMlcA1QvuK7ruIb1Cy+TGy8jbX8+8C8L7j3+tlimLd66AF4ti8dVAP2yUHZcP+DLMuvlWwMGRQqAy7zXroChXsDQBMDnJkBuzq/FOwCbv/9MAsC8HwCsFpR+bYCcGmCYxQty42VU6Qoo/IyBqKhl/K6ARIVfOyC2wFpA8kfpC4CquzBxPgCVAX32uw0Q54H13ycfgBpmIjWAmAtLjk8r54G4GiM5/jotms+n08W7e4BmBEDT1w+Apv+AXPatHwBN/wG57Fs/AHaMHv4fVLIN0PUbwwAEoGQANCsAAlAyAJoVAAEomXOAyg0Gg6AoXdb2fODoY7/e75MH3BPRfFNkEF1WA3g1HkiOl53X+2OSrLXfldN7W+4hgOusJEkB00/nAG8ACooUAX0ujvaHxE+UAUPNgKEBgPsmwJ+cD8AWwL8EQHVA9pMB1P98IFVqemLw+gFA4bguQKLcz+Qt0DN4CySizA+AqrswccKjMDcCYBMgCwpOpNefjQ5h+vaQ80DO7PNAigSAf7jU73BKzpFzgP9rKpecTqPTKfl4yFyYs30uHPBOnKzPVl4sMuFqjGfz1TbzAyAApQKgaQEQgFIB0LQACECpAGhaAASgVAA0LQACUCoAmhYAjQbspQmG+09ZY8/iOgGuVuVCrV9/MukLBMc+t42ePHu7EXCzqQXM4VZNgJMoGk56YsA4OvoWC9JtfgxYLyjw8/rD6DcLirfA3XEX2ytIqn6lIL8aAX9lgkLAeHc8HoeepVEnPxZkPwEgC/Z7AkAWjHbWHkhICNfix7GfCJAFJ0JAJowdBdy0+3HKgLFf5CQg27X78UtxF565Dsh6rX7Zu9JBhAHjLGcB27e/4lPpNGa2jfOcBfQ2EjMR6RPp2W6b5+ZBRCalqdws2uVtAahyMWG8zXJ6F9bacPSV0zMRbfX6X/U8S8MFVQBKBUDTAiAApQKgaQHw3oD/AAN9BsQdYdVgAAAAAElFTkSuQmCC");
     background-repeat: no-repeat;
     background-attachment: scroll;
     border: 0 none;
     outline: none;
     cursor: pointer;
 }
+
 .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-icon__customize,
 .rc-tree .rc-tree-treenode span.rc-tree-checkbox.rc-tree-icon__customize,
 .rc-tree .rc-tree-treenode span.rc-tree-iconEle.rc-tree-icon__customize {
     background-image: none;
 }
+
 .rc-tree .rc-tree-treenode span.rc-tree-icon_loading {
     margin-right: 2px;
     vertical-align: top;
-    background: url('data:image/gif;base64,R0lGODlhEAAQAKIGAMLY8YSx5HOm4Mjc88/g9Ofw+v///wAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgAGACwAAAAAEAAQAAADMGi6RbUwGjKIXCAA016PgRBElAVlG/RdLOO0X9nK61W39qvqiwz5Ls/rRqrggsdkAgAh+QQFCgAGACwCAAAABwAFAAADD2hqELAmiFBIYY4MAutdCQAh+QQFCgAGACwGAAAABwAFAAADD1hU1kaDOKMYCGAGEeYFCQAh+QQFCgAGACwKAAIABQAHAAADEFhUZjSkKdZqBQG0IELDQAIAIfkEBQoABgAsCgAGAAUABwAAAxBoVlRKgyjmlAIBqCDCzUoCACH5BAUKAAYALAYACgAHAAUAAAMPaGpFtYYMAgJgLogA610JACH5BAUKAAYALAIACgAHAAUAAAMPCAHWFiI4o1ghZZJB5i0JACH5BAUKAAYALAAABgAFAAcAAAMQCAFmIaEp1motpDQySMNFAgA7') no-repeat scroll 0 0 transparent;
+    background: url("data:image/gif;base64,R0lGODlhEAAQAKIGAMLY8YSx5HOm4Mjc88/g9Ofw+v///wAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgAGACwAAAAAEAAQAAADMGi6RbUwGjKIXCAA016PgRBElAVlG/RdLOO0X9nK61W39qvqiwz5Ls/rRqrggsdkAgAh+QQFCgAGACwCAAAABwAFAAADD2hqELAmiFBIYY4MAutdCQAh+QQFCgAGACwGAAAABwAFAAADD1hU1kaDOKMYCGAGEeYFCQAh+QQFCgAGACwKAAIABQAHAAADEFhUZjSkKdZqBQG0IELDQAIAIfkEBQoABgAsCgAGAAUABwAAAxBoVlRKgyjmlAIBqCDCzUoCACH5BAUKAAYALAYACgAHAAUAAAMPaGpFtYYMAgJgLogA610JACH5BAUKAAYALAIACgAHAAUAAAMPCAHWFiI4o1ghZZJB5i0JACH5BAUKAAYALAAABgAFAAcAAAMQCAFmIaEp1motpDQySMNFAgA7") no-repeat scroll 0 0 transparent;
 }
+
 .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher-noop {
     cursor: auto;
 }
+
 .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_open {
-    background-position: -22px -22px;
+    background-position: -132px -5px;
 }
+
 .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_close {
-    background-position: -1px -22px;
+    background-position: -100px -5px;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox {
+
+.rc-tree [role="treeitem"] span.rc-tree-checkbox {
     width: 13px;
     height: 13px;
     margin: 0 3px;
     background-position: 0 0;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox-checked {
+
+.rc-tree [role="treeitem"] span.rc-tree-checkbox-checked {
     background-position: -14px 0;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox-indeterminate {
+
+.rc-tree [role="treeitem"] span.rc-tree-checkbox-indeterminate {
     background-position: -14px -28px;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox-disabled {
+
+.rc-tree [role="treeitem"] span.rc-tree-checkbox-disabled {
     background-position: 0 -56px;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox.rc-tree-checkbox-checked.rc-tree-checkbox-disabled {
+
+.rc-tree
+[role="treeitem"]
+span.rc-tree-checkbox.rc-tree-checkbox-checked.rc-tree-checkbox-disabled {
     background-position: -14px -56px;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled {
+
+.rc-tree
+[role="treeitem"]
+span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled {
     position: relative;
     background: #ccc;
     border-radius: 3px;
 }
-.rc-tree .rc-tree-treenode span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled::after {
+
+.rc-tree
+[role="treeitem"]
+span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled::after {
     position: absolute;
     top: 5px;
     left: 3px;
@@ -132,80 +147,76 @@
     border-left: 0;
     -webkit-transform: scale(1);
     transform: scale(1);
-    content: ' ';
+    content: " ";
 }
+
 .rc-tree:not(.rc-tree-show-line) .rc-tree-treenode .rc-tree-switcher-noop {
     background: none;
 }
+
 .rc-tree.rc-tree-show-line .rc-tree-treenode:not(:last-child) > ul {
-    background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
+    background: url("data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7") 0 0 repeat-y;
 }
+
 .rc-tree.rc-tree-show-line .rc-tree-treenode:not(:last-child) > .rc-tree-switcher-noop {
-    background-position: 2px -75px;
+    background-position: -68px -5px;
 }
+
 .rc-tree.rc-tree-show-line .rc-tree-treenode:last-child > .rc-tree-switcher-noop {
-    background-position: 2px -100px;
+    background-position: -68px -5px;
 }
+
 .rc-tree-child-tree {
     display: none;
 }
+
 .rc-tree-child-tree-open {
     display: block;
 }
+
 .rc-tree-treenode-disabled > span:not(.rc-tree-switcher),
 .rc-tree-treenode-disabled > a,
 .rc-tree-treenode-disabled > a span {
     color: #767676;
     cursor: not-allowed;
 }
-.rc-tree-treenode-active {
-    background: rgba(0, 0, 0, 0.1);
-}
+
 .rc-tree-node-selected {
-    border-radius: 6px;
-    background-color: #f2f1f0;
-    box-shadow: 0 0 0 1px #f2f1f0;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
+    background-color: #cde9fd;
+    border: 0;
     opacity: 0.8;
+    padding: 3px 10px 3px 3px;
+    border-radius: 5px;
 }
-.rc-tree-list-holder-inner{
-    font-family: MulishRegular;
-    font-size: 13px;
-    color: #575962;
-}
+
 .rc-tree-icon__open {
     margin-right: 2px;
     vertical-align: top;
     background-position: -110px -16px;
 }
+
 .rc-tree-icon__close {
     margin-right: 2px;
     vertical-align: top;
     background-position: -110px 0;
 }
+
 .rc-tree-icon__docu {
     margin-right: 2px;
     vertical-align: top;
     background-position: -110px -32px;
 }
+
 .rc-tree-icon__customize {
     margin-right: 2px;
     vertical-align: top;
 }
-.rc-tree-title {
-    color: #1e1e2d;
-    /*display: inline-block; old*/
-}
-.rc-tree-indent {
-    display: inline-block;
-    vertical-align: bottom;
-    height: 0;
-}
+
 .rc-tree-indent-unit {
-    width: 16px;
     display: inline-block;
+    padding-left: 18px;
 }
+
 
 .react-contextmenu {
     background-color: #fff;
@@ -226,10 +237,11 @@
     vertical-align: middle;
     padding: 5px 0;
     cursor: pointer;
+    color: #575962;
 }
 
 .react-contextmenu .react-contextmenu-item:hover {
-    color: var(--primary);
+    color: #ff5b1d;
 }
 
 .react-contextmenu .react-contextmenu-item .m-nav__link-icon {
@@ -238,7 +250,7 @@
     vertical-align: middle;
     text-align: left;
     width: 30px;
-    font-size: 1.4rem;
+    font-size: 1.8rem !important;
 }
 
 .react-contextmenu .react-contextmenu-item .m-nav__link-text {
@@ -248,5 +260,5 @@
     margin: 0;
     padding: 0;
     vertical-align: middle;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }

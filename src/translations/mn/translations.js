@@ -416,6 +416,9 @@ export const TRANSLATIONS_MN = {
         health: 'Эрүүл мэндийн үзүүлэлт',
         userRoleNotFound: 'Сурагч эрхтэй хэрэглэгчийн тохиргоо хийгдээгүй байна. Системийн админд хандана уу'
     },
+    nav: {
+        choose_school: 'Сургууль сонгох',
+    },
     studentBookNavs: {
         student_info: 'Сурагчийн мэдээлэл',
         address: 'Гэрийн хаяг',
@@ -1949,6 +1952,13 @@ export const TRANSLATIONS_MN = {
         students_list: 'Сурагчдын жагсаалт',
         total: 'Нэгтгэл',
     },
+    system: {
+        title: "Сургуулийн удирдлагын систем",
+        systemRole: "Системийн дүр",
+        menuRole: "Меню дүр",
+        quit: "Системээс гарах",
+        profile: "Профайл зургаа солих",
+    },
     err: {
         select_class: 'Анги сонгоно уу',
         select_detention: 'Сахилгын төрөл сонгоно уу',
@@ -2889,5 +2899,24 @@ export const TRANSLATIONS_MN = {
         doctor: 'Эмч',
         appointment: 'Уулзалт',
         erp: 'ERP'
-    }
+    },
+    warning: {
+        approve: "Зөвшөөрөх",
+        approve_confirmation: "Та итгэлтэй байна уу?",
+        changePasswordDescription:
+            "Нууц үг солиход хэрэглэгч хуучин нууц үгээрээ орох боломжгүй болохыг анхаарна уу.",
+        delete: "Устгах",
+        delete_confirmation: "Та устгахдаа итгэлтэй байна уу?",
+        delete_confirmation_description:
+            "Нэг устгасан мэдээллийг дахин сэргээх боломжгүйг анхаарна уу!",
+        error_publish:
+            "Та мэдээллийг бүрэн бөглөөгүй байна. Мэдээллийг бөглөлгүй үргэлжлүүлэх бол хадгалах товчийг дахин дарна уу",
+        fill_required_fields: "Талбаруудыг бүрэн бөглөнө үү",
+        invalid_parameter: "Мэдээлэл дамжуулах үед алдаа гарлаа.",
+        publish_confirmation:
+            "Шалгалтын дүнг баталгаажуулснаар дахин засах, устгах боломжгүй болохыг анхаарна уу!",
+        publish_confirmation_description:
+            "Зөвхөн баталгаажуулсан дүнгүүд Сурагчид харагдана.",
+        connectOfficer: "Сургалтын албаны ажилтантай холбогдоно уу.",
+    },
 }

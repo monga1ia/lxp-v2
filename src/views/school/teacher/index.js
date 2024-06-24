@@ -770,7 +770,7 @@ const MainGroup = () => {
 
             <div className='m-content'>
                 <Row className=''>
-                    <Col className="pr-0" xl="3" xxl="2">
+                    <Col xl="3" xxl="2">
                         <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <TreeView

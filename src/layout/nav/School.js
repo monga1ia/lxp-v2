@@ -91,21 +91,23 @@ const Schools = () => {
         )
     }
 
-    const handleSchoolSelectChange = (data) => {
+    const handleSchoolSelectChange = (data, e) => {
         setThisSelectedSchool(data)
+        console.log(e)
     }
 
     const SchoolsDropdownToggle = React.memo(
         React.forwardRef(({ onClick, expanded = false }, ref) => (
                 <Dropdown
-                    placeholder={'-' + t('err.select_school') + '-'}
+                    placeholder={t('nav.choose_school') + ' >'}
                     fluid
                     selection
                     additionPosition='bottom'
                     upward={false}
                     search
                     style={{}}
-                    className='mr-2'
+                    icon={null}
+                    className='d-flex temp '
                     selectOnBlur={false}
                     value={thisSelectedSchool}
                     options={schools}

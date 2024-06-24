@@ -2753,6 +2753,24 @@ table.viewTeacherTable>tr>th {
     line-height: 1.5
 }
 
+.temp {
+    justify-content: center !important;
+    line-height: 1rem !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding-left: 2rem !important;
+    border: none !important;
+    border-bottom: 1px solid #ff5b1d !important;;
+}
+
+/* .temp:focus {
+    justify-content: center !important;
+    line-height: 1rem !important;
+    align-items: center !important;
+    text-align: center !important;
+    border: solid 1px #ff5b1d !important;
+} */
+
 .form-control {
     display: block;
     width: 100%;

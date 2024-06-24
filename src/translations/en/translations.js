@@ -2426,5 +2426,17 @@ export const TRANSLATIONS_EN = {
       doctor: 'Doctor',
       appointment: 'Appointment',
       erp: 'ERP'
-  }
+  },
+  warning: {
+    approve: "Approve",
+    approve_confirmation: "Are you sure?",
+    changePasswordDescription:
+      "Нууц үг солиход хэрэглэгч хуучин нууц үгээрээ орох боломжгүй болохыг анхаарна уу.",
+    delete: "Delete",
+    delete_confirmation: "Are you sure you want to delete it?",
+    delete_confirmation_description:
+      "Please note that one deleted information will not be restored!",
+    invalid_parameter:
+      "There was an error during transmission the information.",
+  },
 };
