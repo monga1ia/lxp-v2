@@ -399,6 +399,7 @@
   margin-bottom: var(--title-spacing);
   h1 {
     line-height: 1;
+    color: #4E4E4E !important;
   }
 }
 
@@ -424,7 +425,7 @@
 .breadcrumb {
   background: initial;
   padding: 0;
-  font-size: 0.85em;
+  font-size: 0.9154em;
   margin-bottom: 0.25rem;
   .breadcrumb-item + .breadcrumb-item::before {
     content: "|";

@@ -215,9 +215,9 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             {t('profile.img_delete')}
                         </button>
                     </div>
-                    <div className="col-7">
+                    <div className="col-8">
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('role')}*
                             </label>
                             <div className="col-8">
@@ -236,7 +236,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.code')}*
                             </label>
                             <div className="col-8">
@@ -250,7 +250,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.new_lastname')}*
                             </label>
                             <div className="col-8">
@@ -264,7 +264,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.new_name')}*
                             </label>
                             <div className="col-8">
@@ -278,7 +278,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('register_number')}
                             </label>
                             <div className="col-8">
@@ -292,7 +292,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.login_name')}*
                             </label>
                             <div className="col-8">
@@ -306,7 +306,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('studentBook.email')}
                             </label>
                             <div className="col-8">
@@ -320,7 +320,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.phone_number')}*
                             </label>
                             <div className="col-8">
@@ -337,7 +337,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.gender')}*
                             </label>
                             <div className="col-8">
@@ -356,7 +356,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('school')}*
                             </label>
                             <div className="col-8">
@@ -375,7 +375,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                 {t('teacher.teacher_title')}*
                             </label>
                             <div className="col-8">
@@ -391,7 +391,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         {
                             gradeRows?.map((el, index) => (
                                 <div key={index} className="form-group m-form__group row">
-                                    <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                                    <label className="col-3 col-form-label text-right label-pinnacle-bold">
                                         {index == 0 && t('teacher.subjects')}
                                     </label>
                                     <div className="col-3">
@@ -437,7 +437,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         {
                             gradeSubjectOptions?.length > gradeRows?.length &&
                             <div className="form-group m-form__group row">
-                                <div className="col-12s d-flex justify-content-end align-items-center">
+                                <div className="col-11 d-flex justify-content-end align-items-center">
                                     <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                         <i className="la la-plus" />
                                     </button>

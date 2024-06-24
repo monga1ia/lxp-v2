@@ -170,9 +170,9 @@
     opacity: 0.8;
 }
 .rc-tree-list-holder-inner{
-    font-family: 'Mulish';
-    font-size: 14px;
-    color: var(--grey-text);
+    font-family: MulishRegular;
+    font-size: 13px;
+    color: #575962;
 }
 .rc-tree-icon__open {
     margin-right: 2px;

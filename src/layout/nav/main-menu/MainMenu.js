@@ -265,7 +265,7 @@ const MainMenu = () => {
                         scrollbars: { autoHide: "leave", autoHideDelay: 600 },
                         overflowBehavior: { x: "hidden", y: "scroll" },
                     }}
-                    className="menu-container flex-grow-1"
+                    className="menu-container flex-grow-1 navBarPadding"
                 >
                     <NavSchools />
                     <ul id="menu" className={!isOrganizationUser && isStudent ? classNames("menu show pl-0 pr-0") : classNames("menu show")}>

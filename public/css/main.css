@@ -3088,6 +3088,16 @@ select.form-control:focus::-ms-value {
     display: block;
     padding-left: 1.25rem
 }
+.login-copyright {
+    font-size: 14px;
+    font-family: MulishRegular;
+    color: #7c7c7c;
+}
+
+.navBarPadding {
+    padding-left: 1.2308rem !important;
+    padding-right: 1.2308rem !important;
+}
 
 .form-check-input {
     position: absolute;

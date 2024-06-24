@@ -174,8 +174,8 @@ const Login = () => {
                             <Input className='form-control font-pinnacle fs-10 text-medium' type="password" name="password" placeholder={t('auth.password')} value={values.password} onChange={handleChange} />
                             {errors.password && touched.password && <div className="d-block invalid-tooltip">{errors.password}</div>}
                         </Relative>
-                        <CheckboxDiv className="form-check mb-3">
-                            <input className="form-check-input" id='rememberMe' type="checkbox" value={values.remember} onChange={handleChange} style={{ borderRadius: '4px' }} />
+                        <CheckboxDiv className="form-check mb-3" style={{ transform: 'translate(4px, 0px)' }}>
+                            <input className="form-check-input" id='rememberMe' type="checkbox" value={values.remember} onChange={handleChange} style={{ borderRadius: '4px', fontSize: '14px !important'}} />
                             <label className="form-check-label font-mulish" htmlFor="rememberMe" style={{ color: '#575962', fontSize: '14px' }}>
                                 {t('auth.rememberMe')}
                             </label>
@@ -183,12 +183,12 @@ const Login = () => {
                         <button type="submit" className='btn btn-info w-100 fw-bold pinnacle-bold' style={{ borderRadius: '8px', height: '40px', fontSize: '12px' }}>
                             {t('auth.login').toUpperCase()}
                         </button>
-                        <button type="button" className='btn btn-outline-info w-100 fw-bold pinnacle-bold mt-3' style={{ borderRadius: '8px', height: '40px', fontSize: '12px' }} onClick={onHandlerRegistration}>
+                        {/* <button type="button" className='btn btn-outline-info w-100 fw-bold pinnacle-bold mt-3' style={{ borderRadius: '8px', height: '40px', fontSize: '12px' }} onClick={onHandlerRegistration}>
                             {t('auth.signUp').toUpperCase()}
                         </button>
                         <button type="button" className='btn btn-empty w-100 fw-bold pinnacle-bold mt-3 text-decoration-underline ' style={{ borderRadius: '8px', height: '40px', color: '#ff5b1d', fontSize: '12px' }} onClick={onHandlerConfirmation}>
                             {t('auth.userConfirm').toUpperCase()}
-                        </button>
+                        </button> */}
                         {/* <button type="submit" className='btn btn-info w-100 fw-bold pinnacle-bold' style={{ borderRadius: '8px', height: '40px' }}>
 									{t('auth.login').toUpperCase()}
 							</button> */}

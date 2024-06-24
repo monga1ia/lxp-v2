@@ -11,7 +11,8 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 // import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { layoutShowingNavMenu } from 'layout/layoutSlice';
 import showMessage from "../../modules/message";
-import { setLoading, setSelectedSchool } from '../../utils/redux/action';
+import { setLoading, setSchools, setSelectedSchool } from '../../utils/redux/action';
+import { NDropdown as Drop } from 'widgets/Dropdown'
 
 // const MENU_NAME = 'Schools';
 const Schools = () => {
@@ -25,8 +26,12 @@ const Schools = () => {
         attrMenuAnimate,
     } = useSelector((state) => state.menu);
     const { color } = useSelector((state) => state.settings);
+    const [thisSelectedSchool, setThisSelectedSchool] = useState(0)
+
     const { isStudent = false, isOrganizationUser = false} = useSelector(state => state.person)
-    const { schools, selectedSchool } = useSelector((state) => state.schoolData);
+    // const { schools, selectedSchool } = useSelector((state) => state.schoolData);
+    const [schools, setSchools] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    // const [schoolsDD, setSchoolsDD] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     // const { showingNavMenu } = useSelector((state) => state.layout);
     const [searchValue, setSearchValue] = useState('');
 
@@ -40,19 +45,19 @@ const Schools = () => {
         // eslint-disable-next-line
     }, [attrMenuAnimate, behaviourHtmlData, attrMobile, color]);
 
-    useEffect(() => {
-        if (isOrganizationUser) {
-            if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
-                showMessage(t('errorMessage.selectSchool'))
-            }
-        } else {
-            if(typeof isStudent == "boolean" && !isStudent){
-                if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
-                    showMessage(t('errorMessage.selectSchool'))
-                }
-            }
-        }        
-    }, [])
+    // useEffect(() => {
+    //     if (isOrganizationUser) {
+    //         if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
+    //             showMessage(t('errorMessage.selectSchool'))
+    //         }
+    //     } else {
+    //         if(typeof isStudent == "boolean" && !isStudent){
+    //             if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
+    //                 showMessage(t('errorMessage.selectSchool'))
+    //             }
+    //         }
+    //     }        
+    // }, [])
 
     const onSearch = (nameKey) => {
         setSearchValue(nameKey)
@@ -86,32 +91,53 @@ const Schools = () => {
         )
     }
 
+    const handleSchoolSelectChange = (data) => {
+        setThisSelectedSchool(data)
+    }
+
     const SchoolsDropdownToggle = React.memo(
         React.forwardRef(({ onClick, expanded = false }, ref) => (
-            <a
-                ref={ref}
-                href="#/"
-                className="notification-button"
-                data-toggle="dropdown"
-                aria-expanded={expanded}
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onClick(e);
-                }}
-            >
-                <div className="position-relative d-inline-flex" style={{ color: 'white' }}>
-                    <div className='d-flex align-items-center mb-3'>
-                        <div className='pt-1' style={{
-                            maxHeight: 50,
-                            color: "#868aa8",
-                            overflow: 'hidden'
-                        }}>
-                            {`${selectedSchool && selectedSchool?.id ? selectedSchool.name : t('common.selectSchool')} \u003E`}
-                        </div>
-                    </div>
-                </div>
-            </a>
+            <div>
+                <Drop
+                    placeholder={'-' + t('err.select_school') + '-'}
+                    fluid
+                    selection
+                    additionPosition='bottom'
+                    upward={false}
+                    search
+                    className='mr-2'
+                    clearable
+                    selectOnBlur={false}
+                    value={thisSelectedSchool}
+                    options={schools}
+                    onChange={(e, data) => handleSchoolSelectChange(data?.value)}
+                />
+            </div>
+            // <a
+            //     ref={ref}
+            //     href="#/"
+            //     className="notification-button"
+            //     data-toggle="dropdown"
+            //     aria-expanded={expanded}
+            //     onClick={(e) => {
+            //         e.preventDefault();
+            //         e.stopPropagation();
+            //         onClick(e);
+            //     }}
+            // >
+            //     <div className="position-relative d-inline-flex" style={{ color: 'white' }}>
+            //         <div className='d-flex align-items-center mb-3'>
+            //             <div className='pt-1' style={{
+            //                 maxHeight: 50,
+            //                 color: "#868aa8",
+            //                 overflow: 'hidden',
+            //                 fontSize: '14px'
+            //             }}>
+            //                 {`${selectedSchool && selectedSchool?.id ? selectedSchool.name : t('common.selectSchool')} \u003E`}
+            //             </div>
+            //         </div>
+            //     </div>
+            // </a>
         ))
     );
 

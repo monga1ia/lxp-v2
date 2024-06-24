@@ -523,7 +523,7 @@ const DTable = ({
                                     }}
                                     key={menu.key}
                                 >
-                                    <div className="mr-2">{menu.icon ? menu.icon : null}</div>
+                                    <div style={{transform: 'translate(0px, -2px)'}}>{menu.icon ? menu.icon : null}</div>
                                     <span className="black-color">{menu.title}</span>
                                 </div>
                             );
