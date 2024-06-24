@@ -222,7 +222,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + t('select + '-'')}
+                                    placeholder={'-' + t('select') + ' - '}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -342,7 +342,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + t('teacher.select_gender + '-'')}
+                                    placeholder={'-' + t('teacher.select_gender') + ' - '}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -361,7 +361,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                             </label>
                             <div className="col-8">
                                 <Dropdown
-                                    placeholder={'-' + t('teacher.select_school + '-'')}
+                                    placeholder={'-' + t('teacher.select_school') + ' - '}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -396,7 +396,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     </label>
                                     <div className="col-3">
                                         <Dropdown
-                                            placeholder={'-' + t('err.select_class + '-'')}
+                                            placeholder={'-' + t('err.select_class') + ' - '}
                                             fluid
                                             selection
                                             additionPosition='bottom'
@@ -411,7 +411,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                     </div>
                                     <div className="col-5s d-flex p-0 align-items-center">
                                         <Dropdown
-                                            placeholder={'-' + t('absent.select_subject + '-'')}
+                                            placeholder={'-' + t('absent.select_subject') + ' - '}
                                             fluid
                                             selection
                                             additionPosition='bottom'

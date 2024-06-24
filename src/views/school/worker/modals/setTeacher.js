@@ -201,7 +201,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                     <div className="col-8">
                         <Dropdown
                             ref={mainGradeRef}
-                            placeholder={'-' + t('teacher.select_school + '-'')}
+                            placeholder={'-' + t('teacher.select_school') + ' - '}
                             fluid
                             selection
                             additionPosition='bottom'

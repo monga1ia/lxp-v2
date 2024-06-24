@@ -234,7 +234,7 @@ const EditGroupModal = ({onClose, onSubmit, data}) => {
                                     // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + t('select + '-'')}
+                                    placeholder={'-' + t('select') + ' - '}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -361,7 +361,7 @@ const EditGroupModal = ({onClose, onSubmit, data}) => {
                                     onChange={(e, data) => handleChange('gender', e)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + t('teacher.select_gender + '-'')}
+                                    placeholder={'-' + t('teacher.select_gender') + ' - '}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -388,7 +388,7 @@ const EditGroupModal = ({onClose, onSubmit, data}) => {
                                     // onChange={(e, data) => handleRowSubjectsChange(index, e)}
                                 />
                                 {/* <Dropdown
-                                    placeholder={'-' + t('teacher.select_school + '-'')}
+                                    placeholder={'-' + t('teacher.select_school') + ' - '}
                                     fluid
                                     selection
                                     additionPosition='bottom'
@@ -431,7 +431,7 @@ const EditGroupModal = ({onClose, onSubmit, data}) => {
                                             onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
                                         />
                                         {/* <Dropdown
-                                            placeholder={'-' + t('err.select_class + '-'')}
+                                            placeholder={'-' + t('err.select_class') + ' - '}
                                             fluid
                                             selection
                                             additionPosition='bottom'
@@ -454,7 +454,7 @@ const EditGroupModal = ({onClose, onSubmit, data}) => {
                                             onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
                                         />
                                         {/* <Dropdown
-                                            placeholder={'-' + t('absent.select_subject + '-'')}
+                                            placeholder={'-' + t('absent.select_subject') + ' - '}
                                             fluid
                                             selection
                                             additionPosition='bottom'

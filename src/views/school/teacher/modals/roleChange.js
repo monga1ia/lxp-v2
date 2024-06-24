@@ -59,7 +59,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                     </label>
                     <div className="col-5">
                         <Dropdown
-                            placeholder={'-' + t('select + '-'')}
+                            placeholder={'-' + t('select') + ' - '}
                             fluid
                             selection
                             multiple

@@ -71,7 +71,7 @@ const statusChange = ({ onClose, onSubmit, teacher }) => {
                             value={selectedStatus}
                             options={statusOptions}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
-                            placeholder={'-' + t('select + '-'')}
+                            placeholder={'-' + t('select') + ' - '}
                         />
                     </div>
                 </div>
