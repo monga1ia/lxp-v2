@@ -4688,9 +4688,8 @@ i.icon.delete.calendar:before {
     content: "\f273"
 }
 
-i.icon.delete:before {
-    /* content: "\f00d" */
-    content: '✖'
+i.delete.icon:before {
+    content: "\f00d"
 }
 
 /*!
@@ -19237,7 +19236,12 @@ select.ui.dropdown {
     content: "\f0da"
 }
 
+/* .ui.dropdown > .ui.label > .delete.icon:before {
+    content: "\f00d" !important
+} */
+
 .ui.dropdown > .clear.icon:before {
+    font-family: Dropdown;
     content: "\f00d"
 }
 

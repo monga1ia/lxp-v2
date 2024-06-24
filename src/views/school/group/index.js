@@ -24,6 +24,7 @@ const localeActiveTableState = 'school_classes_table_index'
 const index = () => {
     
     const { t } = useTranslation();
+    const locale="mn"
 
     const title = t('group.title')
     const description = "E-learning";

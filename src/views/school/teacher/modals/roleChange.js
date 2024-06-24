@@ -65,6 +65,7 @@ const roleChange = ({ onClose, onSubmit, teacher }) => {
                             multiple
                             additionPosition='bottom'
                             upward={false}
+                            clearable
                             selectOnBlur={false}
                             value={selectedRoles}
                             options={roleOptions}

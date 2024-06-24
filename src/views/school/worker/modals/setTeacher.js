@@ -236,7 +236,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                                     onChange={(e, data) => handleRowGradeChange(index, data?.value)}
                                 />
                             </div>
-                            <div className="col-5 p-0 d-flex align-items-center">
+                            <div className="col-5ss d-flex align-items-center">
                                 <Dropdown
                                     placeholder={'-' + t('absent.select_subject') + '-'}
                                     fluid
@@ -266,7 +266,7 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                     <div className="form-group m-form__group row">
                         <label className="col-3 col-form-label text-right label-pinnacle-bold" />
                         <div className="col-3" />
-                        <div className="col-5 p-0 d-flex justify-content-end align-items-center">
+                        <div className="col-5ss d-flex justify-content-end align-items-center" >
                             <div className={'visible'}>
                                 <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                     <i className="la la-plus" />

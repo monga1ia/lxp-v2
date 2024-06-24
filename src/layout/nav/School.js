@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 // import { NavLink } from 'react-router-dom';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown as Drop } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
 // import { SearchRounded } from '@mui/icons-material';
 import classNames from 'classnames';
@@ -12,7 +12,7 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { layoutShowingNavMenu } from 'layout/layoutSlice';
 import showMessage from "../../modules/message";
 import { setLoading, setSchools, setSelectedSchool } from '../../utils/redux/action';
-import { NDropdown as Drop } from 'widgets/Dropdown'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
 
 // const MENU_NAME = 'Schools';
 const Schools = () => {
@@ -97,22 +97,20 @@ const Schools = () => {
 
     const SchoolsDropdownToggle = React.memo(
         React.forwardRef(({ onClick, expanded = false }, ref) => (
-            <div>
-                <Drop
+                <Dropdown
                     placeholder={'-' + t('err.select_school') + '-'}
                     fluid
                     selection
                     additionPosition='bottom'
                     upward={false}
                     search
+                    style={{}}
                     className='mr-2'
-                    clearable
                     selectOnBlur={false}
                     value={thisSelectedSchool}
                     options={schools}
                     onChange={(e, data) => handleSchoolSelectChange(data?.value)}
                 />
-            </div>
             // <a
             //     ref={ref}
             //     href="#/"
@@ -185,11 +183,11 @@ const Schools = () => {
 
     if (isOrganizationUser) {
         return (
-            <Dropdown
+            <Drop
                 style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
             >
-                <Dropdown.Toggle as={SchoolsDropdownToggle} />
-                <Dropdown.Menu
+                <Drop.Toggle as={SchoolsDropdownToggle} />
+                <Drop.Menu
                     className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
                     style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
                     as={SchoolsDropdownMenu}
@@ -212,16 +210,16 @@ const Schools = () => {
                 //     ],
                 // }}
                 />
-            </Dropdown>
+            </Drop>
         );
     } else {
         if (schools && schools.length > 0 && !isStudent) {
             return (
-                <Dropdown
+                <Drop
                     style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
                 >
-                    <Dropdown.Toggle as={SchoolsDropdownToggle} />
-                    <Dropdown.Menu
+                    <Drop.Toggle as={SchoolsDropdownToggle} />
+                    <Drop.Menu
                         className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
                         style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
                         as={SchoolsDropdownMenu}
@@ -244,7 +242,7 @@ const Schools = () => {
                     //     ],
                     // }}
                     />
-                </Dropdown>
+                </Drop>
             );
         } else {
             return <></>;

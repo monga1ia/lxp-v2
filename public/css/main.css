@@ -68,6 +68,10 @@ body,
     font-family: MulishRegular !important;
 } */
 
+.font-pinnacle {
+    font-family: PinnacleRegular !important;
+}
+
 .student-dummy-white {
     background: white;
     width: 50px;

@@ -349,6 +349,14 @@ label {
     max-width: 40%
 }
 
+.col-5ss{
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 41.66667%;
+    flex: 0 0 41.66667%;
+    max-width: 41.66667%;
+    padding-right: 9px;
+}
+
 .col-6 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
