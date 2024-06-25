@@ -41,7 +41,8 @@ const onlineExam = {
 const school = {
     teacher: lazy(() => import("views/school/teacher/index")),
     worker: lazy(() => import("views/school/worker/index")),
-    group: lazy(() => import("views/school/group/index"))
+    class: lazy(() => import("views/school/class/index")),
+    group: lazy(() => import("views/school/group/index")),
 }
 
 const esis = {
@@ -226,10 +227,15 @@ const routesAndMenuItems = {
                     component: school.worker,
                 },
                 {
-                    path: "/group",
-                    label: "menu.group",
-                    component: school.group,
-                }
+                    path: "/class",
+                    label: "class_name",
+                    component: school.class,
+                },
+                // {
+                //     path: "/group",
+                //     label: "menu.group",
+                //     component: school.group,
+                // }
             ],
         },
         {

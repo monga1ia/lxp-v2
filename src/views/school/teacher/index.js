@@ -3,6 +3,7 @@ import { Row, Col, Card, Button } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import message from '../../../modules/message'
 import TreeView from 'modules/TreeView';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
@@ -18,7 +19,6 @@ import InfoChangeModal from './modals/infoChange';
 import StatusChangeModal from './modals/statusChange'
 import PasswordResetModal from './modals/passwordReset'
 import LoginNameChangeModal from './modals/loginNameChange'
-import message from '../../../modules/message'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import PreviewTwoToneIcon from '@mui/icons-material/PreviewTwoTone'
 import LockResetTwoToneIcon from '@mui/icons-material/LockResetTwoTone'
@@ -770,7 +770,7 @@ const MainGroup = () => {
 
             <div className='m-content'>
                 <Row className=''>
-                    <Col xl="3" xxl="2">
+                    <div className='col-3 pr-0'>
                         <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <TreeView
@@ -781,9 +781,9 @@ const MainGroup = () => {
                                 />
                             </div>
                         </div>
-                    </Col>
+                    </div>
 
-                    <Col xl="9" xxl="10">
+                    <div className='col-9'>
                         <Button
                             onClick={() => setShowAddTeacherModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
@@ -882,7 +882,7 @@ const MainGroup = () => {
                                 />
                             </div>
                         </div>
-                    </Col>
+                    </div>
                 </Row>
             </div>
             {

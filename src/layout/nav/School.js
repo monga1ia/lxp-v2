@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 // import { NavLink } from 'react-router-dom';
-import { Dropdown as Drop } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
 // import { SearchRounded } from '@mui/icons-material';
 import classNames from 'classnames';
@@ -11,8 +11,7 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 // import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { layoutShowingNavMenu } from 'layout/layoutSlice';
 import showMessage from "../../modules/message";
-import { setLoading, setSchools, setSelectedSchool } from '../../utils/redux/action';
-import { NDropdown as Dropdown } from 'widgets/Dropdown'
+import { setLoading, setSelectedSchool } from '../../utils/redux/action';
 
 // const MENU_NAME = 'Schools';
 const Schools = () => {
@@ -26,12 +25,8 @@ const Schools = () => {
         attrMenuAnimate,
     } = useSelector((state) => state.menu);
     const { color } = useSelector((state) => state.settings);
-    const [thisSelectedSchool, setThisSelectedSchool] = useState(0)
-
     const { isStudent = false, isOrganizationUser = false} = useSelector(state => state.person)
-    // const { schools, selectedSchool } = useSelector((state) => state.schoolData);
-    const [schools, setSchools] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
-    // const [schoolsDD, setSchoolsDD] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    const { schools, selectedSchool } = useSelector((state) => state.schoolData);
     // const { showingNavMenu } = useSelector((state) => state.layout);
     const [searchValue, setSearchValue] = useState('');
 
@@ -45,19 +40,19 @@ const Schools = () => {
         // eslint-disable-next-line
     }, [attrMenuAnimate, behaviourHtmlData, attrMobile, color]);
 
-    // useEffect(() => {
-    //     if (isOrganizationUser) {
-    //         if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
-    //             showMessage(t('errorMessage.selectSchool'))
-    //         }
-    //     } else {
-    //         if(typeof isStudent == "boolean" && !isStudent){
-    //             if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
-    //                 showMessage(t('errorMessage.selectSchool'))
-    //             }
-    //         }
-    //     }        
-    // }, [])
+    useEffect(() => {
+        if (isOrganizationUser) {
+            if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
+                showMessage(t('errorMessage.selectSchool'))
+            }
+        } else {
+            if(typeof isStudent == "boolean" && !isStudent){
+                if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
+                    showMessage(t('errorMessage.selectSchool'))
+                }
+            }
+        }        
+    }, [])
 
     const onSearch = (nameKey) => {
         setSearchValue(nameKey)
@@ -91,65 +86,41 @@ const Schools = () => {
         )
     }
 
-    const handleSchoolSelectChange = (data, e) => {
-        setThisSelectedSchool(data)
-        console.log(e)
-    }
-
     const SchoolsDropdownToggle = React.memo(
         React.forwardRef(({ onClick, expanded = false }, ref) => (
-                <Dropdown
-                    placeholder={t('nav.choose_school') + ' >'}
-                    fluid
-                    selection
-                    additionPosition='bottom'
-                    upward={false}
-                    search
-                    style={{}}
-                    icon={null}
-                    className='d-flex temp '
-                    selectOnBlur={false}
-                    value={thisSelectedSchool}
-                    options={schools}
-                    onChange={(e, data) => handleSchoolSelectChange(data?.value)}
-                />
-            // <a
-            //     ref={ref}
-            //     href="#/"
-            //     className="notification-button"
-            //     data-toggle="dropdown"
-            //     aria-expanded={expanded}
-            //     onClick={(e) => {
-            //         e.preventDefault();
-            //         e.stopPropagation();
-            //         onClick(e);
-            //     }}
-            // >
-            //     <div className="position-relative d-inline-flex" style={{ color: 'white' }}>
-            //         <div className='d-flex align-items-center mb-3'>
-            //             <div className='pt-1' style={{
-            //                 maxHeight: 50,
-            //                 color: "#868aa8",
-            //                 overflow: 'hidden',
-            //                 fontSize: '14px'
-            //             }}>
-            //                 {`${selectedSchool && selectedSchool?.id ? selectedSchool.name : t('common.selectSchool')} \u003E`}
-            //             </div>
-            //         </div>
-            //     </div>
-            // </a>
+            <a
+                ref={ref}
+                href="#/"
+                className="notification-button"
+                data-toggle="dropdown"
+                aria-expanded={expanded}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onClick(e);
+                }}
+            >
+                <div className="position-relative d-inline-flex" style={{ color: 'white' }}>
+                    <div className='d-flex align-items-center mb-3'>
+                        <div className='pt-1' style={{
+                            maxHeight: 50,
+                            color: "#868aa8",
+                            overflow: 'hidden'
+                        }}>
+                            {`${selectedSchool && selectedSchool?.id ? selectedSchool.name : t('common.selectSchool')} \u003E`}
+                        </div>
+                    </div>
+                </div>
+            </a>
         ))
     );
 
     const SchoolsDropdownMenu = React.memo(
         React.forwardRef(({ style, className, labeledBy }, ref) => {
             return (
-                <div ref={ref} style={style} className={classNames('dropdown-menu wide user-menu', className)} aria-labelledby={labeledBy}>
+                <div ref={ref} style={{transform: ''}} className={classNames('dropdown-menu wide user-menu', className)} aria-labelledby={labeledBy}>
                     {/* search */}
-                    {
-                        schools && schools.length > 5 &&
-                        <input type='text' value={searchValue} autoFocus className='school-search-input mb-1' placeholder={t('action.search')} onInput={(e) => onSearch(e.target.value)} />
-                    }
+                    <input type='text' value={searchValue} autoFocus placeholder={t('action.search')} onInput={(e) => onSearch(e.target.value)} />
                     <OverlayScrollbarsComponent
                         style={{ maxHeight: 250 }}
                         options={{
@@ -185,12 +156,12 @@ const Schools = () => {
 
     if (isOrganizationUser) {
         return (
-            <Drop
+            <Dropdown
                 style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
             >
-                <Drop.Toggle as={SchoolsDropdownToggle} />
-                <Drop.Menu
-                    className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
+                <Dropdown.Toggle as={SchoolsDropdownToggle} />
+                <Dropdown.Menu
+                    className={window.innerWidth < 768 ? 'school-nav-phone mt-2' : 'mt-2'}
                     style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
                     as={SchoolsDropdownMenu}
                 // popperConfig={{
@@ -212,17 +183,17 @@ const Schools = () => {
                 //     ],
                 // }}
                 />
-            </Drop>
+            </Dropdown>
         );
     } else {
         if (schools && schools.length > 0 && !isStudent) {
             return (
-                <Drop
+                <Dropdown
                     style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
                 >
-                    <Drop.Toggle as={SchoolsDropdownToggle} />
-                    <Drop.Menu
-                        className={window.innerWidth < 768 ? 'school-nav-phone mt-5' : 'mt-5'}
+                    <Dropdown.Toggle as={SchoolsDropdownToggle} />
+                    <Dropdown.Menu
+                        className={window.innerWidth < 768 ? 'school-nav-phone mt-2' : 'mt-2'}
                         style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
                         as={SchoolsDropdownMenu}
                     // popperConfig={{
@@ -244,7 +215,7 @@ const Schools = () => {
                     //     ],
                     // }}
                     />
-                </Drop>
+                </Dropdown>
             );
         } else {
             return <></>;

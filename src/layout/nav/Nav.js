@@ -14,11 +14,13 @@ import {
     menuChangeAttrMenuAnimate,
     menuChangeCollapseAll,
 } from "./main-menu/menuSlice";
+import { useWindowSize } from "hooks/useWindowSize";
 
 const DELAY = 80;
 
 const Nav = () => {
     const dispatch = useDispatch();
+    const { height, width } = useWindowSize()
     const {
         navClasses,
         placementStatus,
@@ -50,7 +52,6 @@ const Nav = () => {
             onMouseEnterDelay();
         }, DELAY);
     };
-
     // Vertical menu semihidden state hiding
     // Only works when the vertical menu is active and mobile menu closed
     const onMouseLeaveDelay = () => {
@@ -99,7 +100,11 @@ const Nav = () => {
                     !isOrganizationUser && isStudent &&
                     <StudentIconMenu />
                 }
-                {/* <NavMobileButtons /> */}
+                {
+                    width < 992 &&
+                    <NavMobileButtons />
+
+                }
             </div>
             <div className="nav-shadow" />
         </div>

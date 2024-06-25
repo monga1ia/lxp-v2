@@ -1,51 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
-import { Modal } from 'semantic-ui-react'
+import { Modal } from 'react-bootstrap'
+import { toast } from "react-toastify";
+import HtmlHead from 'components/html-head/HtmlHead';
 import message from 'modules/message';
 // import ViewModal from './modal/view'
-import HtmlHead from 'components/html-head/HtmlHead';
-import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import { Row, Col, Button } from 'react-bootstrap';
-import EditGroupModal from './modals/edit';
 import TreeView from 'modules/TreeView';
-import DeleteModal from 'utils/deleteModal';
 import DTable from 'modules/DataTable/DTable';
+import DeleteModal from 'utils/deleteModal'
+import { Row, Col } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
-import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import ViewModal from './modals/view'
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import { useTranslation } from "react-i18next";
+import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
+import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
 
-const localStorageSelectedTree = 'school_classes_selected_tree_index'
-const localeActiveTableState = 'school_classes_table_index'
+const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+const localStorageSelectedTree = 'school_groups_selected_tree_index'
+const localeActiveTableState = 'school_groups_table_index'
 
 const index = () => {
-    
-    const { t } = useTranslation();
-    const locale="mn"
 
-    const title = t('group.title')
+    const { t } = useTranslation()
+
+    const title = t('group.integratedGroupName');
     const description = "E-learning";
-
     const breadcrumbs = [
         { to: "", text: "Home" },
-        { to: "groups/index", text: title }
+        { to: "school/teacher", text: title }
     ];
-
     const [loading, setLoading] = useState(false)
+    const localStorageSelectedRefId = 'school_groups_selected_ref_id_index'
 
     const [treeData, setTreeData] = useState([])
-    const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || null)
+    const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || 'all')
+    const [selectedRefId, setSelectedRefId] = useState(secureLocalStorage.getItem(localStorageSelectedRefId) || 'all')
 
-    const [tableData, setTableData] = useState([{id: 11, teacherLastName: "23232", teacherFirstName: "asdfsdf"}, {id: 12, teacherLastName: "2322", teacherFirstName: "asasdfsdf"}])
+    const [tableData, setTableData] = useState([])
     const [totalCount, setTotalCount] = useState([])
 
     const [viewTeacherModal, setViewTeacherModal] = useState(false)
     const [viewDeleteModal, setViewDeleteModal] = useState(false)
-    const [showEditModal, setShowEditModal] = useState(false)
-    const [showCreateModal, setShowCreateModal] = useState(false)
     const [teacherInfo, setTeacherInfo] = useState([])
     const [classId, setClassId] = useState(false)
 
@@ -62,20 +56,10 @@ const index = () => {
 
     const contextMenus = [
         {
-            key: 'EDIT',
+            key: 'INSERT',
             icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
-            title: t('edit') || ""
-        },
-        {
-            key: 'DELETE',
-            icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t('delete') || ""
-        },
-        {
-            key: 'ESIS_CLEAR',
-            icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: t('esis.clearClass') || ""
-        },
+            title: t('student.register_student') || ""
+        }
     ]
 
     const config = {
@@ -83,8 +67,6 @@ const index = () => {
         printButton: true,
         columnButton: true,
         excelFileName: secureLocalStorage.getItem('selectedSchool')?.longname + ' - Бүгд',
-        // excelFileRemote: true,
-        // excelFileRemoteUrl: `/${schoolClassInit}?grade=${selectedTreeDataId}&excel=1&excelTotalCount=${totalCount}`,
         defaultSort: [
             {
                 dataField: tableState?.sort || 'class',
@@ -92,180 +74,194 @@ const index = () => {
             }
         ],
         defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
-            // search: tableState?.search,
+            page: tableState?.page,
+            sizePerPage: tableState?.pageSize,
+            search: tableState?.search,
         }
     };
 
-    useEffect(() => {
-        if (selectedTreeDataId) {
-            init(tableState, selectedTreeDataId)
-        } else {
-            init(tableState)
-        }
-    }, [])
-
-    const init = (pagination, grade) => {
-        console.log('init')
-        tableData?.forEach(el => {
-            el.contextMenuKeys = 'EDIT, DELETE, ESIS_CLEAR'
-        })
-    }
-
-    const onUserInteraction = (state) => {
-        if (state.search) {
-            let cloneData = {
-                page: 1,
-                pageSize: state.pageSize,
-                search: state.search,
-                filter: {
-                    page: 1,
-                    pageSize: state?.filter?.pageSize || 10
-                }
-            };
-
-            setTableState(cloneData)
-            secureLocalStorage.setItem(localeActiveTableState, cloneData)
-            init(cloneData, selectedTreeDataId)
-        } else {
-            if (state.page) {
-                setTableState(state)
-                secureLocalStorage.setItem(localeActiveTableState, state)
-                init(state, selectedTreeDataId)
-            }
-        }
-    }
-
-    const esisRemove = (classId) => {
-        console.log('esisRemove')
-    }
-
-    const _contextMenuItemClick = (id, key) => {
-        console.log(id,key)
-        if (id && key) {
-            if (key === 'EDIT') {
-                console.log('edit')
-                setShowEditModal(true)
-                // navigate('/school/classes/edit', { replace: true, state: { id: id } })
-            } else if (key === 'DELETE') {
-                setViewDeleteModal(true)
-                setClassId(id)
-            } else if (key === 'ESIS_CLEAR') {
-                esisRemove(id)
-            }
-        }
-    }
-
-    const closeModal = () => {
-        setViewTeacherModal(false)
-        setViewDeleteModal(false)
-        setShowCreateModal(false)
-        setShowEditModal(false)
-    }
-
     const columns = [
         {
-            dataField: "class",
-            text: t('group.title') || "",
+            dataField: "curriculumName",
+            text: t('courseName'),
             sort: true,
         },
         {
-            dataField: "teacherLastName",
-            text: t('teacher.lastname') || "",
-            sort: true
+            dataField: "gradeName",
+            text: t('subject?.grade'),
+            sort: true,
         },
         {
-            dataField: "teacherFirstName",
-            text: t('teacher.name') || "",
+            dataField: "subjectName",
+            text: t('subject.title'),
             sort: true,
-            formatter: (cell, row) => {
-                if (cell) {
-                    return (
-                        <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
-                    )
-                }
+        },
+        {
+            dataField: "name",
+            text: t('group.integratedGroupName'),
+            sort: true,
+        },
+        {
+            dataField: "totalStudentNumber",
+            text: t('students'),
+            sort: true,
+            formatter: (cell) => {
+                return (
+                    <div
+                        style={{
+                            textAlign: "end",
+                            color: "#4037D7",
+                            textDecorationLine: "underline",
+                            cursor: "pointer",
+                        }}
+                    >
+                        {cell}
+                    </div>
+                );
             },
         },
         {
-            dataField: "studentCount",
-            text: t('group.student_count') || "",
-            sort: true,
-            align: "right",
-        },
-        {
-            dataField: "scoreType",
-            text: t('group.score_type') || "",
+            dataField: "firstName",
+            text: t('created_user'),
             sort: true,
         },
         {
-            dataField: "shift",
-            text: t('group.school_shift') || "",
+            dataField: "createdDate",
+            text: t('created_date'),
             sort: true,
-
-        },
-        {
-            dataField: "room",
-            text: t('group.classroom') || "",
-            sort: true,
-        },
-        {
-            dataField: "esisGroupId",
-            text: t('esis.classCode') || "",
-            hidden: true,
-            sort: false,
+            align: 'left',
+            formatter: (cell) => cell?.date?.split('.')[0]
         }
     ];
 
-    const deleteClass = () => {
-        console.log("deleteClass")
+    // useEffect(() => {
+    //     if (selectedRefId) {
+    //         init(tableState, selectedRefId)
+    //     } else {
+    //         init(tableState)
+    //     }
+    // }, [])
+
+    // const init = (pagination, grade) => {
+    //     setLoading(true)
+    //     fetchRequest(schoolGroupInit, 'POST', {
+    //         filter: pagination?.filter,
+    //         order: pagination?.order,
+    //         sort: pagination?.sort,
+    //         page: pagination?.page,
+    //         pageSize: pagination?.pageSize,
+    //         search: pagination?.search,
+    //         grade
+    //     })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { grades, groups, totalCount } = res.data
+    //                 setTreeData(grades || [])
+    //                 setTableData(groups || [])
+    //                 setTotalCount(totalCount || 0)
+
+    //                 // if (!selectedTreeDataId) {
+    //                 //     if(gradeList.length){
+    //                 //         setSelectedTreeDataId(gradeList[0].key)
+    //                 //     }
+    //                 // }
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch((e) => {
+    //             message(t(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }
+
+    const onUserInteraction = (state) => {
+        // if (state.search) {
+        //     let cloneData = {
+        //         page: 1,
+        //         pageSize: state.pageSize,
+        //         search: state.search,
+        //         filter: {
+        //             page: 1,
+        //             pageSize: state?.filter?.pageSize || 10
+        //         }
+        //     };
+
+        //     setTableState(cloneData)
+        //     secureLocalStorage.setItem(localeActiveTableState, cloneData)
+        //     init(cloneData, selectedRefId)
+        // } else {
+        //     if (state.page) {
+        //         setTableState(state)
+        //         secureLocalStorage.setItem(localeActiveTableState, state)
+        //         init(state, selectedRefId)
+        //     }
+        // }
+    }
+
+    const _contextMenuItemClick = (id, key, row) => {
+        if (id && key) {
+            if (key === 'INSERT') {
+                setShowInsertModal(true)
+                // navigate('/school/groups/edit', { replace: true, state: { group: row.id, grade: row.gradeId, gradeName: row.gradeName } })
+            }
+        }
     }
 
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
             setSelectedTreeDataId(key[0])
-            secureLocalStorage.setItem(localStorageSelectedTree, key[0])
+        //     secureLocalStorage.setItem(localStorageSelectedTree, key[0])
 
-            let cloneData = {
-                page: 1,
-                pageSize: tableState.pageSize,
-                search: tableState.search,
-                sort: tableState.sort,
-                order: tableState.order,
-                filter: {
-                    page: 1,
-                    pageSize: tableState?.filter?.pageSize || 10
-                }
-            };
+        //     let cloneData = {
+        //         page: 1,
+        //         pageSize: tableState.pageSize,
+        //         search: tableState.search,
+        //         sort: tableState.sort,
+        //         order: tableState.order,
+        //         filter: {
+        //             page: 1,
+        //             pageSize: tableState?.filter?.pageSize || 10
+        //         }
+        //     };
 
-            setTableState(cloneData)
-            secureLocalStorage.setItem(localeActiveTableState, cloneData)
-            init(cloneData, key[0])
+        //     setTableState(cloneData)
+
+        //     let selectedTreeData = null
+        //     if (key[0] == 'all') {
+        //         init(cloneData, 'all')
+        //     } else {
+        //         let children = treeData[0]['children'];
+        //         if (children && children.length > 0) {
+        //             selectedTreeData = children.find(child => child.key == key[0])
+
+        //             if (selectedTreeData) {
+        //                 init(cloneData, selectedTreeData.key)
+        //             }
+        //         }
+        //     }
+        //     secureLocalStorage.removeItem(localStorageSelectedRefId)
+        //     secureLocalStorage.setItem(localStorageSelectedRefId, selectedTreeData?.key || null)
         }
-    }
-
-    const _onTdClick = (teacherId) => {
-        console.log('_onTdClick')
     }
 
     return (
         <div className="m-grid__item m-grid__item--fluid m-wrapper">
+
             <HtmlHead title={title} description={description} />
+
             <div className="page-title-container">
                 <Col md="7">
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
             </div>
-            {/* <SubHeader
-                locale={locale}
-                title={t('group.title || null')}
-            /> */}
             <div className="m-content">
                 <div className="row">
                     <div className="col-3 pr-0">
-                        <div className="">
-                            <div className="mb-5 background-white br-16 padding-30">
+                        <div className="m-portlet ">
+                            <div className="m-portlet__body">
                                 <TreeView
                                     treeData={treeData}
                                     selectedNodes={[selectedTreeDataId]}
@@ -276,28 +272,16 @@ const index = () => {
                         </div>
                     </div>
                     <div className="col-9">
-                        <Button
-                            onClick={() => setShowCreateModal(true)}
-                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
-                        >
-                            <AddCircleOutlineRoundedIcon/>
-                            <span className='ml-2'>{t('action.register')}</span>
-                        </Button>
-                        {/* <Link to='/school/classes/create' className="btn m-btn--pill m-btn--uppercase btn-info d-inline-flex align-items-center mb-3 btn-sm">
-                            <AddCircleOutlineRoundedIcon />
-                            <span className="ml-2">{t('action.register || null}</span')>
-                        </Link> */}
-                        <div className="mb-5 background-white br-16">
-                            <div className="padding-30">
+                        <div className="m-portlet ">
+                            <div className="m-portlet__body">
                                 <DTable
                                     remote
                                     locale={locale}
                                     config={config}
                                     data={tableData}
                                     columns={columns}
-                                    individualContextMenus
                                     contextMenus={contextMenus}
-                                    onContextMenuItemClick={_contextMenuItemClick}
+                                    onContextMenuItemClick={(id, key, row) => _contextMenuItemClick(id, key, row)}
                                     onInteraction={onUserInteraction}
                                     totalDataSize={totalCount}
                                 />
@@ -306,41 +290,6 @@ const index = () => {
                     </div>
                 </div>
             </div>
-            {
-                viewTeacherModal &&
-                <ViewModal
-                    onClose={closeModal}
-                />
-            }
-            {
-                showEditModal && 
-                <EditGroupModal
-                    onClose={closeModal}
-                />
-            }
-            {
-                viewDeleteModal &&
-                <DeleteModal
-                    show={viewDeleteModal}
-                    onClose={closeModal}
-                    onDelete={deleteClass}
-                    locale={locale}
-                    title={t('delete')}
-                >
-                    {t('delete_confirmation')}
-                    <br />
-                    <br />
-                    {t('delete_confirmation_description')}
-                </DeleteModal>
-                    // <div className="content">
-                    //     <p>
-                    //         {t('delete_confirmation')}
-                    //         <br />
-                    //         <br />
-                    //         {t('delete_confirmation_description')}
-                    //     </p>
-                    // </div>
-            }
             {
                 loading &&
                 <>
@@ -354,4 +303,4 @@ const index = () => {
     )
 }
 
-export default index
+export default index;
