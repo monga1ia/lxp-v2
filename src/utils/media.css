@@ -1,7 +1,9 @@
 @media only screen and (max-width: 990px) {
     #contentArea {
         position: relative;
-        top: 70px
+        top: 70px;
+        padding-right: 1rem !important;
+        padding-left: 1rem !important;
     }
 
     .student-page-title-container{

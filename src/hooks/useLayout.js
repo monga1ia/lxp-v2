@@ -38,6 +38,7 @@ const useLayout = () => {
       dispatch(setThemeValues());
       htmlTag.setAttribute("data-show", "true");
     }, 30);
+    htmlTag.setAttribute("id", 'htmlHEAD');
     htmlTag.setAttribute("data-color", color);
     htmlTag.setAttribute("data-layout", layout);
     htmlTag.setAttribute("data-radius", radius);

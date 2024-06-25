@@ -133,6 +133,27 @@ const NavUserMenuDropdownToggle = React.memo(
     ))
 );
 
+const NavUserMenuLanguageToggle = React.memo(
+    React.forwardRef(({ onClick, expanded = false, user = {} }, ref) => (
+        <a
+            href="#/!"
+            ref={ref}
+            className="d-flex user position-relative"
+            data-toggle="dropdown"
+            aria-expanded={expanded}
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClick(e);
+            }}
+        >
+            <div>
+                <span style={{fontFamily: "MulishBold"}}>{'Мон >'}</span>
+            </div>
+        </a>
+    ))
+);
+
 // Dropdown needs access to the DOM of the Menu to measure it
 const NavUserMenuDropdownMenu = React.memo(
     React.forwardRef(({ style, className }, ref) => {
@@ -183,32 +204,38 @@ const NavUserMenu = () => {
     }
 
     return (
-        <Dropdown as="div" bsPrefix="user-container d-flex" onToggle={onToggle} show={showingNavMenu === MENU_NAME} drop="down">
-            <Dropdown.Toggle as={NavUserMenuDropdownToggle} user={person} />
-            <Dropdown.Menu
-                as={NavUserMenuDropdownMenu}
-                className="dropdown-menu dropdown-menu-end user-menu user-menu-wide"
-                popperConfig={{
-                    modifiers: [
-                        {
-                            name: 'offset',
-                            options: {
-                                offset: () => {
-                                    if (placement === MENU_PLACEMENT.Horizontal) {
-                                        return [0, 7];
-                                    }
-                                    if (window.innerWidth < 768) {
-                                        return [-84, 7];
-                                    }
+        <>
+            <Dropdown as="div" bsPrefix="user-container d-flex" onToggle={onToggle} show={showingNavMenu === MENU_NAME} drop="down">
+                <Dropdown.Toggle as={NavUserMenuDropdownToggle} user={person} />
+                <Dropdown.Menu
+                    as={NavUserMenuDropdownMenu}
+                    className="dropdown-menu dropdown-menu-end user-menu user-menu-wide"
+                    popperConfig={{
+                        modifiers: [
+                            {
+                                name: 'offset',
+                                options: {
+                                    offset: () => {
+                                        if (placement === MENU_PLACEMENT.Horizontal) {
+                                            return [0, 7];
+                                        }
+                                        if (window.innerWidth < 768) {
+                                            return [-84, 7];
+                                        }
 
-                                    return [-78, 7];
+                                        return [-78, 7];
+                                    },
                                 },
                             },
-                        },
-                    ],
-                }}
-            />
-        </Dropdown>
+                        ],
+                    }}
+                />
+            </Dropdown>
+
+            <Dropdown as="div" bsPrefix="user-container d-flex" style={{height: '3rem', minHeight: '0'}} onToggle={console.log('language request')} drop="down">
+                <Dropdown.Toggle as={NavUserMenuLanguageToggle} user={person} />
+            </Dropdown>
+        </>
     );
 };
 export default React.memo(NavUserMenu);

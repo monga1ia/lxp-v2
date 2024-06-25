@@ -39,20 +39,6 @@ const index = () => {
             value: '0-0-0',
             key: 2,
             selectable: true,
-            children: [
-            {
-                title: 'third level',
-                value: '0-0-0-0',
-                key: 31,
-                selectable: true,
-            },
-            {
-                title: 'third_2 level',
-                value: '0-0-0-1',
-                key: 32,
-                selectable: true,
-            },
-            ],
         }]
     }])
     const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || null)
@@ -402,9 +388,9 @@ const index = () => {
                 </Col>
             </div>
             <div className="m-content">
-                <div className="row">
-                    <div className="col-3 pr-0">
-                        <div className="m-portlet ">
+                <Row className=''>
+                    <Col xl="2" xxl="2">
+                        <div className="m-portlet br-12">
                             <div className="m-portlet__body">
                                 <TreeView
                                     treeData={treeData}
@@ -414,17 +400,16 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className="col-9">
+                    </Col>
+                    <Col xl="10" xxl="10">
                         <Button
                             onClick={() => setShowAddTeacherModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                        <i class="fa fa-pencil" title="Edit"></i> <i class="las la-angle-down"></i>
                             {t('action.register')}
                         </Button>
-                        <div className="m-portlet ">
+                        <div className="m-portlet br-12">
                             <div className="m-portlet__body">
                                 <DTable
                                     remote
@@ -440,8 +425,8 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
             {/* {
                 viewTeacherModal &&

@@ -61,27 +61,25 @@ const MainGroup = () => {
         key: 1,
         selectable: true,
         children: [{
-            title: 'second level',
-            value: '0-0-0',
-            key: 2,
-            selectable: true,
-            children: [
-            {
-                title: 'third level',
-                value: '0-0-0-0',
-                key: 31,
+                title: 'second level',
+                value: '0-0',
+                key: 2,
                 selectable: true,
-            },
-            {
-                title: 'third_2 level',
-                value: '0-0-0-1',
-                key: 32,
-                selectable: true,
-            },
-            ],
-        }]
-    }])
-
+                children: [
+                    {
+                        title: 'third level',
+                        value: '0-0-0-0',
+                        key: 3,
+                        selectable: true,
+                    },{
+                        title: 'third level',
+                        value: '0-0-0-0',
+                        key: 4,
+                        selectable: true,
+                    },
+                ]
+            },]
+        }])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
     const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
     const [selectedTabData, setSelectedTabData] = useState('active')
@@ -770,8 +768,8 @@ const MainGroup = () => {
 
             <div className='m-content'>
                 <Row className=''>
-                    <div className='col-3 pr-0'>
-                        <div className='m-portlet'>
+                    <Col xl="2" xxl="2">
+                        <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>
                                 <TreeView
                                     treeData={treeData}
@@ -781,9 +779,9 @@ const MainGroup = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </Col>
 
-                    <div className='col-9'>
+                    <Col xl="10" xxl="10">
                         <Button
                             onClick={() => setShowAddTeacherModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
@@ -791,7 +789,7 @@ const MainGroup = () => {
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('action.register')}
                         </Button>
-                        <div className='m-portlet tab'>
+                        <div className='m-portlet tab br-12'>
                             <div className=''>
                                 <TabComponent
                                     onChange={(e, data) => handleTabChange(e, data)}
@@ -882,7 +880,7 @@ const MainGroup = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </Col>
                 </Row>
             </div>
             {

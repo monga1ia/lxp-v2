@@ -399,7 +399,8 @@
   margin-bottom: var(--title-spacing);
   h1 {
     line-height: 1;
-    color: #4E4E4E !important;
+    color: #505050 !important;
+    font-size: 30px;
   }
 }
 
@@ -434,7 +435,8 @@
 
   .breadcrumb-item,
   .breadcrumb-item a {
-    color: var(--alternate);
+    color: #505050;
+    font-size: 12px;
 
     &:not(.active):hover {
       color: var(--primary);

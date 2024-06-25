@@ -218,7 +218,7 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: "/teacher",
-                    label: "menu.teacher",
+                    label: "menu.teacher.title",
                     component: school.teacher,
                 },
                 {
@@ -240,7 +240,7 @@ const routesAndMenuItems = {
         },
         {
             path: `${appRoot}/esis`,
-            label: "menu.esis",
+            label: "menu.esis.title",
             icon: "folder",
             exact: true,
             redirect: true,
@@ -248,27 +248,27 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: "/employee",
-                    label: "menu.employee",
+                    label: "menu.esis.employee",
                     component: esis.employee,
                 },
                 {
                     path: "/class",
-                    label: "menu.class",
+                    label: "menu.esis.class",
                     component: esis.class,
                 },
                 {
                     path: "/student",
-                    label: "menu.student",
+                    label: "menu.esis.student",
                     component: esis.student,
                 },
                 {
                     path: "/curriculum",
-                    label: "menu.curriculum",
+                    label: "menu.esis.curriculum",
                     component: esis.curriculum,
                 },
                 {
                     path: "/attendance",
-                    label: "menu.attendance",
+                    label: "menu.esis.attendance",
                     component: esis.attendance,
                 }
             ],
@@ -283,7 +283,7 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/index',
-                    label: "menu.employee",
+                    label: "menu.newsfeed",
                     component: newsFeed.newsFeed,
                 },
                 {
@@ -295,7 +295,7 @@ const routesAndMenuItems = {
         },
         {
             path: `${appRoot}/class`,
-            label: "menu.class",
+            label: "menu.class.title",
             icon: "graduation",
             exact: true,
             redirect: true,
@@ -303,69 +303,69 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/attendance',
-                    label: "menu.attendance",
+                    label: "menu.class.attendance",
                     component: group.attendance,
                 },
                 {
                     path: "/student",
-                    label: "menu.student",
+                    label: "menu.class.student",
                     component: group.student,
                 },
                 {
                     path: "/parents",
-                    label: "menu.parents",
+                    label: "menu.class.parents",
                     component: group.parents,
                 },
                 {
                     path: "/timetable",
-                    label: "menu.timetable",
+                    label: "menu.class.timetable",
                     component: group.timetable,
                 },
                 {
                     path: "/calendar",
-                    label: "menu.calendar",
+                    label: "menu.class.class_calendar",
                     component: group.calendar,
                 },
                 {
                     path: "/exams",
-                    label: "menu.exams",
+                    label: "menu.class.progress_exams",
                     component: group.exams,
                 },
                 {
                     path: "/results",
-                    label: "menu.results",
+                    label: "menu.class.results",
                     component: group.results,
                 },
                 {
                     path: "/reports",
-                    label: "menu.reports",
+                    label: "menu.class.reports",
                     component: group.reports,
                 },
             ],
         },
         {
             path: `${appRoot}/template`,
-            label: "menu.template",
+            label: "menu.template.title",
             icon: "edit",
             exact: true,
             redirect: true,
             to: `${appRoot}/template`,
             subs: [
                 {
-                    path: '/exams',
-                    label: "menu.exams",
+                    path: '/exam_template',
+                    label: "menu.template.exams",
                     component: template.exams,
                 },
                 {
                     path: "/skills",
-                    label: "menu.skills",
+                    label: "menu.template.skills_template",
                     component: template.skills,
                 },
             ],
         },
         {
             path: `${appRoot}/movement`,
-            label: "menu.movement",
+            label: "menu.movement.title",
             icon: "handbag",
             exact: true,
             redirect: true,
@@ -373,29 +373,29 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/in',
-                    label: "menu.in",
+                    label: "menu.movement.movement_in",
                     component: movement.in,
                 },
                 {
                     path: "/out",
-                    label: "menu.out",
+                    label: "menu.movement.movement_out",
                     component: movement.out,
                 },
                 {
                     path: "/between",
-                    label: "menu.between",
+                    label: "menu.movement.movement_between",
                     component: movement.between,
                 },
                 {
                     path: "/up",
-                    label: "menu.up",
+                    label: "menu.movement.movement_up",
                     component: movement.up,
                 },
             ],
         },
         {
             path: `${appRoot}/manager`,
-            label: "menu.manager",
+            label: "menu.manager.title",
             icon: "lecture",
             exact: true,
             redirect: true,
@@ -403,54 +403,49 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/groups',
-                    label: "menu.groups",
+                    label: "menu.manager.groups",
                     component: manager.groups,
                 },
                 {
                     path: "/excuses",
-                    label: "menu.excuses",
+                    label: "menu.manager.excuses",
                     component: manager.excuses,
                 },
                 {
                     path: "/clubs",
-                    label: "menu.clubs",
+                    label: "menu.manager.clubs",
                     component: manager.clubs,
                 },
                 {
                     path: "/timetable",
-                    label: "menu.timetable",
-                    component: manager.timetable,
-                },
-                {
-                    path: '/groups',
-                    label: "menu.groups",
-                    component: manager.groups,
+                    label: "menu.manager.timetable",
+                    component: manager.club_timetable,
                 },
                 {
                     path: "/transcript",
-                    label: "menu.transcript",
+                    label: "menu.manager.transcript",
                     component: manager.transcript,
                 },
                 {
                     path: "/class-groups",
-                    label: "menu.class-groups",
+                    label: "menu.manager.class_groups",
                     component: manager.classGroups,
                 },
                 {
                     path: "/detention",
-                    label: "menu.detention",
+                    label: "menu.manager.detention",
                     component: manager.detention,
                 },
                 {
                     path: "/curriculum",
-                    label: "menu.curriculum",
+                    label: "menu.manager.curriculum",
                     component: manager.curriculum,
                 },
             ],
         },
         {
             path: `${appRoot}/teacher`,
-            label: "menu.teacher",
+            label: "menu.teacher.title",
             icon: "presentation",
             exact: true,
             redirect: true,
@@ -458,49 +453,49 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/today',
-                    label: "menu.today",
+                    label: "menu.teacher.today",
                     component: teacher.today,
                 },
                 {
                     path: "/timetable",
-                    label: "menu.timetable",
+                    label: "menu.teacher.timetable",
                     component: teacher.timetable,
                 },
                 {
                     path: "/journals",
-                    label: "menu.journals",
+                    label: "menu.teacher.journal",
                     component: teacher.journals,
                 },
                 {
                     path: "/excuses",
-                    label: "menu.excuses",
+                    label: "menu.teacher.excuses",
                     component: teacher.excuses,
                 },
                 {
                     path: '/online-lessons',
-                    label: "menu.online-lessons",
+                    label: "menu.teacher.online_lessons",
                     component: teacher.onlineLessons,
                 },
                 {
                     path: "/year",
-                    label: "menu.year",
+                    label: "menu.teacher.years_end",
                     component: teacher.year,
                 },
                 {
                     path: "/hand-to-hand",
-                    label: "menu.hand-to-hand",
+                    label: "menu.teacher.hand_to_hand",
                     component: teacher.handToHand,
                 },
                 {
                     path: "/calendar",
-                    label: "menu.calendar",
+                    label: "menu.teacher.school_calendar",
                     component: teacher.calendar,
                 },
             ],
         },
         {
             path: `${appRoot}/assessments`,
-            label: "menu.assessments",
+            label: "menu.assessments.title",
             icon: "folders",
             exact: true,
             redirect: true,
@@ -508,24 +503,24 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/exams',
-                    label: "menu.exams",
+                    label: "menu.assessments.exams",
                     component: assessments.exams,
                 },
                 {
                     path: "/final-exams",
-                    label: "menu.final-exams",
+                    label: "menu.assessments.season_exams",
                     component: assessments.finalExams,
                 },
                 {
                     path: "/skill",
-                    label: "menu.skill",
+                    label: "menu.assessments.skill",
                     component: assessments.skill,
                 },
             ],
         },
         {
             path: `${appRoot}/analysis`,
-            label: "menu.analysis",
+            label: "menu.analysis.title",
             icon: "electricity",
             exact: true,
             redirect: true,
@@ -533,22 +528,22 @@ const routesAndMenuItems = {
             subs: [
                 {
                     path: '/exam',
-                    label: "menu.exam",
+                    label: "menu.analysis.exam",
                     component: analysis.exam,
                 },
                 {
                     path: "/exam-template",
-                    label: "menu.exam-template",
+                    label: "menu.analysis.exam_template",
                     component: analysis.examTemplate,
                 },
                 {
                     path: "/season-result",
-                    label: "menu.season-result",
+                    label: "menu.analysis.season_result",
                     component: analysis.seasonResult,
                 },
                 {
                     path: "/scoreboard",
-                    label: "menu.scoreboard",
+                    label: "menu.analysis.scoreboard",
                     component: analysis.scoreboard,
                 },
             ],

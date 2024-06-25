@@ -128,7 +128,7 @@ html[data-placement="vertical"] {
         transition: opacity var(--transition-time);
         &:hover {
           @include shadow-basic();
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(255,91,29,.2);
         }
       }
 
@@ -154,7 +154,7 @@ html[data-placement="vertical"] {
 
         &:hover {
           @include shadow-basic();
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(255,91,29,.2);
         }
 
         .profile {
@@ -454,6 +454,14 @@ html[data-placement="horizontal"] {
   }
 }
 
+.nav_long_button {
+  background-color: white !important;
+  border: 1px solid #EBEDF2 !important;
+  margin-bottom: 0.5rem;
+  height: 45px;
+  font-family: MulishBold;
+  color: #868AA8;
+}
 /*
 * Vertical
 * Styles for vertical and mobile menu
@@ -487,6 +495,8 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
     padding-bottom: var(--main-spacing-vertical);
     align-items: center;
     padding-right: initial !important;
+    border-radius: 12px !important;
+    box-shadow: 0px 0px 10px 0px #00000033;
 
     .menu-icons {
       display: flex !important;

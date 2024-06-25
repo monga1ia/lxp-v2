@@ -5275,8 +5275,8 @@ button.close {
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, .2);
-    border-radius: .3rem;
-    outline: 0
+    outline: 0;
+    border-radius: 12px !important;
 }
 
 .modal-backdrop {
@@ -46916,10 +46916,6 @@ and (min-width: 901px) and (-ms-high-contrast: none) {
         padding: 0 20px
     }
 } */
-
-body {
-    background-color: rgba(255, 91, 29, 0.05) !important;
-}
 
 .m-body {
     overflow: hidden

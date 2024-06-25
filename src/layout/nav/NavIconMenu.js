@@ -47,12 +47,19 @@ const NavIconMenu = () => {
                 (isOrganizationUser || !isStudent) &&
                 <ul className="list-unstyled list-inline text-center menu-icons">
                     <li className="list-inline-item">
-                            <a href={"https://helpcenter.eschool.mn/sys-auth?p=LMS&t=" + eToken} target='_blank' title='Help center'>
-                                <img src='/img/icon/ic_helpcenterGray.png' style={{
-                                    width: 18
-                                }}/>
-                            </a>
-                        </li>
+                        <a href={"https://helpcenter.eschool.mn/sys-auth?p=LMS&t=" + eToken} target='_blank' title='Help center'>
+                            <img src='/img/icon/ic_helpcenterGray.png' style={{
+                                width: 18
+                            }}/>
+                        </a>
+                    </li>
+                    <li className="list-inline-item">
+                        <a href={"https://eschool.mn/"} target='_blank' title='Search'>
+                            <img src='/img/icon/ic_search.svg' style={{
+                                width: 18
+                            }}/>
+                        </a>
+                    </li>
                     <li className="list-inline-item">
                         <a
                             href="#/"
@@ -60,8 +67,25 @@ const NavIconMenu = () => {
                             onClick={pinButtonEnable ? onPinButtonClick : onDisabledPinButtonClick}
                             className={classNames('pin-button', { disabled: !pinButtonEnable })}
                         >
-                            <CsLineIcons icon="lock-on" size="18" className="unpin" />
+                            {/* <CsLineIcons icon="lock-on" size="18" className="unpin" /> */}
+                            <img src='/img/icon/ic_padlock.svg' icon="lock-on" size="18" className="unpin" style={{
+                                width: 18
+                            }}/>
                             <CsLineIcons icon="lock-off" size="18" className="pin" />
+                        </a>
+                    </li>
+                    <li className="list-inline-item">
+                        <a href={"https://eschool.mn/"} target='_blank' title='Search'>
+                            <img src='/img/icon/ic_bulbGray.svg' style={{
+                                width: 18
+                            }}/>
+                        </a>
+                    </li>
+                    <li className="list-inline-item">
+                        <a href={"https://eschool.mn/"} target='_blank' title='Search'>
+                            <img src='/img/icon/ic_notificationGray.svg' style={{
+                                width: 18
+                            }}/>
                         </a>
                     </li>
                     {/* <li className="list-inline-item">
