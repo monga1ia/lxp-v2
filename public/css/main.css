@@ -647,6 +647,32 @@ table.viewTeacherTable>tr>th {
 }
 
 /***************** Toast override default font end **************/
+
+.ui.menu .primaryColor.item,
+.ui.primaryColor.menu .item {
+    font-family: Pinnacle;
+    font-size: 14px;
+    color: #575962;
+}
+
+.ui.menu .primaryColor.active.item,
+.ui.primaryColor.menu .active.item {
+    border-color: #ff5b1d !important;
+    color: #ff5b1d !important;
+    font-family: Pinnacle;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.ui.menu .primaryColor.item:hover,
+.ui.primaryColor.menu .item:hover {
+    color: #ff5b1d !important;
+}
+
+.ui.primaryColor.pointing.menu {
+    border-bottom: 2px solid rgba(255, 91, 29, .5) !important;
+}
+
 /***************** Background colord **************/
 
 .background-white {

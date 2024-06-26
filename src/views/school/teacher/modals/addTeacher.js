@@ -450,7 +450,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             <Modal.Footer className="text-center">
                 <button 
                     onClick={onClose}
-                    className="btn m-btn--pill btn-link margin-right-5"
+                    className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
                     {t('back')}        
                 </button>

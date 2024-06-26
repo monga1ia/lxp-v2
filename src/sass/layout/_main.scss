@@ -8,7 +8,7 @@
 
 main {
   min-height: 100%;
-  padding-left: calc(var(--nav-size) + var(--main-spacing-horizontal) - 1.4rem);
+  padding-left: calc(var(--nav-size) + 1rem);
   padding-right: 1rem;
   padding-top: var(--main-spacing-vertical);
   padding-bottom: var(--main-spacing-vertical);
@@ -40,7 +40,9 @@ html[data-placement='vertical'][data-dimension='mobile'] main {
 }
 
 html[data-placement='vertical'][data-behaviour='unpinned'] main {
-  padding-left: calc(var(--main-spacing-horizontal) + var(--nav-size-slim) - 1.5rem);
+  padding-left: calc(var(--nav-size-slim) + 1rem);
+
+  // padding-left: calc(var(--main-spacing-horizontal) + var(--nav-size-slim) - 1.5rem);
 }
 
 html[data-layout='fluid'] {

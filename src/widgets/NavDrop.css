@@ -1,0 +1,25 @@
+#navBarDropdown .ui.selection.active.dropdown, .ui.selection.active.dropdown .menu {
+    border: none !important;
+    cursor: pointer !important;
+    border-radius: 12px !important;
+}
+#navBarDropdown .ui.selection.active.dropdown .menu {
+    margin-top: 2rem;
+    border: none !important;
+}
+#navBarDropdown .ui.search.selection.dropdown > input.search {
+    line-height: 1.21428571em;
+    padding: 1.1em 1.1em 1.1em 1.1em !important;
+}
+#navBarDropdown .ui.selection.visible.dropdown > .text:not(.default) {
+    font-weight: 400;
+    color: rgba(0, 0, 0, .8);
+    padding-top: 0.31em !important;
+}
+#navBarDropdown .ui.search.dropdown > .text {
+    cursor: text;
+    position: relative;
+    padding-top: 0.3em !important;
+    left: 1px;
+    z-index: 3;
+}

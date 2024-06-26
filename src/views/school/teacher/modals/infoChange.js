@@ -137,20 +137,18 @@ const infoChange = ({ onClose, onSubmit, teacher }) => {
                 />
             </Modal.Body>
             <Modal.Footer className="text-center">
-                <div className='text-center w-100'>
-                    <button
-                        className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                        onClick={onClose}
-                    >
-                        {t('back')}
-                    </button>
-                    <button
-                        className="btn m-btn--pill btn-success m-btn--wide"
-                        onClick={handleSave}
-                    >
-                        {t('save')}
-                    </button>
-                </div>
+                <button
+                    className="btn m-btn--pill btn-link m-btn m-btn--custom"
+                    onClick={onClose}
+                >
+                    {t('back')}
+                </button>
+                <button
+                    className="btn m-btn--pill btn-success m-btn--wide"
+                    onClick={handleSave}
+                >
+                    {t('save')}
+                </button>
             </Modal.Footer>
             {
                 loading &&

@@ -183,6 +183,82 @@
   font-weight: 800;
   color: #575962;
 }
+.hideSelectArrow.eschool-select{
+  border: 1px solid rgba(235, 237, 242, 1);
+  border-radius: 12px;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__control:hover{
+  border: 1px solid #ff5b1d !important;
+  box-shadow: none;
+  border-radius: 12px;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__value-container {
+  color: #868AA8 !important;
+  justify-content: center;
+  overflow: visible;
+  white-space: inherit;
+  cursor: pointer;
+  text-align: center;
+  font-family: MulishBold;
+}
+.hideSelectArrow.eschool-select .css-1pahdxg-control {
+  box-shadow: none;
+}
+.hideSelectArrow.eschool-select .my-className-prefix__option {
+  background-color: transparent !important;
+  color: #7c7c7c;
+}
+.hideSelectArrow.eschool-select .my-className-prefix__option:hover {
+  background-color: transparent !important;
+  cursor: pointer;
+  color: #ff5b1d;
+}
+.hideSelectArrow.eschool-select .my-className-prefix__value-container:after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-top: 1px solid #868aa8;
+  border-right: 1px solid #868aa8;
+  transform: rotate(45deg);
+  bottom: initial;
+  top: 14px;
+  left: initial;
+  right: 1rem;
+  top: calc(50% - 3px);
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__single-value {
+  color: #868AA8 !important;
+  font-family: MulishBold;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__placeholder {
+  color: #868AA8 !important;
+  font-family: MulishBold;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__indicator-separator {
+  visibility: hidden;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__control{
+  border-style: none;
+  border-radius: 12px;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__menu{
+  box-shadow: 0 6px 10px rgba(0, 0, 0, .1) !important;
+  border: none !important;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__menu-list{
+  box-shadow: 0 6px 10px rgba(0, 0, 0, .1) !important;
+  border: none !important;
+  padding: 30px;
+}
 
 .modal-select {
   width: 260px;

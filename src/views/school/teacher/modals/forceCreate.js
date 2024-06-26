@@ -28,20 +28,18 @@ const forceCreate = ({ onClose, onSubmit, message }) => {
                 }
             </Modal.Body>
             <Modal.Footer className="text-center">
-                <div className="col-12 text-center">
-                    <button
-                        className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                        onClick={onClose}
-                    >
-                        {t('no')}
-                    </button>
-                    <button
-                        className="btn m-btn--pill btn-success m-btn--wide"
-                        onClick={onSubmit}
-                    >
-                        {t('yes')}
-                    </button>
-                </div>
+                <button
+                    className="btn m-btn--pill btn-link m-btn m-btn--custom"
+                    onClick={onClose}
+                >
+                    {t('no')}
+                </button>
+                <button
+                    className="btn m-btn--pill btn-success m-btn--wide"
+                    onClick={onSubmit}
+                >
+                    {t('yes')}
+                </button>
             </Modal.Footer>
         </Modal >
     )

@@ -13,6 +13,8 @@ import { layoutShowingNavMenu } from 'layout/layoutSlice';
 import showMessage from "../../modules/message";
 import { setLoading, setSelectedSchool } from '../../utils/redux/action';
 import { NDropdown as Drop } from 'widgets/Dropdown';
+import { NDropdown as Drop2 } from 'widgets/NavDropdown'
+import Select from 'modules/Form/Select';
 
 // const MENU_NAME = 'Schools';
 const Schools = () => {
@@ -28,9 +30,9 @@ const Schools = () => {
     const { color } = useSelector((state) => state.settings);
 
     const [schoolOptions, setSchoolOptions ] = useState([
-        {value: "1", refId: "refId", gid: "2323", text: "text 1"},
-        {value: "2", refId: "refId2", gid: "232", text: "text 2"},
-        {value: "3", refId: "refId3", gid: "23", text: "text 3"},
+        {value: "1", code: '1', refId: "refId", gid: "2323", text: "School 1"},
+        {value: "2", code: '2', refId: "refId2", gid: "232", text: "School 2"},
+        {value: "3", refId: "refId3", gid: "23", text: "School 3"},
     ])
 
     const [classOptions, setClassOptions ] = useState([
@@ -56,19 +58,19 @@ const Schools = () => {
         // eslint-disable-next-line
     }, [attrMenuAnimate, behaviourHtmlData, attrMobile, color]);
 
-    useEffect(() => {
-        if (isOrganizationUser) {
-            if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
-                showMessage(t('errorMessage.selectSchool'))
-            }
-        } else {
-            if(typeof isStudent == "boolean" && !isStudent){
-                if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
-                    showMessage(t('errorMessage.selectSchool'))
-                }
-            }
-        }        
-    }, [])
+    // useEffect(() => {
+    //     if (isOrganizationUser) {
+    //         if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
+    //             showMessage(t('errorMessage.selectSchool'))
+    //         }
+    //     } else {
+    //         if(typeof isStudent == "boolean" && !isStudent){
+    //             if (!selectedSchool || Object.keys(selectedSchool).length === 0) {
+    //                 showMessage(t('errorMessage.selectSchool'))
+    //             }
+    //         }
+    //     }        
+    // }, [])
 
     const onSearch = (nameKey) => {
         setSearchValue(nameKey)
@@ -226,7 +228,18 @@ const Schools = () => {
                     <div
                         className='m-0'
                         aria-expanded='true' style={{}}>
-                        <Drop
+                        <Select
+                            clearable={false}
+                            searchable = {true}
+                            fillArrow={true}
+                            className="hideSelectArrow"
+                            placeholder={t("teacher.select_school")}
+                            options={schoolOptions}
+                            classNamePrefix='my-className-prefix'
+                            value={selectedSchoolID}
+                            onChange={(e, data) => setSelectedSchoolID(e)}
+                        />
+                        {/* <Drop2
                             fluid
                             search
                             selection
@@ -237,12 +250,23 @@ const Schools = () => {
                             value={selectedSchoolID}
                             onChange={(e, data) => setSelectedSchoolID(data?.value)}
                             placeholder={t('err.select_school')}
-                        />
+                        /> */}
                     </div>
                     <div
-                        className='m-0'
+                        className='mt-2'
                         aria-expanded='true' style={{}}>
-                        <Drop
+                        <Select
+                            clearable={false}
+                            fillArrow={true}
+                            searchable = {true}
+                            className="hideSelectArrow"
+                            classNamePrefix='my-className-prefix'
+                            placeholder={t("food.choose_class")}
+                            options={classOptions}
+                            value={selectedClassID}
+                            onChange={(e, data) => setSelectedClassID(e)}
+                        />
+                        {/* <Drop
                             fluid
                             search
                             selection
@@ -253,7 +277,7 @@ const Schools = () => {
                             value={selectedClassID}
                             onChange={(e, data) => setSelectedClassID(data?.value)}
                             placeholder={t('err.select_class')}
-                        />
+                        /> */}
                     </div>
                 </div>
             );

@@ -382,7 +382,7 @@ const index = () => {
             <HtmlHead title={title} description={description} />
 
             <div className="page-title-container">
-                <Col md="7">
+                <Col md="7" className='p-0'>
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
@@ -539,7 +539,7 @@ const index = () => {
                     <div className="actions modal-footer ">
                         <div className="col-12 text-center">
                             <button
-                                className="btn m-btn--pill btn-link margin-right-5"
+                                className="btn m-btn--pill btn-link m-btn m-btn--custom"
                                 onClick={closeModal}
                             >
                                 {translations(locale).back || null}

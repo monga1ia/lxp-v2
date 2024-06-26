@@ -197,7 +197,7 @@
     box-shadow: 0 0 0 .2rem rgba(244, 81, 108, .5)
 }
 .btn-success {
-    color: #575962 !important;
+    color: #000 !important;
     background-color: #5dd75c !important;
     border-color: #5dd75c !important
 }

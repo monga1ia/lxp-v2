@@ -82,20 +82,18 @@ const passwordReset = ({ onClose, onSubmit }) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer className="text-center">
-                <div className="col-12 text-center">
-                    <button
-                        className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                        onClick={onClose}
-                    >
-                        {t('back')}
-                    </button>
-                    <button
-                        className="btn m-btn--pill btn-success m-btn--wide"
-                        onClick={handleClick}
-                    >
-                        {t('save')}
-                    </button>
-                </div>
+                <button
+                    className="btn m-btn--pill btn-link m-btn m-btn--custom"
+                    onClick={onClose}
+                >
+                    {t('back')}
+                </button>
+                <button
+                    className="btn m-btn--pill btn-success m-btn--wide"
+                    onClick={handleClick}
+                >
+                    {t('save')}
+                </button>
             </Modal.Footer>
         </Modal>
     )

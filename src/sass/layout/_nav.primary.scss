@@ -462,6 +462,26 @@ html[data-placement="horizontal"] {
   font-family: MulishBold;
   color: #868AA8;
 }
+.langSelector {
+  width: 4rem;
+  justify-content: start;
+  display: flex;
+  padding-left: 0.5rem !important;
+}
+.langSelector:after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-top: 1px solid #868aa8;
+  border-right: 1px solid #868aa8;
+  transform: rotate(45deg);
+  bottom: initial;
+  top: 14px;
+  left: initial;
+  right: 0.5rem;
+  top: calc(50% - 3px);
+}
 /*
 * Vertical
 * Styles for vertical and mobile menu
@@ -569,7 +589,7 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
       display: flex !important;
       flex-direction: column;
       height: auto;
-      min-height: 100px;
+      // min-height: 100px;
       .user {
         flex-direction: column;
         margin-bottom: 5px;
@@ -595,7 +615,7 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
       display: flex !important;
       align-self: flex-start;
       order: 3;
-      margin-top: 2rem;
+      margin-top: 0.6rem;
       margin-bottom: 1rem;
       width: 19.6923rem;
       margin-left: 1rem;
@@ -633,14 +653,14 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
             // }
 
             &.active {
-              background: #FF5B1D44;
-              color: #FF5B1D;
+              background: rgba(255, 91, 29, .4);
+              color: rgba(255, 91, 29, 1);
               font-weight: 800;
               @include shadow-basic();
             }
 
             &:hover {
-              background: #FF5B1D33;
+              background: rgba(255, 91, 29, .25);
               color: #FF5B1D;
               // color: #868aa8;
             }
@@ -1551,5 +1571,5 @@ html[data-color="dark-purple"][data-navcolor="dark"] {
 .menu-container .label,
 .user-container .name {
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 16px;
 }

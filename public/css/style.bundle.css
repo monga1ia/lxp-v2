@@ -224,10 +224,14 @@ label {
 
 .container {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
     margin-right: auto;
     margin-left: auto
+}
+
+#main-student-id{
+    /* padding-left: 295px !important; */
 }
 
 @media (min-width: 576px) {
@@ -2858,10 +2862,15 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     margin-left: .255em;
     vertical-align: .255em;
     content: "";
+    transform: rotate(45deg) translate(0px, -1px) !important;
     border-top: .3em solid;
     border-right: .3em solid transparent;
     border-bottom: 0;
     border-left: .3em solid transparent
+}
+
+.dropdown-toggle.show::after, .show>.dropdown-toggle::after {
+    transform: translate(0px, -2px) rotate(135deg) !important
 }
 
 .dropdown-toggle:empty::after {
@@ -5308,7 +5317,7 @@ button.close {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 1.25rem 1.5rem !important;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid #D8D8D8 !important;
     border-top-left-radius: .3rem;
     border-top-right-radius: .3rem
 }
@@ -5342,15 +5351,17 @@ button.close {
     -ms-flex-pack: end;
     justify-content: flex-end;
     padding: 1rem;
-    border-top: 1px solid #e9ecef
+    border-top: 1px solid #D8D8D8 !important;
 }
 
 .modal-footer > :not(:first-child) {
-    margin-left: .25rem
+    margin-left: .307692307692rem;
+    margin-right: .307692307692rem;
 }
 
 .modal-footer > :not(:last-child) {
-    margin-right: .25rem
+    margin-right: .307692307692rem;
+    margin-right: .307692307692rem;
 }
 
 .modal-scrollbar-measure {
@@ -21507,7 +21518,8 @@ code {
 }
 
 .btn.m-btn--pill {
-    border-radius: 8px
+    border-radius: 8px;
+    font-size: 12px;
 }
 
 .btn.m-btn--square {
@@ -21538,8 +21550,8 @@ code {
 }
 
 .btn.m-btn--custom {
-    padding: .75rem 2rem;
-    font-size: 1rem;
+    padding: .75rem 13px;
+    font-size: 14px;
     font-weight: 400;
     font-family: Poppins
 }

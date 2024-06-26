@@ -28,6 +28,7 @@ import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone'
 import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone'
 import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
+import {Tab} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
 
@@ -387,7 +388,7 @@ const MainGroup = () => {
     
     const handleTabChange = (e, data) => {
         console.log( e, data)
-        setSelectedTabData(data)
+        setSelectedTabData(data.activeIndex)
         // setSelectedTabData({...data?.panes?.[data?.activeIndex]})
         // secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
 
@@ -759,8 +760,8 @@ const MainGroup = () => {
         <>
             <HtmlHead title={title} description={description} />
 
-            <div className="page-title-container">
-                <Col md="7">
+            <div className="page-title-container mb-2">
+                <Col md="7" className='p-0'>
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
@@ -791,14 +792,14 @@ const MainGroup = () => {
                         </Button>
                         <div className='m-portlet tab br-12'>
                             <div className=''>
-                                <TabComponent
-                                    onChange={(e, data) => handleTabChange(e, data)}
+                                <Tab
+                                    menu={{secondary: true, pointing: true, className: 'primaryColor m-0 h-4'}}
+                                    onTabChange={(e, data) => handleTabChange(e, data)}
                                     className='m-portlet-header'
-                                    tabs={[
+                                    panes={[
                                         {
-                                            code: "active",
-                                            title: t('teacher.working'),
-                                            children: (
+                                            menuItem: t('teacher.working'),
+                                            render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote
@@ -817,9 +818,8 @@ const MainGroup = () => {
 
                                         },
                                         {
-                                            code: "absent",
-                                            title: t('teacher.absent'),
-                                            children: (
+                                            menuItem: t('teacher.absent'),
+                                            render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote
@@ -837,9 +837,8 @@ const MainGroup = () => {
                                             )
                                         },
                                         {
-                                            code: "leave",
-                                            title: t('teacher.not_working'),
-                                            children: (
+                                            menuItem: t('teacher.not_working'),
+                                            render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote
@@ -857,9 +856,8 @@ const MainGroup = () => {
                                             )
                                         },
                                         {
-                                            code: "deleted",
-                                            title: t('teacher.deleted'),
-                                            children: (
+                                            menuItem: t('teacher.deleted'),
+                                            render:() => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote

@@ -126,7 +126,7 @@ const Select = ({
                 }}
                 isOptionSelected={getIsSelected}
                 placeholder={rest?.placeholder || `${t("common.select")}...`}
-                components={fillArrow ? { DropdownIndicator } : {}}
+                components={{DropdownIndicator:() => null, IndicatorSeperator: () => null}}
                 filterOption={createFilter(filterConfig)}
                 {...rest}
             />

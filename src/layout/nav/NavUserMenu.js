@@ -138,17 +138,19 @@ const NavUserMenuLanguageToggle = React.memo(
         <a
             href="#/!"
             ref={ref}
-            className="d-flex user position-relative"
+            className="d-flex user position-relative p-0"
+            style={{paddingBottom: '10px !important'}}
             data-toggle="dropdown"
             aria-expanded={expanded}
             onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                console.log('lanRequest')
                 onClick(e);
             }}
         >
-            <div>
-                <span style={{fontFamily: "MulishBold"}}>{'Мон >'}</span>
+            <div className='langSelector'>
+                <span style={{fontFamily: "MulishBold", color: "#868AA8", fontSize: '12px'}}>{'Мон'}</span>
             </div>
         </a>
     ))
@@ -232,7 +234,7 @@ const NavUserMenu = () => {
                 />
             </Dropdown>
 
-            <Dropdown as="div" bsPrefix="user-container d-flex" style={{height: '3rem', minHeight: '0'}} onToggle={console.log('language request')} drop="down">
+            <Dropdown as="div" bsPrefix="user-container d-flex" style={{height: '1rem', minHeight: '0', marginBottom: '0.5rem'}} drop="down">
                 <Dropdown.Toggle as={NavUserMenuLanguageToggle} user={person} />
             </Dropdown>
         </>
