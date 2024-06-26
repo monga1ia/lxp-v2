@@ -185,6 +185,9 @@
 }
 .hideSelectArrow.eschool-select{
   border: 1px solid rgba(235, 237, 242, 1);
+  transition:cubic-bezier(1, 0, 0, 1);
+  opacity: 1;
+  visibility: show;
   border-radius: 12px;
 }
 
@@ -196,25 +199,35 @@
 
 .hideSelectArrow.eschool-select .my-className-prefix__value-container {
   color: #868AA8 !important;
-  justify-content: center;
+  justify-content: left;
+  font-size: 14px;
   overflow: visible;
   white-space: inherit;
   cursor: pointer;
   text-align: center;
   font-family: MulishBold;
 }
+
 .hideSelectArrow.eschool-select .css-1pahdxg-control {
   box-shadow: none;
 }
+
 .hideSelectArrow.eschool-select .my-className-prefix__option {
   background-color: transparent !important;
   color: #7c7c7c;
 }
+
+.hideSelectArrow.eschool-select .my-className-prefix__option:not(:last-child) {
+  border-bottom: 1px solid rgba(124, 124, 124, 0.1);
+  // color: #7c7c7c;
+}
+
 .hideSelectArrow.eschool-select .my-className-prefix__option:hover {
   background-color: transparent !important;
   cursor: pointer;
   color: #ff5b1d;
 }
+
 .hideSelectArrow.eschool-select .my-className-prefix__value-container:after {
   content: "";
   position: absolute;
@@ -257,7 +270,6 @@
 .hideSelectArrow.eschool-select .my-className-prefix__menu-list{
   box-shadow: 0 6px 10px rgba(0, 0, 0, .1) !important;
   border: none !important;
-  padding: 30px;
 }
 
 .modal-select {

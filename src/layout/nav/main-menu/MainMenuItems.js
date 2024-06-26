@@ -186,6 +186,8 @@ const MainMenuItem = memo(
           >
             {getLabel(item.icon, item.label)}
           </a>
+          {/*-------------------------------------------------------------------- SubMenu---------------------------------------------------------- */}
+          
           <Collapse in={verticalMenuCollapseExpanded && !collapseAll}>
             <ul>
               <MainMenuItems
@@ -195,6 +197,8 @@ const MainMenuItem = memo(
               />
             </ul>
           </Collapse>
+
+          {/*-------------------------------------------------------------------- SubMenu---------------------------------------------------------- */}
         </li>
       );
     }

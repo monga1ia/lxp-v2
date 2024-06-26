@@ -202,7 +202,7 @@ html[data-placement="vertical"] {
       img,
       .img {
         // width: 200px;
-        min-height: 37px;
+        // min-height: 37px;
         object-position: left;
         object-fit: cover;
         transition: width var(--transition-time), height var(--transition-time);
@@ -475,9 +475,9 @@ html[data-placement="horizontal"] {
   height: 5px;
   border-top: 1px solid #868aa8;
   border-right: 1px solid #868aa8;
-  transform: rotate(45deg);
+  transform: rotate(45deg) translate(-2px, 3.5px);
   bottom: initial;
-  top: 14px;
+  top: 20px;
   left: initial;
   right: 0.5rem;
   top: calc(50% - 3px);
@@ -589,7 +589,7 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
       display: flex !important;
       flex-direction: column;
       height: auto;
-      // min-height: 100px;
+      min-height: 100px;
       .user {
         flex-direction: column;
         margin-bottom: 5px;
@@ -658,11 +658,19 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
               font-weight: 800;
               @include shadow-basic();
             }
+            &.active:before {
+              border-top: 1px solid #FF5B1D;
+              border-right: 1px solid #FF5B1D;
+            }
 
             &:hover {
               background: rgba(255, 91, 29, .25);
               color: #FF5B1D;
               // color: #868aa8;
+            }
+            &:hover:before {
+              border-top: 1px solid #FF5B1D;
+              border-right: 1px solid #FF5B1D;
             }
           }
         }
@@ -719,6 +727,7 @@ html[data-placement="horizontal"][data-dimension="mobile"] {
   .nav-container {
     .mobile-buttons-container {
       margin-left: auto;
+      margin-top: 10rem;
       height: 100%;
       align-items: center;
       display: flex;
@@ -814,11 +823,15 @@ html[data-placement="horizontal"][data-dimension="mobile"] {
     }
 
     .logo a {
-      width: 40px;
+      width: 33px;
     }
 
     .menu-icons,
     .language-switch-container {
+      visibility: hidden;
+      opacity: 0;
+    }
+    .hideSelectArrow.eschool-select{
       visibility: hidden;
       opacity: 0;
     }
@@ -1015,8 +1028,8 @@ Arrows collapse for vertical menu
     &:before {
       content: "";
       position: absolute;
-      width: 5px;
-      height: 5px;
+      width: 8px;
+      height: 8px;
       border-top: 1px solid #868aa8;
       border-right: 1px solid #868aa8;
       transform: rotate(45deg);

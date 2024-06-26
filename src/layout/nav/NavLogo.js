@@ -16,8 +16,8 @@ const NavLogo = () => {
                         <img className="ml-6" src='/img/logo/eschool-logo-blue-student.png' alt="student-logo" width='150px' height='36px' />
                     </Link>
                     :
-                    <Link to={DEFAULT_PATHS.APP}>
-                        <img src='/img/logo/eschool-logo-black-wordless.png' alt="student-logo" width='150px' height='36px' />
+                    <Link to={DEFAULT_PATHS.APP} style={{height: '38px'}}>
+                        <img src='/img/logo/eschool-logo-black-wordless.png' alt="student-logo" width='119px' height='30px' />
                     </Link>
             }
         </div>

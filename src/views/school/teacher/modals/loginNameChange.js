@@ -1,14 +1,16 @@
 import message from 'modules/message'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Col, Row } from 'react-bootstrap'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
+import Forms from 'modules/Form/Forms'
 
 const loginNameChange = ({ onClose, onSubmit }) => {
     
     const { t } = useTranslation();
+    const formRef = useRef();
 
     const [loginNames, setLoginNames] = useState({})
 
@@ -21,6 +23,76 @@ const loginNameChange = ({ onClose, onSubmit }) => {
         if (loginNames?.newLoginName !== loginNames?.newLoginNameRepeat) return message(t('login_name_re_enter_mismatch'))
         onSubmit({ existingUsername: loginNames?.loginName, newUsername: loginNames?.newLoginName })
     }
+
+    // const newPasswordFields = [
+    //     {
+    //         key: 'confirmationCode',
+    //         label: `${t('teacher.current_login_name')}*`,
+    //         labelBold: true,
+    //         value: '',
+    //         type: 'nonCryllic',
+    //         required: true,
+    //         errorMessage: t('auth.confirmationCode'),
+    //         placeHolder: 'safasdasdasd',
+    //         className: "form-control",
+    //         upperCase: true,
+    //         labelStyle: {
+    //             textAlign: 'right',
+    //             fontFamily: 'PinnacleBold',
+    //             color: '#575962 !important',
+    //             fontSize: '12px !important',
+    //             paddingTop: 'calc(.65rem + 1px)',
+    //             paddingBottom: 'calc(.65rem + 1px)',
+    //             marginBottom: '0',
+    //             fontSize: 'inherit',
+    //             lineHeight: '1.25'
+    //         }
+    //     },
+    //     {
+    //         key: 'newPassword',
+    //         label: `${t('teacher.login_name')}*`,
+    //         className: "form-control",
+    //         labelBold: true,
+    //         value: '',
+    //         type: 'password',
+    //         required: true,
+    //         errorMessage: t('auth.errorMessage.enterNewPassword'),
+    //         placeHolder: t('auth.errorMessage.enterNewPassword'),
+    //         labelStyle: {
+    //             textAlign: 'right',
+    //             fontFamily: 'PinnacleBold',
+    //             color: '#575962 !important',
+    //             fontSize: '12px !important',
+    //             paddingTop: 'calc(.65rem + 1px)',
+    //             paddingBottom: 'calc(.65rem + 1px)',
+    //             marginBottom: '0',
+    //             fontSize: 'inherit',
+    //             lineHeight: '1.25'
+    //         }
+    //     },
+    //     {
+    //         key: 'newPasswordRepeat',
+    //         label: `${t('teacher.login_name')}*`,
+    //         labelBold: true,
+    //         className: "form-control",
+    //         value: '',
+    //         type: 'password',
+    //         required: true,
+    //         errorMessage: t('auth.repeatNewPassword'),
+    //         placeHolder: t('auth.repeatNewPassword'),
+    //         labelStyle: {
+    //             textAlign: 'right',
+    //             fontFamily: 'PinnacleBold',
+    //             color: '#575962 !important',
+    //             fontSize: '12px !important',
+    //             paddingTop: 'calc(.65rem + 1px)',
+    //             paddingBottom: 'calc(.65rem + 1px)',
+    //             marginBottom: '0',
+    //             fontSize: 'inherit',
+    //             lineHeight: '1.25'
+    //         }
+    //     },
+    // ];
 
     return (
         <Modal
@@ -39,6 +111,10 @@ const loginNameChange = ({ onClose, onSubmit }) => {
             <Modal.Body>
                 <p style={{ color: '#848691'}} className='fs-11 pb-4 pl-4'>{t('teacher.change_login_name_description')}</p>
                 <Row className='form-group'>
+                    {/* <Forms 
+                        ref={formRef} 
+                        fields={newPasswordFields} 
+                    /> */}
                     <Col className='text-right'>
                         <label className="text-right label-pinnacle-bold col-form-label">
                             {t('teacher.current_login_name')}*

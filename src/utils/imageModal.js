@@ -160,7 +160,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
 
     return (
         <Modal
-            size='lg'
+            size='xl'
             dimmer='blurring'
             show={true}
             id='imageModal'

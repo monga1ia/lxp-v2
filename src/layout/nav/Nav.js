@@ -7,6 +7,7 @@ import NavUserMenu from "./NavUserMenu";
 import NavIconMenu from "./NavIconMenu";
 import StudentInfoMenu from "./StudentInfoMenu";
 import StudentIconMenu from "./StudentIconMenu";
+import SchoolMenu from "./main-menu/SchoolMenu"
 import MainMenu from "./main-menu/MainMenu";
 import NavLogo from "./NavLogo";
 import NavMobileButtons from "./NavMobileButtons";
@@ -14,6 +15,7 @@ import {
     menuChangeAttrMenuAnimate,
     menuChangeCollapseAll,
 } from "./main-menu/menuSlice";
+import School from "./School";
 import { useWindowSize } from "hooks/useWindowSize";
 
 const DELAY = 80;
@@ -91,6 +93,7 @@ const Nav = () => {
                 <NavLogo />
                 <NavUserMenu />
                 <NavIconMenu />
+                {/* <SchoolMenu/> */}
                 <MainMenu />
                 {
                     !isOrganizationUser && isStudent &&

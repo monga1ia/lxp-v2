@@ -105,7 +105,7 @@ const Schools = () => {
     }  
 
     const myEl = document.getElementById('htmlHEAD')
-    console.log(myEl)
+    // console.log(myEl)
 
     const SchoolsDropdownToggle = React.memo(
         React.forwardRef(({ onClick, expanded = false }, ref) => (

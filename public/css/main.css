@@ -68,6 +68,10 @@ body,
     font-family: MulishRegular !important;
 } */
 
+.m-portlet-header {
+    padding: 0.5rem;
+}
+
 .font-pinnacle {
     font-family: PinnacleRegular !important;
 }
@@ -650,7 +654,7 @@ table.viewTeacherTable>tr>th {
 
 .ui.menu .primaryColor.item,
 .ui.primaryColor.menu .item {
-    font-family: Pinnacle;
+    font-family: PinnacleRegular;
     font-size: 14px;
     color: #575962;
 }
@@ -659,7 +663,7 @@ table.viewTeacherTable>tr>th {
 .ui.primaryColor.menu .active.item {
     border-color: #ff5b1d !important;
     color: #ff5b1d !important;
-    font-family: Pinnacle;
+    font-family: PinnacleRegular;
     font-weight: 700;
     font-size: 14px;
 }
@@ -731,7 +735,7 @@ table.viewTeacherTable>tr>th {
     font-weight: 400;
     text-align: center;
     align-items: center;
-    font-family: PinnacleBold !important;
+    font-family: Pinnacle, PinnacleRegular !important;
     white-space: nowrap;
     vertical-align: middle;
     -webkit-user-select: none;
@@ -739,6 +743,7 @@ table.viewTeacherTable>tr>th {
     -ms-user-select: none;
     user-select: none;
     border: 1px solid transparent;
+    font-weight: 700;
     padding: .65rem 1rem;
     font-size: 1rem;
     line-height: 1.25;

@@ -84,7 +84,7 @@ body {
 }
 
 .MuiFormControlLabel-label {
-  font-family: Mulish !important;
+  font-family: Mulish, MulishRegular !important;
   font-size: 1rem !important;
 }
 

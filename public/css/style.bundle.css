@@ -2870,7 +2870,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 .dropdown-toggle.show::after, .show>.dropdown-toggle::after {
-    transform: translate(0px, -2px) rotate(135deg) !important
+    transform: translate(0px, -0px) rotate(135deg) !important
 }
 
 .dropdown-toggle:empty::after {
@@ -21552,7 +21552,7 @@ code {
 .btn.m-btn--custom {
     padding: .75rem 13px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 700;
     font-family: Poppins
 }
 
