@@ -2870,15 +2870,18 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     margin-left: .255em;
     vertical-align: .255em;
     content: "";
-    transform: rotate(45deg) translate(0px, -1px) !important;
+    transform: rotate(45deg) translate(0px, -0.5px) !important;
+    transform-origin: (0,0);
     border-top: .3em solid;
     border-right: .3em solid transparent;
     border-bottom: 0;
-    border-left: .3em solid transparent
+    border-left: .3em solid transparent;
+    transition: 0.2s;
 }
 
 .dropdown-toggle.show::after, .show>.dropdown-toggle::after {
-    transform: translate(0px, -0px) rotate(135deg) !important
+    transform: translate(0px, -1px) rotate(135deg) !important;
+    transition: 0.2s;
 }
 
 .dropdown-toggle:empty::after {

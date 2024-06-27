@@ -137,6 +137,7 @@ const Schools = () => {
                         </div>
                     </div>
                 </button>
+
                 <button
                     ref={ref}
                     href="#/"
@@ -201,22 +202,62 @@ const Schools = () => {
             );
         })
     );
-
+    const customStyle = {
+        option: (base, state) => {
+           let backgroundColor = 'white'
+           let fontWeight = '700'
+     
+           if (state.isSelected) {
+                fontWeight = '700'
+           }
+     
+           if (state.isFocused) {
+             backgroundColor = "blue";
+           }
+     
+           return {
+             ...base,
+             backgroundColor
+           };
+         }
+     }
     if (isOrganizationUser) {
         return (
-            <div>
-                asdfasdf
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+            }}>
+                <div
+                    className='m-0'
+                    aria-expanded='true' style={{}}>
+                    <Select
+                        clearable={false}
+                        searchable = {true}
+                        fillArrow={true}
+                        className="hideSelectArrow school"
+                        placeholder={t("teacher.select_school")}
+                        options={schoolOptions}
+                        classNamePrefix='my-className-prefix'
+                        value={selectedSchoolID}
+                        onChange={(e, data) => setSelectedSchoolID(e)}
+                    />
+                </div>
+                <div
+                    className='mt-2'
+                    aria-expanded='true' style={{}}>
+                    <Select
+                        clearable={false}
+                        fillArrow={true}
+                        searchable = {true}
+                        className="hideSelectArrow class"
+                        classNamePrefix='my-className-prefix'
+                        placeholder={t("food.choose_class")}
+                        options={classOptions}
+                        value={selectedClassID}
+                        onChange={(e, data) => setSelectedClassID(e)}
+                    />
+                </div>
             </div>
-            // <Dropdown
-            //     style={{ transform: 'translate(0px, 0px)', textAlign: 'center', zIndex: 1000 }}
-            // >
-            //     <Dropdown.Toggle as={SchoolsDropdownToggle} />
-            //     <Dropdown.Menu
-            //         className={window.innerWidth < 768 ? 'school-nav-phone mt-2' : 'mt-2'}
-            //         style={{ maxHeight: 300, transform: 'translate(209px, 54px) !important' }}
-            //         as={SchoolsDropdownMenu}
-            //     />
-            // </Dropdown>
         );
     } else {
         if (schools && schools.length > 0 && !isStudent) {
@@ -232,25 +273,14 @@ const Schools = () => {
                             clearable={false}
                             searchable = {true}
                             fillArrow={true}
-                            className="hideSelectArrow"
+                            className="hideSelectArrow school"
+                            style={customStyle}
                             placeholder={t("teacher.select_school")}
                             options={schoolOptions}
                             classNamePrefix='my-className-prefix'
                             value={selectedSchoolID}
                             onChange={(e, data) => setSelectedSchoolID(e)}
                         />
-                        {/* <Drop2
-                            fluid
-                            search
-                            selection
-                            closeOnChange
-                            selectOnBlur={false}
-                            options={schoolOptions}
-                            className='header-select nav_long_button br-12'
-                            value={selectedSchoolID}
-                            onChange={(e, data) => setSelectedSchoolID(data?.value)}
-                            placeholder={t('err.select_school')}
-                        /> */}
                     </div>
                     <div
                         className='mt-2'
@@ -259,25 +289,13 @@ const Schools = () => {
                             clearable={false}
                             fillArrow={true}
                             searchable = {true}
-                            className="hideSelectArrow"
+                            className="hideSelectArrow class"
                             classNamePrefix='my-className-prefix'
                             placeholder={t("food.choose_class")}
                             options={classOptions}
                             value={selectedClassID}
                             onChange={(e, data) => setSelectedClassID(e)}
                         />
-                        {/* <Drop
-                            fluid
-                            search
-                            selection
-                            closeOnChange
-                            selectOnBlur={false}
-                            options={classOptions}
-                            className='header-select nav_long_button br-12'
-                            value={selectedClassID}
-                            onChange={(e, data) => setSelectedClassID(data?.value)}
-                            placeholder={t('err.select_class')}
-                        /> */}
                     </div>
                 </div>
             );

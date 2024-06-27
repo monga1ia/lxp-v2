@@ -59,6 +59,9 @@ html[data-placement="vertical"] {
             }
             .icon,
             .label {
+              stroke-width: 2px !important;
+              width: 20px !important;
+              height: 20px !important;
               vertical-align: middle;
             }
           }
@@ -657,6 +660,11 @@ html[data-placement="vertical"] .nav-container.mobile-side-ready {
               color: rgba(255, 91, 29, 1);
               font-weight: 800;
               @include shadow-basic();
+            }
+            &.active svg path{
+              stroke-width: 2px !important;
+              width: 20px !important;
+              height: 20px !important;
             }
             &.active:before {
               border-top: 1px solid #FF5B1D;

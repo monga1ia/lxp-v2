@@ -191,6 +191,12 @@
   border-radius: 12px;
 }
 
+.hideSelectArrow.eschool-select .my-className-prefix__control{
+  border: 1px solid #EBEDF2;
+  border-style: none;
+  border-radius: 12px;
+}
+
 .hideSelectArrow.eschool-select .my-className-prefix__control:hover{
   border: 1px solid #ff5b1d !important;
   box-shadow: none;
@@ -206,6 +212,11 @@
   cursor: pointer;
   text-align: center;
   font-family: MulishBold;
+}
+
+.hideSelectArrow.eschool-select .my-className-prefix__option--is-selected {
+  font-weight: 700;
+  color: black !important;
 }
 
 .hideSelectArrow.eschool-select .css-1pahdxg-control {
@@ -228,7 +239,7 @@
   color: #ff5b1d;
 }
 
-.hideSelectArrow.eschool-select .my-className-prefix__value-container:after {
+.hideSelectArrow.eschool-select.class .my-className-prefix__value-container:after {
   content: "";
   position: absolute;
   width: 5px;
@@ -255,11 +266,6 @@
 
 .hideSelectArrow.eschool-select .my-className-prefix__indicator-separator {
   visibility: hidden;
-}
-
-.hideSelectArrow.eschool-select .my-className-prefix__control{
-  border-style: none;
-  border-radius: 12px;
 }
 
 .hideSelectArrow.eschool-select .my-className-prefix__menu{
