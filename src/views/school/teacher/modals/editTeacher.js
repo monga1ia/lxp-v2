@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import message from 'modules/message'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
 import ImageModal from 'utils/imageModal'
 import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
+import Forms from 'modules/Form/Forms'
 
 const EditTeacherModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
+    const formRef = useRef();
 
     const teacherData = data
 
@@ -33,6 +35,172 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
         }
     ])
 
+    const [schoolOptions, setSchoolOptions] = useState([
+        {value: "ID22", refId: "refId", gid: "2323", text: "text 1"},
+        {value: "ID2", refId: "refId2", gid: "232", text: "text 2"},
+        {value: "ID345", refId: "refId3", gid: "23", text: "text 3"},
+    ])
+
+    const addTeacherFields = [
+        {
+            key: 'teacherRole',
+            label: `${t('role')}*`,
+            labelBold: true,
+            value: '',
+            type: 'dropdown',
+            // placeholder: t('teacher.login_name'),
+            className: "form-control",
+            upperCase: true,
+            disabled: true,
+            formContainerClassName: 'form-group m-form__group row',
+            fieldContainerClassName: 'col-8',
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold mr-0",
+            options: roleOptions,
+        },
+        {
+            key: 'teacherCode',
+            label: `${t('teacher.code')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: '',
+            type: 'text',
+            required: true,
+            fieldContainerClassName: 'col-8',
+            errorMessage: t('auth.errorMessage.enterNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            // whiteSpaceContainer
+            placeholder: t('teacher.code'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherLastName',
+            label: `${t('teacher.new_lastname')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.new_lastname_placeholder'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherFirstName',
+            label: `${t('teacher.new_name')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.new_name_placeholder'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'register_number',
+            label: `${t('register_number')}`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'nonCryllic',
+            // required: true,
+            // errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('register_number'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'loginName',
+            label: `${t('teacher.login_name')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            disabled: true,
+            type: 'text',
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.login_name'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherEmail',
+            label: `${t('studentBook.email')}`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            // required: true,
+            // errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('e_mail'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherPhone',
+            label: `${t('teacher.phone_number')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'number',
+            required: true,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.phone_number'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherGender',
+            label: `${t('teacher.gender')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'dropdown',
+            options: genderOptions,
+            required: true,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: '-' + t('teacher.select_gender') + '-',
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherSchool',
+            label: `${t('school')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'dropdown',
+            required: true,
+            options: schoolOptions,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: '-' + t('teacher.select_school') + ' - ',
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+        {
+            key: 'teacherTitle',
+            label: `${t('teacher.teacher_title')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.insert_teacher_title'),
+            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+        },
+    ]
+
     // useEffect(() => {
     //     if (!teacherData?.state?.id) {
     //         message(t('course_select_teacher'))
@@ -41,8 +209,34 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
     // }, [])
 
     const handleSubmit = () => {
-        if (validateFields()) {
-            console.log('success')
+        const [formsValid, formValues] = formRef.current.validate();
+
+        console.log(formValues[4].value)
+
+        if (formsValid) {
+            if (gradeSubjectOptions.length == 1 && gradeSubjectOptions?.[0]?.grade && !gradeSubjectOptions?.[0]?.subjects.length) {
+                return message(t('err.fill_all_fields'))
+            } else if (gradeSubjectOptions.length > 1 && !gradeSubjectOptions.every(el => { return el.grade && el.subjects.length })){
+                return message(t('err.fill_all_fields'))
+            } else {
+                const dataCollectorArray = []
+                for (let x=0;x<formValues.length;x++) {
+                    dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
+                }
+                message('success')
+    
+                // after success \/
+                // onClose()
+                // setLoading(true)
+                // console.log(dataCollectorArray)
+            }
+        } 
+        else{
+            message(t('err.fill_all_fields'))
+        } 
+
+        // if (validateFields()) {
+        //     console.log('success')
             // setLoading(true)
             // const subjectList = gradeSubjectOptions.map(el => {
             //     if (el && el.visible) {
@@ -72,15 +266,15 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             //         message(t('err.error_occurred'))
             //         setLoading(false)
             //     })
-        } else{
-            console.log('fail')
-        }
+        // } else{
+        //     console.log('fail')
+        // }
     }
 
-    const handleChange = (name, value) => {
-        console.log(teacher)
-        setTeacher({ ...teacher, [name]: value })
-    }
+    // const handleChange = (name, value) => {
+    //     console.log(teacher)
+    //     setTeacher({ ...teacher, [name]: value })
+    // }
 
     const handleAvatarUpload = params => {
         setTeacher({ ...teacher, avatar: params.image, fileType: params.imageType, })
@@ -90,27 +284,27 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
         setTeacher({ ...teacher, avatar: undefined, fileType: undefined, })
     }
 
-    const validateFields = () => {
-        const list = gradeSubjectOptions;
-        let hasError = false
-        if (list?.length > 0) {
-            for (let l = 0; l < list?.length; l++) {
-                if (list[l].visible) {
-                    if (list[l].value) {
-                    } else {
-                        hasError = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if (!teacher?.lastName || !teacher?.firstName || !teacher?.code || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
-            return message(t('err.fill_all_fields'))
-        else if (hasError)
-            return message(t('err.fill_all_fields'))
-        else
-            return true
-    }
+    // const validateFields = () => {
+    //     const list = gradeSubjectOptions;
+    //     let hasError = false
+    //     if (list?.length > 0) {
+    //         for (let l = 0; l < list?.length; l++) {
+    //             if (list[l].visible) {
+    //                 if (list[l].value) {
+    //                 } else {
+    //                     hasError = true;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if (!teacher?.lastName || !teacher?.firstName || !teacher?.code || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
+    //         return message(t('err.fill_all_fields'))
+    //     else if (hasError)
+    //         return message(t('err.fill_all_fields'))
+    //     else
+    //         return true
+    // }
 
     const handleRowGradeChange = (index, value, options) => {
         const rows = [...gradeSubjectOptions]
@@ -218,176 +412,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                     </div>
                     <div className="col-7">
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('role')}*
-                            </label>
-                            <div className="col-8">
-                                <Dropdown
-                                    placeholder={'-' + t('select') + ' - '}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    closeOnChange
-                                    selectOnBlur={false}
-                                    value={teacher?.roleId}
-                                    options={roleOptions}
-                                    disabled
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.code')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={teacher?.code || ''}
-                                    placeholder={t('teacher.code')}
-                                    onChange={(e) => handleChange('code', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.new_lastname')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={teacher?.lastName || ''}
-                                    placeholder={t('teacher.new_lastname_placeholder')}
-                                    onChange={(e) => handleChange('lastName', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.new_name')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={teacher?.firstName || ''}
-                                    placeholder={t('teacher.new_name_placeholder')}
-                                    onChange={(e) => handleChange('firstName', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('register_number')}
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={teacher?.registrationNumber || ''}
-                                    placeholder={t('register_number')}
-                                    onChange={(e) => handleChange('registrationNumber', e?.target?.value?.toString()?.toUpperCase()?.replace(/\s/g, ''))}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.login_name')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={teacher?.loginName || ''}
-                                    placeholder={t('teacher.login_name')}
-                                    disabled
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('studentBook.email')}
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    value={teacher?.email || ''}
-                                    placeholder={t('e_mail')}
-                                    onChange={(e) => handleChange('email', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.phone_number')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="number"
-                                    max={99999999}
-                                    className="form-control"
-                                    value={teacher?.phoneNumber || ''}
-                                    placeholder={t('teacher.phone_number')}
-                                    onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                                    inputMode="numeric"
-                                />
-
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.gender')}*
-                            </label>
-                            <div className="col-8">
-                                <Dropdown
-                                    placeholder={'-' + t('teacher.select_gender') + ' - '}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    closeOnChange
-                                    selectOnBlur={false}
-                                    value={teacher?.gender}
-                                    options={genderOptions}
-                                    onChange={(e, data) => handleChange('gender', data?.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('school')}*
-                            </label>
-                            <div className="col-8">
-                                <Dropdown
-                                    placeholder={'-' + t('teacher.select_school') + ' - '}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    closeOnChange
-                                    selectOnBlur={false}
-                                    value={teacher?.grade}
-                                    options={gradeOptions}
-                                    onChange={(e, data) => handleChange('grade', data?.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.teacher_title')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={teacher?.title || ''}
-                                    placeholder={t('teacher.insert_teacher_title')}
-                                    onChange={(e) => handleChange('title', e.target.value)}
-                                />
-                            </div>
+                            <Forms
+                                ref={formRef}
+                                fields={addTeacherFields}
+                            />
                         </div>
                         {
                             gradeSubjectOptions?.map((gradeSubjectObj, s) => {
@@ -411,7 +439,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
                                         />
                                     </div>
-                                    <div className="col-5s d-flex p-0 align-items-center">
+                                    <div className="col-5 d-flex p-0 align-items-center">
                                         <Dropdown
                                             placeholder={'-' + t('absent.select_subject') + ' - '}
                                             fluid
@@ -427,7 +455,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                                             options={gradeSubjectObj?.subjects}
                                             onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
                                         />
-                                        <div style={{marginLeft: "2.6rem"}} className={s != 0 ? 'visible' : 'invisible'}>
+                                        <div style={{paddingRight: "0.71rem"}} className={s != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
                                             </button>

@@ -2500,6 +2500,9 @@ export const TRANSLATIONS_MN = {
             confirmationCode: 'Баталгаажуулах код оруулна уу',
             passwordRepeatNotMatch: 'Давтан оруулсан нууц үг тохирохгүй байна',
             insertLoginName: 'Нэвтрэх нэр оруулна уу',
+            enterLoginName: 'Нэвтрэх нэр оруулна уу',
+            enterNewLoginName: 'Шинэ нэвтрэх нэр оруулна уу',
+            repeatNewLoginName: 'Шинэ нэр давтах',
         }
     },
     esis: {
