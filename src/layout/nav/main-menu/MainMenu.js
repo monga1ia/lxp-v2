@@ -250,6 +250,7 @@ const MainMenu = () => {
                     <input type='text' value='' />
                     <ul id="menu" className={!isOrganizationUser && isStudent ? classNames("menu show pl-0 pr-0") : classNames("menu show")}>
                         <MainMenuItems
+                            onClick = {console.log('asdf')}
                             menuItems={menuItemsMemo}
                             menuPlacement={placementStatus.view}
                         />

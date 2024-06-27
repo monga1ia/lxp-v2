@@ -9,6 +9,8 @@ import CsLineIcons from "cs-line-icons/CsLineIcons";
 import { layoutShowingNavMenu } from "layout/layoutSlice";
 import { useTranslation } from "react-i18next";
 import { menuChangeCollapseAll } from "./menuSlice";
+import { ClickAwayListener } from "@material-ui/core";
+
 
 const HorizontalMenuDropdownToggle = memo(
   forwardRef(({ children, onClick, href = "#", active = false }, ref) => (
@@ -29,6 +31,8 @@ const HorizontalMenuDropdownToggle = memo(
 
 const MainMenuItem = memo(
   ({
+    active,
+    onClick,
     item,
     id,
     isSubItem = false,
@@ -47,6 +51,7 @@ const MainMenuItem = memo(
       useState(isActive);
     const [horizontalDropdownIsOpen, setHorizontalDropdownIsOpen] =
       useState(false);
+      // console.log(item.path, isActive)
 
     const getLabel = (icon, label) => (
       <>
@@ -63,9 +68,18 @@ const MainMenuItem = memo(
       setHorizontalDropdownIsOpen(isOpen);
     };
 
-    const onVerticalMenuCollapseClick = (e) => {
+    const [activeIndex, setActiveIndex] = useState("0")
+    const [mainMenuActive, setMainMenuActive] = useState(false)
+    const onVerticalMenuCollapseClick = (e, index) => {
       e.preventDefault();
       e.stopPropagation();
+      if (activeIndex === index) {
+        setMainMenuActive(false)
+      } else {
+        setMainMenuActive(true)
+      }
+
+      setActiveIndex(activeIndex === index ? null : index);
       setVerticalMenuCollapseExpanded(!verticalMenuCollapseExpanded);
       dispatch(menuChangeCollapseAll(false));
     };
@@ -75,6 +89,8 @@ const MainMenuItem = memo(
       dispatch(layoutShowingNavMenu(""));
     };
 
+
+    // init navigation menus
     useEffect(() => {
       if (showingNavMenu !== "" && horizontalDropdownIsOpen) {
         onToggleItem(false);
@@ -179,16 +195,17 @@ const MainMenuItem = memo(
           <a
             href={item.path}
             data-bs-toggle="collapse"
+            id = {id}
             role="button"
-            className={classNames({ active: isActive })}
-            aria-expanded={verticalMenuCollapseExpanded && !collapseAll}
-            onClick={onVerticalMenuCollapseClick}
+            aria-expanded={!collapseAll && mainMenuActive}
+            onClick={(e) => onVerticalMenuCollapseClick(e, id)}
+            className={classNames({ active: mainMenuActive})}
           >
             {getLabel(item.icon, item.label)}
           </a>
           {/*-------------------------------------------------------------------- SubMenu---------------------------------------------------------- */}
-          
-          <Collapse in={verticalMenuCollapseExpanded && !collapseAll}>
+          {console.log(activeIndex, id)}
+          <Collapse in={!collapseAll && mainMenuActive}>
             <ul>
               <MainMenuItems
                 menuItems={item.subs}
@@ -262,7 +279,7 @@ const MainMenuItems = React.memo(
     menuItems.map((item, index) => (
       <MainMenuItem
         key={`menu.${item.path}.${index}`}
-        id={item.path}
+        id={isSubItem ? 'subMenu' : parseInt(index)}
         item={item}
         menuPlacement={menuPlacement}
         isSubItem={isSubItem}
