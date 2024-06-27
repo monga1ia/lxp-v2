@@ -13,31 +13,6 @@ const loginNameChange = ({ onClose, onSubmit }) => {
     const formRef = useRef();
 
     const [loginNames, setLoginNames] = useState({})
-
-    // const handleInputChange = (name, value) => {
-    //     setLoginNames({ ...loginNames, [name]: value })
-    // }
-
-    const handleSave = () => {
-        const [formsValid, formValues] = formRef.current.validate();
-        if (formsValid) {
-            if (formValues[1].value !== formValues[2].value){
-                return message(t('login_name_re_enter_mismatch'))
-            }
-            else {
-                setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
-                message('success')
-
-                // after success \/
-                // console.log(loginNames)
-                // setLoading(true)
-                // onClose()
-            }
-        } else { 
-            message(t('err.fill_all_fields'))
-        }
-    }
-
     const loginNameFields = [
         {
             key: 'loginName',
@@ -86,6 +61,30 @@ const loginNameChange = ({ onClose, onSubmit }) => {
             whiteSpaceClassName: 'col-md-2',
         },
     ];
+    
+    // const handleInputChange = (name, value) => {
+    //     setLoginNames({ ...loginNames, [name]: value })
+    // }
+
+    const handleSave = () => {
+        const [formsValid, formValues] = formRef.current.validate();
+        if (formsValid) {
+            if (formValues[1].value !== formValues[2].value){
+                return message(t('login_name_re_enter_mismatch'))
+            }
+            else {
+                setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
+                message('success')
+
+                // after success \/
+                // console.log(loginNames)
+                // setLoading(true)
+                // onClose()
+            }
+        } else { 
+            message(t('err.fill_all_fields'))
+        }
+    }
 
     return (
         <Modal

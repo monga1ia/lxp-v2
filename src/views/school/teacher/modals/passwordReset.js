@@ -12,30 +12,7 @@ const passwordReset = ({ onClose, onSubmit }) => {
     const { t } = useTranslation();
     const formRef = useRef();
     
-    const [password, setPassword] = useState({})
-
-    // const handleInputChange = (name, value) => {
-    //     setPassword({ ...password, [name]: value })
-    // }
-
-    const handleSubmit = () => {
-        const [formsValid, formValues] = formRef.current.validate();
-        if (formsValid){
-            if (formValues[0].value.length < 4) {
-                return message(t('password_length_error'))
-            } else if (formValues[0].value !== formValues[1].value) {
-                return message(t('password_re_enter_mismatch'))
-            }
-
-            // after success \/
-            // setLoading(true)
-            // onClose()
-            // console.log(formValues[0].value, formValues[1].value)
-            // onSubmit(formValues[0].value, formValues[1].value)
-        } else {
-            message(t('err.fill_all_fields'))
-        }
-    }
+    // const [password, setPassword] = useState({})
 
     const passwordFields = [
         {
@@ -70,6 +47,29 @@ const passwordReset = ({ onClose, onSubmit }) => {
             whiteSpaceClassName: 'col-md-2',
         },
     ]
+
+    // const handleInputChange = (name, value) => {
+    //     setPassword({ ...password, [name]: value })
+    // }
+
+    const handleSubmit = () => {
+        const [formsValid, formValues] = formRef.current.validate();
+        if (formsValid){
+            if (formValues[0].value.length < 4) {
+                return message(t('password_length_error'))
+            } else if (formValues[0].value !== formValues[1].value) {
+                return message(t('password_re_enter_mismatch'))
+            }
+
+            // after success \/
+            // setLoading(true)
+            // onClose()
+            // console.log(formValues[0].value, formValues[1].value)
+            // onSubmit(formValues[0].value, formValues[1].value)
+        } else {
+            message(t('err.fill_all_fields'))
+        }
+    }
 
     return (
         <Modal
