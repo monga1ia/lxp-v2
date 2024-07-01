@@ -47,14 +47,13 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             label: `${t('role')}*`,
             labelBold: true,
             value: '',
-            type: 'dropdown',
-            // placeholder: t('teacher.login_name'),
+            type: 'nDropdown',
             className: "form-control",
             upperCase: true,
             disabled: true,
             formContainerClassName: 'form-group m-form__group row',
             fieldContainerClassName: 'col-8',
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold mr-0",
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             options: roleOptions,
         },
         {
@@ -66,11 +65,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             type: 'text',
             required: true,
             fieldContainerClassName: 'col-8',
-            errorMessage: t('auth.errorMessage.enterNewLoginName'),
+            errorMessage: t('error.enterTeacherCode'),
             formContainerClassName: 'form-group m-form__group row',
-            // whiteSpaceContainer
             placeholder: t('teacher.code'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherLastName',
@@ -81,10 +79,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             value: '',
             type: 'text',
             required: true,
-            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            errorMessage: t('error.enterLastname'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('teacher.new_lastname_placeholder'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherFirstName',
@@ -95,10 +93,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             value: '',
             type: 'text',
             required: true,
-            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            errorMessage: t('error.enterFirstname'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('teacher.new_name_placeholder'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'register_number',
@@ -108,11 +106,9 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             fieldContainerClassName: 'col-8',
             value: '',
             type: 'nonCryllic',
-            // required: true,
-            // errorMessage: t('auth.errorMessage.repeatNewLoginName'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('register_number'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'loginName',
@@ -125,7 +121,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             type: 'text',
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('teacher.login_name'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherEmail',
@@ -139,7 +135,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             // errorMessage: t('auth.errorMessage.repeatNewLoginName'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('e_mail'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherPhone',
@@ -150,10 +146,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             value: '',
             type: 'number',
             required: true,
-            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            errorMessage: t('error.enterPhone'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('teacher.phone_number'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherGender',
@@ -162,13 +158,13 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             className: "form-control",
             fieldContainerClassName: 'col-8',
             value: '',
-            type: 'dropdown',
+            type: 'nDropdown',
             options: genderOptions,
             required: true,
-            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            errorMessage: t('error.selectGender'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: '-' + t('teacher.select_gender') + '-',
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherSchool',
@@ -177,13 +173,13 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             className: "form-control",
             fieldContainerClassName: 'col-8',
             value: '',
-            type: 'dropdown',
+            type: 'nDropdown',
             required: true,
             options: schoolOptions,
-            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            errorMessage: t('error.enterTeachersSchool'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: '-' + t('teacher.select_school') + ' - ',
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
         {
             key: 'teacherTitle',
@@ -194,10 +190,10 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             value: '',
             type: 'text',
             required: true,
-            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            errorMessage: t('error.enterTitle'),
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('teacher.insert_teacher_title'),
-            labelClassName: "col-4 col-form-label text-right label-pinnacle-bold"
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
         },
     ]
 
@@ -411,7 +407,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                         </button>
                     </div>
                     <div className="col-7">
-                        <div className="form-group m-form__group row">
+                        <div className="form-group m-form__group row mb-0">
                             <Forms
                                 ref={formRef}
                                 fields={addTeacherFields}

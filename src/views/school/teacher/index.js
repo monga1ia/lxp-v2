@@ -7,7 +7,6 @@ import message from '../../../modules/message'
 import TreeView from 'modules/TreeView';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import TabComponent from 'components/tab/Tab';
 import DTable from 'modules/DataTable/DTable';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import ViewModal from './modals/view'
@@ -83,7 +82,7 @@ const MainGroup = () => {
         }])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
     const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
-    const [selectedTabData, setSelectedTabData] = useState('active')
+    const [selectedTabData, setSelectedTabData] = useState(0)
 
     const [showViewModal, setShowViewModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -387,7 +386,7 @@ const MainGroup = () => {
     }
     
     const handleTabChange = (e, data) => {
-        console.log( e, data)
+        console.log( e, data.activeIndex)
         setSelectedTabData(data.activeIndex)
         // setSelectedTabData({...data?.panes?.[data?.activeIndex]})
         // secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
@@ -485,14 +484,14 @@ const MainGroup = () => {
     }
 
     useEffect(() => {
-        if (selectedTabData == 'active') {
+        if (selectedTabData == 0) {
             tableData?.forEach(el => {
                 el.contextMenuKeys = 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, infoChange'
             })
             setColumns(activeColumns)
             setContextMenus(activeContextMenus)
         } else {
-            if (selectedTabData === 'deleted') {
+            if (selectedTabData === 3) {
                 tableData?.forEach(el => {
                     el.contextMenuKeys = 'view, statusChange'
                 })

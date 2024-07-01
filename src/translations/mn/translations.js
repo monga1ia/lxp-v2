@@ -18,6 +18,21 @@ export const TRANSLATIONS_MN = {
         emptyTable: 'Мэдээлэл олдсонгүй',
         calculate: 'Тооцоолох',
     },
+    error: {
+        selectRole: "Дүр сонгоно уу",
+        enterTeacherCode: "Багшийн код оруулна уу",
+        enterLastname: "Овог оруулна уу",
+        enterFirstname: "Нэр оруулна уу",
+        enterLoginname: "Нэвтрэх нэр оруулна уу",
+        enterPhone: "Утасны дугаар оруулна уу",
+        selectGender: 'Хүйс сонгоно уу',
+        enterTeachersSchool: 'Багшийн сургууль сонгоно уу',
+        enterTitle: 'Албан тушаал оруулна уу',
+        enterNewPassword: 'Шинэ нууц үг оруулна уу',
+        repeatNewPassword: 'Шинэ нууц үг давтах',
+        enterStaffCode: 'Ажилчны код оруулна уу',
+        
+    },
     day: 'өдрүүд',
     lessons: 'хичээлүүд',
     result: 'Үр дүн',
@@ -2334,6 +2349,13 @@ export const TRANSLATIONS_MN = {
         season_result: 'Улирлын дүн',
         score_board: 'Дүнгийн хавтгай',
     },
+
+    field: {
+        enterValue: 'Утга оруулна уу',
+        selectValue: 'Утга сонгоно уу',
+        enterPassword: 'Нууц үг оруулна уу',
+    },
+
     errorMessage: {
         attendance: "Тухайн өдөр хичээл заадаггүй тул ирц бүртгэх боломжгүй",
         bug: 'Алдаа гарлаа, админтай холбоо барина уу',

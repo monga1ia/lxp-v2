@@ -26,13 +26,14 @@ const deleteModal = ({ onClose, onDelete, title, locale, children }) => {
             <Modal.Footer className='text-center'>
                 <button
                     onClick={onClose}
-                    className="btn btn-link margin-right-5"
+                    className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
                     {t('back')}
                 </button>
                 <button
                     onClick={onDelete}
                     className="btn m-btn--pill btn-danger"
+                    style={{fontSize: '13px'}}
                 >
                     {t('delete')}
                 </button>

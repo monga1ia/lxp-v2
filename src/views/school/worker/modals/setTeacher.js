@@ -3,12 +3,15 @@ import { Modal } from 'react-bootstrap'
 import React, { useState, useEffect, useRef } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
+import { Row } from 'react-bootstrap'
 import {cloneDeep} from "lodash";
 import { useTranslation } from "react-i18next";
+import Forms from 'modules/Form/Forms'
 
 const setTeacher = ({ onClose, onSubmit, user }) => {
     
     const { t } = useTranslation();
+    const formRef = useRef();
 
     const mainGradeRef = useRef()
 
@@ -20,13 +23,64 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
     const [mainGradeOptions, setMainGradeOptions] = useState([])
     const [disabledGradeIds, setDisabledGradeIds] = useState([])
     const [gradeOptions, setGradeOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    const [schoolOptions, setSchoolOptions] = useState([
+        {value: "ID22", refId: "refId", gid: "2323", text: "text 1"},
+        {value: "ID2", refId: "refId2", gid: "232", text: "text 2"},
+        {value: "ID345", refId: "refId3", gid: "23", text: "text 3"},
+    ])
     const [gradeRows, setGradeRows] = useState([{
         grade: null,
         subjects: [],
         subjectOptions: []
     }])
 
+    const setTeacherFields = [
+        {
+            key: 'teacherRole',
+            label: `${t('teacher.teacher_title')}*`,
+            labelBold: true,
+            value: '',
+            type: 'password',
+            required: true,
+            errorMessage: t('error.enterTitle'),
+            placeholder: t('teacher.insert_teacher_title'),
+            className: "form-control",
+            upperCase: true,
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-8',
+        },
+        {
+            key: 'teacherSchool',
+            label: `${t('school')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: '',
+            options: schoolOptions,
+            type: 'nDropdown',
+            required: true,
+            errorMessage: t('error.enterTeachersSchool'),
+            placeholder: '-' + t('teacher.select_school') + ' - ',
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-8',
+        },
+    ]
+
     const handleSave = () => {
+
+        const [formsValid, formValues] = formRef.current.validate();
+
+        if (formsValid){
+            message('success')
+            // after success \/
+            // setLoading(true)
+            // onClose()
+            // console.log(formValues[0].value, formValues[1].value)
+            // onSubmit(formValues[0].value, formValues[1].value)
+        } else {
+            message(t('err.fill_all_fields'))
+        }
         console.log('submitSetTeacher')
         // const params = {
         //     employee: user,
@@ -180,101 +234,76 @@ const setTeacher = ({ onClose, onSubmit, user }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="form-group m-form__group row">
-                    <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                        {t('teacher.teacher_title')}*
-                    </label>
-                    <div className="col-8">
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={userTitle || ''}
-                            placeholder={t('teacher.insert_teacher_title')}
-                            onChange={(e) => handleChange(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="form-group m-form__group row">
-                    <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                        {t('school')}*
-                    </label>
-                    <div className="col-8">
-                        <Dropdown
-                            ref={mainGradeRef}
-                            placeholder={'-' + t('teacher.select_school') + ' - '}
-                            fluid
-                            selection
-                            additionPosition='bottom'
-                            upward={false}
-                            closeOnChange
-                            clearable
-                            selectOnBlur={false}
-                            value={selectedGrade}
-                            options={mainGradeOptions}
-                            onChange={(e, data) => onGradeChange(data?.value)}
-                        />
-                    </div>
-                </div>
-                {
-                    gradeRows?.map((el, index) => (
-                        <div key={index} className="form-group m-form__group row">
-                            <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                                {index == 0 && t('teacher.subjects')}
-                            </label>
-                            <div className="col-3">
-                                <Dropdown
-                                    placeholder={'-' + t('err.select_class') + '-'}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    closeOnChange
-                                    clearable
-                                    selectOnBlur={false}
-                                    value={el?.grade}
-                                    options={getRowGrades(gradeOptions || [])}
-                                    onChange={(e, data) => handleRowGradeChange(index, data?.value)}
-                                />
-                            </div>
-                            <div className="col-5ss d-flex align-items-center">
-                                <Dropdown
-                                    placeholder={'-' + t('absent.select_subject') + '-'}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    multiple={true}
-                                    search
-                                    className='mr-2'
-                                    clearable
-                                    selectOnBlur={false}
-                                    value={el?.subjects}
-                                    options={el?.subjectOptions}
-                                    onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
-                                />
-                                <div style={{marginLeft: "2.6rem"}} className={index != 0 ? 'visible' : 'invisible'}>
-                                    <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
-                                        <i className="la la-close" />
-                                    </button>
+                <div className="row mt-4">
+                    <Row className='form-group'>
+                        <div className="form-group m-form__group row mb-0">
+                            <Forms 
+                                ref={formRef}
+                                fields={setTeacherFields}
+                            />
+                        </div>
+                        {
+                            gradeRows?.map((el, index) => (
+                                <div key={index} className="form-group m-form__group row">
+                                    <label className="col-3 col-form-label text-right label-pinnacle-bold">
+                                        {index == 0 && t('teacher.subjects')}
+                                    </label>
+                                    <div className="col-3">
+                                        <Dropdown
+                                            placeholder={'-' + t('err.select_class') + '-'}
+                                            fluid
+                                            selection
+                                            additionPosition='bottom'
+                                            upward={false}
+                                            closeOnChange
+                                            clearable
+                                            selectOnBlur={false}
+                                            value={el?.grade}
+                                            options={getRowGrades(gradeOptions || [])}
+                                            onChange={(e, data) => handleRowGradeChange(index, data?.value)}
+                                        />
+                                    </div>
+                                    <div className="col-5ss d-flex align-items-center">
+                                        <Dropdown
+                                            placeholder={'-' + t('absent.select_subject') + '-'}
+                                            fluid
+                                            selection
+                                            additionPosition='bottom'
+                                            upward={false}
+                                            multiple={true}
+                                            search
+                                            className='mr-2'
+                                            clearable
+                                            selectOnBlur={false}
+                                            value={el?.subjects}
+                                            options={el?.subjectOptions}
+                                            onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
+                                        />
+                                        <div style={{marginLeft: "2.6rem"}} className={index != 0 ? 'visible' : 'invisible'}>
+                                            <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                                <i className="la la-close" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        {
+                            gradeOptions?.length > gradeRows?.length &&
+                            <div className="form-group m-form__group row">
+                                <label className="col-3 col-form-label text-right label-pinnacle-bold" />
+                                <div className="col-3" />
+                                <div className="col-5ss d-flex justify-content-end align-items-center" >
+                                    <div className={'visible'}>
+                                        <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                            <i className="la la-plus" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
-                }
-                {
-                    gradeOptions?.length > gradeRows?.length &&
-                    <div className="form-group m-form__group row">
-                        <label className="col-3 col-form-label text-right label-pinnacle-bold" />
-                        <div className="col-3" />
-                        <div className="col-5ss d-flex justify-content-end align-items-center" >
-                            <div className={'visible'}>
-                                <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
-                                    <i className="la la-plus" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                }
+                        }
+                    </Row>
+                </div>
             </Modal.Body>
             <Modal.Footer className="text-center">
                 <button

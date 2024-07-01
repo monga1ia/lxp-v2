@@ -49,7 +49,7 @@ const index = () => {
     const [loading, setLoading] = useState(false)
 
     const [tabData, setTabData] = useState([])
-    const [selectedTabData, setSelectedTabData] = useState(secureLocalStorage?.getItem(localeSelectedTab) || 'active')
+    const [selectedTabData, setSelectedTabData] = useState(0)
 
     const [columns, setColumns] = useState([])
     const [tableData, setTableData] = useState([{id: 11, code: "23232", firstName: "asdfsdf"}, {id: 12, code: "2322", firstName: "asasdfsdf"}])
@@ -318,7 +318,7 @@ const index = () => {
 
     useEffect(() => {
         console.log(selectedTabData)
-        if (selectedTabData == 'active') {
+        if (selectedTabData == 0) {
             tableData?.forEach(el => { el.contextMenuKeys = el.isMobile ? 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, setTeacher' : 'view, edit, delete, statusChange, passwordReset, loginNameChange, roleChange, setTeacher' })
             setColumns(activeColumns)
             setContextMenus(activeContextMenus)
@@ -493,21 +493,22 @@ const index = () => {
     }
 
     const handleTabChange = (e, data) => {
-        const newTableState = {
-            page: 1,
-            search: '',
-            pageSize: tableState.pageSize,
-            sort: tableState.sort,
-            order: tableState.order
-        }
-        // console.log(data)
-        setSelectedTabData(data)
-        setTableState(newTableState)
-        // setTableData([]);
-        secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
-        secureLocalStorage?.setItem(tableIndex, newTableState);
+        setSelectedTabData(data.activeIndex)
+        // const newTableState = {
+        //     page: 1,
+        //     search: '',
+        //     pageSize: tableState.pageSize,
+        //     sort: tableState.sort,
+        //     order: tableState.order
+        // }
+        // // console.log(data)
+        // setSelectedTabData(data)
+        // setTableState(newTableState)
+        // // setTableData([]);
+        // secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
+        // secureLocalStorage?.setItem(tableIndex, newTableState);
         
-        init(data?.panes?.[data?.activeIndex], newTableState)
+        // init(data?.panes?.[data?.activeIndex], newTableState)
     }
 
     const closeModal = () => {
@@ -554,15 +555,16 @@ const index = () => {
         <div className="m-grid__item m-grid__item--fluid m-wrapper">
             <HtmlHead title={title} description={description} />
 
-            <div className="page-title-container">
+            <div className="page-title-container mb-2">
                 <Col md="7" className='p-0'>
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
             </div>
+
             <div className="m-content">
-                <div className="row">
-                    <div className="col">
+                <Row className=''>
+                    <Col className="col">
                         <Button
                             onClick={()=>setShowAddWorkerModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
@@ -570,17 +572,16 @@ const index = () => {
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('action.register')}
                         </Button>
-                        <div className='m-portlet tab'>
+                        <div className='m-portlet tab br-12'>
                             <div className=''>
-                                <TabComponent
-                                    onChange={(e, data) => handleTabChange(e, data)}
+                                <Tab
+                                    menu={{secondary: true, pointing: true, className: 'primaryColor m-0 h-4'}}
+                                    onTabChange={(e, data) => handleTabChange(e, data)}
                                     className='m-portlet-header'
-                                    style={{color: 'red'}}
-                                    tabs={[
+                                    panes={[
                                         {
-                                            code: "active",
-                                            title: "Ажиллаж байгаа",
-                                            children: (
+                                            menuItem: "Ажиллаж байгаа",
+                                            render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote
@@ -599,9 +600,8 @@ const index = () => {
 
                                         },
                                         {
-                                            code: "absent",
-                                            title: "Чөлөөтэй байгаа",
-                                            children: (
+                                            menuItem: "Чөлөөтэй байгаа",
+                                            render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote
@@ -619,9 +619,8 @@ const index = () => {
                                             )
                                         },
                                         {
-                                            code: "leave",
-                                            title: "Ажлаас гарсан",
-                                            children: (
+                                            menuItem: "Ажлаас гарсан",
+                                            render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
                                                         remote
@@ -642,8 +641,8 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
             {
                 loading &&

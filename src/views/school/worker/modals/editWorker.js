@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import message from 'modules/message'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
 import ImageModal from 'utils/imageModal'
 import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
+import Forms from 'modules/Form/Forms'
 
 const EditWorkerModal = ({onClose, onSubmit, data}) => {
 
     const { t } = useTranslation();
+    const formRef = useRef();
+
     const [staffData, setStaffData] = useState(data)
     const [loading, setLoading] = useState(false)
     const [updateView, setUpdateView] = useState(false)
@@ -30,6 +33,145 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
             text: t('female'),
         }
     ])
+
+    const editWorkerFields = [
+        {
+            key: 'workerRole',
+            label: `${t('role')}*`,
+            labelBold: true,
+            value: '',
+            type: 'nDropdown',
+            className: "form-control",
+            upperCase: true,
+            disabled: true,
+            formContainerClassName: 'form-group m-form__group row',
+            fieldContainerClassName: 'col-8',
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0",
+            options: roleOptions,
+        },
+        {
+            key: 'workerCode',
+            label: `${t('staff.code')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('error.enterStaffCode'),
+            formContainerClassName: 'form-group m-form__group row',
+            fieldContainerClassName: 'col-8',
+            placeholder: t('staff.code'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerLastName',
+            label: `${t('teacher.new_lastname')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('error.enterLastname'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.new_lastname_placeholder'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerFirstName',
+            label: `${t('teacher.new_name')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('error.enterFirstname'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.new_name_placeholder'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'register_number',
+            label: `${t('register_number')}`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'nonCryllic',
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('register_number'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerLoginName',
+            label: `${t('teacher.login_name')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            disabled: true,
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.login_name'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerEmail',
+            label: `${t('studentBook.email')}`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('e_mail'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerPhone',
+            label: `${t('teacher.phone_number')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'number',
+            required: true,
+            errorMessage: t('error.enterPhone'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.phone_number'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerGender',
+            label: `${t('teacher.gender')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'nDropdown',
+            options: genderOptions,
+            required: true,
+            errorMessage: t('error.selectGender'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: '-' + t('teacher.select_gender') + '-',
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+        {
+            key: 'workerTitle',
+            label: `${t('teacher.teacher_title')}*`,
+            labelBold: true,
+            className: "form-control",
+            fieldContainerClassName: 'col-8',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('error.enterTitle'),
+            formContainerClassName: 'form-group m-form__group row',
+            placeholder: t('teacher.insert_teacher_title'),
+            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+        },
+    ]
 
     // useEffect(() => {
     //     if (!location?.state?.id) {
@@ -59,8 +201,27 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
 
 
     const handleSubmit = () => {
-        if (validateFields()) {
-            console.log('success')
+
+        const [formsValid, formValues] = formRef.current.validate();
+
+        if (formsValid) {
+            const dataCollectorArray = []
+            for (let x=0;x<formValues.length;x++) {
+                dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
+            }
+            message('success')
+
+            // after success \/
+            // onClose()
+            // setLoading(true)
+            // console.log(dataCollectorArray)
+        } 
+        else{
+            message(t('err.fill_all_fields'))
+        } 
+
+        // if (validateFields()) {
+        //     console.log('success')
             // setLoading(true)
             // fetchRequest(schoolStaffEdit, 'POST', { ...staff, submit: 1, teacher: location?.state?.id })
             //     .then((res) => {
@@ -76,9 +237,9 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
             //         message(t('err.error_occurred'))
             //         setLoading(false)
             //     })
-        } else{
-            console.log('fail')
-        }
+        // } else{
+        //     console.log('fail')
+        // }
     }
 
     const handleChange = (name, value) => {
@@ -94,18 +255,18 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
         setStaff({ ...staff, avatar: undefined, fileType: undefined, })
     }
 
-    const validateFields = () => {
-        if (!staff?.lastName || !staff?.firstName || !staff?.code || !staff?.phoneNumber || !staff?.gender || !staff?.title) {
-            return message(translations(locale).err.fill_all_fields)
-        }
-        else {
-            staff.isTeacher = 0
-            if (staff?.avatar?.startsWith('data')) {
-                staff.photo = staff.avatar
-            }
-            return true
-        }
-    }
+    // const validateFields = () => {
+    //     if (!staff?.lastName || !staff?.firstName || !staff?.code || !staff?.phoneNumber || !staff?.gender || !staff?.title) {
+    //         return message(translations(locale).err.fill_all_fields)
+    //     }
+    //     else {
+    //         staff.isTeacher = 0
+    //         if (staff?.avatar?.startsWith('data')) {
+    //             staff.photo = staff.avatar
+    //         }
+    //         return true
+    //     }
+    // }
 
     return (
         <Modal
@@ -149,159 +310,12 @@ const EditWorkerModal = ({onClose, onSubmit, data}) => {
                             {t('profile.img_delete')}
                         </button>
                     </div>
-                    <div className="col-6">
+                    <div className="col-8">
                         <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('role')}*
-                            </label>
-                            <div className="col-8">
-                                <Dropdown
-                                    placeholder={'-' + t('select') + '-'}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    closeOnChange
-                                    selectOnBlur={false}
-                                    value={staff?.roleId}
-                                    options={roleOptions}
-                                    disabled
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('staff.code')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={staff?.code || ''}
-                                    placeholder={t('staff.code')}
-                                    onChange={(e) => handleChange('code', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.new_lastname')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={staff?.lastName || ''}
-                                    placeholder={t('teacher.new_lastname_placeholder')}
-                                    onChange={(e) => handleChange('lastName', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.new_name')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={staff?.firstName || ''}
-                                    placeholder={t('teacher.new_name_placeholder')}
-                                    onChange={(e) => handleChange('firstName', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('register_number')}
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={staff?.registrationNumber || ''}
-                                    placeholder={t('register_number')}
-                                    onChange={(e) => handleChange('registrationNumber', e?.target?.value?.toString()?.toUpperCase()?.replace(/\s/g, ''))}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.login_name')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={staff?.loginName || ''}
-                                    placeholder={t('teacher.login_name')}
-                                    disabled
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('studentBook.email')}
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    value={staff?.email || ''}
-                                    placeholder={t('e_mail')}
-                                    onChange={(e) => handleChange('email', e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.phone_number')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="number"
-                                    max={99999999}
-                                    className="form-control"
-                                    value={staff?.phoneNumber || ''}
-                                    placeholder={t('teacher.phone_number')}
-                                    onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                                    inputMode="numeric"
-                                />
-
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.gender')}*
-                            </label>
-                            <div className="col-8">
-                                <Dropdown
-                                    placeholder={'-' + t('teacher.select_gender') + '-'}
-                                    fluid
-                                    selection
-                                    additionPosition='bottom'
-                                    upward={false}
-                                    closeOnChange
-                                    selectOnBlur={false}
-                                    value={staff?.gender}
-                                    options={genderOptions}
-                                    onChange={(e, data) => handleChange('gender', data?.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                                {t('teacher.teacher_title')}*
-                            </label>
-                            <div className="col-8">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={staff?.title || ''}
-                                    placeholder={t('teacher.insert_teacher_title')}
-                                    onChange={(e) => handleChange('title', e.target.value)}
-                                />
-                            </div>
+                            <Forms
+                                ref={formRef}
+                                fields={editWorkerFields}
+                            />
                         </div>
                     </div>
                 </div>

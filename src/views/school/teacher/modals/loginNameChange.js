@@ -2,7 +2,6 @@ import message from 'modules/message'
 import React, { useState, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Col, Row } from 'react-bootstrap'
-import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
@@ -26,7 +25,7 @@ const loginNameChange = ({ onClose, onSubmit }) => {
             className: "form-control",
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col text-right label-pinnacle-bold col-form-label",
+            labelClassName: "col text-right label-pinnacle-bold",
             fieldContainerClassName: 'col',
             whiteSpaceClassName: 'col-md-2',
         },
@@ -41,7 +40,7 @@ const loginNameChange = ({ onClose, onSubmit }) => {
             errorMessage: t('auth.errorMessage.enterNewLoginName'),
             placeholder: t('teacher.login_name'),
             formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col text-right label-pinnacle-bold col-form-label",
+            labelClassName: "col text-right label-pinnacle-bold",
             fieldContainerClassName: 'col',
             whiteSpaceClassName: 'col-md-2',
         },
@@ -56,7 +55,7 @@ const loginNameChange = ({ onClose, onSubmit }) => {
             errorMessage: t('auth.errorMessage.repeatNewLoginName'),
             placeholder: t('teacher.login_name'),
             formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col text-right label-pinnacle-bold col-form-label",
+            labelClassName: "col text-right label-pinnacle-bold",
             fieldContainerClassName: 'col',
             whiteSpaceClassName: 'col-md-2',
         },

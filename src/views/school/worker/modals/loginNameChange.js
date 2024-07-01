@@ -1,23 +1,88 @@
 import message from 'modules/message'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Col, Row } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
+import Forms from 'modules/Form/Forms'
 
 const loginNameChange = ({ onClose, onSubmit }) => {
     
     const { t } = useTranslation();
-    const [loginNames, setLoginNames] = useState({})
+    const formRef = useRef();
 
-    const handleInputChange = (name, value) => {
-        setLoginNames({ ...loginNames, [name]: value })
-    }
+    const [loginNames, setLoginNames] = useState({})
+    const loginNameFields = [
+        {
+            key: 'loginName',
+            label: `${t('teacher.current_login_name')}*`,
+            labelBold: true,
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('auth.errorMessage.enterLoginName'),
+            placeholder: t('teacher.login_name'),
+            className: "form-control",
+            upperCase: true,
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col text-right label-pinnacle-bold",
+            fieldContainerClassName: 'col',
+            whiteSpaceClassName: 'col-md-2',
+        },
+        {
+            key: 'newLoginName',
+            label: `${t('teacher.new_login_name')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('auth.errorMessage.enterNewLoginName'),
+            placeholder: t('teacher.login_name'),
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col text-right label-pinnacle-bold",
+            fieldContainerClassName: 'col',
+            whiteSpaceClassName: 'col-md-2',
+        },
+        {
+            key: 'newLoginNameRepeat',
+            label: `${t('teacher.new_login_name_repeat')}*`,
+            labelBold: true,
+            className: "form-control",
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('auth.errorMessage.repeatNewLoginName'),
+            placeholder: t('teacher.login_name'),
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col text-right label-pinnacle-bold",
+            fieldContainerClassName: 'col',
+            whiteSpaceClassName: 'col-md-2',
+        },
+    ];
+
+    // const handleInputChange = (name, value) => {
+    //     setLoginNames({ ...loginNames, [name]: value })
+    // }
 
     const handleSave = () => {
-        if (!loginNames?.loginName || !loginNames?.newLoginName || !loginNames?.newLoginNameRepeat) return message(t('err.fill_all_fields'))
-        if (loginNames?.newLoginName !== loginNames?.newLoginNameRepeat) return message(t('login_name_re_enter_mismatch'))
-        onSubmit({ existingUsername: loginNames?.loginName, newUsername: loginNames?.newLoginName })
+        const [formsValid, formValues] = formRef.current.validate();
+        if (formsValid) {
+            if (formValues[1].value !== formValues[2].value){
+                return message(t('login_name_re_enter_mismatch'))
+            }
+            else {
+                setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
+                message('success')
+
+                // after success \/
+                // console.log(loginNames)
+                // setLoading(true)
+                // onClose()
+            }
+        } else { 
+            message(t('err.fill_all_fields'))
+        }
     }
 
     return (
@@ -37,55 +102,10 @@ const loginNameChange = ({ onClose, onSubmit }) => {
             <Modal.Body>
                 <p style={{ color: '#848691' }} className='fs-11 pb-4 pl-4'>{t('teacher.change_login_name_description_staff')}</p>
                 <Row className='form-group'>
-                    <Col className='text-right'>
-                        <label className="text-right label-pinnacle-bold col-form-label">
-                            {t('teacher.current_login_name')}*
-                        </label>
-                    </Col>
-                    <Col>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={loginNames?.loginName || ''}
-                            placeholder={t('teacher.login_name')}
-                            onChange={(e) => handleInputChange('loginName', e.target.value)}
-                        />
-                    </Col>
-                    <Col md={2} />
-                </Row>
-                <Row className='form-group'>
-                    <Col className='text-right'>
-                        <label className="text-right label-pinnacle-bold col-form-label">
-                            {t('teacher.new_login_name')}*
-                        </label>
-                    </Col>
-                    <Col>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={loginNames?.newLoginName || ''}
-                            placeholder={t('teacher.login_name')}
-                            onChange={(e) => handleInputChange('newLoginName', e.target.value)}
-                        />
-                    </Col>
-                    <Col md={2} />
-                </Row>
-                <Row className='form-group'>
-                    <Col className='text-right'>
-                        <label className="text-right label-pinnacle-bold col-form-label">
-                            {t('teacher.new_login_name_repeat')}*
-                        </label>
-                    </Col>
-                    <Col>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={loginNames?.newLoginNameRepeat || ''}
-                            placeholder={t('teacher.login_name')}
-                            onChange={(e) => handleInputChange('newLoginNameRepeat', e.target.value)}
-                        />
-                    </Col>
-                    <Col md={2} />
+                    <Forms 
+                        ref={formRef} 
+                        fields={loginNameFields} 
+                    />
                 </Row>
             </Modal.Body>
             <Modal.Footer className="text-center">

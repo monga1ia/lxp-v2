@@ -21,7 +21,8 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown';
 
 const Forms = (({
     fields: paramFields = [],
-    onSubmit
+    onSubmit,
+    formStyle = {},
 }, ref) => {
     const { t } = useTranslation();
     const fileUploaderRef = useRef([]);
@@ -606,7 +607,7 @@ const Forms = (({
     }
 
     return (
-        <div>
+        <div style={formStyle}>
             <form ref={ref} onSubmit={handleSubmit}>
                 {
                     fields.map((field, index) => {
@@ -614,32 +615,28 @@ const Forms = (({
                         if (field.inputClassName) {
                             className += ' ' + field.inputClassName
                         }
-                        let placeholder = '-' + t('select') + '-'
-                        if (field.placeholder) {
-                            placeholder = field.placeholder
-                        }
-                        let labelClassName = ''
-                        if (field.labelClassName) {
-                            labelClassName = field.labelClassName
-                        }
-                        let whiteSpaceClassName = ''
-                        if (field.whiteSpaceClassName) {
-                            whiteSpaceClassName = field.whiteSpaceClassName
-                        }
-                        let formContainerClassName = ''
-                        if (field.formContainerClassName) {
-                            formContainerClassName = field.formContainerClassName
-                        }
-                        let fieldContainerClassName = ''
-                        if (field.fieldContainerClassName) {
-                            fieldContainerClassName = field.fieldContainerClassName
-                        }
-                        // let disabled = false
-                        // if (field.disabled) {
-                        //     disabled = field.disabeld
+                        // let placeholder = '-' + t('select') + '-'
+                        // if (field.placeholder) {
+                        //     placeholder = field.placeholder
                         // }
                         let message = '';
                         let feedbackClassName = '';
+                        let labelClassName = 'col-form-label '
+                        let whiteSpaceClassName = ''
+                        let formContainerClassName = ''
+                        let fieldContainerClassName = 'col-form-field-container '
+                        if (field.labelClassName) {
+                            labelClassName = labelClassName + field.labelClassName
+                        }
+                        if (field.whiteSpaceClassName) {
+                            whiteSpaceClassName = field.whiteSpaceClassName
+                        }
+                        if (field.formContainerClassName) {
+                            formContainerClassName = field.formContainerClassName
+                        }
+                        if (field.fieldContainerClassName) {
+                            fieldContainerClassName = fieldContainerClassName + field.fieldContainerClassName
+                        }
                         if (field.showSuccessMessage && field.successMessage) {
                             className = `${className} is-valid`;
                             message = field.successMessage;
@@ -683,49 +680,49 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={
-                                            //     field.align == 'left'
-                                            //         ?
-                                            //         {
-                                            //             display: 'flex',
-                                            //             alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //             marginRight: 10,
-                                            //             marginBottom: 0,
-                                            //             width: field?.labelWidth || 'auto',
-                                            //             justifyContent: 'flex-end',
-                                            //             ...field.labelStyle
-                                            //         }
-                                            //         :
-                                            //         {
-                                            //             display: 'flex',
-                                            //             flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //             justifyContent: 'flex-end',
-                                            //             alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //             marginRight: 10,
-                                            //             marginBottom: 0,
-                                            //             width: field?.labelWidth || 'auto',
-                                            //             ...field.labelStyle
-                                            //         }
-                                            // }
+                                            style={
+                                                field.align == 'left'
+                                                    ?
+                                                    {
+                                                        display: 'flex',
+                                                        alignItems: field.alignItems ? field.alignItems : 'center',
+                                                        marginRight: 10,
+                                                        marginBottom: 0,
+                                                        width: field?.labelWidth || 'auto',
+                                                        justifyContent: 'flex-end',
+                                                        ...field.labelStyle
+                                                    }
+                                                    :
+                                                    {
+                                                        display: 'flex',
+                                                        flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                        justifyContent: 'flex-end',
+                                                        alignItems: field.alignItems ? field.alignItems : 'center',
+                                                        marginRight: 10,
+                                                        marginBottom: 0,
+                                                        width: field?.labelWidth || 'auto',
+                                                        ...field.labelStyle
+                                                    }
+                                            }
                                             className={labelClassName}
                                         >
                                             {field.label}
                                         </label>
                                         <div
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.inputWidth ? undefined : field?.inputFlex || 1,
-                                            //     flexDirection: 'column',
-                                            //     marginLeft: 10,
-                                            //     width: field?.inputWidth || 'auto',
-                                            // }}
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                                flexDirection: 'column',
+                                                marginLeft: 10,
+                                                width: field?.inputWidth || 'auto',
+                                            }}
                                             className={fieldContainerClassName}
                                         >
                                             <input
                                                 disabled={!!field.disabled}
                                                 className={className}
                                                 type='text'
-                                                placeholder={placeholder}
+                                                placeholder={field?.placeholder || t('field.enterValue')}
                                                 onChange={(e) => {
                                                     field?.onChange?.(e, field);
                                                     onInputChange(e, index);
@@ -764,30 +761,30 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={
-                                            //     field.align == 'left'
-                                            //         ?
-                                            //         {
-                                            //             display: 'flex',
-                                            //             alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //             marginRight: 10,
-                                            //             marginBottom: 0,
-                                            //             width: field?.labelWidth || 'auto',
-                                            //             justifyContent: 'flex-end',
-                                            //             ...field.labelStyle
-                                            //         }
-                                            //         :
-                                            //         {
-                                            //             display: 'flex',
-                                            //             flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //             justifyContent: 'flex-end',
-                                            //             alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //             marginRight: 10,
-                                            //             marginBottom: 0,
-                                            //             width: field?.labelWidth || 'auto',
-                                            //             ...field.labelStyle
-                                            //         }
-                                            // }
+                                            style={
+                                                field.align == 'left'
+                                                    ?
+                                                    {
+                                                        display: 'flex',
+                                                        alignItems: field.alignItems ? field.alignItems : 'center',
+                                                        marginRight: 10,
+                                                        marginBottom: 0,
+                                                        width: field?.labelWidth || 'auto',
+                                                        justifyContent: 'flex-end',
+                                                        ...field.labelStyle
+                                                    }
+                                                    :
+                                                    {
+                                                        display: 'flex',
+                                                        flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                        justifyContent: 'flex-end',
+                                                        alignItems: field.alignItems ? field.alignItems : 'center',
+                                                        marginRight: 10,
+                                                        marginBottom: 0,
+                                                        width: field?.labelWidth || 'auto',
+                                                        ...field.labelStyle
+                                                    }
+                                            }
                                             className={labelClassName}
                                         >
                                             {field.label}
@@ -805,7 +802,7 @@ const Forms = (({
                                             <input
                                                 disabled={!!field.disabled}
                                                 className={className}
-                                                placeholder={placeholder}
+                                                placeholder={field.placeholder || t('field.enterPassword')}
                                                 type='password'
                                                 onChange={(e) => {
                                                     field?.onChange?.(e, field);
@@ -909,16 +906,16 @@ const Forms = (({
                                     :
                                 <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                     <label
-                                        // style={{
-                                        //     display: 'flex',
-                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                        //     justifyContent: 'flex-end',
-                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                        //     marginRight: 10,
-                                        //     marginBottom: 0,
-                                        //     width: field?.labelWidth || 'auto',
-                                        //     ...field.labelStyle
-                                        // }}
+                                        style={{
+                                            display: 'flex',
+                                            flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                            justifyContent: 'flex-end',
+                                            alignItems: field.alignItems ? field.alignItems : 'center',
+                                            marginRight: 10,
+                                            marginBottom: 0,
+                                            width: field?.labelWidth || 'auto',
+                                            ...field.labelStyle
+                                        }}
                                         className={labelClassName}
                                     >
                                         {field.label}
@@ -936,7 +933,7 @@ const Forms = (({
                                         <input
                                             disabled={!!field.disabled}
                                             className={className}
-                                            placeholder={placeholder}
+                                            placeholder={field.placeholder || t('field.enterValue')}
                                             type='number'
                                             onChange={(e) => {
                                                 field?.onChange?.(e, field);
@@ -1041,16 +1038,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle
+                                            }}
                                             className={labelClassName}
                                         >
                                             {field.label}
@@ -1068,7 +1065,7 @@ const Forms = (({
                                             <input
                                                 disabled={!!field.disabled}
                                                 className={className}
-                                                placeholder={placeholder}
+                                                placeholder={field.placeholder || t('field.enterValue')}
                                                 type='text'
                                                 onChange={(e) => {
                                                     const re = /[А-Яа-яЁёӨөҮү№₮]/;
@@ -1223,7 +1220,8 @@ const Forms = (({
                                     </div>
                             )
                         }
-                        if (field.type === 'dropdown') {
+
+                        if (field.type === 'nDropdown') {
                             return (
                                 field.hidden
                                     ?
@@ -1231,17 +1229,17 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     // marginTop: '1rem',
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle,
-                                            // }}
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                // marginTop: '1rem',
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle,
+                                            }}
                                             className= {labelClassName}
                                         >
                                             {field.label}
@@ -1265,7 +1263,7 @@ const Forms = (({
                                                 fluid
                                                 closeOnChange
                                                 selection
-                                                placeholder={placeholder}
+                                                placeholder={field.placeholder || '-' + t('select') + '-'}
                                                 selectOnBlur={false}
                                                 additionPosition='bottom'
                                                 multiple={!!field.multiple}
@@ -1273,7 +1271,70 @@ const Forms = (({
                                                 clearable={!!field.clearable}
                                                 options={field.options}
                                             />
-                                            {/* <Select
+                                            <div style={{ display: 'block' }} className={feedbackClassName}>
+                                                {message}
+                                            </div>
+                                        </div>
+                                        {
+                                            field.isExtendedButton
+                                                ?
+                                                <button className={field.isExtendedButtonClass} style={field.isExtendedButtonStyle} onClick={() => handleExtendedButtonChange(index)}>Цэвэрлэх</button>
+                                                : null
+                                        }
+                                        {
+                                            field.inputWidth
+                                                ?
+                                                null
+                                                :
+                                                <div
+                                                    className='whiteSpaceClassName'
+                                                    // style={{
+                                                    //     display: 'flex',
+                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                    //     flexDirection: 'column',
+                                                    //     marginLeft: 10,
+                                                    //     width: field?.inputWidth || 'auto',
+                                                    // }}
+                                                />
+                                        }
+                                    </div>
+                            )
+                        }
+
+                        if (field.type === 'dropdown') {
+                            return (
+                                field.hidden
+                                    ?
+                                    <div key={index} />
+                                    :
+                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                        <label
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                // marginTop: '1rem',
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle,
+                                            }}
+                                            className= {labelClassName}
+                                        >
+                                            {field.label}
+                                        </label>
+                                        <div
+                                            // style={{
+                                            //     display: 'flex',
+                                            //     flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                            //     flexDirection: 'column',
+                                            //     marginLeft: 10,
+                                            //     width: field?.inputWidth || 'auto',
+                                            // }}
+                                            className={fieldContainerClassName}
+                                        >
+                                            <Select
                                                 className={className}
                                                 onChange={(value, evt) => handleDropdownChange(value, evt, index, field)}
                                                 value={field.value}
@@ -1282,7 +1343,7 @@ const Forms = (({
                                                 disabled={!!field.disabled}
                                                 clearable={!!field.clearable}
                                                 options={field.options}
-                                            /> */}
+                                            />
                                             <div style={{ display: 'block' }} className={feedbackClassName}>
                                                 {message}
                                             </div>
