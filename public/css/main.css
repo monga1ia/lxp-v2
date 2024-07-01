@@ -2776,6 +2776,12 @@ table.viewTeacherTable>tr>th {
     font-weight: 700 !important;
 }
 
+.w-0 {
+    width: 0 !important;
+    display: none !important;
+    
+}
+
 .modal-md-img {
     width: 540px !important;
     max-width: 540px !important;

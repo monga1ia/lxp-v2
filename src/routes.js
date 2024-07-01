@@ -42,7 +42,10 @@ const school = {
     teacher: lazy(() => import("views/school/teacher/index")),
     worker: lazy(() => import("views/school/worker/index")),
     class: lazy(() => import("views/school/class/index")),
-    group: lazy(() => import("views/school/group/index")),
+    subject: lazy(() => import("views/school/subject/index")),
+    calendar: lazy(() => import("views/school/calendar/index")),
+    student: lazy(() => import("views/school/student/index")),
+    group: lazy(() => import("views/school/groups/index")),
 }
 
 const esis = {
@@ -233,22 +236,22 @@ const routesAndMenuItems = {
                 },
                 {
                     path: "/subjects",
-                    label: "menu.teacher.school",
-                    component: school.class,
+                    label: "menu.teacher.subjects",
+                    component: school.subject,
                 },
                 {
                     path: "/calendar",
-                    label: "class_name",
-                    component: school.class,
+                    label: "menu.teacher.school_calendar",
+                    component: school.calendar,
                 },
                 {
                     path: "/students",
-                    label: "menu.teacher.school_calendar",
-                    component: school.class,
+                    label: "menu.teacher.students",
+                    component: school.student,
                 },
                 {
                     path: "/groups",
-                    label: "menu.group",
+                    label: "menu.teacher.groups",
                     component: school.group,
                 }
             ],

@@ -607,8 +607,8 @@ const Forms = (({
     }
 
     return (
-        <div style={formStyle}>
-            <form ref={ref} onSubmit={handleSubmit}>
+        <div>
+            <form style={formStyle} ref={ref} onSubmit={handleSubmit}>
                 {
                     fields.map((field, index) => {
                         let className = field.type === 'dropdown' ? '' : 'form-control';
@@ -1030,6 +1030,58 @@ const Forms = (({
                                     </div>
                             )
                         }
+                        if (field.type === 'tableCell') {
+                            return (
+                                <td key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                            flexDirection: 'column',
+                                            marginLeft: 10,
+                                            width: field?.inputWidth || 'auto',
+                                        }}
+                                    >
+                                        <Dropdown
+                                            className={className}
+                                            onChange={(value, evt) => handleDropdownChange(value, evt, index, field)}
+                                            value={field.value}
+                                            style={{width: field?.inputWidth}}
+                                            upward={false}
+                                            disabled={!!field.disabled}
+                                            fluid
+                                            closeOnChange
+                                            selection
+                                            placeholder={field.placeholder || '-' + t('select') + '-'}
+                                            selectOnBlur={false}
+                                            additionPosition='bottom'
+                                            multiple={!!field.multiple}
+                                            searchable={!!field.searchable}
+                                            clearable={!!field.clearable}
+                                            options={field.options}
+                                        />
+                                        <div style={{ display: 'block' }} className={feedbackClassName}>
+                                            {message}
+                                        </div>
+                                    </div>
+                                    {
+                                        field.inputWidth
+                                            ?
+                                            null
+                                            :
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                    flexDirection: 'column',
+                                                    marginLeft: 10,
+                                                    width: field?.inputWidth || 'auto',
+                                                }}
+                                            />
+                                    }
+                                </td>
+                            )
+                        }
                         if (field.type === 'nonCryllic') {
                             return (
                                 field.hidden
@@ -1258,6 +1310,7 @@ const Forms = (({
                                                 className={className}
                                                 onChange={(value, evt) => handleDropdownChange(value, evt, index, field)}
                                                 value={field.value}
+                                                style={{width: field?.inputWidth}}
                                                 upward={false}
                                                 disabled={!!field.disabled}
                                                 fluid

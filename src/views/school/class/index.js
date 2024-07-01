@@ -10,6 +10,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
+import AddClassModal from './modals/add'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -49,6 +50,7 @@ const index = () => {
     ])
     const [totalCount, setTotalCount] = useState([])
 
+    const [showAddClassModal, setShowAddClassModal] = useState(false)
     const [viewTeacherModal, setViewTeacherModal] = useState(false)
     const [viewDeleteModal, setViewDeleteModal] = useState(false)
     const [teacherInfo, setTeacherInfo] = useState([])
@@ -237,7 +239,7 @@ const index = () => {
     }
 
     const closeModal = () => {
-        setViewTeacherModal(false)
+        setShowAddClassModal(false)
         setViewDeleteModal(false)
     }
 
@@ -378,10 +380,10 @@ const index = () => {
     }
 
     return (
-        <div className="m-grid__item m-grid__item--fluid m-wrapper">
+        <>
             <HtmlHead title={title} description={description} />
 
-            <div className="page-title-container">
+            <div className="page-title-container mb-2">
                 <Col md="7" className='p-0'>
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
@@ -403,7 +405,7 @@ const index = () => {
                     </Col>
                     <Col xl="10" xxl="10">
                         <Button
-                            onClick={() => setShowAddTeacherModal(true)}
+                            onClick={() => setShowAddClassModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
@@ -563,7 +565,14 @@ const index = () => {
                     </div>
                 </>
             }
-        </div>
+            {
+                showAddClassModal && 
+                <AddClassModal
+                    onClose = {closeModal}
+                    onSubmit = {console.log('submitted')}
+                />
+            }
+        </>
     )
 }
 

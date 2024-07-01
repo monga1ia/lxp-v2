@@ -20,6 +20,11 @@ export const TRANSLATIONS_MN = {
     },
     error: {
         selectRole: "Дүр сонгоно уу",
+        selectGrade: 'Бүлгийн нэр оруулна уу',
+        selectShift: 'Ээлж оруулна уу',
+        selectEvaluationType: 'Үнэлгээний төрөл сонгоно уу',
+
+        selectClass: 'Анги сонгоно уу',
         enterTeacherCode: "Багшийн код оруулна уу",
         enterLastname: "Овог оруулна уу",
         enterFirstname: "Нэр оруулна уу",
@@ -1369,7 +1374,9 @@ export const TRANSLATIONS_MN = {
             years_end: "Жилийн эцэс",
             hand_to_hand: "Гараас гарт",
             school_calendar: "Сургуулийн календарь",
-            subject: "Хичээл",
+            groups: 'Нэгдсэн групп',
+            subjects: "Хичээл",
+            students: 'Сурагчид',
         },
         assessments: {
             title: "Үнэлгээ",

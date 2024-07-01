@@ -764,7 +764,7 @@ const MainGroup = () => {
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
-            </div>
+            </div>  
 
             <div className='m-content'>
                 <Row className=''>
