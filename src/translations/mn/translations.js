@@ -31,7 +31,6 @@ export const TRANSLATIONS_MN = {
         enterNewPassword: 'Шинэ нууц үг оруулна уу',
         repeatNewPassword: 'Шинэ нууц үг давтах',
         enterStaffCode: 'Ажилчны код оруулна уу',
-        
     },
     day: 'өдрүүд',
     lessons: 'хичээлүүд',
@@ -1370,6 +1369,7 @@ export const TRANSLATIONS_MN = {
             years_end: "Жилийн эцэс",
             hand_to_hand: "Гараас гарт",
             school_calendar: "Сургуулийн календарь",
+            subject: "Хичээл",
         },
         assessments: {
             title: "Үнэлгээ",

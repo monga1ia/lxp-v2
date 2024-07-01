@@ -54,14 +54,18 @@ const MainMenuItem = memo(
       // console.log(item.path, isActive)
 
     const getLabel = (icon, label) => (
-      <>
+      <div style={{display: 'flex'}}>
+      <div style={{transform: 'translate(0, 2px)'}}>
         {icon && (
           <>
-            <CsLineIcons icon={icon} size={18} className="cs-icon icon" />{" "}
+            <CsLineIcons icon={icon} viewBox="0 0 22 22" size={22} className="cs-icon icon" />{" "}
           </>
         )}
+        </div>
+      <div>
         <span className="label">{USE_MULTI_LANGUAGE ? t(label) : label}</span>
-      </>
+        </div>
+      </div>
     );
 
     const onToggleItem = (isOpen) => {

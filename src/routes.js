@@ -211,7 +211,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/school`,
             label: "menu.school",
-            icon: "home-garage",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/school/teacher`,
@@ -227,21 +227,36 @@ const routesAndMenuItems = {
                     component: school.worker,
                 },
                 {
-                    path: "/class",
+                    path: "/classes",
                     label: "class_name",
                     component: school.class,
                 },
-                // {
-                //     path: "/group",
-                //     label: "menu.group",
-                //     component: school.group,
-                // }
+                {
+                    path: "/subjects",
+                    label: "menu.teacher.school",
+                    component: school.class,
+                },
+                {
+                    path: "/calendar",
+                    label: "class_name",
+                    component: school.class,
+                },
+                {
+                    path: "/students",
+                    label: "menu.teacher.school_calendar",
+                    component: school.class,
+                },
+                {
+                    path: "/groups",
+                    label: "menu.group",
+                    component: school.group,
+                }
             ],
         },
         {
             path: `${appRoot}/esis`,
             label: "menu.esis.title",
-            icon: "folder",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/esis/employee`,
@@ -276,7 +291,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/newsfeed`,
             label: "menu.newsfeed",
-            icon: "inbox",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/newsfeed`,
@@ -296,7 +311,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/class`,
             label: "menu.class.title",
-            icon: "graduation",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/class`,
@@ -346,7 +361,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/template`,
             label: "menu.template.title",
-            icon: "edit",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/template`,
@@ -366,7 +381,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/movement`,
             label: "menu.movement.title",
-            icon: "handbag",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/movement`,
@@ -396,7 +411,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/manager`,
             label: "menu.manager.title",
-            icon: "lecture",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/manager`,
@@ -446,7 +461,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/teacher`,
             label: "menu.teacher.title",
-            icon: "presentation",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/teacher`,
@@ -496,7 +511,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/assessments`,
             label: "menu.assessments.title",
-            icon: "folders",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/assessments`,
@@ -521,7 +536,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/analysis`,
             label: "menu.analysis.title",
-            icon: "electricity",
+            icon: "diamond",
             exact: true,
             redirect: true,
             to: `${appRoot}/analysis`,
