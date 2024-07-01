@@ -160,7 +160,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
 
     return (
         <Modal
-            size='xl'
+            size='md-img'
             dimmer='blurring'
             show={true}
             id='imageModal'
@@ -233,7 +233,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
             <Modal.Footer>
                 <div className="col-12 text-center">
                     <button
-                        className="btn m-btn--pill m-btn--air btn-link margin-right-5"
+                        className="btn m-btn--pill btn-link m-btn m-btn--custom"
                         onClick={onClose}
                     >
                         {t('back')}
