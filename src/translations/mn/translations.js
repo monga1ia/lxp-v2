@@ -17,6 +17,8 @@ export const TRANSLATIONS_MN = {
         post: 'Нийтлэх',
         emptyTable: 'Мэдээлэл олдсонгүй',
         calculate: 'Тооцоолох',
+        addToNewYear: 'Шинэ хичээлийн жилд бүртгэх',
+        repetetive_add: 'Давтан үүсгэх',
     },
     error: {
         selectRole: "Дүр сонгоно уу",
@@ -392,6 +394,9 @@ export const TRANSLATIONS_MN = {
             log: 'Өдөр ирц бүртгэх',
             report: 'Тайлан'  
         },
+        add: 'Бүлэг нэмэх',
+        register: 'Бүлэг бүртгэх',
+        new_year_register: 'Шинэ хичээлийн жилд бүртгэх',
         title: 'Анги',
         girls: 'Охид',
         grade: 'Түвшин',

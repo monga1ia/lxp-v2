@@ -11,6 +11,10 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
 import AddClassModal from './modals/add'
+import AddToNewYearModal from './modals/newYearAdd';
+import ViewClassModal from './modals/view'
+import EditClassModal from './modals/edit';
+import DeleteModal from 'utils/deleteModal';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -21,7 +25,7 @@ const index = () => {
 
     const { t } = useTranslation();
 
-    const title = t('teacher.title');
+    const title = t('class_name');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
@@ -45,12 +49,15 @@ const index = () => {
     const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || null)
 
     const [tableData, setTableData] = useState([
-        {id: 11, class: 2323, teacherLastName: "asdfsdf"}, 
-        {id: 12, class: 1232, teacherLastName: "asasdfsdf"},
+        {id: 11, class: 2323, teacherLastName: "asdfsdf", teacherFirstName: 'Jack' }, 
+        {id: 12, class: 1232, teacherLastName: "asasdfsdf", teacherFirstName: "Joe" },
     ])
     const [totalCount, setTotalCount] = useState([])
 
     const [showAddClassModal, setShowAddClassModal] = useState(false)
+    const [showViewModal, setShowViewModal] = useState(false)
+    const [showEditClassModal, setShowEditClassModal] = useState(false)
+    const [showAddToNewYear, setShowAddToNewYear] = useState(false)
     const [viewTeacherModal, setViewTeacherModal] = useState(false)
     const [viewDeleteModal, setViewDeleteModal] = useState(false)
     const [teacherInfo, setTeacherInfo] = useState([])
@@ -227,7 +234,8 @@ const index = () => {
     const _contextMenuItemClick = (id, key) => {
         if (id && key) {
             if (key === 'EDIT') {
-                console.log('editModal')
+                // console.log('editModal')
+                setShowEditClassModal(true)
                 // navigate('/school/classes/edit', { replace: true, state: { id: id } })
             } else if (key === 'DELETE') {
                 setViewDeleteModal(true)
@@ -240,6 +248,9 @@ const index = () => {
 
     const closeModal = () => {
         setShowAddClassModal(false)
+        setShowViewModal(false)
+        setShowAddToNewYear(false)
+        setShowEditClassModal(false)
         setViewDeleteModal(false)
     }
 
@@ -297,7 +308,7 @@ const index = () => {
     ];
 
     const deleteClass = () => {
-        console.log("deleteClass")
+        console.log("delete " + classId)
         // setLoading(true)
         // fetchRequest(schoolClassDelete, 'POST', {
         //     class: classId,
@@ -360,8 +371,10 @@ const index = () => {
     }
 
     const _onTdClick = (teacherId) => {
-        setLoading(true)
+        // setLoading(true)
         console.log('_onTdClcik')
+        setShowViewModal(true);
+
         // fetchRequest(schoolTeacherView, 'POST', { teacher: teacherId })
         //     .then((res) => {
         //         if (res.success) {
@@ -404,13 +417,22 @@ const index = () => {
                         </div>
                     </Col>
                     <Col xl="10" xxl="10">
-                        <Button
-                            onClick={() => setShowAddClassModal(true)}
-                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
-                        >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                            {t('action.register')}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={() => setShowAddClassModal(true)}
+                                className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
+                            >
+                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                {t('action.register')}
+                            </Button>
+                            <Button
+                                onClick={() => setShowAddToNewYear(true)}
+                                className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-2'
+                            >
+                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                {t('action.addToNewYear')}
+                            </Button>
+                        </div>
                         <div className="m-portlet br-12">
                             <div className="m-portlet__body">
                                 <DTable
@@ -430,92 +452,7 @@ const index = () => {
                     </Col>
                 </Row>
             </div>
-            {/* {
-                viewTeacherModal &&
-                <Modal
-                    size='small'
-                    dimmer='blurring'
-                    open={viewTeacherModal}
-                    onClose={closeModal}
-                    className="react-modal overflow-modal"
-                >
-                    <div className="header">{translations(locale).teacher.view}</div>
-                    <div className="content">
-                        {
-                            teacherInfo
-                                ?
-                                <div className="viewTeacherModal">
-                                    <div className="row form-group">
-                                        <div className="col-4">
-                                            <img
-                                                src={teacherInfo?.avatar || '/images/avatar.png'}
-                                                alt={`photo of ${teacherInfo?.firstName}`}
-                                                onError={(e) => {
-                                                    e.target.onError = null
-                                                    e.target.src = '/images/avatar.png'
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="col-8">
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{translations(locale).status}:</td>
-                                                        <th>{teacherInfo?.status || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).role}:</td>
-                                                        <th>{teacherInfo?.role || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).school}:</td>
-                                                        <th>{teacherInfo?.grade || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).teacher.code}:</td>
-                                                        <th>{teacherInfo?.code || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).teacher.new_lastname}:</td>
-                                                        <th>{teacherInfo?.lastName || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).teacher.new_name}:</td>
-                                                        <th>{teacherInfo?.firstName}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).teacher.teacher_class}:</td>
-                                                        <th>{teacherInfo?.classes || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{translations(locale).teacher.phone_number}:</td>
-                                                        <th>{teacherInfo?.contacts || '-'}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td className="vertical">{translations(locale).teacher.subjects}:</td>
-                                                        <th>{teacherInfo?.subjects || '-'}</th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                : null
-                        }
-                    </div>
-                    <div className="actions modal-footer">
-                        <div className='col-12 text-center'>
-                            <button
-                                className="btn m-btn--pill btn-outline-metal"
-                                onClick={closeModal}
-                            >
-                                {t('close.toUpperCase')()}
-                            </button>
-                        </div>
-                    </div>
-                </Modal>
-            }
-            {
+            {/*{
                 viewDeleteModal &&
                 <Modal
                     size='mini'
@@ -570,6 +507,40 @@ const index = () => {
                 <AddClassModal
                     onClose = {closeModal}
                     onSubmit = {console.log('submitted')}
+                />
+            }
+            {
+                showViewModal &&
+                <ViewClassModal
+                    onClose={closeModal}
+                />
+            }
+            {
+                showEditClassModal &&
+                <EditClassModal
+                    onClose={closeModal}
+                />
+            }
+            {
+                viewDeleteModal &&
+                <DeleteModal
+                    show={viewDeleteModal}
+                    onClose={closeModal}
+                    onDelete={deleteClass}
+                    locale={locale}
+                    title={t('warning.delete')}
+                >
+                    {t('warning.delete_confirmation')}
+                    <br />
+                    <br />
+                    {t('warning.delete_confirmation_description')}
+                </DeleteModal>
+            }
+            {
+                showAddToNewYear &&
+                <AddToNewYearModal
+                    onClose = {closeModal}
+                    onSubmit = {console.log('submitted new year')}
                 />
             }
         </>

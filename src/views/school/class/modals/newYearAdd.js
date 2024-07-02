@@ -13,7 +13,7 @@ import Forms from 'modules/Form/Forms'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const AddClassModal = ({onClose, onSubmit, data}) => {
+const AddToNewYearModal = ({onClose, onSubmit, data}) => {
     const { t } = useTranslation();
     const formRef = useRef();
 
@@ -25,7 +25,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
     const [scoreTypeList, setScoreTypeList] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [gradeList, setGradeList] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
     const [roomList, setRoomList] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
-    const [addClassData, setAddClassData] = useState(['Add class information'])
+    const [addNewYearClassData, setAddNewYearClassData] = useState(['Add class for new year information'])
     const [addAgain, setAddAgain] = useState(false)
     const [rows, setRows] = [{
         gradeId: null,
@@ -39,7 +39,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
     }]
     const wrapper = null
 
-    const addClassFields = [
+    const newYearFields = [
         {
             key: 'classClass',
             labelBold: true,
@@ -147,7 +147,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
                     formValues[x].value = ''
                 }
             }
-            setAddClassData([...addClassData, dataCollectorArray])
+            setAddNewYearClassData([...addNewYearClassData, dataCollectorArray])
             dataCollectorArray.push({key: 'addAgain', value: addAgain})
             message('success')
             // after success \/
@@ -159,9 +159,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
             message(t('err.fill_all_fields'))
         } 
     }
-
-    console.log(addClassData)
-
+    console.log(addNewYearClassData)
     return (
         <Modal
             dimmer='blurring'
@@ -174,7 +172,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('class.register')}
+                    {t('class.new_year_register')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -183,7 +181,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
                         <div className="form-group m-form__group row mb-0">
                             <Forms
                                 ref={formRef}
-                                fields={addClassFields}
+                                fields={newYearFields}
                             />
                             <div className="mb-3 form-check col-10 d-flex justify-content-end align-items-center" style={{ transform: 'translate(4px, 0px)' }}>
                                 <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px', paddingRight: '16px' }}>
@@ -225,4 +223,4 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
     )
 }
 
-export default AddClassModal
+export default AddToNewYearModal

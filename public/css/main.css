@@ -2782,6 +2782,13 @@ table.viewTeacherTable>tr>th {
     
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    /* background-color: #2196F3; */
+    padding: 10px;
+  }
+
 .modal-md-img {
     width: 540px !important;
     max-width: 540px !important;

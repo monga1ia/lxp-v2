@@ -54,15 +54,15 @@ const MainMenuItem = memo(
       // console.log(item.path, isActive)
 
     const getLabel = (icon, label) => (
-      <div style={{display: 'flex'}}>
-      <div style={{transform: 'translate(0, 2px)'}}>
+      <div style={{display: 'flex', alignItems: 'center'}}>
+      <div>
         {icon && (
           <>
-            <CsLineIcons icon={icon} viewBox="0 0 22 22" size={22} className="cs-icon icon" />{" "}
+            <CsLineIcons icon={icon} viewBox="0 0 23 23" size={23} className="cs-icon icon" />{" "}
           </>
         )}
         </div>
-      <div>
+      <div style={{width: '70%'}}>
         <span className="label">{USE_MULTI_LANGUAGE ? t(label) : label}</span>
         </div>
       </div>
@@ -208,7 +208,7 @@ const MainMenuItem = memo(
             {getLabel(item.icon, item.label)}
           </a>
           {/*-------------------------------------------------------------------- SubMenu---------------------------------------------------------- */}
-          {console.log(activeIndex, id)}
+          {/* {console.log(activeIndex, id)} */}
           <Collapse in={!collapseAll && mainMenuActive}>
             <ul>
               <MainMenuItems

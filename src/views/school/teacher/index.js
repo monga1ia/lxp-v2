@@ -345,7 +345,6 @@ const MainGroup = () => {
         setShowEditTeacherModal(false)
         setShowDeleteModal(false)
         setShowViewModal(false)
-        setShowDeleteModal(false)
         setStatusChangeModal(false)
         setSelectedTableDataId(null)
         setShowRoleChangeModal(false)

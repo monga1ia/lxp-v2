@@ -23,6 +23,7 @@ const Forms = (({
     fields: paramFields = [],
     onSubmit,
     formStyle = {},
+    formClass = '',
 }, ref) => {
     const { t } = useTranslation();
     const fileUploaderRef = useRef([]);
@@ -608,7 +609,7 @@ const Forms = (({
 
     return (
         <div>
-            <form style={formStyle} ref={ref} onSubmit={handleSubmit}>
+            <form style={formStyle} className={formClass} ref={ref} onSubmit={handleSubmit}>
                 {
                     fields.map((field, index) => {
                         let className = field.type === 'dropdown' ? '' : 'form-control';
