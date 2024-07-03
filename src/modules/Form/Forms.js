@@ -59,6 +59,7 @@ const Forms = (({
     }, []);
 
     const onInputChange = (e, index, upperCase) => {
+        console.log(e.target.value, index)
         const clone = [...fields];
         const field = { ...clone[index] };
         if (field.key.toLowerCase() === 'code') {
@@ -1273,6 +1274,87 @@ const Forms = (({
                                     </div>
                             )
                         }
+                        if (field.type === 'color') {
+                            return (
+                                field.hidden
+                                    ?
+                                    <div key={index} />
+                                    :
+                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                        <label
+                                            style={
+                                                field.align == 'left'
+                                                    ?
+                                                    {
+                                                        display: 'flex',
+                                                        alignItems: field.alignItems ? field.alignItems : 'center',
+                                                        marginRight: 10,
+                                                        marginBottom: 0,
+                                                        width: field?.labelWidth || 'auto',
+                                                        justifyContent: 'flex-end',
+                                                        ...field.labelStyle
+                                                    }
+                                                    :
+                                                    {
+                                                        display: 'flex',
+                                                        flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                        justifyContent: 'flex-end',
+                                                        alignItems: field.alignItems ? field.alignItems : 'center',
+                                                        marginRight: 10,
+                                                        marginBottom: 0,
+                                                        width: field?.labelWidth || 'auto',
+                                                        ...field.labelStyle
+                                                    }
+                                            }
+                                            className={labelClassName}
+                                        >
+                                            {field.label}
+                                        </label>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                                flexDirection: 'column',
+                                                marginLeft: 10,
+                                                width: field?.inputWidth || 'auto',
+                                            }}
+                                            className={fieldContainerClassName}
+                                        >
+                                            <input
+                                                disabled={!!field.disabled}
+                                                className={className}
+                                                type='color'
+                                                placeholder={field?.placeholder || t('field.enterValue')}
+                                                onChange={(e) => {
+                                                    field?.onChange?.(e, field);
+                                                    onInputChange(e, index);
+                                                }}
+                                                value={field.value}
+                                                style={field.inputStyle}
+                                            />
+                                            <div className={feedbackClassName}>
+                                                {message}
+                                            </div>
+                                        </div>
+                                        {
+                                            field.inputWidth
+                                                ?
+                                                null
+                                                :
+                                                <div
+                                                    className={whiteSpaceClassName}
+                                                    // style={{
+                                                    //     display: 'flex',
+                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                    //     flexDirection: 'column',
+                                                    //     marginLeft: 10,
+                                                    //     width: field?.inputWidth || 'auto',
+                                                    // }}
+                                                />
+                                        }
+                                    </div>
+                            )
+                        }
 
                         if (field.type === 'nDropdown') {
                             return (
@@ -1446,6 +1528,7 @@ const Forms = (({
                                                 // marginTop: '1rem',
                                                 // marginBottom: 0,
                                             }}
+                                            className={labelClassName}
                                         />
                                         <div
                                             style={{
@@ -1455,6 +1538,7 @@ const Forms = (({
                                                 marginLeft: 10,
                                                 width: field?.inputWidth || 'auto',
                                             }}
+                                            className={fieldContainerClassName}
                                         >
                                             {
                                                 field.buttonType == 'radio'
@@ -1462,13 +1546,14 @@ const Forms = (({
                                                     <div className='d-flex flex-row align-item-center' onClick={() => handleCheckboxClick(field.value, index)}>
                                                         <RadioButton className='mr-3' checked={!!field.value} onChange={() => handleCheckboxClick(field.value, index)} />
                                                         <div className='d-flex flex-column align-items-center justify-content-center'>
-                                                            <label>{field.label}</label>
+                                                            <label >{field.label}</label>
                                                         </div>
                                                     </div>
                                                     :
                                                     <Checkbox
                                                         className='custom-cbox eschool-checkbox'
                                                         checked={!!field.value}
+                                                        style={{marginLeft: '10px'}}
                                                         onChange={() => handleCheckboxClick(!!field.value, index)}
                                                         label={field.label}
                                                         disabled={!!field.disabled}
@@ -1491,6 +1576,7 @@ const Forms = (({
                                                         marginLeft: 10,
                                                         width: field?.inputWidth || 'auto',
                                                     }}
+                                                    className={whiteSpaceClassName}
                                                 />
                                         }
                                     </div>
@@ -1678,16 +1764,17 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle
+                                            }}
+                                            className={labelClassName}
                                         >
                                             {field.label}
                                         </label>
@@ -1699,6 +1786,7 @@ const Forms = (({
                                                 marginLeft: 10,
                                                 width: field?.inputWidth || 'auto',
                                             }}
+                                            className={fieldContainerClassName}
                                         >
                                             <DatePickerRange
                                                 onChange={(val) => handerRangePicker(val, index)}
@@ -1749,6 +1837,7 @@ const Forms = (({
                                             //     width: field?.labelWidth || 'auto',
                                             //     ...field.labelStyle
                                             // }}
+                                            className={labelClassName}
                                         >
                                             {field.label}
                                         </label>
@@ -1760,6 +1849,7 @@ const Forms = (({
                                                 marginLeft: 10,
                                                 width: field?.inputWidth || 'auto',
                                             }}
+                                            className={fieldContainerClassName}
                                         >
                                             <TimePickerRange
                                                 onChange={(val) => handerRangePicker(val, index)}
@@ -1783,6 +1873,7 @@ const Forms = (({
                                                         marginLeft: 10,
                                                         width: field?.inputWidth || 'auto',
                                                     }}
+                                                    className={whiteSpaceClassName}
                                                 />
                                         }
                                     </div>
@@ -1796,16 +1887,17 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle
+                                            }}
+                                            className={labelClassName}
                                         >
                                             {field.label}
                                         </label>
@@ -1817,11 +1909,13 @@ const Forms = (({
                                                 marginLeft: 10,
                                                 width: field?.inputWidth || 'auto',
                                             }}
+                                            className={fieldContainerClassName}
                                         >
                                             <textarea
                                                 disabled={!!field.disabled}
                                                 className={className}
                                                 rows={field.rows}
+                                                placeholder={field.placeholder ? field.placeholder : ''}
                                                 onChange={(e) => {
                                                     field?.onChange?.(e, field);
                                                     onInputChange(e, index);
@@ -1846,6 +1940,7 @@ const Forms = (({
                                                         marginLeft: 10,
                                                         width: field?.inputWidth || 'auto',
                                                     }}
+                                                    className={whiteSpaceClassName}
                                                 />
                                         }
                                     </div>

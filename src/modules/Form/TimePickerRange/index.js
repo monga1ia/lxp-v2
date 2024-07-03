@@ -60,6 +60,7 @@ const TimePickerRange = ({
             />
             <DatePicker
                 locale={mn}
+                className='react-datepicker-with-icon p-0'
                 customInput={<CustomIcon className={''} />}
                 shouldCloseOnSelect={false}
                 disabled={true}

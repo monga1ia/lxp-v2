@@ -155,7 +155,7 @@ const DatePickerRange = ({
             />
             <DatePicker
                 locale={mn}
-                className="react-datepicker-with-icon"
+                className="react-datepicker-with-icon p-0"
                 onChange={handleDateChange}
                 onSelect={handleSelect}
                 startDate={mainStartDate}

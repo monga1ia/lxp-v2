@@ -29,6 +29,12 @@ export const TRANSLATIONS_MN = {
         enterTeacherCode: "Багшийн код оруулна уу",
         enterLastname: "Овог оруулна уу",
         enterFirstname: "Нэр оруулна уу",
+
+        enterEventName: 'Үйл ажиллагааны нэр оруулна уу',
+        enterDateRange: 'Он сар сонгоно уу',
+        enterTimeRange: 'Цаг оруулна уу',
+
+        enterDescription: 'Тайлбар оруулна уу',
         enterLoginname: "Нэвтрэх нэр оруулна уу",
         enterPhone: "Утасны дугаар оруулна уу",
         selectGender: 'Хүйс сонгоно уу',
