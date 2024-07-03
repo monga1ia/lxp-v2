@@ -25,7 +25,6 @@ export const TRANSLATIONS_MN = {
         selectGrade: 'Бүлгийн нэр оруулна уу',
         selectShift: 'Ээлж оруулна уу',
         selectEvaluationType: 'Үнэлгээний төрөл сонгоно уу',
-
         selectClass: 'Анги сонгоно уу',
         enterTeacherCode: "Багшийн код оруулна уу",
         enterLastname: "Овог оруулна уу",
@@ -38,6 +37,9 @@ export const TRANSLATIONS_MN = {
         enterNewPassword: 'Шинэ нууц үг оруулна уу',
         repeatNewPassword: 'Шинэ нууц үг давтах',
         enterStaffCode: 'Ажилчны код оруулна уу',
+        selectSubjectTitle: 'Хичээл сонгоно уу',
+        selectSubjectType: 'Хичээлийн төрөл сонгоно уу',
+        selectSubjectTeacher: 'Хичээлийн багш сонгоно уу',
     },
     day: 'өдрүүд',
     lessons: 'хичээлүүд',
@@ -1576,6 +1578,8 @@ export const TRANSLATIONS_MN = {
 
     },
     subject: {
+        add_subject: 'Хичээл нэмэх',
+        edit_subject: 'Хичээл засах',
         index: 'Индекс',
         credit: 'Багц цаг',
         name: 'Хичээлийн нэр',

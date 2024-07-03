@@ -87,9 +87,12 @@ const view = ({ onClose, id }) => {
                                         <td className="vertical">{t('teacher.teacher_class')}:</td>
                                         <th>
                                             {
+                                                teacher.classes ? 
                                                 teacher.classes?.split(',')?.map((el, key) =>
                                                     <li key={key} className="subjectName">{el || '-'}</li>
                                                 )
+                                                :
+                                                <li key={'subjectKey'} className="subjectName">{'-'}</li>
                                             }
                                         </th>
                                     </tr>

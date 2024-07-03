@@ -6,7 +6,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
-const loginNameChange = ({ onClose, onSubmit }) => {
+const loginNameChange = ({ onClose, onSubmit, id }) => {
     
     const { t } = useTranslation();
     const formRef = useRef();

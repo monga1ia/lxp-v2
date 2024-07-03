@@ -5,7 +5,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
-const statusChange = ({ onClose, onSubmit, teacher }) => {
+const statusChange = ({ onClose, onSubmit, id }) => {
 
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false)

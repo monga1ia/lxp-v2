@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
 
-const passwordReset = ({ onClose, onSubmit }) => {
+const passwordReset = ({ onClose, onSubmit, id }) => {
 
     const { t } = useTranslation();
     const formRef = useRef();

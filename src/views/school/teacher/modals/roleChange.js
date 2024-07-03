@@ -6,7 +6,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
-const roleChange = ({ onClose, onSubmit, teacher }) => {
+const roleChange = ({ onClose, onSubmit, id }) => {
     
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false)

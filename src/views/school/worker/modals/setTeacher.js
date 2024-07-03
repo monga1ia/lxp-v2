@@ -8,7 +8,7 @@ import {cloneDeep} from "lodash";
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
-const setTeacher = ({ onClose, onSubmit, user }) => {
+const setTeacher = ({ onClose, onSubmit, id }) => {
     
     const { t } = useTranslation();
     const formRef = useRef();

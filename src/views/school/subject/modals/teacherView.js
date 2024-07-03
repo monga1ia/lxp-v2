@@ -11,24 +11,6 @@ const view = ({ onClose, id }) => {
     const [loading, setLoading] = useState(false)
     const [teacher, setTeacher] = useState({subjects: '1,3'})
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherView, 'POST', { teacher: id })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { teacherData } = res.data
-    //                 setTeacher(teacherData)
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t(err.error_occurred))
-    //             setLoading(false)
-    //         })
-    // }, [])
-
     return (
         <Modal
             size='lg'
@@ -88,8 +70,8 @@ const view = ({ onClose, id }) => {
                                         <th>
                                             {
                                                 teacher.classes ? 
-                                                teacher?.classes?.split(',')?.map((el, key) =>
-                                                    <li key={key} className="subjectName">{el || '-'}</li>
+                                                teacher.classes?.split(',')?.map((el, key) =>
+                                                    <li key={key} className="subjectName">{el || '-asdf'}</li>
                                                 )
                                                 :
                                                 <li key={'subjectKey'} className="subjectName">{'-'}</li>

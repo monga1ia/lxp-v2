@@ -9,7 +9,7 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
-const AddWorkerModal = ({onClose, onSubmit, data}) => {
+const AddWorkerModal = ({onClose, onSubmit, id}) => {
 
     const { t } = useTranslation();
     const formRef = useRef();

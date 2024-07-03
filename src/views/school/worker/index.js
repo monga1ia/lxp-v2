@@ -679,6 +679,7 @@ const index = () => {
                 <PasswordResetModal
                     onClose={closeModal}
                     onSubmit={handlePasswordReset}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -686,7 +687,7 @@ const index = () => {
                 <StatusChangeModal
                     onClose={closeModal}
                     onSubmit={handleStatusChange}
-                    teacher={selectedTableDataId}
+                    id={selectedTableDataId}
                     tableState={tableState}
                 />
             }
@@ -695,6 +696,7 @@ const index = () => {
                 <LoginNameChangeModal
                     onClose={closeModal}
                     onSubmit={handleLoginNameChange}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -711,20 +713,20 @@ const index = () => {
                 <SetTeacherModal
                     onClose={closeModal}
                     onSubmit={handleRoleChange}
-                    user={selectedTableDataId}
+                    id={selectedTableDataId}
                 />
             }
             {
                 showAddWorkerModal &&
                 <AddWorkerModal
                     onClose={closeModal}
-
                 />
             }
             {
                 showEditWorkerModal && selectedTableDataId &&
                 <EditWorkerModal
                     onClose={closeModal}
+                    id={selectedTableDataId}
                 />
             }
         </div>

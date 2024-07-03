@@ -7,7 +7,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 import { useTranslation } from "react-i18next";
 
-const infoChange = ({ onClose, onSubmit, teacher }) => {
+const infoChange = ({ onClose, onSubmit, id }) => {
     
     const { t } = useTranslation();
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'

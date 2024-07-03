@@ -58,7 +58,7 @@ const index = () => {
     const [showViewModal, setShowViewModal] = useState(false)
     const [showEditClassModal, setShowEditClassModal] = useState(false)
     const [showAddToNewYear, setShowAddToNewYear] = useState(false)
-    const [viewTeacherModal, setViewTeacherModal] = useState(false)
+    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
     const [viewDeleteModal, setViewDeleteModal] = useState(false)
     const [teacherInfo, setTeacherInfo] = useState([])
     const [classId, setClassId] = useState(false)
@@ -233,6 +233,7 @@ const index = () => {
 
     const _contextMenuItemClick = (id, key) => {
         if (id && key) {
+            setSelectedTableDataId(id)
             if (key === 'EDIT') {
                 // console.log('editModal')
                 setShowEditClassModal(true)
@@ -252,6 +253,7 @@ const index = () => {
         setShowAddToNewYear(false)
         setShowEditClassModal(false)
         setViewDeleteModal(false)
+        setSelectedTableDataId(null)
     }
 
     const columns = [
@@ -512,12 +514,14 @@ const index = () => {
             {
                 showViewModal &&
                 <ViewClassModal
+                    data={selectedTableDataId}
                     onClose={closeModal}
                 />
             }
             {
                 showEditClassModal &&
                 <EditClassModal
+                    data={selectedTableDataId}
                     onClose={closeModal}
                 />
             }

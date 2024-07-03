@@ -30,10 +30,6 @@ import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplica
 import {Tab} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
-
-const tableIndex = ['groups_index_table_index'];
-const gradeIndex = ['groups_index_grade_index'];
-
 const MainGroup = () => {
 
     const locale="mn"
@@ -901,6 +897,7 @@ const MainGroup = () => {
                 <PasswordResetModal
                     onClose={closeModal}
                     onSubmit={handlePasswordReset}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -908,7 +905,7 @@ const MainGroup = () => {
                 <StatusChangeModal
                     onClose={closeModal}
                     onSubmit={handleStatusChange}
-                    teacher={selectedTableDataId}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -916,6 +913,7 @@ const MainGroup = () => {
                 <LoginNameChangeModal
                     onClose={closeModal}
                     onSubmit={handleLoginNameChange}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -923,7 +921,7 @@ const MainGroup = () => {
                 <RoleChangeModal
                     onClose={closeModal}
                     onSubmit={handleRoleChange}
-                    teacher={selectedTableDataId}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -931,7 +929,7 @@ const MainGroup = () => {
                 <InfoChangeModal
                     onClose={closeModal}
                     onSubmit={handleInfoChange}
-                    teacher={selectedTableDataId}
+                    id={selectedTableDataId}
                 />
             }
             {
@@ -960,6 +958,7 @@ const MainGroup = () => {
             {
                 showEditTeacherModal &&
                 <EditTeacherModal
+                    data={selectedTableDataId}
                     onClose={closeModal}
                     onSubmit={handleEditTeacher}
                 />

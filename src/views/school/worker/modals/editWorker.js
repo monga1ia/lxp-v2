@@ -8,12 +8,12 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
-const EditWorkerModal = ({onClose, onSubmit, data}) => {
+const EditWorkerModal = ({onClose, onSubmit, id}) => {
 
     const { t } = useTranslation();
     const formRef = useRef();
 
-    const [staffData, setStaffData] = useState(data)
+    const [staffId, setStaffId] = useState(id)
     const [loading, setLoading] = useState(false)
     const [updateView, setUpdateView] = useState(false)
     const [viewImageModal, setViewImageModal] = useState(false)
