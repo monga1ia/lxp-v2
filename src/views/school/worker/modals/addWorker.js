@@ -303,7 +303,7 @@ const AddWorkerModal = ({onClose, onSubmit, id}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('action.register')}
+                    {t('staff.add_staff')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

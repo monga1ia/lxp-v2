@@ -2855,6 +2855,7 @@ export const TRANSLATIONS_MN = {
         }
     },
     staff: {
+        add_staff: 'Ажилтан нэмэх',
         teacher_staff: 'Багш, ажилтан',
         title: 'Ажилтан',
         code: 'Ажилтны код',

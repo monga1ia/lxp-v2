@@ -96,7 +96,7 @@ const Main = () => {
             <PersistGate loading={null} persistor={persistedStore}>
                 <DndProvider backend={dndBackEnd}>
                     <Helmet {...REACT_HELMET_PROPS} />
-                    <ToastContainer transition={Slide} newestOnTop />
+                    <ToastContainer transition={Slide} newestOnTop style={{backgroundColor: '#34bfa3'}} />
                     <Router basename={process.env.REACT_APP_BASENAME}>
 
                         <LangProvider>
