@@ -147,7 +147,7 @@ const EditSubjectModal = ({onClose, onSubmit, data}) => {
                 for (let x=0;x<formValues.length;x++) {
                     dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
                 }
-                message('success')
+                message('success', true)
     
                 // after success \/
                 // onClose()

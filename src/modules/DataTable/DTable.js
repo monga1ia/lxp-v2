@@ -785,7 +785,7 @@ const DTable = ({
                             return (
                                 <button
                                     type="button"
-                                    className="btn-icon btn-icon-only position-relative btn btn-outline-primary btn-sm"
+                                    className="btn-icon btn-icon-only position-relative btn btn-outline-info btn-sm"
                                     onClick={(e) => onClickMore(e, row)}
                                 >
                                     <i className="flaticon-more"></i>
@@ -1081,8 +1081,7 @@ const DTable = ({
                                                             <div
                                                                 style={{
                                                                     display: 'inline-block',
-                                                                    marginLeft: '0.05769rem',
-                                                                    marginRight: '0.25rem',
+                                                                    marginLeft: '1px'
                                                                 }}
                                                             >
                                                                 <CustomToggleList

@@ -72,7 +72,7 @@ const setTeacher = ({ onClose, onSubmit, id }) => {
         const [formsValid, formValues] = formRef.current.validate();
 
         if (formsValid){
-            message('success')
+            message('success', true)
             // after success \/
             // setLoading(true)
             // onClose()

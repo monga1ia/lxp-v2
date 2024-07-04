@@ -60,7 +60,7 @@ const passwordReset = ({ onClose, onSubmit, id }) => {
             } else if (formValues[0].value !== formValues[1].value) {
                 return message(t('password_re_enter_mismatch'))
             } else {
-                message('success')
+                message('success', true)
             }
 
             // after success \/
