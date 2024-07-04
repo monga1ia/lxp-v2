@@ -12,7 +12,7 @@ import {fetchRequest} from 'utils/fetchRequest'
 // import {
 //     schoolStudentCreate,
 // } from 'utils/url'
-// import {isValidEmail} from 'utils/Util'
+import {isValidEmail} from 'utils/Util'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -225,9 +225,9 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                                     // student already got user & disabled
                                 } else {
                                     if (studentObj?.username && studentObj?.username?.length > 0) {
-                                        // if (!isValidEmail(studentObj?.username)) {
-                                        //     hasError = true;
-                                        // }
+                                        if (!isValidEmail(studentObj?.username)) {
+                                            hasError = true;
+                                        }
                                         if (!studentObj?.password || studentObj?.password?.trim()?.length < 4) {
                                             hasPasswordError = true;
                                         }
@@ -239,8 +239,7 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                                 message(translations(locale)?.err?.invalid_email)
                             } else {
                                 const emailStudents = students?.filter(obj => {
-                                    return !obj?.disable && obj?.username && obj?.username?.length > 0 
-                                    // && isValidEmail(obj?.username)
+                                    return !obj?.disable && obj?.username && obj?.username?.length > 0 && isValidEmail(obj?.username)
                                 })
 
                                 if (emailStudents && emailStudents?.length > 0) {

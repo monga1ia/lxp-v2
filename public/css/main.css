@@ -87,6 +87,18 @@
     font-weight: 900
 }
 
+.menu-profile-img {
+    width: 3rem !important;
+    height: 3rem !important;
+    object-fit: cover;
+}
+
+.menu-profile-dropdown-img {
+    width: 70px !important;
+    height: 70px !important;
+    object-fit: cover;
+}
+
 /* This file is reserved for overriding and extending the template styles. */
 /* // audio player container width fixed */
 html { font-size: 13px; }

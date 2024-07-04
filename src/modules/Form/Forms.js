@@ -59,7 +59,6 @@ const Forms = (({
     }, []);
 
     const onInputChange = (e, index, upperCase) => {
-        console.log(e.target.value, index)
         const clone = [...fields];
         const field = { ...clone[index] };
         if (field.key.toLowerCase() === 'code') {

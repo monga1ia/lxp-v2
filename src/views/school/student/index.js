@@ -12,6 +12,7 @@ import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import PasswordResetModal from './modals/passwordReset'
 import LoginNameChangeModal from './modals/loginNameChange'
+import ClearUserModal from './modals/clearUser'
 import InsertModal from './modals/insertModal'
 import LockResetRoundedIcon from '@mui/icons-material/LockResetRounded'
 import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded'
@@ -114,7 +115,20 @@ const index = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const [treeData, setTreeData] = useState([])
+    const [treeData, setTreeData] = useState([{
+        title: 'first level',
+        value: '0-0',
+        key: 'asdfasdf',
+        id: 'class_123123',
+        selectable: true,
+        children: [{
+            title: 'second level',
+            value: '0-0-0',
+            key: 'asdij',
+            id: 'class_123',
+            selectable: true,
+        }]
+    }])
     const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage.getItem(localSelectedTree) || {})
 
     const [hasStudentRole, setHasStudentRole] = useState(false)
@@ -349,7 +363,7 @@ const index = () => {
                     <Col xl="10" xxl="10">
                         <Button
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
-                            onClick={() => setShowExcelUploadModal(true)}
+                            onClick={() => console.log('excelImportModal')}
                         >
                             <AddCircleOutlineRoundedIcon/>
                             <span className='ml-2'>{translations(locale)?.excel_import}</span>
@@ -450,41 +464,18 @@ const index = () => {
                 />
             }
             {
-                showClearUserModal && <Modal
-                    centered
-                    open={true}
+                showClearUserModal && 
+                    
+                <ClearUserModal
+                    show={showClearUserModal}
                     onClose={closeModal}
-                    className='react-modal overflow-modal'
-                >
-                    <div className='header'>
-                        {translations(locale)?.clear_login_name}
-                        <button type='button' className='close' aria-label='Close' onClick={closeModal} >
-                            <CloseIcon />
-                        </button>
-                    </div>
-                    <div className='content'>
-                        <p className='fs-11 pl-4 pb-4'>
-                            {translations(locale)?.clear_login_name_description}<br/>
-                            {translations(locale)?.clear_login_name_description_1}
-                        </p>
-                    </div>
-                    <div className='actions modal-footer '>
-                        <div className='col-12 text-center'>
-                            <button
-                                className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                                onClick={closeModal}
-                            >
-                                {translations(locale)?.back}
-                            </button>
-                            <button
-                                className='btn m-btn--pill btn-danger m-btn--wide'
-                                onClick={submitClearUser}
-                            >
-                                {translations(locale)?.remove}
-                            </button>
-                        </div>
-                    </div>
-                </Modal>
+                    onDelete={submitClearUser}
+                    title={t('warning.delete')}>
+                    {t('clear_login_name_description')}
+                    <br />
+                    <br />
+                    {t('clear_login_name_description_1')}
+                </ClearUserModal>
             }
         </>
     )

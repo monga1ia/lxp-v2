@@ -59,6 +59,8 @@ const passwordReset = ({ onClose, onSubmit, id }) => {
                 return message(t('password_length_error'))
             } else if (formValues[0].value !== formValues[1].value) {
                 return message(t('password_re_enter_mismatch'))
+            } else {
+                message('success')
             }
 
             // after success \/
