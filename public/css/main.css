@@ -198,6 +198,10 @@ a {
     cursor: pointer !important;
 }
 
+.br-08 {
+    border-radius: 8px;
+}
+
 .br-20{
     border-radius: 20px !important;
 }
@@ -3541,4 +3545,519 @@ select.form-control:focus::-ms-value {
     text-decoration: underline !important;
     color: #5867dd !important;
     cursor: pointer;
+}
+
+/************************************* Class css end ***************************************************************/
+/************************************* School calendar css start ***************************************************************/
+.pickerSeparator {
+    background-color: #F4F5F8;
+    border: 1px solid #ebedf2 !important;
+    width: 45px;
+    height: 35.13px;
+    text-align: center;
+    border-right: 0;
+    border-left: 0;
+    padding: 13px 15px 2px 17px;
+}
+
+.DayPickerInputOverlay {
+    position: absolute;
+    top: 40px;
+    z-index: 1000;
+    background-color: white;
+    -webkit-box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    -webkit-transition: -webkit-box-shadow .1s ease, -webkit-transform .1s ease;
+    transition: -webkit-box-shadow .1s ease, -webkit-transform .1s ease;
+}
+
+/************************************* ClassTimetable css end ***************************************************************/
+/************************************* My Today css  ***************************************************************/
+.myToday-DayPicker>input {
+    border: none;
+    font-size: 15px;
+    text-align: center;
+    padding: 0;
+    color: #ff5b1d;
+    background-color: transparent;
+    outline: none;
+    width: 12rem;
+    font-family: 'MulishBold';
+}
+
+.myToday-hw-DayPicker>input {
+    outline: none;
+    width: 100%;
+    border: 1px solid #ebedf2;
+    min-height: 2.71428571em;
+    padding: 0.22619048em 0.65714286em 0.22619048em 0.65714286em;
+    border-radius: 0.28571429rem;
+    color: #212529;
+}
+
+.myToday-DayPicker>input:hover {
+    cursor: pointer;
+}
+
+.myToday-DataTableStyle>thead>tr>th {
+    font-size: 14px;
+    font-weight: bold;
+    color: #575962;
+    border: none;
+    padding: 1rem;
+}
+
+.myToday-DataTableStyle>thead>tr>th.homework,
+.myToday-DataTableStyle>thead>tr>th:nth-child(3) {
+    text-align: center;
+}
+
+.myToday-DataTableStyle>tbody>tr>td {
+    font-size: 14px;
+    font-weight: bold;
+    color: #575962;
+    border-top: .07rem dashed #ebedf2 !important;
+    vertical-align: middle;
+    padding: 1rem;
+    line-height: 1.29;
+}
+
+.myToday-DataTableStyle>tbody>tr:last-child>td {
+    border-bottom: .07rem dashed #ebedf2 !important;
+}
+
+.myToday-DataTableStyle>tbody>tr.schoolShift>td {
+    background-color: rgba(54, 163, 247, 0.3);
+    color: #0275d8 !important;
+}
+
+.myToday-DataTableStyle>tbody>tr>td>span.title {
+    font-weight: normal;
+    color: #575962;
+}
+
+.myToday-DataTableStyle>tbody>tr>td>span.class {
+    font-weight: normal;
+    color: #5867dd;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.myToday-DataTableStyle>tbody>tr>td.online-lesson>.fa-times-circle,
+.myToday-DataTableStyle>tbody>tr>td.attendance>.fa-times-circle,
+.myToday-DataTableStyle>tbody>tr>td.homework>.fa-times-circle {
+    color: #f4516b;
+    font-size: 2.6rem !important;
+    padding: 0;
+    border-radius: 30px;
+    box-shadow: 0 1px 15px 0 rgba(244, 81, 107, 0.3);
+}
+
+.myToday-DataTableStyle>tbody>tr>td.online-lesson,
+.myToday-DataTableStyle>tbody>tr>td.homework {
+    text-align: center;
+}
+
+.myToday-icon-correct-green {
+    box-shadow: 0 1px 15px 0 rgba(62, 191, 163, 0.4);
+    background-color: rgba(62, 191, 163, 0.2);
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.myToday-DataTableStyle>tbody>tr>td.homework>span.span-gray {
+    padding: 6px 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px 0 rgba(53, 54, 66, 0.2);
+    background-color: #868aa8;
+    color: #fff;
+    font-weight: lighter !important;
+}
+
+.myToday-DataTableStyle>tbody>tr>td.homework>span.span-green {
+    padding: 6px 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px 0 rgba(62, 191, 163, 0.2);
+    background-color: #3ebfa3;
+    color: #fff;
+    font-weight: lighter !important;
+}
+
+.myToday-icon-correct-gray {
+    box-shadow: 0 1px 15px 0 rgba(134, 138, 168, 0.4);
+    background-color: rgba(134, 138, 168, 0.2);
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+/* .myToday-group-student-modal-style {
+    padding: 0 2.5rem 0 2.5rem !important;
+} */
+
+.myToday-group-student-modal-style .groupInfo {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.myToday-group-student-modal-style .groupInfo>div {
+    font-size: 14px;
+    line-height: 1.29;
+    color: #575962;
+}
+
+.myToday-group-student-modal-style .groupInfo>div:first-child,
+.myToday-group-student-modal-style .groupInfo>div:nth-child(5) {
+    font-weight: bold;
+}
+
+.myToday-group-student-modal-style .groupInfo>div:nth-child(3) {
+    text-decoration: underline;
+}
+
+.myToday-group-student-modal-style .group-student-datatable>thead>tr>th {
+    color: #1d5383 !important;
+    font-weight: bold;
+}
+
+.attendance>i,
+.homework>i {
+    cursor: pointer;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:first-child>.m-portlet__body>.col-12 {
+    display: flex;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:first-child>.m-portlet__body>.col-12>.col-5 {
+    font-weight: bold;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:first-child>.m-portlet__body>.col-12>.col-5>div {
+    font-size: 14px;
+    line-height: 1.29;
+    text-align: right;
+    color: #0275d8;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:first-child>.m-portlet__body>.col-12>.col-7 {
+    padding-left: 5px !important;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:first-child>.m-portlet__body>.col-12>.col-7>div {
+    font-size: 14px;
+    line-height: 1.29;
+    color: #575962;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:first-child>.m-portlet__body>.col-12>.col-7>div:first-child {
+    font-weight: bold;
+}
+
+.myToday-attendance-student-modal-style>.m-portlet:last-child>.m-portlet__body>.col-12 th {
+    color: #1d5383 !important;
+}
+
+.myToday-existingAttendanceStyle,
+.myToday-existingHomeworkStyle {
+    margin-left: 5px;
+    margin-bottom: 28px
+}
+
+.myToday-existingAttendanceStyle>.col,
+.myToday-existingHomeworkStyle>.col {
+    border-radius: 6px;
+    margin-right: 15px;
+    height: 90px;
+}
+
+.myToday-existingAttendanceStyle>.col h4,
+.myToday-existingHomeworkStyle>.col h4 {
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+    position: relative;
+    right: 20px;
+    bottom: 28px;
+}
+
+.myToday-existingHomeworkStyle .col h3 {
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+    position: relative;
+    bottom: 10px;
+    margin-top: 0 !important;
+    margin-left: 5px !important;
+}
+
+.myToday-existingAttendanceStyle>.col .m-widget24__number,
+.myToday-existingHomeworkStyle>.col .m-widget24__number {
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    right: 15px;
+    bottom: 20px;
+}
+
+.myToday-existingAttendanceStyle>.col .m-widget24__stats,
+.myToday-existingHomeworkStyle>.col .m-widget24__stats {
+    font-size: 40px !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+    position: relative;
+    bottom: 33px;
+    left: 20px;
+}
+
+.m-btn--bolder {
+    font-weight: bold !important;
+}
+
+.myToday-otherAttModalStyle>div>p {
+    display: inline-block;
+    white-space: pre;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #575962;
+}
+
+.myToday-otherAttModalStyle>div>p:first-child {
+    font-weight: bold;
+}
+
+.myToday-otherCheckboxStyle {
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+
+.myToday-otherCheckboxStyle label {
+    font-size: 14px;
+    color: #575962;
+    font-weight: 400 !important;
+}
+
+.myToday-online-lesson-modal-style .ui.menu {
+    display: block !important;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    margin: 0 !important;
+}
+
+.myToday-online-lesson-modal-style .ui.menu a.item {
+    display: inline-block !important;
+    color: #0275d8 !important;
+    padding: 0.8em 2.5em !important;
+    border-top-color: #0275d8;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-bottom-color: #0275d8;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.myToday-online-lesson-modal-style .ui.menu a.item:first-child,
+.myToday-online-lesson-modal-style .ui.menu a.item:last-child {
+    border-left-color: #0275d8;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-right-color: #0275d8;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.myToday-online-lesson-modal-style .ui.menu a.active {
+    background-color: #0275d8 !important;
+    color: #fff !important;
+}
+
+.myToday-online-lesson-modal-style .ui.menu a.active:hover {
+    background-color: #0275d8 !important;
+    color: #fff !important;
+}
+
+.myToday-online-lesson-modal-style .ui.menu a:hover {
+    background-color: #fff !important;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:first-child>.m-portlet__body>.col-12 {
+    display: flex;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-5 {
+    font-weight: bold;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-5>div {
+    font-size: 14px;
+    line-height: 1.29;
+    text-align: right;
+    color: #0275d8;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-7 {
+    padding-left: 5px !important;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-7>div {
+    font-size: 14px;
+    line-height: 1.29;
+    color: #575962;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-7>div:first-child {
+    font-weight: bold;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:last-child>.m-portlet__body>.col-12 th {
+    color: #1d5383 !important;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:last-child .form-group label {
+    font-size: 14px;
+    color: #1d5383 !important;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:last-child .form-group .DayPickerInput input {
+    border-radius: unset;
+    border: 1px solid #ebedf2;
+}
+
+.myToday-online-lesson-modal-style .attached.segment.active {
+    border: none;
+    padding: 1em 1em 0 1rem !important;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:last-child .m-portlet__foot>div {
+    text-align: center;
+}
+
+.myToday-online-lesson-modal-style .m-portlet:last-child {
+    margin-bottom: 0 !important;
+}
+
+.link-button-style {
+    border-style: none;
+    background: #fff;
+    color: #153fe2;
+    text-decoration: underline;
+    cursor: pointer;
+    padding-left: 0;
+    text-align: left;
+}
+
+.myToday-homework-student-modal-style .ui.menu {
+    display: block !important;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    margin: 0 !important;
+}
+
+.myToday-homework-student-modal-style .ui.menu a {
+    display: inline-block !important;
+    border: solid 1px #0275d8 !important;
+    color: #0275d8 !important;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.myToday-homework-student-modal-style .ui.menu a.active {
+    background-color: #0275d8 !important;
+    color: #fff !important;
+}
+
+.myToday-homework-student-modal-style .ui.menu a.active:hover {
+    background-color: #0275d8 !important;
+    color: #fff !important;
+}
+
+.myToday-homework-student-modal-style .ui.menu a:hover {
+    background-color: #fff !important;
+}
+
+.myToday-homework-student-modal-style .m-portlet:first-child>.m-portlet__body>.col-12 {
+    display: flex;
+}
+
+.myToday-homework-student-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-5 {
+    font-weight: bold;
+}
+
+.myToday-homework-student-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-5>div {
+    font-size: 14px;
+    line-height: 1.29;
+    text-align: right;
+    color: #0275d8;
+}
+
+.myToday-homework-student-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-7 {
+    padding-left: 5px !important;
+}
+
+.myToday-homework-student-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-7>div {
+    font-size: 14px;
+    line-height: 1.29;
+    color: #575962;
+}
+
+.myToday-homework-student-modal-style .m-portlet:first-child>.m-portlet__body>.col-12>.col-7>div:first-child {
+    font-weight: bold;
+}
+
+.myToday-homework-student-modal-style .m-portlet:last-child>.m-portlet__body>.col-12 th {
+    color: #1d5383 !important;
+}
+
+.myToday-homework-student-modal-style .m-portlet:nth-child(2) .form-group label {
+    font-size: 14px;
+    color: #1d5383 !important;
+}
+
+.myToday-homework-student-modal-style .m-portlet:nth-child(2) .form-group .DayPickerInput input {
+    border-radius: unset;
+    border: 1px solid #ebedf2;
+}
+
+.myToday-homework-student-modal-style .attached.segment.active {
+    border: none;
+    padding: 1em 1em 0 1rem !important;
+}
+
+.myToday-homework-student-modal-style .m-portlet:nth-child(2) .m-portlet__foot>div {
+    text-align: center;
+}
+
+.myToday-homework-student-modal-style .m-portlet:last-child {
+    margin-bottom: 0 !important;
+}
+
+.myToday-addHomeworkEditorArea .rdw-editor-toolbar {
+    border: none !important;
+    padding: 0;
+}
+
+/*.myToday-addHomeworkEditorArea .rdw-editor-toolbar .rdw-link-dropdown, .myToday-addHomeworkEditorArea .rdw-editor-toolbar .rdw-link-dropdown > a{*/
+/*padding: 0;*/
+/*margin: 0;*/
+/*}*/
+.myToday-addHomeworkEditorArea .public-DraftEditor-content {
+    min-height: 50px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    border-radius: .25rem;
+    display: block;
+    width: 100%;
+    padding: .65rem 1rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    margin: 0;
+    border: 1px solid #ebedf2;
+    resize: vertical !important;
+}
+
+.myToday-addHomeworkEditorArea .public-DraftStyleDefault-block {
+    margin: 0 !important;
 }
