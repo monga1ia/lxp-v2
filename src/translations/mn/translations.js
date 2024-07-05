@@ -19,11 +19,12 @@ export const TRANSLATIONS_MN = {
         calculate: 'Тооцоолох',
         addToNewYear: 'Шинэ хичээлийн жилд бүртгэх',
         repetetive_add: 'Давтан үүсгэх',
+        create_user: 'Хэрэглэгч үүсгэх',
     },
     error: {
         selectRole: "Дүр сонгоно уу",
         selectGrade: 'Бүлгийн нэр оруулна уу',
-        selectShift: 'Ээлж оруулна уу',
+        selectShift: 'Ээлж сонгоно уу',
         selectEvaluationType: 'Үнэлгээний төрөл сонгоно уу',
         selectClass: 'Анги сонгоно уу',
         selectCurriculum: 'Хөтөлбөр сонгоно уу',

@@ -78,6 +78,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
             type: 'nDropdown',
             label: t('group.curriculum') + '*',
             required: true,
+            search: true,
             errorMessage: t('error.selectCurriculum'),
             className: "form-control",
             upperCase: true,

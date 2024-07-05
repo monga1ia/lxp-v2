@@ -83,19 +83,12 @@ const CustomToggleList = ({
             size="small"
             aria-controls={open ? "split-button-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
-            aria-label="select merge strategy"
             aria-haspopup="menu"
             onClick={handleToggle}
-            className="btn m-btn--icon m-btn--icon-only btn-primary br-03 mx-1"
+            className="btn m-btn--icon m-btn--icon-only btn-info br-03 mx-1"
             style={{
-                backgroundColor: '#ff5b1d',
-                border: 'none',
                 width: '33px',
                 height: '33px',
-                minWidth: 'unset',
-                alignItems: 'center',
-                marginRight: '0.5rem',
-                color: 'white'
             }}
         >
             <i className="la la-columns" style={{ fontSize: "22px" }} />
@@ -121,12 +114,12 @@ const CustomToggleList = ({
                             <FormGroup id="split-button-menu">
                                 {
                                     columns.map(column => {
-                                        if (column?.dataField === 'dt-row-order-number') return
+                                        if (column?.dataField === 'dt-row-order-number' || column?.dataField === 'dt-row-click-context') return
                                         return(
                                             <FormControlLabel
                                                 key={column.dataField}
                                                 control={
-                                                    <div class="dtableColumnCheckbox">
+                                                    <div className="dtableColumnCheckbox">
                                                         <Checkbox defaultChecked={column.hidden ? false : true} />
                                                     </div>
                                                 }
@@ -1078,21 +1071,14 @@ const DTable = ({
                                                     {
                                                         config.columnButton
                                                             ?
-                                                            <div
-                                                                style={{
-                                                                    display: 'inline-block',
-                                                                    marginLeft: '1px'
-                                                                }}
-                                                            >
-                                                                <CustomToggleList
-                                                                    anchorRef={anchorRef}
-                                                                    open={open}
-                                                                    handleToggle={handleColumnsToggle}
-                                                                    handleClose={handleColumnsClose}
-                                                                    onColumnToggle={customHandleToggleColumnVisibility}
-                                                                    columns={props.columnToggleProps.columns}
-                                                                />
-                                                            </div>
+                                                            <CustomToggleList
+                                                                anchorRef={anchorRef}
+                                                                open={open}
+                                                                handleToggle={handleColumnsToggle}
+                                                                handleClose={handleColumnsClose}
+                                                                onColumnToggle={customHandleToggleColumnVisibility}
+                                                                columns={props.columnToggleProps.columns}
+                                                            />
                                                             : null
                                                     }
 
