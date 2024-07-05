@@ -12441,7 +12441,9 @@ ol.ui.list li[value]:before {
     padding: .85714286em 1.14285714em;
     border-bottom-width: 2px;
     -webkit-transition: color .1s ease;
-    transition: color .1s ease
+    transition: color .1s ease;
+    min-width: 15rem;
+    justify-content: center;
 }
 
 .ui.secondary.pointing.menu .header.item {

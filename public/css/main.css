@@ -87,6 +87,18 @@
     font-weight: 900
 }
 
+.menu-profile-img {
+    width: 3rem !important;
+    height: 3rem !important;
+    object-fit: cover;
+}
+
+.menu-profile-dropdown-img {
+    width: 70px !important;
+    height: 70px !important;
+    object-fit: cover;
+}
+
 /* This file is reserved for overriding and extending the template styles. */
 /* // audio player container width fixed */
 html { font-size: 13px; }
@@ -4060,4 +4072,35 @@ select.form-control:focus::-ms-value {
 
 .myToday-addHomeworkEditorArea .public-DraftStyleDefault-block {
     margin: 0 !important;
+
+}
+
+.Toastify__toast--rtl {
+    direction: rtl;
+}
+
+.Toastify__toast--dark {
+    background: #121212;
+    color: #fff;
+}
+
+.Toastify__toast--default {
+    background: #fff !important;
+    color: #aaa;
+}
+
+.Toastify__toast--info {
+    background: #36a3f7 !important;
+}
+
+.Toastify__toast--success {
+    background: #34bfa3 !important;
+}
+
+.Toastify__toast--warning {
+    background: #ffb822 !important;
+}
+
+.Toastify__toast--error {
+    background: #f4516c !important;
 }

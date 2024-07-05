@@ -10,7 +10,7 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         width: 220,
-        border: '1px solid #dcdcdc',
+        border: '1px solid #EBEDF2',
         boxShadow: 'none',
         borderRadius: 8,
         height: 38

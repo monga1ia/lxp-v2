@@ -113,7 +113,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             className: "form-control",
             fieldContainerClassName: 'col-8',
             value: '',
-            type: 'nonCryllic',
+            type: 'textUppercase',
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('register_number'),
             labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
@@ -218,7 +218,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                 for (let x=0;x<formValues.length;x++) {
                     dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
                 }
-                message('success')
+                message('success', true)
     
                 // after success \/
                 // onClose()
@@ -236,7 +236,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
         // //     }
         // //     else {
         // //         setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
-        // //         message('success')
+        // //         message('success', true)
 
         // //         // after success \/
         // //         // console.log(loginNames)

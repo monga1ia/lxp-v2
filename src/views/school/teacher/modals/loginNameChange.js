@@ -73,7 +73,7 @@ const loginNameChange = ({ onClose, onSubmit, id }) => {
             }
             else {
                 setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
-                message('success')
+                message('success', true)
 
                 // after success \/
                 // console.log(loginNames)

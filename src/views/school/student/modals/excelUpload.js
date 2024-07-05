@@ -4,7 +4,7 @@ import { StepsStyleConfig } from 'chakra-ui-steps'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import { fetchRequest } from 'utils/fetchRequest'
-import { schoolStudentExcelUpload } from 'utils/url'
+// import { schoolStudentExcelUpload } from 'utils/url'
 import { ReactSpreadsheetImport } from 'react-spreadsheet-import'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -112,82 +112,88 @@ const excelUpload = ({ onClose, onSubmit, open }) => {
     const [classes, setClasses] = useState([])
     const [studentCodes, setStudentCodes] = useState([])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(schoolStudentExcelUpload, 'POST')
-            .then((res) => {
-                if (res.success) {
-                    const { classes } = res.data
-                    const studentCodes = []
-                    classes?.forEach(el =>
-                        el?.studentCodes?.forEach(code =>
-                            studentCodes?.push({
-                                value: code,
-                                label: code
-                            })
-                        )
-                    )
-                    refFields.find(el => el.key == 'class').fieldType.options = classes || []
-                    refFields.find(el => el.key == 'studentCode').fieldType.options = studentCodes || []
-                    setFields(refFields)
-                    setClasses(classes || [])
-                    setStudentCodes(studentCodes || [])
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolStudentExcelUpload, 'POST')
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { classes } = res.data
+    //                 const studentCodes = []
+    //                 classes?.forEach(el =>
+    //                     el?.studentCodes?.forEach(code =>
+    //                         studentCodes?.push({
+    //                             value: code,
+    //                             label: code
+    //                         })
+    //                     )
+    //                 )
+    //                 refFields.find(el => el.key == 'class').fieldType.options = classes || []
+    //                 refFields.find(el => el.key == 'studentCode').fieldType.options = studentCodes || []
+    //                 setFields(refFields)
+    //                 setClasses(classes || [])
+    //                 setStudentCodes(studentCodes || [])
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleUploadStepHook = data => {
-        if (!data?.length) {
-            onClose()
-            message(translations(locale)?.err?.file_empty)
-        }
-        return data
+        console.log('handleUplaodStep')
+        // if (!data?.length) {
+        //     onClose()
+        //     message(translations(locale)?.err?.file_empty)
+        // }
+        // return data
     }
 
     const handleMatchColumnsStepHook = (data, rawData, columns) => {
-        const studentCodeIndex = columns?.find(el => el?.value == 'studentCode')?.index
-        const classIndex = columns?.find(el => el?.value == 'class')?.index
-        rawData?.forEach((row, index) => {
-            const studentCode = row?.[studentCodeIndex]?.toString()?.replace(/\s/g, '')?.toLowerCase()
-            const studentClass = row?.[classIndex]?.toString()?.replace(/\s/g, '')?.toLowerCase()
-            data[index].studentCode = studentCodes?.find(el => el?.label?.toLowerCase() == studentCode)?.value
-            data[index].class = classes?.find(el => el?.label?.toLowerCase() == studentClass)?.value
-        })
-        return data
+        console.log('handleMatchColumns')
+        // const studentCodeIndex = columns?.find(el => el?.value == 'studentCode')?.index
+        // const classIndex = columns?.find(el => el?.value == 'class')?.index
+        // rawData?.forEach((row, index) => {
+        //     const studentCode = row?.[studentCodeIndex]?.toString()?.replace(/\s/g, '')?.toLowerCase()
+        //     const studentClass = row?.[classIndex]?.toString()?.replace(/\s/g, '')?.toLowerCase()
+        //     data[index].studentCode = studentCodes?.find(el => el?.label?.toLowerCase() == studentCode)?.value
+        //     data[index].class = classes?.find(el => el?.label?.toLowerCase() == studentClass)?.value
+        // })
+        // return data
     }
 
     const handleRowHook = (row, addError) => {
-        Object.keys(row)?.forEach(key => {
-            const value = row?.[key]?.toString()?.replace(/\s/g, '')
-            switch (key) {
-                case 'password':
-                    if (!row[key])
-                        row[key] = row?.studentCode
-                    break
-                case 'studentCode':
-                    const studentClass = classes?.find(el => el?.value == row?.class)
-                    if (!studentClass?.studentCodes?.includes(row?.studentCode))
-                        addError(key, {
-                            message: `${studentClass?.label} ${translations(locale)?.sheetImport?.error?.studentNotExists1} ${row?.studentCode} ${translations(locale)?.sheetImport?.error?.studentNotExists2}`,
-                            level: 'error'
-                        })
-                    break
-                default:
-                    row[key] = value
-                    break
-            }
-        })
-        return row
+        console.log('handleRow')
+        // Object.keys(row)?.forEach(key => {
+        //     const value = row?.[key]?.toString()?.replace(/\s/g, '')
+        //     switch (key) {
+        //         case 'password':
+        //             if (!row[key])
+        //                 row[key] = row?.studentCode
+        //             break
+        //         case 'studentCode':
+        //             const studentClass = classes?.find(el => el?.value == row?.class)
+        //             if (!studentClass?.studentCodes?.includes(row?.studentCode))
+        //                 addError(key, {
+        //                     message: `${studentClass?.label} ${translations(locale)?.sheetImport?.error?.studentNotExists1} ${row?.studentCode} ${translations(locale)?.sheetImport?.error?.studentNotExists2}`,
+        //                     level: 'error'
+        //                 })
+        //             break
+        //         default:
+        //             row[key] = value
+        //             break
+        //     }
+        // })
+        // return row
     }
 
     return (
+        // <div>
+        //     asdf
+        // </div>
         <>
             <ReactSpreadsheetImport
                 isOpen={open}

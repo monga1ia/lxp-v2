@@ -98,7 +98,7 @@ const EditWorkerModal = ({onClose, onSubmit, id}) => {
             className: "form-control",
             fieldContainerClassName: 'col-8',
             value: '',
-            type: 'nonCryllic',
+            type: 'textUppercase',
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('register_number'),
             labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
@@ -209,7 +209,7 @@ const EditWorkerModal = ({onClose, onSubmit, id}) => {
             for (let x=0;x<formValues.length;x++) {
                 dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
             }
-            message('success')
+            message('success', true)
 
             // after success \/
             // onClose()
@@ -279,7 +279,7 @@ const EditWorkerModal = ({onClose, onSubmit, id}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('staff.title')}
+                    {t('action.edit')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

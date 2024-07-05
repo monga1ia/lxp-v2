@@ -45,6 +45,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
             labelBold: true,
             value: '',
             type: 'nDropdown',
+            search: true,
             label: t('className') + '*',
             required: true,
             errorMessage: t('error.selectClass'),
@@ -71,24 +72,40 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
             options: gradeList,
         },
         {
-            key: 'classTeacher',
+            key: 'classCurriculum',
             labelBold: true,
             value: '',
             type: 'nDropdown',
-            label: t('group.class_teacher'),
+            label: t('group.curriculum') + '*',
+            required: true,
+            errorMessage: t('error.selectCurriculum'),
             className: "form-control",
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row grid-item',
             fieldContainerClassName: 'col-6',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            options: teacherList,
-            clearable: true,
+            options: gradeList,
         },
+        // {
+        //     key: 'classTeacher',
+        //     labelBold: true,
+        //     value: '',
+        //     type: 'nDropdown',
+        //     label: t('group.class_teacher'),
+        //     className: "form-control",
+        //     upperCase: true,
+        //     formContainerClassName: 'form-group m-form__group row grid-item',
+        //     fieldContainerClassName: 'col-6',
+        //     labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+        //     options: teacherList,
+        //     clearable: true,
+        // },
         {
             key: 'classShift',
             labelBold: true,
             value: '',
             type: 'nDropdown',
+            search: true,
             label: t('group.school_shift') + '*',
             required: true,
             errorMessage: t('error.selectShift'),
@@ -99,35 +116,35 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             options: schoolShift,
         },
-        {
-            key: 'classEvaluation',
-            labelBold: true,
-            value: '',
-            type: 'nDropdown',
-            label: t('group.score_type') + '*',
-            required: true,
-            errorMessage: t('error.selectEvaluationType'),
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row grid-item',
-            fieldContainerClassName: 'col-6',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            options: scoreTypeList,
-        },
-        {
-            key: 'classRoom',
-            labelBold: true,
-            value: '',
-            type: 'nDropdown',
-            label: t('group.classroom'),
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row grid-item',
-            fieldContainerClassName: 'col-6',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            options: roomList,
-            clearable: true,
-        },
+        // {
+        //     key: 'classEvaluation',
+        //     labelBold: true,
+        //     value: '',
+        //     type: 'nDropdown',
+        //     label: t('group.score_type') + '*',
+        //     required: true,
+        //     errorMessage: t('error.selectEvaluationType'),
+        //     className: "form-control",
+        //     upperCase: true,
+        //     formContainerClassName: 'form-group m-form__group row grid-item',
+        //     fieldContainerClassName: 'col-6',
+        //     labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+        //     options: scoreTypeList,
+        // },
+        // {
+        //     key: 'classRoom',
+        //     labelBold: true,
+        //     value: '',
+        //     type: 'nDropdown',
+        //     label: t('group.classroom'),
+        //     className: "form-control",
+        //     upperCase: true,
+        //     formContainerClassName: 'form-group m-form__group row grid-item',
+        //     fieldContainerClassName: 'col-6',
+        //     labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+        //     options: roomList,
+        //     clearable: true,
+        // },
     ]
 
     const handleCheckbox = () => {
@@ -135,32 +152,43 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
     }
 
     const handleSubmit = () => {
-        console.log('submit')
-
         const [formsValid, formValues] = formRef.current.validate();
 
-        if (formsValid) {
+        if (formsValid && addAgain) {
             const dataCollectorArray = []
             for (let x=0;x<formValues.length;x++) {
                 dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
-                if (addAgain) {
-                    formValues[x].value = ''
-                }
+                formValues[x].value = ''
             }
             setAddClassData([...addClassData, dataCollectorArray])
             dataCollectorArray.push({key: 'addAgain', value: addAgain})
-            message('success')
+            if (addAgain === false){
+                console.log(addClassData)
+                message('success', true)
+                // after success \/
+                // onClose()
+                // setLoading(true)
+                // console.log(dataCollectorArray)
+            }
+        } else if (formsValid && !addAgain) {
+            const dataCollectorArray = []
+            for (let x=0;x<formValues.length;x++) {
+                dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
+            }
+            setAddClassData([...addClassData, dataCollectorArray])
+            dataCollectorArray.push({key: 'addAgain', value: addAgain})
+            console.log(addClassData)
+            message('success', true)
             // after success \/
             // onClose()
             // setLoading(true)
             // console.log(dataCollectorArray)
-        } 
+        }
         else{
             message(t('err.fill_all_fields'))
         } 
     }
 
-    console.log(addClassData)
 
     return (
         <Modal
@@ -174,7 +202,7 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('class.register')}
+                    {t('class.add')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -185,11 +213,14 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
                                 ref={formRef}
                                 fields={addClassFields}
                             />
-                            <div className="mb-3 form-check col-10 d-flex justify-content-end align-items-center" style={{ transform: 'translate(4px, 0px)' }}>
-                                <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px', paddingRight: '16px' }}>
-                                    {t('action.repetetive_add')}
-                                </label>
-                                <input className="form-check-input" id='reAdd' type="checkbox" value={addAgain} onChange={handleCheckbox} style={{ borderRadius: '4px', fontSize: '16px !important', transform : 'translate(0, -2px)'}} />
+                            <div className="form-group m-form__group row grid-item ml-3">
+                                <div className='col-form-label col-4 mr-0'/>
+                                <div className='align-items-center col-6'>
+                                    <input className="form-check-input" id='reAdd' type="checkbox" value={addAgain} onChange={handleCheckbox} style={{ borderRadius: '4px', fontSize: '16px !important'}} />
+                                    <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px'}}>
+                                        {t('action.recreate')}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

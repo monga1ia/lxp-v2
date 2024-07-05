@@ -149,7 +149,7 @@ const AddToNewYearModal = ({onClose, onSubmit, data}) => {
             }
             setAddNewYearClassData([...addNewYearClassData, dataCollectorArray])
             dataCollectorArray.push({key: 'addAgain', value: addAgain})
-            message('success')
+            message('success', true)
             // after success \/
             // onClose()
             // setLoading(true)

@@ -16,6 +16,8 @@ import ViewClassModal from './modals/view'
 import EditClassModal from './modals/edit';
 import DeleteModal from 'utils/deleteModal';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
+import {Tab} from "semantic-ui-react";
+
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const localStorageSelectedTree = 'school_classes_selected_tree_index'
@@ -53,6 +55,7 @@ const index = () => {
         {id: 12, class: 1232, teacherLastName: "asasdfsdf", teacherFirstName: "Joe" },
     ])
     const [totalCount, setTotalCount] = useState([])
+    const [selectedTabData, setSelectedTabData] = useState(0)
 
     const [showAddClassModal, setShowAddClassModal] = useState(false)
     const [showViewModal, setShowViewModal] = useState(false)
@@ -259,25 +262,31 @@ const index = () => {
     const columns = [
         {
             dataField: "class",
-            text: t('group.title') || "",
+            text: t('group.group_name') || "",
             sort: true,
         },
+        // {
+        //     dataField: "teacherLastName",
+        //     text: t('teacher.lastname') || "",
+        //     sort: true
+        // },
+        // {
+        //     dataField: "teacherFirstName",
+        //     text: t('teacher.name') || "",
+        //     sort: true,
+        //     formatter: (cell, row) => {
+        //         if (cell) {
+        //             return (
+        //                 <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
+        //             )
+        //         }
+        //     },
+        // },
         {
-            dataField: "teacherLastName",
-            text: t('teacher.lastname') || "",
-            sort: true
-        },
-        {
-            dataField: "teacherFirstName",
-            text: t('teacher.name') || "",
+            dataField: "classCurriculum",
+            text: t('group.curriculum') || "",
             sort: true,
-            formatter: (cell, row) => {
-                if (cell) {
-                    return (
-                        <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
-                    )
-                }
-            },
+            align: "right",
         },
         {
             dataField: "studentCount",
@@ -285,22 +294,22 @@ const index = () => {
             sort: true,
             align: "right",
         },
-        {
-            dataField: "scoreType",
-            text: t('group.score_type') || "",
-            sort: true,
-        },
+        // {
+        //     dataField: "scoreType",
+        //     text: t('group.score_type') || "",
+        //     sort: true,
+        // },
         {
             dataField: "shift",
             text: t('group.school_shift') || "",
             sort: true,
 
         },
-        {
-            dataField: "room",
-            text: t('group.classroom') || "",
-            sort: true,
-        },
+        // {
+        //     dataField: "room",
+        //     text: t('group.classroom') || "",
+        //     sort: true,
+        // },
         {
             dataField: "esisGroupId",
             text: t('esis.classCode') || "",
@@ -394,6 +403,11 @@ const index = () => {
         //     })
     }
 
+    const handleTabChange = (e, data) => {
+        console.log( e, data.activeIndex)
+        setSelectedTabData(data.activeIndex)
+    }
+
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -435,19 +449,54 @@ const index = () => {
                                 {t('action.addToNewYear')}
                             </Button>
                         </div>
-                        <div className="m-portlet br-12">
-                            <div className="m-portlet__body">
-                                <DTable
-                                    remote
-                                    locale={locale}
-                                    config={config}
-                                    data={tableData}
-                                    columns={columns}
-                                    individualContextMenus
-                                    contextMenus={contextMenus}
-                                    onContextMenuItemClick={_contextMenuItemClick}
-                                    onInteraction={onUserInteraction}
-                                    totalDataSize={totalCount}
+                        <div className="m-portlet tab br-12">
+                            <div className="">
+                                <Tab
+                                    menu={{secondary: true, pointing: true, className: 'primaryColor m-0 h-4'}}
+                                    onTabChange={(e, data) => handleTabChange(e, data)}
+                                    className='m-portlet-header'
+                                    panes={[
+                                        {
+                                            menuItem: t('active'),
+                                            render: () => (
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        locale={locale}
+                                                        config={config}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        clickContextMenu={true}
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={_contextMenuItemClick}
+                                                        onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
+                                            )
+                                        },
+                                        {
+                                            menuItem: t('studentBook.graduated'),
+                                            render: () => (
+                                                <div className='m-portlet__body'>
+                                                    <DTable
+                                                        remote
+                                                        locale={locale}
+                                                        config={config}
+                                                        data={tableData}
+                                                        columns={columns}
+                                                        individualContextMenus
+                                                        clickContextMenu={true}
+                                                        contextMenus={contextMenus}
+                                                        onContextMenuItemClick={_contextMenuItemClick}
+                                                        onInteraction={onUserInteraction}
+                                                        totalDataSize={totalCount}
+                                                    />
+                                                </div>
+                                            )
+                                        },
+                                    ]}
                                 />
                             </div>
                         </div>

@@ -105,7 +105,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
             className: "form-control",
             fieldContainerClassName: 'col-8',
             value: '',
-            type: 'nonCryllic',
+            type: 'textUppercase',
             formContainerClassName: 'form-group m-form__group row',
             placeholder: t('register_number'),
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0"
@@ -219,7 +219,7 @@ const EditTeacherModal = ({onClose, onSubmit, data}) => {
                 for (let x=0;x<formValues.length;x++) {
                     dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
                 }
-                message('success')
+                message('success', true)
     
                 // after success \/
                 // onClose()

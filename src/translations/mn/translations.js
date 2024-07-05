@@ -26,6 +26,7 @@ export const TRANSLATIONS_MN = {
         selectShift: 'Ээлж оруулна уу',
         selectEvaluationType: 'Үнэлгээний төрөл сонгоно уу',
         selectClass: 'Анги сонгоно уу',
+        selectCurriculum: 'Хөтөлбөр сонгоно уу',
         enterTeacherCode: "Багшийн код оруулна уу",
         enterLastname: "Овог оруулна уу",
         enterFirstname: "Нэр оруулна уу",
@@ -1560,6 +1561,7 @@ export const TRANSLATIONS_MN = {
         addClass: 'Бүлэг нэмэх',
         addStudent: 'Сурагч нэмэх',
         approveStudents: 'Сурагчдыг баталгаажуулах',
+        curriculum: 'Хөтөлбөр',
         title: 'Бүлэг',
         type: 'Төрөл',
         class_teacher_title: 'Анги даасан багш',
@@ -1578,6 +1580,7 @@ export const TRANSLATIONS_MN = {
         calendar: 'Ангийн календарь',
         teacher_list: 'Багшийн жагсаалт',
         group_not_found: 'Группийн мэдээлэл олдсонгүй',
+        group_name: 'Бүлгийн нэр',
         addAgain: 'Дахин бүлэг нэмэх',
         integratedGroup: 'Нэгдсэн групп',
         integratedGroupName: 'Нэгдсэн Группийн нэр'

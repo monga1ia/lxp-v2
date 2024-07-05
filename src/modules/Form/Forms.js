@@ -59,7 +59,6 @@ const Forms = (({
     }, []);
 
     const onInputChange = (e, index, upperCase) => {
-        console.log(e.target.value, index)
         const clone = [...fields];
         const field = { ...clone[index] };
         if (field.key.toLowerCase() === 'code') {
@@ -1153,6 +1152,72 @@ const Forms = (({
                                     </div>
                             )
                         }
+                        if (field.type === 'textUppercase') {
+                            return (
+                                field.hidden
+                                    ?
+                                    <div key={index} />
+                                    :
+                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                        <label
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle
+                                            }}
+                                            className={labelClassName}
+                                        >
+                                            {field.label}
+                                        </label>
+                                        <div
+                                            // style={{
+                                            //     display: 'flex',
+                                            //     flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                            //     flexDirection: 'column',
+                                            //     marginLeft: 10,
+                                            //     width: field?.inputWidth || 'auto',
+                                            // }}
+                                            className={fieldContainerClassName}
+                                        >
+                                            <input
+                                                disabled={!!field.disabled}
+                                                className={className}
+                                                placeholder={field.placeholder || t('field.enterValue')}
+                                                type='text'
+                                                onChange={(e) => {
+                                                    onInputChange(e, index, field.upperCase = true);
+                                                    field?.onChange?.(e, field);
+                                                }}
+                                                value={field.value}
+                                            />
+                                            <div className={feedbackClassName}>
+                                                {message}
+                                            </div>
+                                        </div>
+                                        {
+                                            field.inputWidth
+                                                ?
+                                                null
+                                                :
+                                                <div
+                                                    className={whiteSpaceClassName}
+                                                    // style={{
+                                                    //     display: 'flex',
+                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                    //     flexDirection: 'column',
+                                                    //     marginLeft: 10,
+                                                    //     width: field?.inputWidth || 'auto',
+                                                    // }}
+                                                />
+                                        }
+                                    </div>
+                            )
+                        }
                         if (field.type === 'fileUpload') {
                             return (
                                 field.hidden
@@ -1403,9 +1468,10 @@ const Forms = (({
                                                 selectOnBlur={false}
                                                 additionPosition='bottom'
                                                 multiple={!!field.multiple}
-                                                searchable={!!field.searchable}
+                                                search={!!field.search}
                                                 clearable={!!field.clearable}
                                                 options={field.options}
+                                                // {...field.searchable ? {searchable} : ''}
                                             />
                                             <div style={{ display: 'block' }} className={feedbackClassName}>
                                                 {message}
