@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
     root: {
-        fontSize: '0.9rem',
+        fontSize: '1rem !important',
         padding: '0px 4px',
         display: 'flex',
         alignItems: 'center',
@@ -13,10 +13,10 @@ const useStyles = makeStyles({
         border: '1px solid #EBEDF2',
         boxShadow: 'none',
         borderRadius: 8,
-        height: 38
+        height: 35
     },
     input: {
-        fontSize: '0.9rem',
+        fontSize: '1rem !important',
         color: '#4e4e4e',
         marginLeft: 8,
         flex: 1,

@@ -78,6 +78,7 @@ const EditClassModal = ({onClose, onSubmit, data}) => {
             required: true,
             errorMessage: t('error.selectCurriculum'),
             className: "form-control",
+            search: true,
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row grid-item',
             fieldContainerClassName: 'col-6',

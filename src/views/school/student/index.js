@@ -128,7 +128,7 @@ const index = () => {
             title: t('clear_login_name'),
         },
     ]
-    
+
     const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage.getItem(localSelectedTree) || {})
 
     const [hasStudentRole, setHasStudentRole] = useState(false)

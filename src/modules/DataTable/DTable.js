@@ -778,7 +778,7 @@ const DTable = ({
                             return (
                                 <button
                                     type="button"
-                                    className="btn-icon btn-icon-only position-relative btn btn-outline-info btn-sm"
+                                    className=" bt-context-menu btn-icon btn-icon-only position-relative btn btn-outline-info btn-sm"
                                     onClick={(e) => onClickMore(e, row)}
                                 >
                                     <i className="flaticon-more"></i>
@@ -1094,6 +1094,7 @@ const DTable = ({
                                                                     getUserInteraction({}, '', date)
                                                                 }
                                                             }}
+                                                            
                                                             onSubmit={(query) => {
                                                                 if (query && query.length > 0) {
                                                                     handleSearch()    

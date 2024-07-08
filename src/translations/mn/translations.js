@@ -399,6 +399,7 @@ export const TRANSLATIONS_MN = {
         unable_to_log_date: 'Ирц бүртгэх боломжгүй өдөр байна',
     },
     class: {
+        class_list: 'Бүлгийн жагсаалт',
         attendance: {
             title: 'Өдөр ирц',
             log: 'Өдөр ирц бүртгэх',

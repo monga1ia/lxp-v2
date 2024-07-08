@@ -99,7 +99,7 @@ const index = () => {
         excelExport: true,
         printButton: true,
         columnButton: true,
-        excelFileName: secureLocalStorage.getItem('selectedSchool')?.longname + ' - Бүгд',
+        excelFileName: secureLocalStorage.getItem('selectedSchool')?.longname + ' - ' + t('class.class_list'),
         // excelFileRemote: true,
         // excelFileRemoteUrl: `/${schoolClassInit}?grade=${selectedTreeDataId}&excel=1&excelTotalCount=${totalCount}`,
         defaultSort: [
