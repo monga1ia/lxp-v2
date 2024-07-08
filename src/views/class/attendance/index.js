@@ -443,7 +443,7 @@ const index = () => {
     //                     setReportColumns(cols)
     //                 } else {
     //                     if (!res?.data?.canLog) {
-    //                         message(translations(locale)?.attendance?.unable_to_log_date)
+    //                         message(t('attendance.unable_to_log_date')
     //                     }
     //                     setCanLog(res?.data?.canLog || false)
     //                     setSeasonStart(res?.data?.seasonStart || null)
@@ -459,7 +459,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -482,7 +482,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -521,7 +521,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch((e) => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -542,14 +542,14 @@ const index = () => {
     //                 }
 
     //                 setHdr(res?.data?.hdr)
-    //                 message(translations(locale)?.success, true)
+    //                 message(t('success, true'))
     //             } else {
     //                 message(res.data.message)
     //             }
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -613,7 +613,7 @@ const index = () => {
                 showPagination: false,
                 showLeftButton: false,
                 showLeftText: true,
-                leftText: (hdr?.teacherLog ? (t('attendance.download_timetable') + ' (' + hdr?.teacherLog + ') ') : '') + translations('attendance.sent_time') + ': ' + hdr?.createdUser,
+                leftText: (hdr?.teacherLog ? (t('attendance.download_timetable') + ' (' + hdr?.teacherLog + ') ') : '') + t('attendance.sent_time') + ': ' + hdr?.createdUser,
                 leftTextStyle: {fontSize: 16, whiteSpace: 'nowrap', fontFamily: 'PinnacleRegular'},
                 defaultSort: [{
                     dataField: 'firstName',
@@ -667,14 +667,14 @@ const index = () => {
     //                 setHdr(null)
     //                 setStudents(clone)
     //                 setShowDeleteModal(false)
-    //                 message(translations(locale)?.success, true)
+    //                 message(t('success, true')
     //             } else {
     //                 message(res.data.message)
     //             }
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -865,7 +865,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -955,7 +955,7 @@ const index = () => {
                                                             // setStudents(rows)
 
                                                             // if (!clone.editing) {
-                                                            //     message(translations(locale)?.success, true)
+                                                            //     message(t('success, true')
                                                             // }
                                                             setShowTeacherLogModal(true)
                                                         }}

@@ -7,7 +7,6 @@ import InputModal from './modals/inputModal'
 import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import { Row, Col, Card } from 'react-bootstrap'
-import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import SyncRoundedIcon from '@mui/icons-material/SyncRounded'
@@ -65,7 +64,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -92,7 +91,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -128,7 +127,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -163,7 +162,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -225,7 +224,7 @@ const index = () => {
                                 // {/* onClick={() => inputTableRef?.current?.submit()} */}
                             >
                                 <AddCircleOutlineRoundedIcon />
-                                <span className='ml-2'>{translations(locale)?.esis?.createUser}</span>
+                                <span className='ml-2'>{t('esis.createUser')}</span>
                             </button>
                         }
                     </div>
@@ -281,12 +280,12 @@ const index = () => {
                     onClose={closeModal}
                     onDelete={handleDelete}
                     locale={locale}
-                    title={translations(locale)?.delete}
+                    title={t('delete')}
                 >
-                    {translations(locale)?.delete_confirmation}
+                    {t('delete_confirmation')}
                     <br />
                     <br />
-                    {translations(locale)?.delete_confirmation_description}
+                    {t('delete_confirmation_description')}
                 </DeleteModal>
             }
             {

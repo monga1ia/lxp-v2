@@ -1,11 +1,11 @@
-import { paginate } from 'utils/Util'
+import {paginate, getGender} from 'utils/Util'
 import DTable from 'modules/DataTable/DTable'
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from 'react-i18next'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
-const localTableState = 'esis_employee_table_state'
+const localTableState = 'esis_student_table_state'
 
 const styles = {
     green: {
@@ -19,27 +19,16 @@ const styles = {
     },
 }
 
-
-const table = ({ data, openModal, updateTable, onTableRender }) => {
+const table = ({data, openModal, updateTable, onTableRender}) => {
 
     const { t } = useTranslation()
 
     const [tableState, setTableState] = useState(secureLocalStorage.getItem(localTableState) ||
-    {
-        page: 1,
-        pageSize: 10,
-        search: ''
-    })
-
-
-    useEffect(() => {
-        if (updateTable) {
-            onTableRender()
-        }
-    }, [updateTable])
-
-    useEffect(() => {
-    }, [data, tableState])
+        {
+            page: 1,
+            pageSize: 10,
+            search: ''
+        })
 
     const columns = [
         {
@@ -48,14 +37,19 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
             sort: true
         },
         {
-            dataField: 'esisShortName',
-            text: t('esis.shortName'),
+            dataField: 'esisGradeName',
+            text: t('esis.gradeName'),
             sort: true
         },
         {
-            dataField: 'esisLastName',
-            text: t('studentBook.parent_name'),
+            dataField: 'esisClassName',
+            text: t('esis.className'),
             sort: true,
+        },
+        {
+            dataField: 'esisLastName',
+            text: t('foodDashboardFinanceModalStudents.last_name'),
+            sort: true
         },
         {
             dataField: 'esisFirstName',
@@ -68,41 +62,63 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
             sort: true
         },
         {
-            dataField: 'eschoolCode',
+            dataField: 'esisGender',
+            text: t('gender'),
+            sort: true,
+            formatter: cell => getGender(cell)
+        },
+        {
+            dataField: 'eschoolClassName',
+            text: t('class_name'),
+            sort: true,
+        },
+        {
+            dataField: 'eschoolStudentCode',
             text: t('esis.eschoolCode'),
             sort: true
         },
         {
             dataField: 'eschoolLastName',
-            text: t('esis.eschoolLastName'),
-            sort: true
+            text: t('last_name'),
+            sort: true,
+            formatter: (cell, row) => {
+                return row?.eschoolId ? cell : null
+            }
         },
         {
             dataField: 'eschoolFirstName',
-            text: t('esis.eschoolFirstName'),
-            sort: true
-        },
-        {
-            dataField: 'eschoolTitle',
-            text: t('esis.eschoolTitle'),
-            sort: true
-        },
-        {
-            dataField: 'eschoolLoginName',
-            text: t('teacher.login_name'),
+            text: t('first_name'),
             sort: true,
+            formatter: (cell, row) => {
+                return row?.eschoolId ? cell : null
+            }
+        },
+        {
+            dataField: 'eschoolGender',
+            text: t('gender'),
+            sort: true,
+            formatter: (cell, row) => {
+                return row?.eschoolId ? cell : null
+            }
+        },
+        {
+            dataField: 'eschoolRegistrationNumber',
+            text: t('register_number'),
+            sort: true,
+            formatter: (cell, row) => {
+                return row?.eschoolId ? cell : null
+            }
         },
         {
             dataField: 'action',
             text: '',
-            align: 'center',
             formatter: (cell, row) => {
-                if (!row?.eschoolUserId) return (
+                if (!row?.eschoolId) return (
                     <button
-                        className='btn btn-info m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                        className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
                         onClick={() => openModal('edit', row)}
                     >
-                        <i className='fa flaticon-edit-1' />
+                        <i className='fa flaticon-edit-1'/>
                     </button>
                 )
                 else return (
@@ -110,7 +126,7 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
                         className='btn btn-danger m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
                         onClick={() => openModal('delete', row)}
                     >
-                        <i className='fa flaticon2-cross' />
+                        <i className='fa flaticon2-cross'/>
                     </button>
                 )
             }
@@ -119,7 +135,7 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
 
     const config = {
         defaultSort: [{
-            dataField: 'esisFirstName',
+            dataField: 'esisClassName',
             order: 'asc'
         }],
         defaultPageOptions: {
@@ -129,9 +145,18 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
         }
     }
 
+    useEffect(() => {
+        if (updateTable) {
+            onTableRender()
+        }
+    }, [updateTable])
+
+    useEffect(() => {
+
+    }, [data, tableState])
 
     const handleRowStyle = row => {
-        if (row?.eschoolUserId)
+        if (row?.eschoolClassId)
             return styles.green
         else if (row?.something)
             return styles.grey
@@ -141,10 +166,9 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
     }
 
     const handleInteraction = state => {
-        setTableState({ ...tableState, ...state })
+        setTableState({...tableState, ...state})
         secureLocalStorage.setItem(localTableState, state)
     }
-
 
     const getTableList = (list) => {
         const paginatedData = paginate(list, tableState)
@@ -157,16 +181,18 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
     }
 
     return (
-        <DTable
-            remote
-            config={config}
-            locale={locale}
-            data={getTableList(data)}
-            columns={columns}
-            rowStyle={handleRowStyle}
-            onInteraction={handleInteraction}
-            totalDataSize={getTableTotalSize(data)}
-        />
+        <>
+            <DTable
+                remote
+                config={config}
+                locale={locale}
+                data={getTableList(data)}
+                columns={columns}
+                rowStyle={handleRowStyle}
+                onInteraction={handleInteraction}
+                totalDataSize={getTableTotalSize(data)}
+            />
+        </>
     )
 }
 

@@ -583,7 +583,7 @@ const MainGroup = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -615,7 +615,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -650,7 +650,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred')
         //         setLoading(false)
         //     })
     }
@@ -684,7 +684,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -707,7 +707,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -726,7 +726,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -745,7 +745,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }

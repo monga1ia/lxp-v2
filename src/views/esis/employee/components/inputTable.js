@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
+import { useTranslation } from 'react-i18next'
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -16,6 +16,8 @@ const config = {
 }
 
 const inputTable = forwardRef((props, ref) => {
+
+    const { t } = useTranslation()
     const { data, onSubmit } = props
 
     const [loading, setLoading] = useState(false)
@@ -53,27 +55,27 @@ const inputTable = forwardRef((props, ref) => {
         },
         {
             dataField: 'esisShortName',
-            text: translations(locale)?.esis?.shortName,
+            text: t('esis.shortName'),
             sort: true
         },
         {
             dataField: 'esisLastName',
-            text: translations(locale)?.studentBook?.parent_name,
+            text: t('studentBook.parent_name'),
             sort: true,
         },
         {
             dataField: 'esisFirstName',
-            text: translations(locale)?.studentBook?.name,
+            text: t('studentBook.name'),
             sort: true
         },
         {
             dataField: 'esisBirthDay',
-            text: translations(locale)?.studentBook?.birth_day,
+            text: t('studentBook.birth_day'),
             sort: true
         },
         {
             dataField: 'eschoolCode',
-            text: translations(locale)?.esis?.eschoolCode,
+            text: t('esis.eschoolCode'),
             style: { padding: 2 },
             formatter: (cell, row) =>
                 <input
@@ -86,7 +88,7 @@ const inputTable = forwardRef((props, ref) => {
         },
         {
             dataField: 'eschoolLastName',
-            text: translations(locale)?.esis?.eschoolLastName,
+            text: t('esis.eschoolLastName'),
             style: { padding: 2 },
             formatter: (cell, row) =>
                 <input
@@ -99,7 +101,7 @@ const inputTable = forwardRef((props, ref) => {
         },
         {
             dataField: 'eschoolFirstName',
-            text: translations(locale)?.esis?.eschoolFirstName,
+            text: t('esis.eschoolFirstName'),
             style: { padding: 2 },
             formatter: (cell, row) =>
                 <input
@@ -112,7 +114,7 @@ const inputTable = forwardRef((props, ref) => {
         },
         {
             dataField: 'eschoolTitle',
-            text: translations(locale)?.esis?.eschoolTitle,
+            text: t('esis.eschoolTitle'),
             style: { padding: 2 },
             formatter: (cell, row) =>
                 <input
@@ -125,7 +127,7 @@ const inputTable = forwardRef((props, ref) => {
         },
         {
             dataField: 'eschoolLoginName',
-            text: translations(locale)?.teacher?.login_name,
+            text: t('teacher.login_name'),
             style: { padding: 2 },
             formatter: (cell, row) =>
                 <input

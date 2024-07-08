@@ -3,7 +3,6 @@ import DTable from 'modules/DataTable/DTable'
 import React, { useEffect, useState } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from 'react-i18next'
-import { translations } from 'utils/translations'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const localTableState = 'esis_class_table_state'
@@ -35,47 +34,47 @@ const table = ({ data, openModal }) => {
     const columns = [
         {
             dataField: 'esisGradeName',
-            text: translations(locale)?.esis?.gradeName,
+            text: t('esis.gradeName'),
             sort: true
         },
         {
             dataField: 'esisClassCode',
-            text: translations(locale)?.esis?.classCode,
+            text: t('esis.classCode'),
             sort: true
         },
         {
             dataField: 'esisClassName',
-            text: translations(locale)?.esis?.className,
+            text: t('esis.className'),
             sort: true,
         },
         {
             dataField: 'esisClassTeacher',
-            text: translations(locale)?.esis?.classTeacher,
+            text: t('esis.classTeacher'),
             sort: true
         },
         {
             dataField: 'eschoolClassName',
-            text: translations(locale)?.esis?.eschoolClassName,
+            text: t('esis.eschoolClassName'),
             sort: true
         },
         {
             dataField: 'eschoolTeacher',
-            text: translations(locale)?.esis?.classTeacher,
+            text: t('esis.classTeacher'),
             sort: true
         },
         {
             dataField: 'eschoolShift',
-            text: translations(locale)?.school_shift,
+            text: t('school_shift'),
             sort: true
         },
         {
             dataField: 'eschoolScoreType',
-            text: translations(locale)?.group?.score_type,
+            text: t('group.score_type'),
             sort: true
         },
         {
             dataField: 'eschoolRoom',
-            text: translations(locale)?.group?.classroom,
+            text: t('group.classroom'),
             sort: true
         },
         {

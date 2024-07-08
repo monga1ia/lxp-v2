@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import DTable from 'modules/DataTable/DTable'
-import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 
@@ -62,7 +61,7 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
@@ -83,9 +82,9 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
     const handleSubmit = () => {
         const employees = tableData?.filter(el => el?.checked == true)
         if (!employees?.length)
-            return message(translations(locale)?.esis?.selectTeacherStaff)
+            return message(t('esis.selectTeacherStaff'))
         if (employees?.length > 1)
-            return message(translations(locale)?.esis?.selectOnlyOneTeacherStaff)
+            return message(t('esis.selectOnlyOneTeacherStaff'))
         onSubmit({ esisPersonId: esisUser?.id, eschoolUserId: employees?.[0]?.id })
     }
 
@@ -156,19 +155,19 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
             <Modal.Body>
                 <div className='br-20 border-orange p-3 text-grey'>
                     <Row>
-                        <Col className='text-right pr-2'>{translations(locale)?.esis?.shortName}</Col>
+                        <Col className='text-right pr-2'>{t('esis.shortName')}</Col>
                         <Col className='pl-2'>{esisUser?.esisShortName || '-'}</Col>
                     </Row>
                     <Row>
-                        <Col className='text-right pr-2'>{translations(locale)?.studentBook?.parent_name}</Col>
+                        <Col className='text-right pr-2'>{t('studentBook.parent_name')}</Col>
                         <Col className='pl-2'>{esisUser?.esisLastName || '-'}</Col>
                     </Row>
                     <Row>
-                        <Col className='text-right pr-2'>{translations(locale)?.studentBook?.name}</Col>
+                        <Col className='text-right pr-2'>{t('studentBook.name')}</Col>
                         <Col className='pl-2'>{esisUser?.esisFirstName || '-'}</Col>
                     </Row>
                     <Row>
-                        <Col className='text-right pr-2'>{translations(locale)?.studentBook?.birth_day}</Col>
+                        <Col className='text-right pr-2'>{t('studentBook.birth_day')}</Col>
                         <Col className='pl-2'>{esisUser?.esisBirthDay || '-'}</Col>
                     </Row>
                 </div>
@@ -178,7 +177,7 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
                             type='text'
                             style={{ width: '15rem' }}
                             className='form-control br-08'
-                            placeholder={translations(locale)?.action?.search}
+                            placeholder={t('action.search')}
                             onChange={(e) => handleSearch(e?.target?.value?.toLowerCase())}
                         />
                     </div> */}
@@ -195,11 +194,11 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
                             <tr>
                                 <th>№</th>
                                 <th></th>
-                                <th>{translations(locale)?.code}</th>
-                                <th>{translations(locale)?.last_name}</th>
-                                <th>{translations(locale)?.first_name}</th>
-                                <th>{translations(locale)?.studentBook?.birth_day}</th>
-                                <th>{translations(locale)?.studentBook?.work_role}</th>
+                                <th>{t('code')}</th>
+                                <th>{t('last_name')}</th>
+                                <th>{t('first_name')}</th>
+                                <th>{t('studentBook.birth_day')}</th>
+                                <th>{t('studentBook.work_role')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -221,7 +220,7 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
                                             <th>{el?.title}</th>
                                         </tr>
                                     )
-                                    : <tr><th colSpan={7} className='text-center'>{translations(locale)?.action?.emptyTable}</th></tr>
+                                    : <tr><th colSpan={7} className='text-center'>{t('action.emptyTable')}</th></tr>
                             }
                         </tbody>
 

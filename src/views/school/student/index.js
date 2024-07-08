@@ -6,7 +6,6 @@ import DTable from 'modules/DataTable/DTable'
 // import ExcelUploadModal from './modals/excelUpload'
 import secureLocalStorage from 'react-secure-storage'
 import {fetchRequest} from 'utils/fetchRequest'
-import {translations} from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
@@ -36,72 +35,6 @@ const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const localSelectedTree = 'school_students_selected_tree_data'
 const localTableState = 'school_students_table_state'
 
-const columns = [
-    {
-        dataField: 'isActive',
-        text: '',
-        align: 'center',
-        headerStyle: {width: 50},
-        formatter: (cell) =>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div className={`table-circle ${cell === true && "active"}`} />
-            </div>
-    },
-    {
-        dataField: 'className',
-        text: translations(locale)?.className,
-        sort: true
-    },
-    {
-        dataField: 'code',
-        text: translations(locale)?.studentCode,
-        sort: true
-    },
-    {
-        dataField: 'lastName',
-        text: translations(locale)?.studentLastName,
-        sort: true
-    },
-    {
-        dataField: 'firstName',
-        text: translations(locale)?.studentFirstName,
-        sort: true
-    },
-    {
-        dataField: 'username',
-        text: translations(locale)?.teacher?.login_name,
-        sort: true,
-    },
-]
-
-const contextMenus = [
-    {
-        key: 'loginNameChange',
-        icon: <ManageAccountsRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-        title: translations(locale)?.change_login_name,
-    },
-    {
-        key: 'passwordReset',
-        icon: <LockResetRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-        title: translations(locale)?.change_password,
-    },
-    {
-        key: 'disable',
-        icon: <HighlightOffRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-        title: translations(locale)?.disable,
-    },
-    {
-        key: 'enable',
-        icon: <CheckCircleOutlineRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-        title: translations(locale)?.enable,
-    },
-    {
-        key: 'clearUser',
-        icon: <PersonRemoveIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
-        title: translations(locale)?.clear_login_name,
-    },
-]
-
 const index = () => {
 
     const { t } = useTranslation();
@@ -129,6 +62,73 @@ const index = () => {
             selectable: true,
         }]
     }])
+
+    const columns = [
+        {
+            dataField: 'isActive',
+            text: '',
+            align: 'center',
+            headerStyle: {width: 50},
+            formatter: (cell) =>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={`table-circle ${cell === true && "active"}`} />
+                </div>
+        },
+        {
+            dataField: 'className',
+            text: t('className'),
+            sort: true
+        },
+        {
+            dataField: 'code',
+            text: t('studentCode'),
+            sort: true
+        },
+        {
+            dataField: 'lastName',
+            text: t('studentLastName'),
+            sort: true
+        },
+        {
+            dataField: 'firstName',
+            text: t('studentFirstName'),
+            sort: true
+        },
+        {
+            dataField: 'username',
+            text: t('teacher.login_name'),
+            sort: true,
+        },
+    ]
+    
+    const contextMenus = [
+        {
+            key: 'loginNameChange',
+            icon: <ManageAccountsRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t('change_login_name'),
+        },
+        {
+            key: 'passwordReset',
+            icon: <LockResetRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t('change_password'),
+        },
+        {
+            key: 'disable',
+            icon: <HighlightOffRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t('disable'),
+        },
+        {
+            key: 'enable',
+            icon: <CheckCircleOutlineRoundedIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t('enable'),
+        },
+        {
+            key: 'clearUser',
+            icon: <PersonRemoveIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            title: t('clear_login_name'),
+        },
+    ]
+    
     const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage.getItem(localSelectedTree) || {})
 
     const [hasStudentRole, setHasStudentRole] = useState(false)
@@ -151,7 +151,7 @@ const index = () => {
     const config = {
         excelExport: true,
         printButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${translations(locale)?.students}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('students')}`,
         defaultSort: [
             {
                 dataField: tableState?.sort || 'className',
@@ -189,7 +189,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -209,7 +209,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -234,7 +234,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -254,7 +254,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -274,7 +274,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -294,7 +294,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -366,13 +366,13 @@ const index = () => {
                             onClick={() => console.log('excelImportModal')}
                         >
                             <AddCircleOutlineRoundedIcon/>
-                            <span className='ml-2'>{translations(locale)?.excel_import}</span>
+                            <span className='ml-2'>{t('excel_import')}</span>
                         </Button>
                         <Button
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-3'
                             onClick={() => setShowInsertModal(true)}
                         >
-                            <span className='ml-2'>{translations(locale)?.student?.create_user}</span>
+                            <span className='ml-2'>{t('student.create_user')}</span>
                         </Button>
                         {
                             // hasStudentRole
@@ -383,17 +383,17 @@ const index = () => {
                             //         onClick={() => setShowExcelUploadModal(true)}
                             //     >
                             //         <AddCircleOutlineRoundedIcon/>
-                            //         <span className='ml-2'>{translations(locale)?.excel_import}</span>
+                            //         <span className='ml-2'>{t('excel_import')}</span>
                             //     </button>
                             //         <button
                             //             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-3'
                             //             onClick={() => setShowInsertModal(true)}
                             //         >
-                            //             <span className='ml-2'>{translations(locale)?.student?.create_user}</span>
+                            //             <span className='ml-2'>{t('student.create_user')}</span>
                             //         </button>
                             //     </>
                             //     :
-                            //     <p className={'ml-2'}>{translations(locale)?.student?.userRoleNotFound}</p>
+                            //     <p className={'ml-2'}>{t('student.userRoleNotFound')}</p>
                         }
                         <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>

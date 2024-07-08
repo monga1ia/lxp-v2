@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { cloneDeep } from 'lodash'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import DTable from 'modules/DataTable/DTable'
-import { translations } from 'utils/translations'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -57,7 +56,7 @@ const createEsisClass = ({ onClose, onSubmit }) => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -90,27 +89,27 @@ const createEsisClass = ({ onClose, onSubmit }) => {
         return [
             {
                 dataField: 'esisGradeName',
-                text: translations(locale)?.esis?.gradeName,
+                text: t('esis.gradeName'),
                 sort: true
             },
             {
                 dataField: 'esisClassCode',
-                text: translations(locale)?.esis?.classCode,
+                text: t('esis.classCode'),
                 sort: true
             },
             {
                 dataField: 'esisClassName',
-                text: translations(locale)?.esis?.className,
+                text: t('esis.className'),
                 sort: true,
             },
             {
                 dataField: 'esisClassTeacher',
-                text: translations(locale)?.esis?.classTeacher,
+                text: t('esis.classTeacher'),
                 sort: true
             },
             {
                 dataField: 'eschoolClassName',
-                text: translations(locale)?.esis?.eschoolClassName,
+                text: t('esis.eschoolClassName'),
                 style: { padding: 2 },
                 formatter: (cell, row) =>
                     <input
@@ -123,7 +122,7 @@ const createEsisClass = ({ onClose, onSubmit }) => {
             },
             {
                 dataField: 'eschoolTeacher',
-                text: translations(locale)?.esis?.classTeacher,
+                text: t('esis.classTeacher'),
                 style: { padding: 2 },
                 formatter: (cell, row) =>
                     <Dropdown
@@ -133,13 +132,13 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         value={cell}
                         closeOnChange
                         options={teachers || []}
-                        placeholder={'-' + translations(locale)?.select + '-'}
+                        placeholder={'-' + t('select') + '-'}
                         onChange={(e, data) => handleChange(row?.id, 'eschoolTeacher', data?.value)}
                     />
             },
             {
                 dataField: 'eschoolShift',
-                text: translations(locale)?.school_shift,
+                text: t('school_shift'),
                 style: { padding: 2 },
                 formatter: (cell, row) =>
                     <Dropdown
@@ -149,13 +148,13 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         value={cell}
                         closeOnChange
                         options={shifts || []}
-                        placeholder={'-' + translations(locale)?.select + '-'}
+                        placeholder={'-' + t('select') + '-'}
                         onChange={(e, data) => handleChange(row?.id, 'eschoolShift', data?.value)}
                     />
             },
             {
                 dataField: 'eschoolScoreType',
-                text: translations(locale)?.group?.score_type,
+                text: t('group.score_type'),
                 style: { padding: 2 },
                 formatter: (cell, row) =>
                     <Dropdown
@@ -165,13 +164,13 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         value={cell}
                         closeOnChange
                         options={scoreTypes || []}
-                        placeholder={'-' + translations(locale)?.select + '-'}
+                        placeholder={'-' + t('select') + '-'}
                         onChange={(e, data) => handleChange(row?.id, 'eschoolScoreType', data?.value)}
                     />
             },
             {
                 dataField: 'eschoolRoom',
-                text: translations(locale)?.group?.classroom,
+                text: t('group.classroom'),
                 style: { padding: 2 },
                 formatter: (cell, row) =>
                     <Dropdown
@@ -181,7 +180,7 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         value={cell}
                         closeOnChange
                         options={rooms || []}
-                        placeholder={'-' + translations(locale)?.select + '-'}
+                        placeholder={'-' + t('select') + '-'}
                         onChange={(e, data) => handleChange(row?.id, 'eschoolRoom', data?.value)}
                     />
             },

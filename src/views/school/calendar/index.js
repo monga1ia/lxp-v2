@@ -10,7 +10,6 @@ import { Row, Col, Card, Button } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import interactionPlugin from '@fullcalendar/interaction'
 import HtmlHead from 'components/html-head/HtmlHead';
@@ -64,7 +63,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
@@ -85,7 +84,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -106,7 +105,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -127,7 +126,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -147,7 +146,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }

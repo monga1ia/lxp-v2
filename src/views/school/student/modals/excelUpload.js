@@ -2,7 +2,6 @@ import message from 'modules/message'
 import React, { useEffect, useState } from 'react'
 import { StepsStyleConfig } from 'chakra-ui-steps'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
 import { fetchRequest } from 'utils/fetchRequest'
 // import { schoolStudentExcelUpload } from 'utils/url'
 import { ReactSpreadsheetImport } from 'react-spreadsheet-import'
@@ -42,65 +41,65 @@ const titleStyle = {
 const refFields = [
     {
         key: 'class',
-        label: translations(locale)?.group?.name,
+        label: t('group.name'),
         alternateMatches: ['Анги', 'Бүлэг'],
         fieldType: { type: 'select' },
-        description: translations(locale)?.sheetImport?.required?.grade,
+        description: t('sheetImport.required.grade'),
         example: '1Б',
         validations: [
             {
                 rule: 'required',
-                errorMessage: translations(locale)?.sheetImport?.required?.grade,
+                errorMessage: t('sheetImport.required.grade'),
             },
         ],
     },
     {
         key: 'studentCode',
-        label: translations(locale)?.student?.student_code,
+        label: t('student?.student_code'),
         alternateMatches: ['Сурагчийн код', 'код'],
         fieldType: { type: 'select' },
-        description: translations(locale)?.sheetImport?.unique?.studentCode,
+        description: t('sheetImport.unique.studentCode'),
         example: 'HG746483',
         validations: [
             {
                 rule: 'required',
-                errorMessage: translations(locale)?.sheetImport?.required?.studentCode,
+                errorMessage: t('sheetImport.required.studentCode'),
             },
             {
                 rule: 'unique',
-                errorMessage: translations(locale)?.sheetImport?.unique?.studentCode,
+                errorMessage: t('sheetImport.unique.studentCode'),
             },
         ],
     },
     {
         key: 'username',
-        label: translations(locale)?.teacher?.login_name,
+        label: t('teacher?.login_name'),
         alternateMatches: ['Нэвтрэх', 'нэр', 'Нэвтрэх нэр', 'Хэрэглэгчийн нэр'],
         fieldType: { type: 'input' },
-        description: translations(locale)?.sheetImport?.regex?.email,
+        description: t('sheetImport.regex.email'),
         example: 'damia@eschool.edu.mn',
         validations: [
             {
                 rule: 'required',
-                errorMessage: translations(locale)?.sheetImport?.required?.username,
+                errorMessage: t('sheetImport.required.username'),
             },
             {
                 rule: 'unique',
-                errorMessage: translations(locale)?.sheetImport?.unique?.username,
+                errorMessage: t('sheetImport.unique.username'),
             },
             {
                 rule: 'regex',
                 value: emailRegex,
-                errorMessage: translations(locale)?.sheetImport?.regex?.email,
+                errorMessage: t('sheetImport.regex.email'),
             },
         ],
     },
     {
         key: 'password',
-        label: translations(locale)?.password,
+        label: t('password'),
         alternateMatches: ['Нууц үг', 'нууц', 'үг'],
         fieldType: { type: 'input' },
-        description: translations(locale)?.sheetImport?.desc?.studentPassword,
+        description: t('sheetImport.desc.studentPassword'),
         example: 'myPassword',
     },
 ]
@@ -138,7 +137,7 @@ const excelUpload = ({ onClose, onSubmit, open }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err?.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
@@ -147,7 +146,7 @@ const excelUpload = ({ onClose, onSubmit, open }) => {
         console.log('handleUplaodStep')
         // if (!data?.length) {
         //     onClose()
-        //     message(translations(locale)?.err?.file_empty)
+        //     message(t('err?.file_empty'))
         // }
         // return data
     }
@@ -178,7 +177,7 @@ const excelUpload = ({ onClose, onSubmit, open }) => {
         //             const studentClass = classes?.find(el => el?.value == row?.class)
         //             if (!studentClass?.studentCodes?.includes(row?.studentCode))
         //                 addError(key, {
-        //                     message: `${studentClass?.label} ${translations(locale)?.sheetImport?.error?.studentNotExists1} ${row?.studentCode} ${translations(locale)?.sheetImport?.error?.studentNotExists2}`,
+        //                     message: `${studentClass?.label} ${t('sheetImport.error.studentNotExists2')}`,
         //                     level: 'error'
         //                 })
         //             break
@@ -203,7 +202,7 @@ const excelUpload = ({ onClose, onSubmit, open }) => {
                 allowInvalidSubmit={false}
                 uploadStepHook={handleUploadStepHook}
                 matchColumnsStepHook={handleMatchColumnsStepHook}
-                translations={{ ...translations(locale)?.sheetImport }}
+                translations={{ ...t('sheetImport')}}
                 onSubmit={(data) => { onSubmit(JSON.stringify(data?.validData)) }}
                 customTheme={{
                     colors: {

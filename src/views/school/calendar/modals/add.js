@@ -53,9 +53,9 @@ const add = ({ onClose, onSubmit }) => {
         else{
             message(t('err.fill_all_fields'))
         } 
-        // if (!event?.title || !event?.start || !event?.end) return message(translations(locale)?.err?.fill_all_fields)
-        // if (!event?.allDay && (!startTime || !endTime)) return message(translations(locale)?.err?.fill_all_fields)
-        // if (!event?.allDay && (startTime == endTime)) return message(translations(locale)?.calendar?.time_duplicate)
+        // if (!event?.title || !event?.start || !event?.end) return message(t('err.fill_all_fields'))
+        // if (!event?.allDay && (!startTime || !endTime)) return message(t('err.fill_all_fields'))
+        // if (!event?.allDay && (startTime == endTime)) return message(t('calendar.time_duplicate'))
         // onSubmit({ ...event, startTime, endTime, allDay: event?.allDay ? 1 : 0 })
     }
 

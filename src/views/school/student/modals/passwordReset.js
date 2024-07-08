@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react'
 import { Col, Row, Modal } from 'react-bootstrap'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import Forms from 'modules/Form/Forms'
 
@@ -72,11 +71,11 @@ const passwordReset = ({ onClose, onSubmit }) => {
             message(t('err.fill_all_fields'))
         }
         // if (!password?.new || !password?.repeat)
-        //     return message(translations(locale)?.err?.fill_all_fields)
+        //     return message(t('err.fill_all_fields'))
         // else if (password?.new.length < 4)
-        //     return message(translations(locale)?.password_length_error)
+        //     return message(t('password_length_error'))
         // else if (password?.new !== password?.repeat)
-        //     return message(translations(locale)?.password_re_enter_mismatch)
+        //     return message(t('password_re_enter_mismatch'))
         // onSubmit({
         //     password: password.new,
         //     passwordRepeat: password.repeat
@@ -115,13 +114,13 @@ const passwordReset = ({ onClose, onSubmit }) => {
                         className='btn m-btn--pill btn-link m-btn m-btn--custom'
                         onClick={onClose}
                     >
-                        {translations(locale)?.back}
+                        {t('back')}
                     </button>
                     <button
                         className='btn m-btn--pill btn-success m-btn--wide'
                         onClick={handleSave}
                     >
-                        {translations(locale)?.save}
+                        {t('save')}
                     </button>
                 </div>
             </Modal.Footer>

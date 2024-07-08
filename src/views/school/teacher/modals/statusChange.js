@@ -27,7 +27,7 @@ const statusChange = ({ onClose, onSubmit, id }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(t('err?.error_occurred'))
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])

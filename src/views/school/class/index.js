@@ -174,7 +174,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(t('.err?.error_occurred'))
+    //             message(t('.err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -229,7 +229,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(t('.err?.error_occurred'))
+        //         message(t('.err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -353,7 +353,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(t('.err?.error_occurred'))
+        //         message(t('.err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -398,7 +398,7 @@ const index = () => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(t('.err?.error_occurred'))
+        //         message(t('.err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -532,13 +532,13 @@ const index = () => {
                                 className="btn m-btn--pill btn-link m-btn m-btn--custom"
                                 onClick={closeModal}
                             >
-                                {translations(locale).back || null}
+                                {t('back') || null}
                             </button>
                             <button
                                 onClick={deleteClass}
                                 className="btn m-btn--pill btn-danger m-btn--wide"
                             >
-                                {translations(locale).delete || null}
+                                {t('delete') || null}
                             </button>
                         </div>
                     </div>
