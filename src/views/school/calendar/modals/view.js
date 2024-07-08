@@ -52,7 +52,7 @@ const view = ({ onClose, onEdit, onDelete, event }) => {
                                     <td style={{ color: '#575962' }}>
                                         {
                                             event?.allDay ?
-                                                t('calendar?.all_day')
+                                                t('calendar.all_day')
                                                 :
                                                 `${new Date(event?.start)?.toLocaleTimeString('it-IT')?.slice(0, 5)} - ${new Date(event?.end)?.toLocaleTimeString('it-IT')?.slice(0, 5)}`
                                         }

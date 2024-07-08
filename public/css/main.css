@@ -809,6 +809,24 @@ table.viewTeacherTable>tr>th {
     line-height: 1.25;
     border-radius: 0.3076rem;
 }
+
+.bt-context-menu {
+    color: #FF4900 !important;
+    border: 0.5px solid #FF4900;
+}
+
+.bt-1 {
+    border-width: 0.5px !important;
+}
+.bt-2 {
+    border-width: 1.5px !important;
+}
+.bt-3 {
+    border-width: 1.5px !important;
+}
+.bt-4 {
+    border-width: 2px !important;
+}
 .btn-custom-search-style {
     border: 1px solid #ddd !important;
     border-left-color: #fff !important
@@ -2876,6 +2894,25 @@ input[type="color"]::-webkit-color-swatch {
 .modal-md-img {
     width: 540px !important;
     max-width: 540px !important;
+}
+@media (min-width: 992px) {
+    .modal-xxl{
+        max-width: 800px
+    }
+}
+@media (min-width: 1200px) {
+    .modal-xxl{
+        max-width:1140px
+    }
+}
+@media (min-width: 1500px) {
+    .modal-xxl{
+        max-width:1440px
+    }
+}
+
+.border-orange {
+    border: 1px solid rgba(255, 91, 29, .1);
 }
 
 .col-form-label {

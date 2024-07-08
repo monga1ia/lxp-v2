@@ -8,7 +8,8 @@ import message from 'modules/message';
 import TreeView from 'modules/TreeView';
 import DTable from 'modules/DataTable/DTable';
 import DeleteModal from 'utils/deleteModal'
-import { Row, Col } from 'react-bootstrap';
+import InsertModal from './modals/insert'
+import { Row, Col, Button, Card } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
@@ -31,17 +32,19 @@ const index = () => {
     const [loading, setLoading] = useState(false)
     const localStorageSelectedRefId = 'school_groups_selected_ref_id_index'
 
-    const [treeData, setTreeData] = useState([])
+    const [treeData, setTreeData] = useState([
+        {key: "all", title: "Бүгд", children: [{key: "2117", refId: 5, gid: "2117", title: "1-р анги"}]},
+    ])
     const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || 'all')
     const [selectedRefId, setSelectedRefId] = useState(secureLocalStorage.getItem(localStorageSelectedRefId) || 'all')
 
-    const [tableData, setTableData] = useState([])
+    const [tableData, setTableData] = useState([
+        {id: "50", name: "English B1 Level", curriculumName: "Цөм хөтөлбөр", gradeId: "2126"},
+        {id: "53", name: "English B1 Level", curriculumName: "Цахим хөтөлбөр", gradeId: "2126"}
+    ])
     const [totalCount, setTotalCount] = useState([])
-
-    const [viewTeacherModal, setViewTeacherModal] = useState(false)
-    const [viewDeleteModal, setViewDeleteModal] = useState(false)
-    const [teacherInfo, setTeacherInfo] = useState([])
-    const [classId, setClassId] = useState(false)
+    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
+    const [showInsertModal, setShowInsertModal] = useState(false)
 
     const [tableState, setTableState] = useState(secureLocalStorage.getItem(localeActiveTableState) ||
     {
@@ -88,7 +91,7 @@ const index = () => {
         },
         {
             dataField: "gradeName",
-            text: t('subject?.grade'),
+            text: t('subject.grade'),
             sort: true,
         },
         {
@@ -202,6 +205,7 @@ const index = () => {
 
     const _contextMenuItemClick = (id, key, row) => {
         if (id && key) {
+            setSelectedTableDataId(id)
             if (key === 'INSERT') {
                 setShowInsertModal(true)
                 // navigate('/school/groups/edit', { replace: true, state: { group: row.id, grade: row.gradeId, gradeName: row.gradeName } })
@@ -246,6 +250,14 @@ const index = () => {
         }
     }
 
+    const handleInsertGroup = () => {
+        console.log('handleInsert')
+    }
+    
+    const closeModal = () => {
+        setShowInsertModal(false)
+    }
+
     return (
         <div className="m-grid__item m-grid__item--fluid m-wrapper">
 
@@ -258,10 +270,10 @@ const index = () => {
                 </Col>
             </div>
             <div className="m-content">
-                <div className="row">
-                    <div className="col-3 pr-0">
-                        <div className="m-portlet ">
-                            <div className="m-portlet__body">
+                <Row className=''>
+                    <Col xl="2" xxl="2">
+                        <div className='m-portlet br-12'>
+                            <div className='m-portlet__body'>
                                 <TreeView
                                     treeData={treeData}
                                     selectedNodes={[selectedTreeDataId]}
@@ -270,9 +282,9 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className="col-9">
-                        <div className="m-portlet ">
+                    </Col>
+                    <Col xl="10" xxl="10">
+                        <div className="m-portlet br-12">
                             <div className="m-portlet__body">
                                 <DTable
                                     remote
@@ -287,8 +299,8 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
             {
                 loading &&
@@ -298,6 +310,14 @@ const index = () => {
                         <div className='m-loader m-loader--brand m-loader--lg' />
                     </div>
                 </>
+            }
+            {
+                showInsertModal && selectedTableDataId &&
+                <InsertModal
+                    data={selectedTableDataId}
+                    onClose={closeModal}
+                    onSubmit={handleInsertGroup}
+                />
             }
         </div>
     )

@@ -4,7 +4,6 @@ import {Col, Row, Modal} from 'react-bootstrap'
 import { NDropdown as Dropdown } from 'widgets/NavDropdown';
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
-import {translations} from 'utils/translations'
 import { useTranslation } from 'react-i18next';
 
 import {fetchRequest} from 'utils/fetchRequest'
@@ -67,7 +66,7 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
         //         setLoading(false)
         //     })
         //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
+        //         message(t('err.error_occurred'))
         //         setLoading(false)
         //     })
     }
@@ -117,11 +116,11 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
             <Modal.Body>
                 <div className="form-group row">
                     <label className="col-5 col-form-label text-right label-pinnacle-bold">
-                        {translations(locale).class.title + '*' || ""}
+                        {t('class.title') + '*' || ""}
                     </label>
                     <div className="col-4">
                         <Dropdown
-                            placeholder={'-' + translations(locale).select + '-' || ""}
+                            placeholder={'-' + t('select') + '-' || ""}
                             fluid
                             selection
                             additionPosition='bottom'
@@ -148,12 +147,12 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                                 <thead>
                                 <tr>
                                     <th>№</th>
-                                    <th>{translations(locale).photo}</th>
-                                    <th>{translations(locale).studentCode}</th>
-                                    <th>{translations(locale).student?.last_name}</th>
-                                    <th>{translations(locale).student?.first_name}</th>
-                                    <th>{translations(locale).student_email?.title}</th>
-                                    <th>{translations(locale).password}</th>
+                                    <th>{t('photo')}</th>
+                                    <th>{t('studentCode')}</th>
+                                    <th>{t('student.last_name')}</th>
+                                    <th>{t('student.first_name')}</th>
+                                    <th>{t('student_email.title')}</th>
+                                    <th>{t('password')}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -213,7 +212,7 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                         className='btn m-btn--pill btn-link m-btn m-btn--custom'
                         onClick={onClose}
                     >
-                        {translations(locale)?.back}
+                        {t('back')}
                     </button>
                     <button
                         className='btn m-btn--pill btn-success m-btn--wide'
@@ -236,7 +235,7 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                             })
 
                             if (hasError) {
-                                message(translations(locale)?.err?.invalid_email)
+                                message(t('err.invalid_email'))
                             } else {
                                 const emailStudents = students?.filter(obj => {
                                     return !obj?.disable && obj?.username && obj?.username?.length > 0 && isValidEmail(obj?.username)
@@ -244,7 +243,7 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
 
                                 if (emailStudents && emailStudents?.length > 0) {
                                     if (hasPasswordError) {
-                                        message(translations(locale)?.password_length_error)
+                                        message(t('password_length_error'))
                                     } else
                                     {
                                         loadData({
@@ -255,12 +254,12 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                                     }
 
                                 } else {
-                                    message(translations(locale)?.insert_email)
+                                    message(t('insert_email'))
                                 }
                             }
                         }}
                     >
-                        {translations(locale)?.save}
+                        {t('save')}
                     </button>
                 </div>
             </Modal.Footer>

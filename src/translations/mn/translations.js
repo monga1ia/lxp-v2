@@ -19,11 +19,12 @@ export const TRANSLATIONS_MN = {
         calculate: 'Тооцоолох',
         addToNewYear: 'Шинэ хичээлийн жилд бүртгэх',
         repetetive_add: 'Давтан үүсгэх',
+        create_user: 'Хэрэглэгч үүсгэх',
     },
     error: {
         selectRole: "Дүр сонгоно уу",
         selectGrade: 'Бүлгийн нэр оруулна уу',
-        selectShift: 'Ээлж оруулна уу',
+        selectShift: 'Ээлж сонгоно уу',
         selectEvaluationType: 'Үнэлгээний төрөл сонгоно уу',
         selectClass: 'Анги сонгоно уу',
         selectCurriculum: 'Хөтөлбөр сонгоно уу',
@@ -398,6 +399,7 @@ export const TRANSLATIONS_MN = {
         unable_to_log_date: 'Ирц бүртгэх боломжгүй өдөр байна',
     },
     class: {
+        class_list: 'Бүлгийн жагсаалт',
         attendance: {
             title: 'Өдөр ирц',
             log: 'Өдөр ирц бүртгэх',
@@ -1339,7 +1341,7 @@ export const TRANSLATIONS_MN = {
         esis: {
             title: "ESIS",
             employee: "Багш, ажилтан",
-            class: "Анги",
+            class: "Бүлэг",
             student: "Сурагчид",
             curriculum: "Хөтөлбөр, төлөвлөлт",
             attendance: "Өдрийн ирц",

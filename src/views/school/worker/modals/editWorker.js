@@ -175,7 +175,7 @@ const EditWorkerModal = ({onClose, onSubmit, id}) => {
 
     // useEffect(() => {
     //     if (!location?.state?.id) {
-    //         message(translations(locale)?.staff?.select)
+    //         message(t('staff.select'))
     //         navigate('/school/staffs', { replace: true })
     //     }
     // }, [])
@@ -194,7 +194,7 @@ const EditWorkerModal = ({onClose, onSubmit, id}) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])
@@ -257,7 +257,7 @@ const EditWorkerModal = ({onClose, onSubmit, id}) => {
 
     // const validateFields = () => {
     //     if (!staff?.lastName || !staff?.firstName || !staff?.code || !staff?.phoneNumber || !staff?.gender || !staff?.title) {
-    //         return message(translations(locale).err.fill_all_fields)
+    //         return message(t('err.fill_all_fields)')
     //     }
     //     else {
     //         staff.isTeacher = 0

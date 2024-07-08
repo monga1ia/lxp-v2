@@ -339,7 +339,8 @@
 .btn-info.focus, .btn-info:focus {
     background-color: #ff5b1d;
     -webkit-box-shadow: none !important;
-    box-shadow: none !important
+    box-shadow: none !important;
+    border: 1px solid #ff5b1d
 }
 
 .btn-info.disabled, .btn-info:disabled {

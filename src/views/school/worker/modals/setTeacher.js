@@ -129,7 +129,7 @@ const setTeacher = ({ onClose, onSubmit, id }) => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }, [])

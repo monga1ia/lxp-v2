@@ -242,21 +242,11 @@ const Forms = (({
     };
 
     const handleDropdownChange = (value, evt, index, fieldOption) => {
-        // let option = [];
-        // let options = fieldOption.options;
-        // if (options && options.length > 0) {
-        //     for (let i = 0; i < options.length; i++) {
-        //         if (value == options[i].value) {
-        //             option = options[i]
-        //         }
-        //     }
-        // }
         const clone = [...fields];
         const field = { ...clone[index] };
         field.value = evt.value;
         clone[index] = field;
         setFields(clone);
-        // field?.onChange?.(value, option);
     };
 
     const handleExtendedButtonChange = (index) => {
@@ -1457,7 +1447,7 @@ const Forms = (({
                                             <Dropdown
                                                 className={className}
                                                 onChange={(value, evt) => handleDropdownChange(value, evt, index, field)}
-                                                value={field.value}
+                                                value={field.value ? field.value : ''}
                                                 style={{width: field?.inputWidth}}
                                                 upward={false}
                                                 disabled={!!field.disabled}

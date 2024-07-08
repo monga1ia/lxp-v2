@@ -444,7 +444,7 @@ const index = () => {
     //                     setReportColumns(cols)
     //                 } else {
     //                     if (!res?.data?.canLog) {
-    //                         message(translations(locale)?.attendance?.unable_to_log_date)
+    //                         message(t('attendance.unable_to_log_date')
     //                     }
     //                     setCanLog(res?.data?.canLog || false)
     //                     setSeasonStart(res?.data?.seasonStart || null)
@@ -460,7 +460,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -483,7 +483,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -522,7 +522,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch((e) => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -543,14 +543,14 @@ const index = () => {
     //                 }
 
     //                 setHdr(res?.data?.hdr)
-    //                 message(translations(locale)?.success, true)
+    //                 message(t('success, true'))
     //             } else {
     //                 message(res.data.message)
     //             }
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -668,14 +668,14 @@ const index = () => {
     //                 setHdr(null)
     //                 setStudents(clone)
     //                 setShowDeleteModal(false)
-    //                 message(translations(locale)?.success, true)
+    //                 message(t('success, true')
     //             } else {
     //                 message(res.data.message)
     //             }
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -867,7 +867,7 @@ const index = () => {
     //             setLoading(false)
     //         })
     //         .catch(() => {
-    //             message(translations(locale)?.err?.error_occurred)
+    //             message(t('err.error_occurred'))
     //             setLoading(false)
     //         })
     // }
@@ -956,9 +956,9 @@ const index = () => {
                                                             }
                                                             setStudents(rows)
 
-                                                            if (!clone.editing) {
-                                                                message(translations(locale)?.success, true)
-                                                            }
+                                                            // if (!clone.editing) {
+                                                            //     message(t('success, true')
+                                                            // }
                                                             setShowTeacherLogModal(true)
                                                         }}
                                                                 className={'btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3' + (hdr?.editing ? 'btn-success' : 'btn-primary')}
