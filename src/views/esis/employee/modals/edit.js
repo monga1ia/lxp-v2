@@ -102,7 +102,7 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
         {
             dataField: 'checked',
             text: '',
-            sort: false,
+            align: 'center',
             formatter: (cell, row) => {
                 return (
                     <Checkbox

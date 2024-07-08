@@ -2,10 +2,11 @@ import { paginate } from 'utils/Util'
 import DTable from 'modules/DataTable/DTable'
 import React, { useEffect, useState } from 'react'
 import secureLocalStorage from 'react-secure-storage'
+import { useTranslation } from 'react-i18next'
 import { translations } from 'utils/translations'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
-const localTableState = 'esis_employee_table_state'
+const localTableState = 'esis_class_table_state'
 
 const styles = {
     green: {
@@ -19,9 +20,11 @@ const styles = {
     },
 }
 
+const table = ({ data, openModal }) => {
 
-const table = ({ data, openModal, updateTable, onTableRender }) => {
-
+    const { t } = useTranslation()
+    const [tableData, setTableData] = useState([])
+    const [tableDataTotalSize, setTableDataTotalSize] = useState(0)
     const [tableState, setTableState] = useState(secureLocalStorage.getItem(localTableState) ||
     {
         page: 1,
@@ -29,75 +32,60 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
         search: ''
     })
 
-
-    useEffect(() => {
-        if (updateTable) {
-            onTableRender()
-        }
-    }, [updateTable])
-
-    useEffect(() => {
-    }, [data, tableState])
-
     const columns = [
         {
-            dataField: 'esisId',
-            text: 'ESIS ID',
+            dataField: 'esisGradeName',
+            text: translations(locale)?.esis?.gradeName,
             sort: true
         },
         {
-            dataField: 'esisShortName',
-            text: translations(locale)?.esis?.shortName,
+            dataField: 'esisClassCode',
+            text: translations(locale)?.esis?.classCode,
             sort: true
         },
         {
-            dataField: 'esisLastName',
-            text: translations(locale)?.studentBook?.parent_name,
+            dataField: 'esisClassName',
+            text: translations(locale)?.esis?.className,
             sort: true,
         },
         {
-            dataField: 'esisFirstName',
-            text: translations(locale)?.studentBook?.name,
+            dataField: 'esisClassTeacher',
+            text: translations(locale)?.esis?.classTeacher,
             sort: true
         },
         {
-            dataField: 'esisBirthDay',
-            text: translations(locale)?.studentBook?.birth_day,
+            dataField: 'eschoolClassName',
+            text: translations(locale)?.esis?.eschoolClassName,
             sort: true
         },
         {
-            dataField: 'eschoolCode',
-            text: translations(locale)?.esis?.eschoolCode,
+            dataField: 'eschoolTeacher',
+            text: translations(locale)?.esis?.classTeacher,
             sort: true
         },
         {
-            dataField: 'eschoolLastName',
-            text: translations(locale)?.esis?.eschoolLastName,
+            dataField: 'eschoolShift',
+            text: translations(locale)?.school_shift,
             sort: true
         },
         {
-            dataField: 'eschoolFirstName',
-            text: translations(locale)?.esis?.eschoolFirstName,
+            dataField: 'eschoolScoreType',
+            text: translations(locale)?.group?.score_type,
             sort: true
         },
         {
-            dataField: 'eschoolTitle',
-            text: translations(locale)?.esis?.eschoolTitle,
+            dataField: 'eschoolRoom',
+            text: translations(locale)?.group?.classroom,
             sort: true
-        },
-        {
-            dataField: 'eschoolLoginName',
-            text: translations(locale)?.teacher?.login_name,
-            sort: true,
         },
         {
             dataField: 'action',
             text: '',
             align: 'center',
             formatter: (cell, row) => {
-                if (!row?.eschoolUserId) return (
+                if (!row?.eschoolClassId) return (
                     <button
-                        className='btn btn-info m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                        className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
                         onClick={() => openModal('edit', row)}
                     >
                         <i className='fa flaticon-edit-1' />
@@ -117,7 +105,7 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
 
     const config = {
         defaultSort: [{
-            dataField: 'esisFirstName',
+            dataField: 'esisClassName',
             order: 'asc'
         }],
         defaultPageOptions: {
@@ -127,9 +115,14 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
         }
     }
 
+    useEffect(() => {
+        const paginatedData = paginate(data, tableState)
+        setTableData(paginatedData?.data)
+        setTableDataTotalSize(paginatedData?.length)
+    }, [data, tableState])
 
     const handleRowStyle = row => {
-        if (row?.eschoolUserId)
+        if (row?.eschoolClassId)
             return styles.green
         else if (row?.something)
             return styles.grey
@@ -143,27 +136,16 @@ const table = ({ data, openModal, updateTable, onTableRender }) => {
         secureLocalStorage.setItem(localTableState, state)
     }
 
-
-    const getTableList = (list) => {
-        const paginatedData = paginate(list, tableState)
-        return paginatedData?.data
-    }
-
-    const getTableTotalSize = (list) => {
-        const paginatedData = paginate(list, tableState)
-        return paginatedData?.length
-    }
-
     return (
         <DTable
             remote
             config={config}
             locale={locale}
-            data={getTableList(data)}
+            data={tableData}
             columns={columns}
             rowStyle={handleRowStyle}
             onInteraction={handleInteraction}
-            totalDataSize={getTableTotalSize(data)}
+            totalDataSize={tableDataTotalSize}
         />
     )
 }

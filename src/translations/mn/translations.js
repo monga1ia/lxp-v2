@@ -1340,7 +1340,7 @@ export const TRANSLATIONS_MN = {
         esis: {
             title: "ESIS",
             employee: "Багш, ажилтан",
-            class: "Анги",
+            class: "Бүлэг",
             student: "Сурагчид",
             curriculum: "Хөтөлбөр, төлөвлөлт",
             attendance: "Өдрийн ирц",

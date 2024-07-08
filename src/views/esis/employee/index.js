@@ -215,44 +215,29 @@ const index = () => {
                 </Col>
             </div>  
             <div className='m-content'>
-                {
-                    insertMode
-                        ? <div className='mb-3 d-flex gap-04'>
-                            <button
-                                className='btn btn-success m-btn--pill text-uppercase'
-                                onClick={() => inputTableRef?.current?.submit()}
+
+                <div className='d-flex justify-content-between align-items-center mb-3'>
+                    <div>
+                        {
+                            filterNonEmployee(tableData).length > 0 && <button
+                                className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
+                                onClick={() => inputModalHandle()}
+                                // {/* onClick={() => inputTableRef?.current?.submit()} */}
                             >
-                                {translations(locale)?.save}
+                                <AddCircleOutlineRoundedIcon />
+                                <span className='ml-2'>{translations(locale)?.esis?.createUser}</span>
                             </button>
-                            <button
-                                className='btn btn-link'
-                                onClick={() => setInsertMode(false)}
-                            >
-                                {translations(locale)?.back}
-                            </button>
-                        </div>
-                        : <div className='d-flex justify-content-between align-items-center mb-3'>
-                            <div>
-                                {
-                                    filterNonEmployee(tableData).length > 0 && <button
-                                        className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
-                                        onClick={() => inputModalHandle()}
-                                    >
-                                        <AddCircleOutlineRoundedIcon />
-                                        <span className='ml-2'>{translations(locale)?.esis?.createUser}</span>
-                                    </button>
-                                }
-                            </div>
-                            <button
-                                style={{ backgroundColor: '#009cff' }}
-                                className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex text-white'
-                                onClick={loadInit}
-                            >
-                                <SyncRoundedIcon />
-                                <span className='ml-2'>SYNC</span>
-                            </button>
-                        </div>
-                }
+                        }
+                    </div>
+                    <button
+                        style={{ backgroundColor: '#009cff' }}
+                        className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex text-white'
+                        onClick={loadInit}
+                    >
+                        <SyncRoundedIcon />
+                        <span className='ml-2'>SYNC</span>
+                    </button>
+                </div>
                 <div className='m-portlet br-12'>
                     <div className='m-portlet__body'>
                         {

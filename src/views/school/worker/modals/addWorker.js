@@ -284,12 +284,14 @@ const AddWorkerModal = ({onClose, onSubmit, id}) => {
         setStaff({ ...staff, photo: undefined, fileType: undefined, })
     }
 
-    const validateFields = () => {
-        if (!staff?.lastName || !staff?.firstName || !staff?.role || !staff?.code || !staff?.loginName || !staff?.phoneNumber || !staff?.gender || !staff?.title)
-            return message(t('err.fill_all_fields'))
-        else
-            return true
-    }
+    // const validateFields = () => {
+    //     if (!staff?.lastName || !staff?.firstName || !staff?.role 
+    //             || !staff?.code || !staff?.loginName || !staff?.phoneNumber 
+    //             || !staff?.gender || !staff?.title)
+    //         return message(t('err.fill_all_fields'))
+    //     else
+    //         return true
+    // }
 
     return (
         <Modal
