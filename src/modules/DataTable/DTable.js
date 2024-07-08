@@ -47,6 +47,11 @@ const defaultConfig = {
     leftButtonClassName: "",
     leftButtonStyle: {},
     leftButtonText: "",
+
+    showSecondaryLeftButton: false,
+    secondaryLeftButtonClassName: '',
+    secondaryLeftButtonStyle: {},
+    secondaryLeftButtonText: '',
     tableMarginLess: false,
     defaultSort: [
         {
@@ -286,6 +291,7 @@ const DTable = ({
     contextMenus = [],
     onContextMenuItemClick,
     onLeftButtonClick,
+    onSecondaryLeftButtonClick,
     wrapperClassName = "",
     className = "",
     draggable = false,
@@ -1029,6 +1035,33 @@ const DTable = ({
                                                             }
                                                         </button>
                                                         : null
+                                                }
+                                                {
+                                                    config.showSecondaryLeftButton
+                                                        ?
+                                                        <button
+                                                            className={config.secondaryLeftButtonClassName}
+                                                            style={config.secondaryLeftButtonStyle}
+                                                            onClick={onSecondaryLeftButtonClick}
+                                                        >
+                                                            {
+                                                                config.secondaryLeftButtonIcon
+                                                                    ?
+                                                                    <>
+                                                                        {config.secondaryLeftButtonIcon}
+                                                                        <span className='ml-2'>
+                                                                            {config.secondaryLeftButtonText}
+                                                                        </span>
+                                                                    </>
+                                                                    :
+                                                                    // config.secondaryLeftButtonText
+                                                                    <span className='ml-2'>
+                                                                            {config.secondaryLeftButtonText}
+                                                                        </span>
+                                                            }
+                                                        </button>
+                                                        :
+                                                        null
                                                 }
                                                 <SizePerPageDropdownStandalone
                                                     className={`custom-size-per-page ${!config.showPagination ? 'height-0' : ''}`}
