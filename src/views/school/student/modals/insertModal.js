@@ -127,6 +127,7 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                             upward={false}
                             closeOnChange
                             selectOnBlur={false}
+                            search
                             value={selectedClass}
                             clearable={true}
                             options={classes?.map(classObj => {
@@ -143,17 +144,17 @@ const insertModal = ({onClose, onSubmit, gradeKey = null}) => {
                 {
                     students && students?.length > 0 && <div className="form-group row">
                         <Col md={12}>
-                            <table className={'table table-striped table-bordered'}>
+                            <table className={'table table-striped table-bordered insert-modal'}>
                                 <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>{t('photo')}</th>
-                                    <th>{t('studentCode')}</th>
-                                    <th>{t('student.last_name')}</th>
-                                    <th>{t('student.first_name')}</th>
-                                    <th>{t('student_email.title')}</th>
-                                    <th>{t('password')}</th>
-                                </tr>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>{t('photo').toUpperCase()}</th>
+                                        <th>{t('studentCode').toUpperCase()}</th>
+                                        <th>{t('student.last_name').toUpperCase()}</th>
+                                        <th>{t('student.first_name').toUpperCase()}</th>
+                                        <th>{t('student_email.title').toUpperCase()}</th>
+                                        <th>{t('password').toUpperCase()}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 {students?.map((studentObj, i) => {

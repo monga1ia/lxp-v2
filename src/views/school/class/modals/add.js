@@ -214,11 +214,21 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
                                 ref={formRef}
                                 fields={addClassFields}
                             />
-                            <div className="form-group m-form__group row grid-item ml-3">
-                                <div className='col-form-label col-4 mr-0'/>
-                                <div className='align-items-center col-6'>
-                                    <input className="form-check-input" id='reAdd' type="checkbox" value={addAgain} onChange={handleCheckbox} style={{ borderRadius: '4px', fontSize: '16px !important'}} />
-                                    <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px'}}>
+                        </div>
+                        <div className="form-group m-form__group row">
+                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            </label>
+                            <div className="col-6">
+                                <div className='align-center align-items-center d-flex' style={{marginLeft: '17px'}}>
+                                    <input 
+                                        className="form-check-input form-modal-check mt-0" 
+                                        id='reAdd' 
+                                        type="checkbox" 
+                                        style={{ borderRadius: '4px', fontSize: '18px'}} 
+                                        value={addAgain}
+                                        onChange={handleCheckbox}
+                                    />
+                                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
                                         {t('action.recreate')}
                                     </label>
                                 </div>

@@ -8,7 +8,7 @@ const clearUserModal = ({ onClose, onDelete, title, locale, children }) => {
 
     return (
         <Modal
-            size='sm'
+            size='lg'
             dimmer='blurring'
             show={true}
             onHide={onClose}

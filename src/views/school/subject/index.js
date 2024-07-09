@@ -75,12 +75,18 @@ const MainGroup = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showAddSubjectModal, setShowAddSubjectModal] = useState(false)
     const [showEditSubjectModal, setShowEditSubjectModal] = useState(false)
+    // const [excelName, setExcelName] = useState('')
+
+    // useEffect(()=> {
+    //     setExcelName(secureLocalStorage.getItem('selectedSchool'))
+    // }, [secureLocalStorage])
+    // console.log(secureLocalStorage.getItem('selectedSchool'))
 
     const config = {
         excelExport: true,
         printButton: true,
         columnButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('teacher_title')}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('subject.subjects')}`,
         defaultSort: [{
             dataField: 'firstName',
             order: 'asc'
@@ -103,9 +109,16 @@ const MainGroup = () => {
             sort: true
         },
         {
-            dataField: "typeName",
-            text: t('subject.subject_type') || "",
+            dataField: 'credit',
+            text: t('subject.credit') || '',
             sort: true,
+            align: "right",
+        },
+        {
+            dataField: 'grade',
+            text: t('subject.grade') || '',
+            sort: true,
+            align: "right",
         },
         {
             dataField: "teachers",
@@ -121,12 +134,6 @@ const MainGroup = () => {
                 ))
             }
         },
-        {
-            dataField: 'credit',
-            text: t('subject.credit') || '',
-            sort: true,
-            align: "right",
-        },
     ]
 
     const activeContextMenus = [
@@ -137,7 +144,7 @@ const MainGroup = () => {
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '1.8rem !important', color: '#ff5b1d'}}/>,
             title: t('edit')
         },
         {
@@ -248,6 +255,7 @@ const MainGroup = () => {
                                         locale={locale}
                                         data={tableData}
                                         columns={columns}
+                                        clickContextMenu
                                         contextMenus={contextMenus}
                                         onContextMenuItemClick={handleContextMenuClick}
                                         onInteraction={onUserInteraction}

@@ -70,6 +70,7 @@ table.react-bootstrap-table.custom-dt tbody tr td, table.react-bootstrap-table.c
     align-items: center;
     padding: 5px 1.5rem 5px 1rem;
     font-weight: 500;
+    min-height: 36px;
 }
 .dt-cm-item span{
     margin-left: 15px;
@@ -118,22 +119,22 @@ tr.dt-drag-hover-bottom td {
     cursor: pointer;
 }
 .react-bootstrap-table th .order-4:before{
-    color: rgba(255, 91, 29);
+    color: rgba(255, 91, 29) !important;
 }
 .react-bootstrap-table th .caret-4-asc:before{
-    color: #ff5b1d;
+    color: #ff5b1d !important;
 }
 .react-bootstrap-table th .caret-4-desc:before{
-    color: #ff5b1d;
+    color: #ff5b1d !important;
 }
 .react-bootstrap-table th .order-4:after {
-    color: rgba(255, 91, 29);
+    color: rgba(255, 91, 29) !important;
 }
 .react-bootstrap-table th .caret-4-asc:after {
-    color: rgba(255, 91, 29);
+    color: rgba(255, 91, 29) !important;
 }
 .react-bootstrap-table th .caret-4-desc:after {
-    color: #ff5b1d;
+    color: #ff5b1d !important;
 }
 #split-button-menu span:last-child{
     font-family: MulishRegular !important;

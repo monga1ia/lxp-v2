@@ -197,3 +197,23 @@ tr.dt-drag-hover-bottom {
 }
 
 /***************** datatable pagination link css **************/
+
+.insert-modal tbody tr td {
+  color: #575962;
+  border: 1px solid #EBEDF2;
+  border-color: #EBEDF2;
+}
+.insert-modal th {
+  color: #575962;
+  vertical-align: middle !important;
+  text-transform: capitalize;
+  border: 1px solid #EBEDF2;
+}
+
+.insert-modal thead th {
+  border-width: 1px;
+}
+
+.insert-modal {
+  border: 1px solid #EBEDF2;
+}

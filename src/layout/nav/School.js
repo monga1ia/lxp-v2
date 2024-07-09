@@ -31,8 +31,8 @@ const Schools = () => {
 
     const [schoolOptions, setSchoolOptions ] = useState([
         {value: "1", code: '1', refId: "refId", gid: "2323", text: "School 1"},
-        {value: "2", code: '2', refId: "refId2", gid: "232", text: "School 2"},
-        {value: "3", refId: "refId3", gid: "23", text: "School 3"},
+        {value: "221", code: '2', refId: "refId2", gid: "232", text: "School 2"},
+        {value: "34", refId: "refId3", gid: "23", text: "School 3"},
     ])
 
     const [classOptions, setClassOptions ] = useState([
@@ -239,7 +239,7 @@ const Schools = () => {
                         options={schoolOptions}
                         classNamePrefix='my-className-prefix'
                         value={selectedSchoolID}
-                        onChange={(e, data) => setSelectedSchoolID(e)}
+                        onChange={(e, data) => {setSelectedSchoolID(e), secureLocalStorage.setItem('selectedSchool', schoolOptions.filter(school => school.value === e)[0])}}
                     />
                 </div>
                 <div
@@ -279,7 +279,8 @@ const Schools = () => {
                             options={schoolOptions}
                             classNamePrefix='my-className-prefix'
                             value={selectedSchoolID}
-                            onChange={(e, data) => setSelectedSchoolID(e)}
+                            onChange={(e, data) => {setSelectedSchoolID(e), 
+                                secureLocalStorage.setItem('selectedSchool', schoolOptions.filter(school => school.value === e)[0])}}
                         />
                     </div>
                     <div
