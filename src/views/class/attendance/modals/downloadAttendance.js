@@ -41,13 +41,15 @@ const DownloadAttendanceModal = (
             labelBold: true,
             value: '',
             required: true,
+            search: true,
+            placeholder: `- ${t('err.select_school_shift')} -`, 
             errorMessage: `- ${t('err.select_school_shift')} -`, 
             className: "form-control",
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             fieldContainerClassName: 'col-6',
-            options:schoolShiftsOptions,
+            options:schoolShiftsOptions
         },
         {
             key: 'dashboardAttendenceHour',
@@ -56,14 +58,15 @@ const DownloadAttendanceModal = (
             labelBold: true,
             value: '',
             required: true,
+            search: true,
+            placeholder: `- ${t('err.select_time')} -`, 
             errorMessage: `- ${t('err.select_time')} -`, 
             className: "form-control",
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row',
             fieldContainerClassName: 'col-6',    
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            options: dashboardAttendenceHourOptions,
-            
+            options: dashboardAttendenceHourOptions
         }
     ]);
 
@@ -108,7 +111,7 @@ const DownloadAttendanceModal = (
                         {t('back')}
                     </button>
                     <button
-                        className="btn m-btn--pill btn-success m-btn--wide"
+                        className="btn m-btn--pill btn-success text-uppercase"
                         onClick={handleSubmit}
                     >
                         {t('save')}

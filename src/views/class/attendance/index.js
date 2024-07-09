@@ -8,6 +8,7 @@ import DTable from 'modules/DataTable/DTable';
 import {Tab} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import {dateFormat} from 'utils/Util';
+import message from '../../../modules/message'
 import {cloneDeep} from 'lodash';
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import TimelineIcon from '@mui/icons-material/Timeline';
@@ -280,11 +281,11 @@ const index = () => {
                 let button = {}
                 return <div className='container'>
                             <div className='row flex-row flex-nowrap px-3' style={{gap: 9}}>
-                                <button style={{...baseButton, color: 'rgb(255, 255, 255)', borderColor: 'rgb(62, 191, 163)', backgroundColor: 'rgb(62, 191, 163)'}} type='button' className='br-08'>И</button>
-                                <button style={{...baseButton, color: 'rgb(244, 81, 107)', borderColor: 'rgb(244, 81, 107)', backgroundColor: 'rgb(255, 255, 255)'}} type='button' className='br-08'>Ч</button>
+                                <button style={{...baseButton, color: 'rgb(255, 255, 255)', borderColor: 'rgb(62, 191, 163)', backgroundColor: 'rgb(62, 191, 163)'}} type='button' className='br-08'>Т</button>
+                                <button style={{...baseButton, color: 'rgb(244, 81, 107)', borderColor: 'rgb(244, 81, 107)', backgroundColor: 'rgb(255, 255, 255)'}} type='button' className='br-08'>Т</button>
                                 <button style={{...baseButton, color: 'rgb(155, 155, 155)', borderColor: 'rgb(155, 155, 155)', backgroundColor: 'rgb(255, 255, 255)'}} type='button' className='br-08'>Х</button>
                                 <button style={{...baseButton, color: 'rgb(144, 18, 254)', borderColor: 'rgb(144, 18, 254)', backgroundColor: 'rgb(255, 255, 255)'}} type='button' className='br-08'>Ө</button>
-                                <button style={{...baseButton, color: 'rgb(255, 108, 0)', borderColor: 'rgb(255, 108, 0)', backgroundColor: 'rgb(255, 255, 255)'}} type='button' className='br-08'>Т</button>
+                                <button style={{...baseButton, color: 'rgb(255, 108, 0)', borderColor: 'rgb(255, 108, 0)', backgroundColor: 'rgb(255, 255, 255)'}} type='button' className='br-08'>Ч</button>
                             </div>
                         </div>
             }
@@ -604,7 +605,7 @@ const index = () => {
         }]
     }
 
-    const getConfig = (hasHdr = false, ableToLog = false) => {
+    const getConfig = (hasHdr = false, ableToLog = false) => {       
         if (hasHdr) {
             return {
                 excelExport: false,
@@ -626,14 +627,14 @@ const index = () => {
                 printButton: false,
                 showAllData: true,
                 showPagination: false,
-                showLeftButton: ableToLog,
-                leftButtonStyle: {position: 'relative', bottom: '5px'},
-                leftButtonClassName: 'btn btn-sm m-btn--pill btn-publish m-btn--uppercase m-btn--wide mr-2',
+                showLeftButton: true,
+                leftButtonStyle: {position: 'relative', paddind: '0 0 10 0' ,bottom: '5px'},
+                leftButtonClassName: 'btn btn-sm m-btn--pill btn-publish m-btn--uppercase m-btn--wide mr-2 d-inline-flex',
                 leftButtonText: t('attendance.sent_attendance'),
 
-                showSecondaryLeftButton: ableToLog,
+                showSecondaryLeftButton: true,
                 secondaryLeftButtonStyle: {position: 'relative', bottom: '5px'},
-                secondaryLeftButtonClassName: 'btn btn-sm m-btn--pill btn-primary m-btn--uppercase m-btn--wide',
+                secondaryLeftButtonClassName: 'btn btn-sm m-btn--pill btn-secondary-left m-btn--uppercase m-btn--wide d-inline-flex',
                 secondaryLeftButtonText: t('attendance.download_attendance'),
 
                 defaultSort: [{
@@ -698,11 +699,12 @@ const index = () => {
         if (type === 'start') {
             start = selectedDay;
             end = endDate;
-            setStartDate(selectedDay)
+            setStartDate(selectedDay);
+                       
         } else if (type === 'end') {
             start = startDate;
             end = selectedDay;
-            setEndDate(selectedDay)
+            setEndDate(selectedDay);
         }
     }
 
@@ -897,7 +899,7 @@ const index = () => {
                                             menuItem: t('class.attendance.log'),
                                             render: () => (
                                                 <div className='m-portlet__body'>
-                                                    <div className="d-flex align-items-center justify-content-start">
+                                                    <div className="d-flex align-items-center justify-content-start mb-5 mt-4">
                                                         <a href="#" style={{color: 'black'}} onClick={() => {
                                                             let selectedDay = date.substring(0, 10);
                                                             let selectedDate = new Date(selectedDay);
@@ -939,20 +941,20 @@ const index = () => {
                                                             <i className='la la-angle-right'/>
                                                         </a>
                                                 </div>
-                                            {
-                                                // hdr && hdr?.reports && hdr?.reports?.length > 0 &&
+                                            {/* {
+                                                hdr && hdr?.reports && hdr?.reports?.length > 0 &&
                                                 <div className={'text-right'} style={{flex: 1}}>
                                                     <Button
                                                     onClick={() => {
-                                                            // let clone = cloneDeep(hdr)
-                                                            // clone.editing = !clone.editing;
-                                                            // setHdr(clone)
+                                                            let clone = cloneDeep(hdr)
+                                                            clone.editing = !clone.editing;
+                                                            setHdr(clone)
 
-                                                            // const rows = [...students]
-                                                            // for (let st = 0; st < rows?.length; st++) {
-                                                            //     rows[st].editing = clone.editing
-                                                            // }
-                                                            // setStudents(rows)
+                                                            const rows = [...students]
+                                                            for (let st = 0; st < rows?.length; st++) {
+                                                                rows[st].editing = clone.editing
+                                                            }
+                                                            setStudents(rows)
 
                                                             // if (!clone.editing) {
                                                             //     message(t('success, true')
@@ -961,17 +963,23 @@ const index = () => {
                                                         }}
                                                                 className={'btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3' + (hdr?.editing ? 'btn-success' : 'btn-primary')}
                                                             >
-                                                        {/* {hdr?.editing ? t('save') : t('attendance.edit_attendance')} */}
+                                                        {hdr?.editing ? t('save') : t('attendance.edit_attendance')}
                                                         {t('attendance.download_attendance')}
                                                     </Button>
                                                 </div>
-                                            }
+                                            } */}
                                                     <DTable
                                                         remote
-                                                        config={config}
+                                                        config={getConfig((hdr?.id, canLog))}
+                                                        // config={config}
+                                                        selectMode={'radio'}
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        onLeftButtonClick={() => sendLogs()}
+                                                            onSecondaryLeftButtonClick={() => {
+                                                                setShowTeacherLogModal(true)
+                                                            }}
                                                     />
                                                     {/* <DTable
                                                             config={getConfig(hdr?.id, canLog)}
@@ -991,8 +999,8 @@ const index = () => {
                                         {
                                             menuItem: t('class.attendance.report'),
                                             render: () => (
-                                        <div className='m-portlet__body'>
-                                        <div className='d-flex justify-content-center'>
+                                                <div className='m-portlet__body'>
+                                                <div className='d-flex justify-content-center'>
                                                     <div className={"text-right mr-4"}>
                                                         <label
                                                             className="col-form-label text-right label-pinnacle-bold">
@@ -1004,7 +1012,7 @@ const index = () => {
                                                         style={{
                                                             width: 160
                                                         }}
-                                                        value={startDate}
+                                                        // value={startDate}
                                                         hideOnDayClick={true}
                                                         inputProps={{className: 'form-control'}}
                                                         placeholder={t('err.select_date')}
@@ -1015,7 +1023,10 @@ const index = () => {
                                                                     after: new Date(seasonEnd)
                                                                 }
                                                                 :
-                                                                {}
+                                                                {
+                                                                    // before: new Date(startDate),
+                                                                    // after: FormData(new Date()) 
+                                                                }
                                                         }}
                                                         classNames={{
                                                             overlay: 'DayPickerInputOverlay',
@@ -1031,7 +1042,7 @@ const index = () => {
                                                     </div>
                                                     <DayPickerInput
                                                         onDayChange={(e) => dateRangeChange('end', e)}
-                                                        value={endDate}
+                                                        // value={endDate}
                                                         hideOnDayClick={true}
                                                         inputProps={{className: 'form-control'}}
                                                         placeholder={t('err.select_date')}
@@ -1042,7 +1053,10 @@ const index = () => {
                                                                     after: new Date(seasonEnd)
                                                                 }
                                                                 :
-                                                                {}
+                                                                { 
+                                                                    before: new Date(startDate),
+                                                                    after: new Date(date)                                                                    
+                                                                }
                                                         }}
                                                         classNames={{
                                                             overlay: 'DayPickerInputOverlay',
@@ -1052,20 +1066,25 @@ const index = () => {
                                                     <div
                                                         className="actions justify-content-center d-flex align-items-center ml-4">
                                                         <Button
-                                                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
-                                                            // onClick={() => {
-                                                            //     if (startDate && endDate) {
-                                                            //         loadData({
-                                                            //             start: startDate,
-                                                            //             end: endDate,
-                                                            //             viewType: 'REPORT'
-                                                            //         })
-                                                            //     } else {
-                                                            //         message(t('err.select_date'))
-                                                            //     }
-                                                            // }}
+                                                            className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex'
+                                                            style={{
+                                                                borderRadius: '10px',
+                                                                backgroundColor: '#41c5dc',
+                                                                color: 'white',
+                                                                borderColor: '#41c5dc'
+                                                            }}
+                                                            onClick={() => {
+                                                                if (startDate && endDate) {
+                                                                    loadData({
+                                                                        start: startDate,
+                                                                        end: endDate,
+                                                                        viewType: 'REPORT'
+                                                                    })
+                                                                } else {
+                                                                    message(t('err.select_date'))
+                                                                }
+                                                            }}
                                                         >
-                                                            <div className='d-flex'>
                                                                 <TimelineIcon className='d-flex' style={{
                                                                     marginLeft: '0.5rem',
                                                                     marginRight: '0.5rem',
@@ -1075,7 +1094,6 @@ const index = () => {
                                                                     marginLeft: '0.5rem',
                                                                     marginRight: '0.5rem'
                                                                 }}>{t('view')}</span>
-                                                            </div>
                                                         </Button>
                                                     </div>
                                                     

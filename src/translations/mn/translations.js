@@ -1348,7 +1348,7 @@ export const TRANSLATIONS_MN = {
         },
         class: {
             title: "Анги",
-            attendance: "Өдрийн ирц",
+            attendance: "Өдөр ирц",
             student: "Сурагчид",
             parents: "Асран хамгаалагч",
             timetable: "Хичээлийн хуваарь",
