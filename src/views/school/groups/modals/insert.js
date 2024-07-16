@@ -110,7 +110,7 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('class.add')}
+                    {t('student.register_student')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

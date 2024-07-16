@@ -23,7 +23,7 @@ const index = () => {
 
     const { t } = useTranslation()
 
-    const title = t('group.integratedGroupName');
+    const title = t('group.integratedGroup');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
@@ -60,7 +60,7 @@ const index = () => {
     const contextMenus = [
         {
             key: 'INSERT',
-            icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '26px !important', color: '#ff5b1d' }} />,
             title: t('student.register_student') || ""
         }
     ]
@@ -290,6 +290,7 @@ const index = () => {
                                     remote
                                     locale={locale}
                                     config={config}
+                                    clickContextMenu
                                     data={tableData}
                                     columns={columns}
                                     contextMenus={contextMenus}

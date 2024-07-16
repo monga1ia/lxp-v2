@@ -25,12 +25,13 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
     const addSubjectFields = [
         {
             key: 'subjectClass',
-            type: 'nDropdown',
+            type: 'text',
             label: `${t('subject.class')}`,
             labelBold: true,
             value: '',
             disabled: true,
             className: "form-control",
+            placeholder: '-'+t('select')+'-',
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
@@ -114,6 +115,7 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
             className: "form-control",
             labelBold: true,
             search: true,
+            multiple: true,
             value: '',
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",

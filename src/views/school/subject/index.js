@@ -144,7 +144,7 @@ const MainGroup = () => {
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '1.8rem !important', color: '#ff5b1d'}}/>,
+            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
             title: t('edit')
         },
         {

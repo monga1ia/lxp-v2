@@ -2355,6 +2355,13 @@ a.btn.disabled, fieldset:disabled a.btn {
     box-shadow: 0 0 0 .2rem rgba(88, 103, 221, .5)
 }
 
+.btn-sizePP button{
+    font-family: Mulish MulishRegular !important;
+    font-size: 14px;
+    font-weight: 400;
+    color: #575962;
+}
+
 .btn-secondary {
     color: #fff;
     background-color: #36a3f7!important;

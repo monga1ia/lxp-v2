@@ -3264,7 +3264,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .form-control:disabled, .form-control[readonly] {
-    background-color: #f4f5f8;
+    background-color: #EBEDF2;
+    border: 1px solid #EBEDF2;
     opacity: 1
 }
 
