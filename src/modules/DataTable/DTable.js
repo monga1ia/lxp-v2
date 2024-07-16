@@ -562,6 +562,7 @@ const DTable = ({
                         {availableContextMenus.map((menu) => {
                             return (
                                 <div
+                                    style={menu?.style ? menu.style : (menu.key == 'view' ? { position: 'relative', right: 1 } : {})}
                                     className="dt-cm-item"
                                     onClick={(event) => {
                                         event.stopPropagation();
@@ -570,8 +571,8 @@ const DTable = ({
                                     }}
                                     key={menu.key}
                                 >
-                                    <div>{menu.icon ? menu.icon : null}</div>
-                                    <span className="black-color ml-2">{menu.title}</span>
+                                    <div style={{transform: 'translate(0px, -2px)'}}>{menu.icon ? menu.icon : null}</div>
+                                    <span className="black-color">{menu.title}</span>
                                 </div>
                             );
                         })}

@@ -24,13 +24,12 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
 
     const addSubjectFields = [
         {
-            key: 'subjectTitle',
+            key: 'subjectClass',
             type: 'nDropdown',
-            label: `${t('subject.title')}*`,
+            label: `${t('subject.class')}`,
             labelBold: true,
             value: '',
-            required: true,
-            errorMessage: t('error.selectSubjectTitle'),
+            disabled: true,
             className: "form-control",
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row',
@@ -39,24 +38,9 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
             options: subjectOptions,
         },
         {
-            key: 'subjectType',
-            type: 'nDropdown',
-            label: `${t('subject.type')}*`,
-            className: "form-control",
-            labelBold: true,
-            required: true,
-            value: '',
-            required: true,
-            errorMessage: t('error.selectSubjectType'),
-            formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            fieldContainerClassName: 'col-6',
-            options: subjectTypeOptions,
-        },
-        {
             key: 'subjectIndex',
             type: 'text',
-            label: `${t('subject.index')}*`,
+            label: `${t('subject.subject_index')}*`,
             className: "form-control",
             labelBold: true,
             required: true,
@@ -83,35 +67,6 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
             fieldContainerClassName: 'col-6',
         },
         {
-            key: 'subjectGrade',
-            type: 'nDropdown',
-            label: `${t('group.grade')}*`,
-            className: "form-control",
-            labelBold: true,
-            required: true,
-            value: '',
-            errorMessage: t('group.select_grade'),
-            placeholder: t('group.select_grade'),
-            formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            fieldContainerClassName: 'col-6',
-            options: subjectLevelOptions,
-        },
-        {
-            key: 'subjectTeacher',
-            type: 'nDropdown',
-            label: `${t('subject.teacher')}*`,
-            className: "form-control",
-            labelBold: true,
-            required: true,
-            value: '',
-            errorMessage: t('error.selectSubjectTeacher'),
-            formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            fieldContainerClassName: 'col-6',
-            options: subjectTeacherOptions,
-        },
-        {
             key: 'subjectCredit',
             type: 'text',
             label: `${t('subject.credit')}*`,
@@ -124,6 +79,46 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             fieldContainerClassName: 'col-6',
+        },
+        {
+            key: 'subjectType',
+            type: 'nDropdown',
+            label: `${t('subject.type')}`,
+            className: "form-control",
+            labelBold: true,
+            search: true,
+            value: '',
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+            options: subjectTypeOptions,
+        },
+        {
+            key: 'subjectGrade',
+            type: 'nDropdown',
+            label: `${t('group.grade')}`,
+            className: "form-control",
+            labelBold: true,
+            search: true,
+            value: '',
+            placeholder: t('group.select_grade'),
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+            options: subjectLevelOptions,
+        },
+        {
+            key: 'subjectTeacher',
+            type: 'nDropdown',
+            label: `${t('subject.teacher')}`,
+            className: "form-control",
+            labelBold: true,
+            search: true,
+            value: '',
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+            options: subjectTeacherOptions,
         },
     ]
 
@@ -163,7 +158,7 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="row mt-4">
+                <div className="row">
                     <div className="col">
                         <div className="form-group m-form__group row mb-0">
                             <Forms
@@ -175,22 +170,38 @@ const AddSubjectModal = ({onClose, onSubmit, data}) => {
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                             </label>
                             <div className="col-6">
-                                <Checkbox
-                                    checked={isAll}
-                                    onChange={() => setIsAll( !isAll )}
-                                    label={t('subject.isAll') || ""}
-                                />
+                                <div className='align-center align-items-center d-flex' style={{marginLeft: '17px'}}>
+                                    <input 
+                                        className="form-check-input form-modal-check mt-0" 
+                                        id='subjectIsAll' 
+                                        type="checkbox" 
+                                        style={{ borderRadius: '4px', fontSize: '18px'}} 
+                                        value={isAll}
+                                        onChange={() => setIsAll( !isAll )}
+                                    />
+                                    <label className="form-check-label font-mulish" htmlFor="subjectIsAll" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
+                                        {t('subject.isAll')}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                             </label>
                             <div className="col-6">
-                                <Checkbox
-                                    checked={isResult}
-                                    onChange={() => setIsResult( !isResult )}
-                                    label={t('subject.isResult') || ""}
-                                />
+                                <div className='align-center align-items-center d-flex' style={{marginLeft: '17px'}}>
+                                    <input 
+                                        className="form-check-input form-modal-check mt-0" 
+                                        id='subjectIsResult' 
+                                        type="checkbox" 
+                                        style={{ borderRadius: '4px', fontSize: '18px'}} 
+                                        value={isResult}
+                                        onChange={() => setIsResult( !isResult )}
+                                    />
+                                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
+                                        {t('subject.isResult')}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

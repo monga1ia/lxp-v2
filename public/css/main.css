@@ -121,6 +121,10 @@ body,
     font-family: MulishRegular !important;
 } */
 
+.font-mulish {
+    font-family: Mulish !important
+}
+
 .m-portlet-header {
     padding: 0.5rem;
 }
@@ -825,6 +829,12 @@ table.viewTeacherTable>tr>th {
 .bt-context-menu {
     color: #FF4900 !important;
     border: 0.5px solid #FF4900;
+}
+
+.bt-context-menu:hover {
+    background-color: #FF4900 !important;
+    border: 0.5px solid #FF4900;
+    border-color: #FF4900
 }
 
 .bt-1 {
@@ -3574,6 +3584,14 @@ select.form-control:focus::-ms-value {
 
 .form-check-input:disabled ~ .form-check-label {
     color: #6c757d
+}
+
+.form-check-input.form-modal-check {
+    position: absolute;
+    margin-top: .3rem;
+    border: 1px solid #ff5b1d;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .form-check-label {

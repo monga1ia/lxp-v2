@@ -1527,16 +1527,16 @@ label {
 .table td, .table th {
     padding: .75rem;
     vertical-align: top;
-    border-top: 1px solid #f4f5f8
+    border-top: 1px solid #EBEDF2
 }
 
 .table thead th {
     vertical-align: bottom;
-    border-bottom: 2px solid #f4f5f8
+    border-bottom: 2px solid #EBEDF2
 }
 
 .table tbody + tbody {
-    border-top: 2px solid #f4f5f8
+    border-top: 2px solid #EBEDF2
 }
 
 .table .table {
@@ -1548,11 +1548,11 @@ label {
 }
 
 .table-bordered {
-    border: 1px solid #f4f5f8
+    border: 1px solid #EBEDF2
 }
 
 .table-bordered td, .table-bordered th {
-    border: 1px solid #f4f5f8
+    border: 1px solid #EBEDF2
 }
 
 .table-bordered thead td, .table-bordered thead th {
@@ -1688,7 +1688,7 @@ label {
 .table .thead-light th {
     color: #575962;
     background-color: #ebedf2;
-    border-color: #f4f5f8
+    border-color: #EBEDF2
 }
 
 .table-dark {
