@@ -272,6 +272,18 @@ a {
     background-color: #acacac;  
 }
 
+.react-modal {
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    overflow: visible;
+}
+
+.overflow-modal {
+    overflow: initial !important;
+}
+
 /* mathAjax -н expire message */
 .wrs_tickContainer {
     visibility: hidden;

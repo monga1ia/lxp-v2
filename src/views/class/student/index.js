@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
-// import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import message from '../../../modules/message'
@@ -10,7 +10,10 @@ import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import DTable from 'modules/DataTable/DTable';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import RegistrationSheetModal from './modals/registrationSheet'
 import ImageModal from '../../../utils/imageModal'
+import PrintData from './components/printData'
+import { useReactToPrint } from 'react-to-print'
 import {Tab} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
@@ -28,6 +31,7 @@ const index = () => {
     const [selectedStudent, setSelectedStudent] = useState(null)
 
     const [showImageModal, setShowImageModal] = useState(false)
+    const [showRegistrationStudentModal, setShowRegistrationStudentModal] = useState(false)
     const [showRegistrationSheetModal, setShowRegistrationSheetModal] = useState(false)
 
     const [school, setSchool] = useState({})
@@ -202,7 +206,7 @@ const index = () => {
     }
 
     const closeModal = () => {
-        // setShowAddStudentModal(false)
+        // setRegisterAddStudentModal(false)
         setSelectedStudent(null)
         setShowImageModal(false)
         setShowRegistrationSheetModal(false)
@@ -218,9 +222,10 @@ const index = () => {
         setSelectedTabData(data.activeIndex)
     }
 
-    const handleAddStudent = () => {
-        setShowAddStudentModal(true)
-    }
+    // const handleAddStudent = () => {
+    //     setShowRegistrationStudentModal(true)
+        
+    // }
     
 
     const handleContextMenuClick = (row, key) => {
@@ -230,9 +235,9 @@ const index = () => {
             setSelectedStudent(row)
             if (key === 'avatar') {
                 setShowImageModal(true)
-            } else if (key === 'sheet') {
+            } else if (key === 'sheet') { // хувийн хэрэг
                 setShowRegistrationSheetModal(true)
-            } else if (key === 'studentBook') {
+            } else if (key === 'studentBook') { // бүртгэлийн хуудас 
                 onClickName(row)
             } 
         }
@@ -251,6 +256,14 @@ const index = () => {
     //     }
     // }, [treeData])
 
+    const handlePrint = useReactToPrint({
+        suppressErrors: true,
+        content: () => printRef.current,
+        onPrintError: () => { message(t('err.error_occurred')) },
+        pageStyle: '@page{size: auto!important; margin: 0.2cm 1cm!important}',
+        documentTitle: `${selectedStudent?.firstName} - ${t('movement.register_sheet')}`,
+    })
+
     const onClickName = (row) => {
         // navigate('/student/book', { state: {
         //     id: row?.id,
@@ -262,6 +275,13 @@ const index = () => {
 
     return (
         <>
+                <div className='d-none'>
+                    <PrintData
+                        ref={printRef}
+                        school={school}
+                        student={selectedStudent}
+                    />
+                </div>  
             <HtmlHead title={title} description={description} />
 
             <div className="page-title-container mb-2">
@@ -289,7 +309,7 @@ const index = () => {
                     <Col xl="10" xxl="10">
                     { selectedTabData == 0 && 
                         <Button
-                            onClick={() => setShowAddStudentModal(true)}
+                            onClick={() => setShowRegistrationStudentModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
@@ -305,7 +325,7 @@ const index = () => {
                                     className='m-portlet-header'
                                     panes={[
                                         {
-                                            menuItem: t('studentBook.studying'),
+                                            menuItem: t('active'),
                                             render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
@@ -313,6 +333,7 @@ const index = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        clickContextMenu={true}
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
@@ -330,6 +351,7 @@ const index = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        clickContextMenu={true}
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
@@ -362,8 +384,16 @@ const index = () => {
                     onSubmit={handleAvatar}
                 />
             }
+            {
+                showRegistrationSheetModal && selectedStudent &&
+                <RegistrationSheetModal
+                    onClose={closeModal}
+                    onSubmit={handlePrint}
+                />
+            }
+            
         </>
     );
 }
 
-export default index
+export default index;

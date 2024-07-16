@@ -15,7 +15,8 @@ const DownloadAttendanceModal = (
         schoolShifts, 
         setSchoolShifts,
         selectedTimeTemplate, 
-        setSelectedTimeTemplate 
+        setSelectedTimeTemplate,
+        selectedTeacherLog
     }) => {
 
     const { t } = useTranslation()
@@ -112,6 +113,7 @@ const DownloadAttendanceModal = (
                     </button>
                     <button
                         className="btn m-btn--pill btn-success text-uppercase"
+                        disabled={!selectedTeacherLog}
                         onClick={handleSubmit}
                     >
                         {t('save')}

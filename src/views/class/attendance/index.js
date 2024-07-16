@@ -62,8 +62,8 @@ const baseButton = {
 }
 
 const index = () => {
-    // const locale="mn";
-    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+    const locale="mn";
+    // const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const localSchool = secureLocalStorage.getItem('selectedSchool')
     const { t } = useTranslation();
     const history = useHistory();
@@ -161,7 +161,7 @@ const index = () => {
     const [endDate, setEndDate] = useState(null)
 
     const [totalCount, setTotalCount] = useState(0);
-    const [tableData, setTableData] = useState([
+    const [attendanceData, setAttendanceData] = useState([
         {id: 11, code: 555, firstName: "john", lastName: 'eee'}, 
         {id: 12, code: 333, firstName: "joy", lastName: 'www'}, 
         {id: 13, code: 888, firstName: "julie", lastName: 'Mark'}, 
@@ -174,15 +174,18 @@ const index = () => {
         {id: 14, code: 77, firstName: "julia", lastName: 'Mike', percentage: '100'}, 
     ]);
 
-    const config = {
+    const attendanceConfig = {
         excelExport: false,
         printButton: false,
         columnButton: false,
-        showPagination: false,
         defaultSort: [{
             dataField: 'firstName',
             order: 'asc'
-        }]
+        }],
+        defaultPageOptions: {
+            page: 1,
+            sizePerPage: 10,
+        }
     }
 
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
@@ -192,11 +195,11 @@ const index = () => {
    
 
     // const [tableState, setTableState] = useState(
-    //     selectedTabData?.code == 'ACTIVE'
+    //     selectedTabData?.code == 'ATTENDANCE'
     //         ?
-    //         secureLocalStorage.getItem(localeActiveTableState)
+    //         secureLocalStorage.getItem(localeAttendanceTableState)
     //             ?
-    //             secureLocalStorage.getItem(localeActiveTableState)
+    //             secureLocalStorage.getItem(localeAttendanceTableState)
     //             :
     //             {
     //                 filter: {},
@@ -207,22 +210,18 @@ const index = () => {
     //                 order: 'asc'
     //             }
     //         :
-    //         selectedTabData?.code == 'QUIT'
+    //         secureLocalStorage.getItem(localeReportTableState)
     //             ?
-    //             secureLocalStorage.getItem(localeQuitTableState)
+    //             secureLocalStorage.getItem(localeReportTableState)
     //             :
-    //             selectedTabData?.code == 'ABSENT'
-    //                 ?
-    //                 secureLocalStorage.getItem(localeAbsentTableState)
-    //                 :
-    //                 {
-    //                     filter: {},
-    //                     page: 1,
-    //                     pageSize: 10,
-    //                     search: '',
-    //                     sort: 'firstName',
-    //                     order: 'asc'
-    //                 }
+    //             {
+    //                 filter: {},
+    //                 page: 1,
+    //                 pageSize: 10,
+    //                 search: '',
+    //                 sort: 'firstName',
+    //                 order: 'asc'
+    //             }
     // )
     // const onTypeChange = (rowTypeId = null, isEditing = false) => {
     //     const rowArray = rowTypeId?.split('_');
@@ -235,20 +234,20 @@ const index = () => {
     //     }
     // }
      
-    const columns = [
+    const attendanceColumns = [
         {
             dataField: 'avatar',
             text: t('teacher.photo'),
             sort: false,
             width: 40,
             align: 'center',
-            formatter: (cell) => 
+            formatter: (row, cell) => 
                 <img className='img-responsive img-circle'
-                            src={cell || '/img/profile/placeholder.jpg'}
-                            width={40} height={40} alt='profile picture'
+                            src={cell || '/images/avatar.png'}
+                            width={40} height={40} alt={`Photo of ${row?.firstName}`}
                             onError={(e) => {
                                 e.target.onError = null
-                                e.target.src = '/img/profile/avatar.png'
+                                e.target.src = '/img/avatar.png'
                             }}
                 />
         },
@@ -598,11 +597,14 @@ const index = () => {
         excelFileName: `${localSchool?.classes?.find(el => el?.value == secureLocalStorage.getItem('selectedClassId'))?.text}-${t('class.attendance.title')}`,
         printButton: false,
         showAllData: true,
-        showPagination: false,
         defaultSort: [{
             dataField: 'firstName',
             order: 'asc'
-        }]
+        }],
+        defaultPageOptions: {
+            page: 1,
+            sizePerPage: 10,
+        }
     }
 
     const getConfig = (hasHdr = false, ableToLog = false) => {       
@@ -715,7 +717,7 @@ const index = () => {
         // setShowViewModal(false)
         // setShowDeleteModal(false)
         // setStatusChangeModal(false)
-        setSelectedTableDataId(null)
+        // setSelectedTableDataId(null)
         // setShowRoleChangeModal(false)
         // setShowInfoChangeModal(false)
         // setShowPasswordResetModal(false)
@@ -971,15 +973,14 @@ const index = () => {
                                                     <DTable
                                                         remote
                                                         config={getConfig((hdr?.id, canLog))}
-                                                        // config={config}
-                                                        selectMode={'radio'}
                                                         locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
+                                                        columns={attendanceColumns}
+                                                        data={attendanceData}
                                                         onLeftButtonClick={() => sendLogs()}
                                                             onSecondaryLeftButtonClick={() => {
                                                                 setShowTeacherLogModal(true)
                                                             }}
+                                                        totalDataSize={totalCount}
                                                     />
                                                     {/* <DTable
                                                             config={getConfig(hdr?.id, canLog)}
@@ -1024,8 +1025,8 @@ const index = () => {
                                                                 }
                                                                 :
                                                                 {
-                                                                    // before: new Date(startDate),
-                                                                    // after: FormData(new Date()) 
+                                                                    before: new Date(seasonStart),
+                                                                    after: new Date(date)
                                                                 }
                                                         }}
                                                         classNames={{
@@ -1101,10 +1102,10 @@ const index = () => {
                                                     <DTable
                                                         remote
                                                         config={reportConfig}
-                                                        selectMode={'radio'}
-                                                        columns={reportDefaultColumns}
-                                                        // data={reportData}
                                                         locale={locale}
+                                                        columns={reportDefaultColumns}
+                                                        data={reportData}                                                        
+                                                        totalDataSize={totalCount}
                                                     />
                                             
                                                 </div>                                               
@@ -1126,6 +1127,7 @@ const index = () => {
                     setSchoolShifts={setSchoolShifts}
                     selectedTimeTemplate={selectedTimeTemplate}
                     setSelectedTimeTemplate={setSelectedTimeTemplate}
+                    selectedTeacherLog={selectedTeacherLog}
                     onClose={onCloseTeacherLog}
                     onSubmit={submitDownloadAttendance}
                 />
