@@ -215,29 +215,23 @@ const AddClassModal = ({onClose, onSubmit, data}) => {
                                 fields={addClassFields}
                             />
                         </div>
-                        <div className="form-group m-form__group row">
-                            <label className="col-4 col-form-label text-right label-pinnacle-bold">
-                            </label>
-                            <div className="col-6">
-                                <div className='align-center align-items-center d-flex' style={{marginLeft: '17px'}}>
-                                    <input 
-                                        className="form-check-input form-modal-check mt-0" 
-                                        id='reAdd' 
-                                        type="checkbox" 
-                                        style={{ borderRadius: '4px', fontSize: '18px'}} 
-                                        value={addAgain}
-                                        onChange={handleCheckbox}
-                                    />
-                                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
-                                        {t('action.recreate')}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </Modal.Body>
             <Modal.Footer className="text-center">
+                <div className='align-center align-items-center' style={{marginLeft: '17px', position: 'absolute', left: '1.5rem', bottom: '1.5rem'}}>
+                    <input 
+                        className="form-check-input modal-position form-modal-check mt-0" 
+                        id='reAdd' 
+                        type="checkbox" 
+                        style={{ borderRadius: '4px', fontSize: '18px'}} 
+                        value={addAgain}
+                        onChange={handleCheckbox}
+                    />
+                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px', fontWeight: '400' }}>
+                        {t('action.recreate')}
+                    </label>
+                </div>
                 <button 
                     onClick={onClose}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"

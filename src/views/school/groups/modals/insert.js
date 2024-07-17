@@ -1,109 +1,177 @@
-import React, { useRef, useState, useEffect } from 'react'
+import { useState } from 'react'
 import message from 'modules/message'
+import React, { useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
-import _ from 'lodash';
-import secureLocalStorage from 'react-secure-storage';
+// import { schoolGroupEdit } from 'Utilities/url'
+import secureLocalStorage from 'react-secure-storage'
+// import { fetchRequest } from 'Utilities/fetchRequest'
+import { translations } from 'utils/translations'
+import { NDropdown as Dropdown } from "widgets/Dropdown"
 import { useTranslation } from "react-i18next";
-import { NDropdown as Dropdown } from 'widgets/Dropdown';
-import Forms from 'modules/Form/Forms'
-
-const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+import AddIcon from '@mui/icons-material/Add';
+import { Checkbox } from 'semantic-ui-react'
 
 const InsertGroupModal = ({onClose, onSubmit, data}) => {
 
-    const { t } = useTranslation();
-    const formRef = useRef();
+    const { t } = useTranslation()
 
+    const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
+    const [staff, setStaff] = useState(false)
+    const [classOptions, setClassOptions] = useState([{value: '11', text: '111', students: [{value: 'stu1', text: 'Im studnets 1'}, {value: '123829', text: 'Students2'}]},
+     {value: '22', text: 'asdf', students: [{value: 'stu4', text: 'Im studnets 4'}, {value: '12382', text: 'Students6'}]}])
+    const [details, setDetails] = useState([{
+        index: 0,
+        classId: null,
+        studentIds: []
+    }])
 
-    const [classList, setClassList] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
-    const [studentList, setStudentList] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}, {value: '223', text: 'asdef'}, {value: '224', text: 'asadf'}, {value: '252', text: 'asbdf'}])
-    const [shallowCopy, setShallowCopy] = useState([])
-    const [selectedStudentIds, setSelectedStudentIds] = useState([])
-    const [selectAll, setSelectAll] = useState(false)
-    const [allStudents, setAllStudents] = useState([])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(schoolGroupEdit, 'POST', { grade: location?.state?.grade, group: location?.state?.group })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { classes, teacherData, students } = res.data
+    //                 setClassOptions(classes || [])
+    //                 setStaff(teacherData || {})
+    //                 if(students && students.length > 0){
+    //                     setDetails(students)
+    //                 }
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
-    useEffect (() => {
-        let holder = []
-        for (let x=0;x<studentList.length;x++){
-            holder.push(studentList[x].value)
-        }
-        setAllStudents(holder)
-    }, [])
+    const validateFields = () => {
+        let error = false
+        if(details && details.length > 0){
+            for(let i = 0; i < details.length; i++){
+                if(!details[i].classId){
+                    message(translations(locale)?.finance.select_class, false)
+                    error = true
+                    break;
+                } else if (details[i].studentIds == 0){
+                    message(translations(locale)?.timetable.select_students, false)
+                    error = true
+                    break;
+                }
 
-    const handleCheckbox = () => {
-        setSelectAll(!selectAll)
-        if (selectAll) {
-            setSelectedStudentIds(shallowCopy)
+                if(details[i].classId && details.find(data => data.classId == details[i].classId && data.index != details[i].index)){
+                    message(translations(locale)?.err.class_duplicate, false)
+                    error = true   
+                    break;
+                }
+            }
+
+            if(error){
+                return false
+            } else {
+                return true
+            }
         } else {
-            setSelectedStudentIds(allStudents)
+            return false
         }
     }
 
     const handleSubmit = () => {
-        const [formsValid, formValues] = formRef.current.validate();
+        console.log('handleSubmit')
+        // if (validateFields()) {
+        //     setLoading(true)
+        //     fetchRequest(schoolGroupEdit, 'POST', { 
+        //         submit: 1, 
+        //         group: location?.state?.group,
+        //         details: JSON.stringify(details)
+        //     })
+        //         .then((res) => {
+        //             if (res.success) {
+        //                 message(res.data.message, true)
+        //                 navigate('/school/groups')
+        //             } else {
+        //                 message(res.data.message)
+        //             }
+        //             setLoading(false)
+        //         })
+        //         .catch(() => {
+        //             message(translations(locale)?.err?.error_occurred)
+        //             setLoading(false)
+        //         })
+        // }
+    }
 
-        if (formsValid) {
-            const dataCollectorArray = []
-            for (let x=0;x<formValues.length;x++) {
-                dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
+    const classChange = (data, index) => {
+        const cloneDetails = [...details]
+        cloneDetails[index].classId = data.value;
+        setDetails(cloneDetails)
+    }
+
+    const studentChange = (data, index) => {
+        const cloneDetails = [...details]
+        cloneDetails[index].studentIds = data.value;
+        setDetails(cloneDetails)
+    }
+
+    const handleCheckBoxChange = (value, index) => {
+        console.log(value, index)
+        const cloneDetails = [...details]
+        if(value){
+            let cloneClassOptions = [...classOptions];
+            let classData = cloneClassOptions.find(data => data.value == cloneDetails[index].classId)
+
+            if(classData && classData.students && classData.students.length > 0){
+                let allStudentIds = [];
+                for(let i = 0; i < classData.students.length; i++){
+                    allStudentIds.push(classData.students[i].value)
+                }
+
+                cloneDetails[index].studentIds = allStudentIds
             }
-            dataCollectorArray.push({key: 'students', value: selectedStudentIds, options: studentList})
-            console.log(dataCollectorArray)
-            message('success', true)
-            // after success \/
-            // onClose()
-            // setLoading(true)
-            // console.log(dataCollectorArray)
-        } else{
-            message(t('err.fill_all_fields'))
-        } 
+        } else {
+            cloneDetails[index].studentIds = []
+        }
+
+        setDetails(cloneDetails)
     }
 
-    const handleStudentChange = (e, data) => {
-        setSelectedStudentIds(data)
-        // use Shallow copy as a cache
-        // setShallowCopy('securelocalstorage')
+    const addRow = () => {
+        let cloneDetails = [...details];
+        cloneDetails.push({
+            index: cloneDetails.length + 1,
+            classId: null,
+            studentIds: []
+        })
+        setDetails(cloneDetails)
     }
 
-    const [insertGroupFields, setInsertGroupFields] = useState([
-        {
-            key: 'classLevel',
-            labelBold: true,
-            value: '',
-            type: 'text',
-            disabled: true,
-            search: true,
-            label: t('grade'),
-            placeholder: '-',
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row grid-item',
-            fieldContainerClassName: 'col-6',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-        },
-        {
-            key: 'classClass',
-            labelBold: true,
-            value: '',
-            type: 'nDropdown',
-            label: t('class.title') + '*',
-            required: true,
-            errorMessage: t('error.selectGrade'),
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row grid-item',
-            fieldContainerClassName: 'col-6',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            options: classList,
-        },
-    ])
+    const removeRow = (index) => {
+        let cloneDetails = [...details];
+        cloneDetails.splice(index, 1);
+        setDetails(cloneDetails)
+    }
+
+    const getStudentValues = (classId) => {
+        if(classId){
+            let cloneClassOptions = [...classOptions];
+            let classData = cloneClassOptions.find(data => data.value == classId)
+
+            if(classData){
+                return classData.students
+            }
+        }
+
+        return []
+    }
 
     return (
         <Modal
             dimmer='blurring'
             show={true}
-            size="lg"
+            size="xl"
             aria-labelledby="contained-modal-title-vcenter"
             onHide={onClose}
             centered
@@ -115,50 +183,126 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
             </Modal.Header>
             <Modal.Body>
                 <div className="row">
-                    <div className="col">
-                        <div className="form-group m-form__group row mb-0">
-                            <Forms
-                                ref={formRef}
-                                fields={insertGroupFields}
-                            />
+                    <div className="col-12 form-group d-flex">
+                        <label className="col-4 col-form-label text-right label-pinnacle-bold">
+                            {translations(locale)?.grade + ':'}
+                        </label>
+                        <div className="col-4 col-form-label" style={{background: '#f4f5f8', borderRadius: 6}}>
+                            {/* {location?.state?.gradeName} */}
+                            {'GradeName'}
                         </div>
-                        <div className="form-group m-form__group row mb-0">
-                            <div>
-                                <div className='form-group m-form__group row grid-item '>
-                                    <label class="col-form-label col-4 text-right label-pinnacle-bold mr-0">
-                                        {t('students') + '*'}
-                                    </label>
-                                    <div className="col-form-field-container col-6">
-                                        <Dropdown
-                                            placeholder={'-' + t('err.select_class') + ' - '}
-                                            fluid
-                                            selection
-                                            className='form-control'
-                                            search
-                                            additionPosition='bottom'
-                                            upward={false}
-                                            closeOnChange
-                                            clearable
-                                            selectOnBlur={false}
-                                            multiple
-                                            value={selectedStudentIds}
-                                            options={studentList}
-                                            onChange={(e, data) => handleStudentChange(data?.value)}
-                                        />
-                                    </div>
-                                    <div class="whiteSpaceClassName"></div>
-                                </div>
-                                <div className="form-group m-form__group row grid-item ml-3">
-                                    <div className='col-form-label col-4 mr-0'/>
-                                    <div className='align-items-center col-6'>
-                                        <input className="form-check-input" id='selectAll' type="checkbox" value={selectAll} onChange={() => handleCheckbox()} style={{ borderRadius: '4px', fontSize: '16px !important'}} />
-                                        <label className="form-check-label font-mulish" htmlFor="selectAll" style={{ color: '#575962', fontSize: '14px'}}>
-                                            {t('select_all')}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div className='col-4'/>
+                    </div>
+                    <div className='col-12'>
+                        <table className='mt-4' width='100%'>
+                            <thead>
+                                <tr>
+                                    <th width="150px" className='border-less text-left pl-4 label-pinnacle-bold'>
+                                        {translations(locale).className || null}
+                                    </th>
+                                    <th className='border-less text-left pl-4 label-pinnacle-bold'>
+                                        {translations(locale).students || null}
+                                    </th>
+                                    <th width="210" className='border-less text-left pl-4 label-pinnacle-bold'/>
+                                    <th width="40" className='border-less' />
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    details && details.length > 0 &&
+                                    details.map((row, i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>
+                                                    <Dropdown
+                                                        placeholder={'-' + translations(locale).select + '-' || ""}
+                                                        fluid
+                                                        selection
+                                                        additionPosition='bottom'
+                                                        upward={false}
+                                                        closeOnChange
+                                                        selectOnBlur={false}
+                                                        value={row.classId}
+                                                        options={classOptions || []}
+                                                        onChange={(e, data) => classChange(data, i)}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Dropdown
+                                                        placeholder={'-' + translations(locale).select + '-' || ""}
+                                                        fluid
+                                                        selection
+                                                        search
+                                                        multiple
+                                                        clearable
+                                                        additionPosition='bottom'
+                                                        upward={false}
+                                                        closeOnChange
+                                                        selectOnBlur={false}
+                                                        options={getStudentValues(row.classId)}
+                                                        value={row.studentIds}
+                                                        onChange={(e, data) => studentChange(data, i)}
+                                                    />
+                                                </td>
+                                                {/* <td>
+                                                    <Checkbox
+                                                        className='mt-2 col-form-label'
+                                                        checked={row?.isAll}
+                                                        label={translations(locale)?.select_all}
+                                                        onChange={(e, data) => handleCheckBoxChange(data?.checked, i)}
+                                                    />
+                                                </td> */}
+                                                <td>
+                                                    <div className='pl-4'>
+                                                        <input 
+                                                            className="form-check-input modal-position col-form-label" 
+                                                            id='selectAll' type="checkbox" 
+                                                            value={row?.isAll} 
+                                                            onChange={(e, data) => handleCheckBoxChange(e.target.checked, i)}
+                                                            style={{ borderRadius: '4px', height: '18px', width: '18px'}} 
+                                                        />
+                                                        <label 
+                                                            className="form-check-label font-mulish" 
+                                                            htmlFor="selectAll" 
+                                                            style={{ color: '#575962', fontSize: '14px', marginLeft: '10px'}}
+                                                        >
+                                                            {t('select_all')}
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {
+                                                        i > 0
+                                                            ? 
+                                                            <button 
+                                                                onClick={() => removeRow(i)}
+                                                                className="btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                            >
+                                                                <i className="la la-remove" />
+                                                            </button>
+                                                            : null
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                                {
+                                    classOptions.length > details.length &&
+                                    <tr>
+                                        <td className="no-border" colSpan={3} />
+                                        <td>
+                                            <button
+                                                onClick={addRow}
+                                                className="btn btn-outline-info m-btn m-btn--icon m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center"
+                                            >
+                                                <AddIcon />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </Modal.Body>
@@ -177,16 +321,13 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
                 </button>
             </Modal.Footer>
             {
-                loading
-                    ?
-                    <div>
-                        <div className="blockUI blockOverlay" />
-                        <div className="blockUI blockMsg blockPage">
-                            <div className="m-loader m-loader--brand m-loader--lg" />
-                        </div>
+                loading &&
+                <>
+                    <div className="blockUI blockOverlay" />
+                    <div className="blockUI blockMsg blockPage">
+                        <div className="m-loader m-loader--brand m-loader--lg" />
                     </div>
-                    :
-                    null
+                </>
             }
         </Modal>
     )
