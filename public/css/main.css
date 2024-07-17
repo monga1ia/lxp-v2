@@ -454,6 +454,11 @@ div.ui.dropdown.disabled {
     display: block;
 }
 
+.nav-item-important {
+    width: 135px !important;
+    height: auto !important
+}
+
 img.img-circle {
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;
