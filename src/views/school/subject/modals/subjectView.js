@@ -13,7 +13,7 @@ const SubjectViewModal = ({ onClose, id }) => {
 
     return (
         <Modal
-            size='md'
+            size='md-img'
             dimmer='blurring'
             show={true}
             onHide={onClose}

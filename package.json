@@ -173,6 +173,7 @@
     "xlsx-js-style": "^1.2.0"
   },
   "scripts": {
+    "debug": "NODE_OPTIONS='--openssl-legacy-provider' next dev -p 5000",
     "start-js": "react-scripts start --dev",
     "start-css": "sass --style=compressed --watch src/sass/styles.scss:public/css/styles.css",
     "start": "concurrently \"npm run start-js\" \"npm run start-css\"",

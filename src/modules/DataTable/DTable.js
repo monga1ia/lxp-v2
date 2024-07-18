@@ -1058,7 +1058,7 @@ const DTable = ({
                                                         null
                                                 }
                                                 <SizePerPageDropdownStandalone
-                                                    className={`custom-size-per-page ${!config.showPagination ? 'height-0' : ''}`}
+                                                    className={`custom-size-per-page btn-sizePP ${!config.showPagination ? 'height-0' : ''}`}
                                                     {...paginationProps}
                                                     sizePerPage={paginationProps.sizePerPage}
                                                     hidden={!config.showPagination}

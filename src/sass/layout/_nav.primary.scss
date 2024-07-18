@@ -925,7 +925,7 @@ html[data-placement="vertical"][data-behaviour="unpinned"][data-menu-animate="sh
   transition-property: width;
   .nav-content {
     .menu-container {
-      width: 19.6923rem;
+      width: 19.9rem;
       margin-left: 1rem;
       margin-right: 1rem;
       overflow-x: hidden;
@@ -934,11 +934,18 @@ html[data-placement="vertical"][data-behaviour="unpinned"][data-menu-animate="sh
       align-self: center;
 
       .menu a {
-        white-space: nowrap;
+        // white-space: nowrap;
         transition-delay: 0.1s;
         &:before,
         .label {
           transition-delay: 0.1s;
+        }
+        .nav-item-important {
+          width: 135px !important;
+          // overflow: hidden;
+          display: inline-block;
+          background:linear-gradient(transparent 150px, white);
+          // text-overflow: ellipsis;
         }
       }
     }

@@ -31,11 +31,13 @@ const EditSubjectModal = ({onClose, onSubmit, data}) => {
     const editSubjectFields = [
         {
             key: 'subjectClass',
-            type: 'nDropdown',
+            type: 'text',
             label: `${t('subject.class')}`,
             labelBold: true,
             value: '',
             className: "form-control",
+            placeholder: t('course_course_name'),
+            disabled: true,
             upperCase: true,
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",

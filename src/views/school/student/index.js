@@ -409,6 +409,7 @@ const index = () => {
                                             ...tableState
                                         }
                                     }}
+                                    clickContextMenu
                                     data={tableData}
                                     columns={columns}
                                     individualContextMenus
@@ -471,10 +472,8 @@ const index = () => {
                     onClose={closeModal}
                     onDelete={submitClearUser}
                     title={t('warning.delete')}>
-                    {t('clear_login_name_description')}
-                    <br />
-                    <br />
-                    {t('clear_login_name_description_1')}
+                    <div>{t('clear_login_name_description')}</div>
+                    <div>{t('clear_login_name_description_1')}</div>
                 </ClearUserModal>
             }
         </>

@@ -87,7 +87,7 @@ const table = ({ data, openModal }) => {
                         className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
                         onClick={() => openModal('edit', row)}
                     >
-                        <i className='fa flaticon-edit-1' />
+                        <i className='fa flaticon-edit' />
                     </button>
                 )
                 else return (

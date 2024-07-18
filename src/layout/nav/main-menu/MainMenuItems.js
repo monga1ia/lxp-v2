@@ -55,15 +55,15 @@ const MainMenuItem = memo(
 
     const getLabel = (icon, label) => (
       <div style={{display: 'flex', alignItems: 'center'}}>
-      <div>
+        <div>
         {icon && (
           <>
             <CsLineIcons icon={icon} viewBox="0 0 23 23" size={23} className="cs-icon icon" />{" "}
           </>
         )}
         </div>
-      <div style={{width: '70%'}}>
-        <span className="label">{USE_MULTI_LANGUAGE ? t(label) : label}</span>
+        <div className="nav-item-important" style={{width: '70%'}}>
+          <span className="label">{USE_MULTI_LANGUAGE ? t(label) : label}</span>
         </div>
       </div>
     );
