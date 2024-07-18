@@ -10,6 +10,8 @@ import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
 import DeleteModal from './modals/deleteModal';
+import ViewHeader from './modals/viewHeaderModal';
+import CreateHeader from './modals/createHeaderModal';
 import { Row, Col } from 'react-bootstrap';
 // import { NewsFeedConfigAddRecipients, NewsFeedConfigDeleteRecipient, NewsFeedConfigCreate, NewsFeedConfigDelete, NewsFeedConfigEdit, NewsFeedConfigInit, NewsFeedConfigRecipients, NewsFeedConfigView, NewsFeedConfigEditRecipient } from 'utils/url'
 import CloseIcon from '@mui/icons-material/Close';
@@ -898,7 +900,9 @@ const index = () => {
     } 
 
     const onHdrCreate = (params) => {
-        console.log('onHdrCreate')
+        // console.log('onHdrCreate')
+        setShowCreateHdrModal(true)
+
         // setLoading(true)
         // fetchRequest(NewsFeedConfigCreate, 'POST', params)
         //     .then((res) => {
@@ -1191,7 +1195,6 @@ const index = () => {
     }
 
     const handleTreeContextMenuClick = (id, key) => {
-        console.log(id, key)
         if (key === 'create') {
             let params = {
                 id,
@@ -1575,7 +1578,7 @@ const index = () => {
                                     contextMenuKey={'treeKey'}
                                     onContextMenuClick={handleTreeContextMenuClick}
                                     contextMenus={{ treeKey: treeContextMenus}}
-                                    individualContextMenus
+                                    // individualContextMenus
                                     searchValue={searchValue}
                                 />
                             </div>
@@ -1616,7 +1619,15 @@ const index = () => {
                     </Col>
                 </div>
             </div>
-            <Modal
+            {
+                showViewHdrModal && 
+                <ViewHeader
+                    onClose={() => closeViewHdrModal(false)}
+                    viewHdrData = {viewHdrData}
+                    onSubmit={() => closeViewHdrModal(true)}
+                />
+            }
+            {/* <Modal
                 size={'small'}
                 dimmer={'blurring'}
                 open={showViewHdrModal}
@@ -1683,7 +1694,15 @@ const index = () => {
                         </div>
                     </div>
                 </div>
-            </Modal>
+            </Modal> */}
+            {/* {
+                showCreateHdrModal &&
+                <CreateHeader
+                    onClose={closeModal}
+                    onSubmit={_submitNewHdr}
+                    isAdminOrSuper={isAdminOrSuper}
+                />
+            } */}
             <Modal
                 size={'small'}
                 dimmer={'blurring'}

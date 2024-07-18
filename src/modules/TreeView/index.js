@@ -106,7 +106,6 @@ const TreeView = ({
                     } else {
                         availableContextMenus = contextMenus[contextMenuKey];
                     }
-
                     if (availableContextMenus && availableContextMenus.length > 0) {
                         const menuRenderViews = (
                             <ClickAwayListener onClickAway={unMountContextMenus}>
