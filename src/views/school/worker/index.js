@@ -26,7 +26,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import SchoolIcon from '@mui/icons-material/School'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
-// import { schoolStaffDelete, schoolStaffIndex, schoolStaffLoginNameChange, schoolStaffPasswordReset, schoolStaffRoleChange, schoolStaffStatusChange } from 'Utilities/url'
+// import { schoolStaffDelete, schoolStaffIndex, schoolStaffLoginNameChange, schoolStaffPasswordReset, schoolStaffRoleChange, schoolStaffStatusChange } from 'utils/url'
 import EditWorkerModal from './modals/editWorker'
 import AddWorkerModal from './modals/addWorker'
 import { useTranslation } from "react-i18next";

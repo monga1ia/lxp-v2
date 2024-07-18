@@ -8,6 +8,19 @@ export const videoActionLog = 'system/vlogs'
 
 export const changePassword = "auth/change-password";
 
+// ============================= School =============================
+// staff
+// export const schoolStaffIndex = 'api/employee/init'
+// export const schoolStaffSubmit = 'api/employee/submit'
+// export const schoolStaffEdit = 'api/employee/edit'
+// export const schoolStaffDelete = 'api/employee/delete'
+// export const schoolStaffView = 'api/employee/view'
+// export const schoolStaffStatusChange = 'api/employee/change-status'
+// export const schoolStaffLoginNameChange = 'api/employee/change-username'
+// export const schoolStaffPasswordReset = 'api/employee/change-password'
+// export const schoolStaffRoleChange = 'api/employee/change-roles'
+// export const schoolStaffToTeacher = 'api/employee/to-teacher'
+
 // ============================= Reference =============================
 export const groupIndex = 'api/group/index';
 export const groupCreate = 'api/group/create';

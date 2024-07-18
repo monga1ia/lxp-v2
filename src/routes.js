@@ -57,8 +57,12 @@ const esis = {
 }
 
 const newsFeed = {
-    newsFeed: lazy(() => import("views/newsFeed/newsFeed/index")),
+    newsFeed: lazy(() => import("views/newsFeed/NewsFeed")),
     config: lazy(() => import("views/newsFeed/config/index")),
+//     import NewsFeed from './src/Components/newsfeed/NewsFeed'
+// // Config
+// import NewsFeedConfig from './src/Components/newsfeed/config/index'
+// import NewsFeedConfigNew from './src/Components/newsfeed/config'
 }
 
 const group = {
@@ -211,6 +215,27 @@ const routesAndMenuItems = {
             redirect: true,
             to: `${appRoot}/school/teacher`,
         },
+        // {
+        //     path: `${appRoot}/groups`,
+        //     icon: "home-garage",
+        //     label: "menu.mainGroup",
+        //     exact: true,
+        //     redirect: true,
+        //     to: `${appRoot}/groups/index`,
+        //     subs: [
+        //         {
+        //             path: "/index",
+        //             label: "menu.mainGroup",
+        //             component: dashboards.mainGroup,
+        //         }
+        //         // {
+        //         //     path: "/edit",
+        //         //     label: "menu.mainGroup",
+        //         //     component: dashboards.groupDetails,
+        //         //     menuHidden: true,
+        //         // }
+        //     ],
+        // },
         {
             path: `${appRoot}/school`,
             label: "menu.school",

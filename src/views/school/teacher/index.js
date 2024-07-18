@@ -27,6 +27,10 @@ import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone'
 import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone'
 import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
+// import { groupCreate, groupDelete, groupIndex, groupView } from '../../utils/fetchRequest/Urls';
+import { fetchRequest } from 'utils/fetchRequest';
+import { groupIndex } from 'utils/fetchRequest/Urls';
+
 import {Tab} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
@@ -348,6 +352,42 @@ const MainGroup = () => {
         setShowPasswordResetModal(false)
         setShowLoginNameChangeModal(false)
     }
+
+    // useEffect(() => {
+    //     fetchRequest(groupIndex, 'POST')
+    //         .then ((res) => {
+    //             if (res) {
+    //                 console.log(res.data)
+    //             }
+    //         })
+    // }, [])
+    // const init = (params) => {
+    //     setLoading(true)
+    //     fetchRequest(groupIndex, 'POST', params)
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { groups, grades, subjects, totalCount } = res
+    //                 if (grades && grades.length > 0) {
+    //                     setFilterGrades(grades.map(grade => ({ value: grade.id, text: grade.name })))
+    //                 }
+
+    //                 if (subjects && subjects.length > 0) {
+    //                     setFilterSubjects(subjects.map(subject => ({ value: subject.id, text: subject.name })))
+    //                 }
+
+    //                 setTableData(groups)
+    //                 setTotalCount(totalCount)
+    //             } else {
+    //                 message(res.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(t('errorMessage.title'));
+    //             setLoading(false)
+    //         })
+    // }
+
     
     const handleTreeSelect = key => {
         if (key && key.length > 0) {

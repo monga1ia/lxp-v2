@@ -21514,7 +21514,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
 }
 
 .fa, .far, .fas {
-    font-family: Font Awesome\ 5 Free
+    font-family: Font Awesome !important
 }
 
 .fa, .fas {

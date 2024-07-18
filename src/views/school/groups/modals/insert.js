@@ -2,9 +2,9 @@ import { useState } from 'react'
 import message from 'modules/message'
 import React, { useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
-// import { schoolGroupEdit } from 'Utilities/url'
+// import { schoolGroupEdit } from 'utils/url'
 import secureLocalStorage from 'react-secure-storage'
-// import { fetchRequest } from 'Utilities/fetchRequest'
+// import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
 import { NDropdown as Dropdown } from "widgets/Dropdown"
 import { useTranslation } from "react-i18next";

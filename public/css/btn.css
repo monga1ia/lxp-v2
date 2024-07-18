@@ -167,10 +167,17 @@
 .btn-danger {
     color: #fff;
     background-color: #f4516c;
-    border-color: #f4516c
+    border-color: #f4516c;
+    transition: 0.4s;
 }
 
 .btn-danger:hover {
+    color: #fff;
+    background-color: #f22d4e;
+    border-color: #f12143
+}
+
+.btn-danger:focus {
     color: #fff;
     background-color: #f22d4e;
     border-color: #f12143
