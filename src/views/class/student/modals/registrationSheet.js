@@ -32,7 +32,7 @@ const registrationSheet = ({ onClose, onSubmit }) => {
                     onClick={onClose}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
-                    {t('close') || null}
+                    {t('back') || null}
                 </button>
                 <button
                     onClick={onSubmit}

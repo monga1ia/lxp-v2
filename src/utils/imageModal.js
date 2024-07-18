@@ -166,7 +166,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
             id='imageModal'
             onHide={onClose}
             aria-labelledby="contained-modal-title-vcentersdfsd"
-            className='doubleModal'
+            className='imageDoubleModal'
             centered
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>

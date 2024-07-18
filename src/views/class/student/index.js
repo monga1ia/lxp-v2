@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
+import { NavLink, useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import message from '../../../modules/message'
@@ -19,14 +20,16 @@ import { useTranslation } from "react-i18next";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined'
 import FolderSharedIcon from '@mui/icons-material/FolderShared'
+import DayPickerInput from "react-day-picker/DayPickerInput";
 
 const index = () => {
     const locale="mn"
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
-    // const navigate = useNavigate()
-    const printRef = useRef()
+    // const navigate = useNavigate();
+    const location = useLocation();
+    const printRef = useRef();
 
     const [selectedStudent, setSelectedStudent] = useState(null)
 
@@ -122,14 +125,14 @@ const index = () => {
             dataField: 'firstName',
             text: t('studentFirstName'),
             sort: true,
-            formatter: (cell, row) =>
-                <span
-                    className='underline'
-                    onClick={() => handleContextMenuClick(row?.id, 'view')}
-                >
-                    {cell}
-                </span>,
-            // formatter: (cell, row) => { return <span className='underline' onClick={() => onClickName(row)}>{cell}</span> }
+            // formatter: (cell, row) =>
+            //     <span
+            //         className='underline'       
+            //         onClick={() => handleContextMenuClick(row?.id, 'view')}
+            //     >
+            //         {cell}
+            //     </span>,
+            formatter: (cell, row) => { return <span className='underline' onClick={() => onClickName(row)}>{cell}</span> }
         },
         {
             dataField: 'gender',
@@ -204,13 +207,6 @@ const index = () => {
         //         setLoading(false)
         //     })
     }
-
-    const closeModal = () => {
-        // setRegisterAddStudentModal(false)
-        setSelectedStudent(null)
-        setShowImageModal(false)
-        setShowRegistrationSheetModal(false)
-    }
     
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
@@ -227,20 +223,34 @@ const index = () => {
         
     // }
     
+    const onClickName = (row) => {
+        navigate("/student/book", { state: {
+            id: row?.id,
+            urlData: {
+                backUrl: "/class/student",
+            }
+        }});
+    }
 
     const handleContextMenuClick = (row, key) => {
-        console.log(row, key)
         if (row && key) {
             // setSelectedTableDataId(id)
             setSelectedStudent(row)
             if (key === 'avatar') {
                 setShowImageModal(true)
-            } else if (key === 'sheet') { // хувийн хэрэг
+            } else if (key === 'sheet') { // бүртгэлийн хуудас 
                 setShowRegistrationSheetModal(true)
-            } else if (key === 'studentBook') { // бүртгэлийн хуудас 
+            } else if (key === 'studentBook') { // хувийн хэрэг
                 onClickName(row)
             } 
         }
+    }
+
+    const closeModal = () => {
+        // setRegisterAddStudentModal(false)
+        setSelectedStudent(null)
+        setShowImageModal(false)
+        setShowRegistrationSheetModal(false)
     }
 
     useEffect(() => {
@@ -263,15 +273,6 @@ const index = () => {
         pageStyle: '@page{size: auto!important; margin: 0.2cm 1cm!important}',
         documentTitle: `${selectedStudent?.firstName} - ${t('movement.register_sheet')}`,
     })
-
-    const onClickName = (row) => {
-        // navigate('/student/book', { state: {
-        //     id: row?.id,
-        //     urlData: {
-        //         backUrl: '/class/students',
-        //     }
-        // }});
-    }
 
     return (
         <>
@@ -372,7 +373,7 @@ const index = () => {
                 <>
                     <div className='loader-container'>
                         <svg className="splash-spinner" viewBox="0 0 50 50">
-                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"/>
                         </svg>
                     </div>
                 </>

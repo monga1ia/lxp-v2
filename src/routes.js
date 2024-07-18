@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { DEFAULT_PATHS } from "config.js";
+import { redirect } from "react-router";
 
 const dashboards = {
     mainGroup: lazy(() => import("views/groups/MainGroup")),
@@ -46,6 +47,11 @@ const school = {
     calendar: lazy(() => import("views/school/calendar/index")),
     student: lazy(() => import("views/school/student/index")),
     group: lazy(() => import("views/school/groups/index")),
+}
+
+const classes = {
+    // student: lazy(() => import("views/class/student/studentBook/index")),
+    studentBook: lazy(() => import("views/class/student/studentBook/index"))
 }
 
 const esis = {
@@ -812,7 +818,16 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/user/profile`,
             component: user.index,
-        }
+        },
+        {
+            path: `${appRoot}/student/book`,
+            component: classes.studentBook,
+            hideSideBar: true,
+            menuHidden: true,
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/student/book`
+        },
     ],
     //student web
     studentMenuItems: [
