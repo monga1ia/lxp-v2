@@ -20,6 +20,7 @@ const useStyles = makeStyles({
         color: '#4e4e4e',
         marginLeft: 8,
         flex: 1,
+        width: 200,
         fontFamily: 'Mulish'
     },
     iconButton: {

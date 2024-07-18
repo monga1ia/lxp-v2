@@ -10,6 +10,7 @@ const Unauthorized = lazy(() => import("views/default/Unauthorized"));
 const InvalidAccess = lazy(() => import("views/default/InvalidAccess"));
 const App = lazy(() => import("App.js"));
 const Home = lazy(() => import("views/default/Home"));
+const StudentBook = lazy(() => import("views/class/student/studentBook/index"));
 
 const defaultRoutes = [
   { path: DEFAULT_PATHS.NOTFOUND, exact: true, component: NotFound },
@@ -25,6 +26,7 @@ const defaultRoutes = [
   { path: DEFAULT_PATHS.INVALID_ACCESS, exact: true, component: InvalidAccess },
   { path: DEFAULT_PATHS.APP, component: App },
   { path: "/", exact: true, component: Home },
+  { path: DEFAULT_PATHS.STUDENT_BOOK, exact: true, component: StudentBook },
 ];
 
 export default defaultRoutes;

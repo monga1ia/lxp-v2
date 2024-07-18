@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import secureLocalStorage from 'react-secure-storage'
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import DTable from 'modules/DataTable/DTable';
@@ -63,13 +64,12 @@ const baseButton = {
 
 const index = () => {
     const locale="mn";
-    // const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const localSchool = secureLocalStorage.getItem('selectedSchool')
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
 
-    // const { selectedSchool } = useSelector(state => state.schoolData);
+    const { selectedSchool } = useSelector(state => state.schoolData);
 
     const title = t('class.attendance.title');
     const description = "E-learning";
@@ -80,7 +80,6 @@ const index = () => {
 
     const [hdr, setHdr] = useState(null);
     const [types, setTypes] = useState([]);
-    // const localSchool = secureLocalStorage.getItem('selectedSchool')
 
     const [tabIndex, setTabIndex] = useState(0)
     const [date, setDate] = useState(dateFormat(new Date()))
@@ -95,15 +94,16 @@ const index = () => {
     const [students, setStudents] = useState([])
     const [reportStudents, setReportStudents] = useState([])
 
-        const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showTeacherLogModal, setShowTeacherLogModal] = useState(false)
 
     const [schoolShifts, setSchoolShifts] = useState([])
     const [selectedShift, setSelectedShift] = useState(null)
     const [selectedTimeTemplate, setSelectedTimeTemplate] = useState(null)
     const [selectedTeacherLog, setSelectedTeacherLog] = useState(null)
+    
 
-    const reportDefaultColumns = [
+    const reportColumns = [
         {
             dataField: 'avatar',
             text: t('teacher.photo'),
@@ -114,14 +114,14 @@ const index = () => {
                     width: 100,
                 };
             },
-            formatter: (cell, row) => 
+            formatter: (cell) => 
                 <img width={40} height={40}
                             className='img-responsive img-circle'
-                            src={cell || '/images/avatar.png'}
-                            alt={`Photo of ${row?.firstName}`}
+                            src={cell || '/img/profile/avatar.png'}
+                            alt='profile picture'
                             onError={(e) => {
                                 e.target.onError = null
-                                e.target.src = '/images/avatar.png'
+                                e.target.src = '/img/profile/avatar.png'
                             }}
                 />
         },
@@ -153,39 +153,49 @@ const index = () => {
             align: 'right',
             formatter: (cell) => cell + '%'
         }
-    ]
-
-    const [reportColumns, setReportColumns] = useState([])
+    ];
 
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
 
     const [totalCount, setTotalCount] = useState(0);
-    const [attendanceData, setAttendanceData] = useState([
-        {id: 11, code: 555, firstName: "john", lastName: 'eee'}, 
-        {id: 12, code: 333, firstName: "joy", lastName: 'www'}, 
-        {id: 13, code: 888, firstName: "julie", lastName: 'Mark'}, 
-        {id: 14, code: 77, firstName: "julia", lastName: 'Mike'}, 
-    ]);
-    const [reportData, setReportData] = useState([
-        {id: 11, code: 555, firstName: "john", lastName: 'eee', percentage: '80' }, 
-        {id: 12, code: 333, firstName: "joy", lastName: 'www', percentage: '58'}, 
-        {id: 13, code: 888, firstName: "julie", lastName: 'Mark', percentage: '90'}, 
-        {id: 14, code: 77, firstName: "julia", lastName: 'Mike', percentage: '100'}, 
+    const [tableData, setTableData] = useState([
+        {id: 11, code: 555, firstName: "john"}, 
+        {id: 12, code: 333, firstName: "joy"}, 
+        {id: 13, code: 888, firstName: "julie"}, 
+        {id: 14, code: 77, firstName: "julia"}, 
     ]);
 
     const attendanceConfig = {
-        excelExport: false,
-        printButton: false,
-        columnButton: false,
-        defaultSort: [{
-            dataField: 'firstName',
-            order: 'asc'
-        }],
-        defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
-        }
+        // excelExport: false,
+        // printButton: false,
+        // columnButton: false,
+        // defaultSort: [{
+        //     dataField: 'firstName',
+        //     order: 'asc'
+        // }],
+        // defaultPageOptions: {
+        //     page: 1,
+        //     sizePerPage: 10,
+        // }
+                excelExport: false,
+                printButton: false,
+                showAllData: true,
+                showPagination: false,
+                showLeftButton: true,
+                leftButtonStyle: {position: 'relative', paddind: '0 0 10 0' ,bottom: '5px'},
+                leftButtonClassName: 'btn btn-sm m-btn--pill btn-publish m-btn--uppercase m-btn--wide mr-2 d-inline-flex',
+                leftButtonText: t('attendance.sent_attendance'),
+
+                showSecondaryLeftButton: true,
+                secondaryLeftButtonStyle: {position: 'relative', bottom: '5px'},
+                secondaryLeftButtonClassName: 'btn btn-sm m-btn--pill btn-secondary-left m-btn--uppercase m-btn--wide d-inline-flex',
+                secondaryLeftButtonText: t('attendance.download_attendance'),
+
+                defaultSort: [{
+                    dataField: 'firstName',
+                    order: 'asc'
+                }]
     }
 
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
@@ -197,9 +207,9 @@ const index = () => {
     // const [tableState, setTableState] = useState(
     //     selectedTabData?.code == 'ATTENDANCE'
     //         ?
-    //         secureLocalStorage.getItem(localeAttendanceTableState)
+    //         secureLocalStorage.getItem(localeActiveTableState)
     //             ?
-    //             secureLocalStorage.getItem(localeAttendanceTableState)
+    //             secureLocalStorage.getItem(localeActiveTableState)
     //             :
     //             {
     //                 filter: {},
@@ -210,9 +220,9 @@ const index = () => {
     //                 order: 'asc'
     //             }
     //         :
-    //         secureLocalStorage.getItem(localeReportTableState)
+    //         secureLocalStorage.getItem(localeActiveTableState)
     //             ?
-    //             secureLocalStorage.getItem(localeReportTableState)
+    //             secureLocalStorage.getItem(localeActiveTableState)
     //             :
     //             {
     //                 filter: {},
@@ -241,13 +251,13 @@ const index = () => {
             sort: false,
             width: 40,
             align: 'center',
-            formatter: (row, cell) => 
+            formatter: (cell) => 
                 <img className='img-responsive img-circle'
-                            src={cell || '/images/avatar.png'}
-                            width={40} height={40} alt={`Photo of ${row?.firstName}`}
+                            src={cell || '/img/profile/avatar.png'}
+                            width={40} height={40} alt='profile picture'
                             onError={(e) => {
                                 e.target.onError = null
-                                e.target.src = '/img/avatar.png'
+                                e.target.src = '/img/profile/avatar.png'
                             }}
                 />
         },
@@ -277,7 +287,6 @@ const index = () => {
                 };
             },
             formatter: (cell, row) => {
-                let button = {}
                 return <div className='container'>
                             <div className='row flex-row flex-nowrap px-3' style={{gap: 9}}>
                                 <button style={{...baseButton, color: 'rgb(255, 255, 255)', borderColor: 'rgb(62, 191, 163)', backgroundColor: 'rgb(62, 191, 163)'}} type='button' className='br-08'>Т</button>
@@ -288,280 +297,10 @@ const index = () => {
                             </div>
                         </div>
             }
-        },
-        // {
-        //     dataField: 'attendanceType',
-        //     text: t('attendance.title'),
-        //     sort: false,
-        //     headerStyle: () => {
-        //         return {
-        //             width: 300,
-        //         };
-        //     },
-        //     formatter: (cell, row) => {
-        //         let button = {}
-        //         if (hdr) {
-        //             if (row?.editing) {
-        //                 return (
-        //                     <div className='container'>
-        //                         <div className='row flex-row flex-nowrap' style={{gap: 9}}>
-        //                             {(types || []).map((type, key) => {
-        //                                 if (cell == type.id) {
-        //                                     button = {
-        //                                         color: '#fff',
-        //                                         borderColor: type.color,
-        //                                         backgroundColor: type.color,
-        //                                     }
-        //                                 } else {
-        //                                     button = {
-        //                                         color: type.color,
-        //                                         borderColor: type.color,
-        //                                         backgroundColor: '#fff',
-        //                                     }
-        //                                 }
-        //                                 return <button
-        //                                     onClick={(e) => onTypeChange(row.id + '_' + type.id, row.editing)}
-        //                                     style={{...baseButton, ...button}} key={key} className='br-08'
-        //                                     type='button'>{type.shortName}</button>
-        //                             })
-        //                             }
-        //                         </div>
-        //                     </div>
-        //                 )
-        //             } else {
-        //                 const selectedType = (types || []).find(obj => obj?.id === row?.attendanceType)
-
-        //                 if (selectedType) {
-        //                     button = {
-        //                         color: '#fff',
-        //                         borderColor: selectedType.color,
-        //                         backgroundColor: selectedType.color,
-        //                     }
-        //                     return (
-        //                         <div className='container'>
-        //                             <div className='row flex-row flex-nowrap' style={{gap: 9}}>
-        //                                 <button onClick={(e) => {
-        //                                 }}
-        //                                         style={{...baseButton, ...button}} className='br-08'
-        //                                         type='button'>{selectedType.shortName}</button>
-        //                             </div>
-        //                         </div>
-        //                     )
-        //                 } else {
-        //                     return null
-        //                 }
-        //             }
-        //         } else {
-        //             return (
-        //                 <div className='container'>
-        //                     <div className='row flex-row flex-nowrap' style={{gap: 9}}>
-        //                         {(types || []).map((type, key) => {
-        //                             if (cell == type.id) {
-        //                                 button = {
-        //                                     color: '#fff',
-        //                                     borderColor: type.color,
-        //                                     backgroundColor: type.color,
-        //                                 }
-        //                             } else {
-        //                                 button = {
-        //                                     color: type.color,
-        //                                     borderColor: type.color,
-        //                                     backgroundColor: '#fff',
-        //                                 }
-        //                             }
-        //                             return <button onClick={(e) => onTypeChange(row.id + '_' + type.id)}
-        //                                            style={{...baseButton, ...button}} key={key} className='br-08'
-        //                                            type='button'>{type.shortName}</button>
-        //                         })
-        //                         }
-        //                     </div>
-        //                 </div>
-        //             )
-        //         }
-
-
-        //     }
-        // }
-        
+        }
     ];
-    
-    // const loadData = (params = {}) => {
-    //     setLoading(true)
-    //     fetchRequest(classAttendanceInit, 'POST', params)
-    //         .then(res => {
-    //             if (res.success) {
-    //                 if (res?.data?.viewType == 'REPORT') {
-    //                     if (!startDate) {
-    //                         setStartDate(res?.data?.reportStart)
-    //                     }
-    //                     if (!endDate) {
-    //                         setEndDate(res?.data?.reportEnd)
-    //                     }
-    //                     setReportStudents(res?.data?.students || [])
 
-    //                     const cols = reportDefaultColumns;
-    //                     if (res?.data?.dates && res?.data?.dates?.length > 0) {
-    //                         for (let d = 0; d < res?.data?.dates?.length; d++) {
-    //                             cols.push({
-    //                                 dataField: res?.data?.dates[d],
-    //                                 text: res?.data?.dates[d],
-    //                                 sort: false,
-    //                                 colType: 'html',
-    //                                 textValueKey: res?.data?.dates[d] + '_typeName',
-    //                                 headerFormatter: (cell) => {
-    //                                     return <span style={{
-    //                                         width: 60,
-    //                                         display: 'block'
-    //                                     }}>{res?.data?.dates[d]}</span>
-    //                                 },
-    //                                 formatter: (cell, row, e, ev) => {
-    //                                     if (cell) {
-    //                                         let button = {
-    //                                             color: '#fff',
-    //                                             borderColor: row[res?.data?.dates[d] + '_typeColor'],
-    //                                             backgroundColor: row[res?.data?.dates[d] + '_typeColor'],
-    //                                         }
-    //                                         return (
-    //                                             <div className='container'>
-    //                                                 <div className='flex-row flex-nowrap' style={{gap: 9}}>
-    //                                                     <button onClick={(e) => {
-    //                                                     }}
-    //                                                             style={{...baseButton, ...button}} className='br-08'
-    //                                                             type='button'>{row[(res?.data?.dates[d] + '_typeName')].substring(0, 1)}</button>
-    //                                                 </div>
-    //                                             </div>
-    //                                         )
-    //                                     } else {
-    //                                         return <div className='container text-center'>
-    //                                             <span>-</span>
-    //                                         </div>
-    //                                     }
-    //                                 }
-    //                             })
-    //                         }
-    //                     }
-    //                     setReportColumns(cols)
-    //                 } else {
-    //                     if (!res?.data?.canLog) {
-    //                         message(t('attendance.unable_to_log_date')
-    //                     }
-    //                     setCanLog(res?.data?.canLog || false)
-    //                     setSeasonStart(res?.data?.seasonStart || null)
-    //                     setSeasonEnd(res?.data?.seasonEnd || null)
-    //                     setHdr(res?.data?.hdr)
-    //                     setStudents(res?.data?.students || [])
-    //                     setTypes(res?.data?.attendanceTypes || [])
-    //                     setSchoolShifts(res?.data?.schoolShifts || [])
-    //                 }
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
-
-    // const loadTeacherLog = (params = {}) => {
-    //     setLoading(true)
-    //     fetchRequest(classAttendanceTeacherLog, 'POST', params)
-    //         .then(res => {
-    //             if (res.success) {
-    //                 if (params?.submit) {
-    //                     setHdr(res?.data?.hdr)
-    //                     setStudents(res?.data?.students || [])
-    //                     onCloseTeacherLog()
-    //                 } else {
-    //                     setSelectedTeacherLog(res?.data?.teacherLog)
-    //                 }
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
-
-    // useEffect(() => {
-    //     setUpdateView(!updateView)
-    // }, [dateTitle])
-
-    // useEffect(() => {
-    //     loadData()
-    // }, [])
-   
-
-    // const submitLog = (params = {}, isEditing = false) => {
-    //     setLoading(true)
-    //     fetchRequest(classAttendanceLog, 'POST', params)
-    //         .then(res => {
-    //             if (res.success) {
-    //                 const clone = [...students]
-    //                 for (let c = 0; c < clone.length; c++) {
-    //                     if (clone[c].id === res?.data?.student) {
-    //                         clone[c].attendanceType = res?.data?.type;
-    //                         break;
-    //                     }
-    //                 }
-    //                 setStudents(clone)
-    //                 let hdrObj = res?.data?.hdr
-    //                 if (hdrObj) {
-    //                     hdrObj.editing = isEditing
-
-    //                     setHdr(hdrObj)
-    //                 }
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch((e) => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
-
-    // const sendLogs = () => {
-    //     setLoading(true)
-    //     fetchRequest(classAttendanceSend, 'POST', {
-    //         date
-    //     })
-    //         .then(res => {
-    //             if (res.success) {
-    //                 if (res?.data?.isToday) {
-    //                     const element = document.getElementById('btn_class_day_attendance');
-    //                     if (element) {
-    //                         element.className = "btn pinnacle-regular btn-light-green";
-    //                         element.style.border = "solid 1px #3ebfa3";
-    //                     }
-    //                 }
-
-    //                 setHdr(res?.data?.hdr)
-    //                 message(t('success, true'))
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
-
-    // const handleTabChange = data => {
-    //     setTabIndex(data?.activeIndex)
-
-    //     loadData({
-    //         date,
-    //         viewType: data?.activeIndex === 0 ? 'ATTENDANCE' : "REPORT"
-    //     })
-    // }
+    const [columns, setColumns] = useState(attendanceColumns)
 
     const onDayChange = (day) => {
         let selectedDay = dateFormat(new Date(day));
@@ -597,14 +336,11 @@ const index = () => {
         excelFileName: `${localSchool?.classes?.find(el => el?.value == secureLocalStorage.getItem('selectedClassId'))?.text}-${t('class.attendance.title')}`,
         printButton: false,
         showAllData: true,
+        showPagination: false,
         defaultSort: [{
             dataField: 'firstName',
             order: 'asc'
-        }],
-        defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
-        }
+        }]
     }
 
     const getConfig = (hasHdr = false, ableToLog = false) => {       
@@ -647,47 +383,6 @@ const index = () => {
         }
     }
 
-    // const submitDelete = () => {
-    //     setLoading(true)
-    //     fetchRequest(classAttendanceDelete, 'POST', {
-    //         date
-    //     })
-    //         .then(res => {
-    //             if (res.success) {
-    //                 const clone = [...students]
-
-    //                 let cameTypeId = null;
-    //                 for (let t = 0; t < types?.length; t++) {
-    //                     if (types[t].code?.toUpperCase() === 'CAME') {
-    //                         cameTypeId = types[t].id;
-    //                         break;
-    //                     }
-    //                 }
-    //                 for (let c = 0; c < clone.length; c++) {
-    //                     clone[c].attendanceType = cameTypeId;
-    //                     clone[c].editing = true;
-    //                 }
-    //                 setHdr(null)
-    //                 setStudents(clone)
-    //                 setShowDeleteModal(false)
-    //                 message(t('success, true')
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
-
-    // const onCloseTeacherLog = () => {
-    //     setSelectedShift(null)
-    //     setSelectedTeacherLog(null)
-    //     setShowTeacherLogModal(false)
-    // }
-
     const clearDateRange = () => {
         setStartDate(null)
         setEndDate(null)
@@ -711,17 +406,7 @@ const index = () => {
     }
 
     const closeModal = () => {
-        // setShowAddTeacherModal(false)
-        // setShowEditTeacherModal(false)
-        // setShowDeleteModal(false)
-        // setShowViewModal(false)
-        // setShowDeleteModal(false)
-        // setStatusChangeModal(false)
-        // setSelectedTableDataId(null)
-        // setShowRoleChangeModal(false)
-        // setShowInfoChangeModal(false)
-        // setShowPasswordResetModal(false)
-        // setShowLoginNameChangeModal(false)
+        setSelectedTableDataId(null)
     }
 
     const onCloseTeacherLog = () => {
@@ -739,6 +424,10 @@ const index = () => {
                 end: tTemplate?.end,
             })
         }
+    }
+
+    const onUserInteraction = state => {
+        console.log('onUserInteraction');     
     }
 
   
@@ -764,27 +453,15 @@ const index = () => {
         // init(selectedTableState, selectedTreeDataId, data?.panes?.[data?.activeIndex]?.code)
     }
 
-    
-
-    
-
-    // useEffect(() => { ROOT CODE
-    //     if (selectedTabData == 0) {
-    //         tableData?.forEach(el => {
-    //             el.contextMenuKeys = 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, infoChange'
-    //         })
-    //         setColumns(activeColumns)
-    //         setContextMenus(activeContextMenus)
-    //     } else {
-    //         if (selectedTabData === 1) {
-    //             tableData?.forEach(el => {
-    //                 el.contextMenuKeys = 'view, statusChange'
-    //             })
-    //         } 
-    //         // setColumns(otherColumns)
-    //         // setContextMenus(otherContextMenus)
-    //     }
-    // }, [selectedTabData, tableData])
+    useEffect(() => {
+        if (selectedTabData == 0) {           
+            setColumns(attendanceColumns)
+        } else {
+            if (selectedTabData === 1) {
+            } 
+            setColumns(reportColumns)
+        }
+    }, [selectedTabData, tableData])
 
     // useEffect(() => {
     //     if (treeData.length && !selectedTreeDataId.length) {
@@ -837,45 +514,6 @@ const index = () => {
     //         });
     //     }
     // }, [tabData])
-
-    // const init = (pagination, gradeId, statusCode) => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherInit, 'POST', {
-    //         status: statusCode,
-    //         grade: gradeId,
-    //         filter: pagination?.filter,
-    //         order: pagination?.order,
-    //         sort: pagination?.sort,
-    //         page: pagination?.page,
-    //         pageSize: pagination?.pageSize,
-    //         search: pagination?.search,
-    //     })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const {teachers, statuses, grades, totalCount} = res.data
-    //                 setTreeData(grades || [])
-    //                 setTableData(teachers || [])
-    //                 setTabData(statuses?.map((el, index) => ({
-    //                     index: index,
-    //                     menuItem: el.name,
-    //                     code: el.code,
-    //                     id: el.id
-    //                 })) || [])
-    //                 setTotalCount(totalCount || 0)
-    //                 if (!firstRender) setLoading(false)
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
-
-    
-
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -925,7 +563,10 @@ const index = () => {
                                                                             after: new Date(seasonEnd)
                                                                         }
                                                                         :
-                                                                        {}
+                                                                        {
+                                                                            before: new Date(seasonStart),
+                                                                            after: new Date(date)
+                                                                        }
                                                                 }}
                                                                 classNames={{
                                                                     overlay: 'DayPickerInputOverlay',
@@ -943,56 +584,20 @@ const index = () => {
                                                             <i className='la la-angle-right'/>
                                                         </a>
                                                 </div>
-                                            {/* {
-                                                hdr && hdr?.reports && hdr?.reports?.length > 0 &&
-                                                <div className={'text-right'} style={{flex: 1}}>
-                                                    <Button
-                                                    onClick={() => {
-                                                            let clone = cloneDeep(hdr)
-                                                            clone.editing = !clone.editing;
-                                                            setHdr(clone)
-
-                                                            const rows = [...students]
-                                                            for (let st = 0; st < rows?.length; st++) {
-                                                                rows[st].editing = clone.editing
-                                                            }
-                                                            setStudents(rows)
-
-                                                            // if (!clone.editing) {
-                                                            //     message(t('success, true')
-                                                            // }
-                                                            setShowTeacherLogModal(true)
-                                                        }}
-                                                                className={'btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3' + (hdr?.editing ? 'btn-success' : 'btn-primary')}
-                                                            >
-                                                        {hdr?.editing ? t('save') : t('attendance.edit_attendance')}
-                                                        {t('attendance.download_attendance')}
-                                                    </Button>
-                                                </div>
-                                            } */}
                                                     <DTable
                                                         remote
-                                                        config={getConfig((hdr?.id, canLog))}
+                                                        // config={getConfig((hdr?.id, canLog))}
+                                                        config={attendanceConfig}
                                                         locale={locale}
-                                                        columns={attendanceColumns}
-                                                        data={attendanceData}
+                                                        columns={columns}
+                                                        data={tableData}
                                                         onLeftButtonClick={() => sendLogs()}
-                                                            onSecondaryLeftButtonClick={() => {
+                                                        onSecondaryLeftButtonClick={() => {
                                                                 setShowTeacherLogModal(true)
                                                             }}
                                                         totalDataSize={totalCount}
+                                                        onInteraction={onUserInteraction}
                                                     />
-                                                    {/* <DTable
-                                                            config={getConfig(hdr?.id, canLog)}
-                                                            selectMode={'radio'}
-                                                            columns={columns}
-                                                            data={students}
-                                                            onLeftButtonClick={() => sendLogs()}
-                                                            onSecondaryLeftButtonClick={() => {
-                                                                setShowTeacherLogModal(true)
-                                                            }}
-                                                            locale={locale}
-                                                         /> */}
                                                 </div>
                                             )
 
@@ -1013,7 +618,7 @@ const index = () => {
                                                         style={{
                                                             width: 160
                                                         }}
-                                                        // value={startDate}
+                                                        value={startDate}
                                                         hideOnDayClick={true}
                                                         inputProps={{className: 'form-control'}}
                                                         placeholder={t('err.select_date')}
@@ -1043,7 +648,7 @@ const index = () => {
                                                     </div>
                                                     <DayPickerInput
                                                         onDayChange={(e) => dateRangeChange('end', e)}
-                                                        // value={endDate}
+                                                        value={endDate}
                                                         hideOnDayClick={true}
                                                         inputProps={{className: 'form-control'}}
                                                         placeholder={t('err.select_date')}
@@ -1067,20 +672,19 @@ const index = () => {
                                                     <div
                                                         className="actions justify-content-center d-flex align-items-center ml-4">
                                                         <Button
-                                                            className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex'
+                                                            className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex br-8'
                                                             style={{
-                                                                borderRadius: '10px',
                                                                 backgroundColor: '#41c5dc',
                                                                 color: 'white',
                                                                 borderColor: '#41c5dc'
                                                             }}
                                                             onClick={() => {
                                                                 if (startDate && endDate) {
-                                                                    loadData({
-                                                                        start: startDate,
-                                                                        end: endDate,
-                                                                        viewType: 'REPORT'
-                                                                    })
+                                                                    // loadData({
+                                                                    //     start: startDate,
+                                                                    //     end: endDate,
+                                                                    //     viewType: 'REPORT'
+                                                                    // })
                                                                 } else {
                                                                     message(t('err.select_date'))
                                                                 }
@@ -1103,11 +707,11 @@ const index = () => {
                                                         remote
                                                         config={reportConfig}
                                                         locale={locale}
-                                                        columns={reportDefaultColumns}
-                                                        data={reportData}                                                        
+                                                        columns={columns}
+                                                        data={tableData}                                                        
                                                         totalDataSize={totalCount}
+                                                        onInteraction={onUserInteraction}
                                                     />
-                                            
                                                 </div>                                               
                                             )
                                         }
