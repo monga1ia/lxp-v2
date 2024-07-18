@@ -998,7 +998,7 @@ const index = () => {
             </div>             
             
             <div className='m-content'>
-                <div style={{overflow: 'scroll'}}>
+                <div>
                     <Tab
                         activeIndex={tabIndex}
                         menu={{secondary: true, pointing: true, className: 'primaryColor'}}

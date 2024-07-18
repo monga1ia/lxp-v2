@@ -49,14 +49,242 @@ const index = () => {
     const [filter, setFilter] = useState({})
     const [attendanceParams, setAttendanceParams] = useState({})
 
-    const [schoolShifts, setSchoolShifts] = useState([])
-    const [timeTemplates, setTimeTemplates] = useState([])
+    const [schoolShifts, setSchoolShifts] = useState([{value:5, text:'1-р ээлж', timeTemplates: [{value:54, text:'1-р tsag'}, {value:61, text:'2-р tsag'}]}, {value:6, text:'2-р ээлж'}])
+    const [timeTemplates, setTimeTemplates] = useState([{value:54, text:'1-р tsag'}, {value:61, text:'2-р tsag'}])
 
-    const [classList, setClassList] = useState([])
+    const [classList, setClassList] = useState([
+        {
+            "classId": "12515",
+            "className": "1A",
+            "esisProgramStage": null,
+            "esisAcademicLevel": null,
+            "esisGroupId": null,
+            "timetables": [{1: '1232', 2:'adfi8uj', hasTeacherLog: true}],
+            "esisAttendanceLog": null,
+            "esisAttendanceLogColor": null,
+            "esisAttendanceLogDate": null
+        },
+        {
+            "classId": "12516",
+            "className": "2A",
+            "esisProgramStage": null,
+            "esisAcademicLevel": null,
+            "esisGroupId": null,
+            "timetables": [{1: '1232', 2:'adfi8uj'}],
+            "esisAttendanceLog": null,
+            "esisAttendanceLogColor": null,
+            "esisAttendanceLogDate": null
+        },
+        {
+            "classId": "12538",
+            "className": "2gg",
+            "esisProgramStage": null,
+            "esisAcademicLevel": null,
+            "esisGroupId": null,
+            "timetables": [],
+            "esisAttendanceLog": null,
+            "esisAttendanceLogColor": null,
+            "esisAttendanceLogDate": null
+        },
+        {
+            "classId": "12517",
+            "className": "3A",
+            "esisProgramStage": null,
+            "esisAcademicLevel": null,
+            "esisGroupId": null,
+            "timetables": [],
+            "esisAttendanceLog": null,
+            "esisAttendanceLogColor": null,
+            "esisAttendanceLogDate": null
+        },
+        {
+            "classId": "12535",
+            "className": "3A",
+            "esisProgramStage": null,
+            "esisAcademicLevel": null,
+            "esisGroupId": null,
+            "timetables": [],
+            "esisAttendanceLog": null,
+            "esisAttendanceLogColor": null,
+            "esisAttendanceLogDate": null
+        },
+        {
+            "classId": "12518",
+            "className": "4A",
+            "esisProgramStage": null,
+            "esisAcademicLevel": null,
+            "esisGroupId": null,
+            "timetables": [],
+            "esisAttendanceLog": null,
+            "esisAttendanceLogColor": null,
+            "esisAttendanceLogDate": null
+        },
+    ])
     const [attendanceTypes, setAttendanceTypes] = useState([])
 
     const [schoolLogsLoading, setSchoolLogsLoading] = useState(false)
-    const [attendanceLogs, setAttendanceLogs] = useState([])
+    const [attendanceLogs, setAttendanceLogs] = useState([
+        {
+            "id": "1",
+            "createdDate": "2023-04-12 12:13:43",
+            "date": "2023-04-12",
+            "sentDate": "2023-04-12 12:13:43",
+            "sentUser": "Baatar",
+            "totalStudent": "3",
+            "reports": [
+                {
+                    "id": 1,
+                    "code": "CAME",
+                    "name": "Ирсэн",
+                    "studentCount": 0
+                },
+                {
+                    "id": 3,
+                    "code": "NONATT",
+                    "name": "Тасалсан",
+                    "studentCount": 0
+                },
+                {
+                    "id": 5,
+                    "code": "LATE",
+                    "name": "Хоцорсон",
+                    "studentCount": 0
+                },
+                {
+                    "id": 4,
+                    "code": "SICK",
+                    "name": "Өвчтэй",
+                    "studentCount": 0
+                },
+                {
+                    "id": 2,
+                    "code": "ABSENT",
+                    "name": "Чөлөөтэй",
+                    "studentCount": 0
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "createdDate": "2023-04-13 07:23:07",
+            "date": "2023-04-13",
+            "sentDate": "2023-04-13 07:23:07",
+            "sentUser": "Admin",
+            "totalStudent": "3",
+            "reports": [
+                {
+                    "id": 1,
+                    "code": "CAME",
+                    "name": "Ирсэн",
+                    "studentCount": 0
+                },
+                {
+                    "id": 3,
+                    "code": "NONATT",
+                    "name": "Тасалсан",
+                    "studentCount": 0
+                },
+                {
+                    "id": 5,
+                    "code": "LATE",
+                    "name": "Хоцорсон",
+                    "studentCount": 0
+                },
+                {
+                    "id": 4,
+                    "code": "SICK",
+                    "name": "Өвчтэй",
+                    "studentCount": 0
+                },
+                {
+                    "id": 2,
+                    "code": "ABSENT",
+                    "name": "Чөлөөтэй",
+                    "studentCount": 0
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "createdDate": "2023-04-22 10:23:36",
+            "date": "2023-04-21",
+            "sentDate": "2023-04-22 10:23:36",
+            "sentUser": "Мөнхзул",
+            "totalStudent": null,
+            "reports": [
+                {
+                    "id": 1,
+                    "code": "CAME",
+                    "name": "Ирсэн",
+                    "studentCount": 0
+                },
+                {
+                    "id": 3,
+                    "code": "NONATT",
+                    "name": "Тасалсан",
+                    "studentCount": 0
+                },
+                {
+                    "id": 5,
+                    "code": "LATE",
+                    "name": "Хоцорсон",
+                    "studentCount": 0
+                },
+                {
+                    "id": 4,
+                    "code": "SICK",
+                    "name": "Өвчтэй",
+                    "studentCount": 0
+                },
+                {
+                    "id": 2,
+                    "code": "ABSENT",
+                    "name": "Чөлөөтэй",
+                    "studentCount": 0
+                }
+            ]
+        },
+        {
+            "id": "110",
+            "createdDate": "2023-10-26 14:52:21",
+            "date": "2023-10-26",
+            "sentDate": "2023-10-26 14:52:21",
+            "sentUser": "Мөнхзул",
+            "totalStudent": null,
+            "reports": [
+                {
+                    "id": 1,
+                    "code": "CAME",
+                    "name": "Ирсэн",
+                    "studentCount": 0
+                },
+                {
+                    "id": 3,
+                    "code": "NONATT",
+                    "name": "Тасалсан",
+                    "studentCount": 0
+                },
+                {
+                    "id": 5,
+                    "code": "LATE",
+                    "name": "Хоцорсон",
+                    "studentCount": 0
+                },
+                {
+                    "id": 4,
+                    "code": "SICK",
+                    "name": "Өвчтэй",
+                    "studentCount": 0
+                },
+                {
+                    "id": 2,
+                    "code": "ABSENT",
+                    "name": "Чөлөөтэй",
+                    "studentCount": 0
+                }
+            ]
+        }
+    ])
     const [totalAttendanceLogCount, setTotalAttendanceLogCount] = useState(0)
 
     const defaultAttendanceLogColumns = [
@@ -357,7 +585,7 @@ const index = () => {
         switch (tabIndex) {
             case 0:
                 return <>
-                    <div className='m-portlet' style={{marginTop: 20}}>
+                    <div className='m-portlet br-12' style={{marginTop: 20}}>
                         <div className='m-portlet__body'>
                             <Row>
                                 <Col>
@@ -436,7 +664,7 @@ const index = () => {
 
                     {
                         classList && classList.length > 0
-                        && <div className='m-portlet mt5'>
+                        && <div className='m-portlet br-12 mt5'>
                             <div className='m-portlet__body'>
                                 {/*<DTable*/}
                                 {/*    config={classConfig}*/}
@@ -455,7 +683,7 @@ const index = () => {
                                     <span className='ml-2'>{translations(locale).send}</span>
                                 </button>
 
-                                <div className="table-responsive">
+                                <div className="table-responsive mt-4">
                                     <table className='table table-striped table-bordered'>
                                         <thead>
                                         <tr>
@@ -631,7 +859,7 @@ const index = () => {
                     }
                 </>
             case 1:
-                return <div className='m-portlet' style={{marginTop: 20}}>
+                return <div className='m-portlet br-12' style={{marginTop: 20}}>
                     <div className='m-portlet__body'>
                         <DTable
                             remote
