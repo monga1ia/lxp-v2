@@ -9,43 +9,27 @@ import { Row, Col} from 'react-bootstrap';
 
 const locale = 'mn'
 
-const CreateHeader = ({ onClose, createParams, clickedNode, isAdminOrSuper, dropdownOptions }) => {
+const EditHeader = ({ onClose, createParams, clickedNode, isAdminOrSuper, dropdownOptions, selectedEditHdr }) => {
 
     const { t } = useTranslation();
-    const [newSelectedHeaderType, setNewSelectedHeaderType] = useState(null)
-    const [newHdrSelectedParent, setNewHdrSelectedParent] = useState(null)
-    const [selectedSchoolRoles, setSelectedSchoolRoles] = useState([])
-    const [newHdrName, setNewHdrName] = useState('')
     const formRef = useRef();
+
+//test environment variables
+    selectedEditHdr= [{1: '232', 2: '123414', 3: '81273'}]
+    isAdminOrSuper = true
 
     const createHeaderFields = [
         {
             key: 'newHeaderName',
-            label: `${t('teacher.teacher_title')}*`,
+            label: `${t('newsfeedConfig.hdrName')}*`,
             labelBold: true,
             value: '',
             type: 'text',
             required: true,
             errorMessage: translations(locale).newsfeedConfig.insertNameError,
-            placeholder: t('teacher.insert_teacher_title'),
+            placeholder: t('newsfeedConfig.hdrName'),
             className: "form-control",
             upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-            fieldContainerClassName: 'col-6',
-        },
-        {
-            key: 'newHeaderSchooldRole',
-            label: `${t('newsfeedConfig.parent_hdr_type')}*`,
-            className: "form-control",
-            labelBold: true,
-            value: '',
-            options: dropdownOptions?.headerTypes,
-            type: 'nDropdown',
-            required: true,
-            search: true,
-            errorMessage: translations(locale).newsfeedConfig.insertHdrTypeError,
-            placeholder: '-' + t('newsfeedConfig.parent_hdr_type') + ' - ',
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             fieldContainerClassName: 'col-6',
@@ -62,6 +46,22 @@ const CreateHeader = ({ onClose, createParams, clickedNode, isAdminOrSuper, drop
             search: true,
             errorMessage: translations(locale).newsfeedConfig.insertParentHdrError,
             placeholder: '-' + t('newsfeedConfig.parent_hdr') + ' - ',
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+        },
+        {
+            key: 'newHeaderSchooldRole',
+            label: `${t('newsfeedConfig.parent_hdr_type')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: '',
+            options: dropdownOptions?.headerTypes,
+            type: 'nDropdown',
+            required: true,
+            search: true,
+            errorMessage: translations(locale).newsfeedConfig.insertHdrTypeError,
+            placeholder: '-' + t('newsfeedConfig.parent_hdr_type') + ' - ',
             formContainerClassName: 'form-group m-form__group row',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             fieldContainerClassName: 'col-6',
@@ -86,17 +86,37 @@ const CreateHeader = ({ onClose, createParams, clickedNode, isAdminOrSuper, drop
     ]
 
     let secondCreateFields = []
-    if (!isAdminOrSuper) {
+    if ((!selectedEditHdr || selectedEditHdr.length===0) && !isAdminOrSuper) {
         secondCreateFields = [
             ...createHeaderFields.slice(0,1),
-            ...createHeaderFields.slice(2, createHeaderFields.length)
+            ...createHeaderFields.slice(2,3)
         ]
-    } else {
+    }
+
+    else if ((selectedEditHdr || selectedEditHdr.length>0) && !isAdminOrSuper) {
+
+        secondCreateFields = [
+            ...createHeaderFields.slice(0,2),
+            ...createHeaderFields.slice(3,4)
+        ]
+    }
+
+    else if ((!selectedEditHdr || selectedEditHdr.length===0) && isAdminOrSuper) {
+        secondCreateFields = [
+            ...createHeaderFields.slice(0,1),
+            ...createHeaderFields.slice(2,4),
+            // ...createHeaderFields.slice(1, createHeaderFields.length)
+        ]
+    } 
+    
+    else {
         secondCreateFields = createHeaderFields
     }
 
     const submitHandler = () => {
+
         const [formsValid, formValues] = formRef.current.validate();
+
         if (formsValid){
             message('success', true)
             // after success \/
@@ -109,15 +129,27 @@ const CreateHeader = ({ onClose, createParams, clickedNode, isAdminOrSuper, drop
             return
         }
 
-        let params = {
-            name: formValues[0].value,
-            parentHdr: formValues[0].value,
-            type: formValues[1].value,
-            roles: JSON.stringify(formValues[2].value),
+        let bodyParams = {
+            hdr: selectedEditHdr?.id || null ,
+            name: formValues[0].value ? formValues[0].value : selectedEditHdr?.name || null,
+            type: isAdminOrSuper ? formValues[1].value ? formValues[1].value : selectedEditHdr?.typeId || null : null,
+            parentHdr: 
+                isAdminOrSuper && selectedEditHdr ? 
+                    formValues[2].value ?
+                        formValues[2].value : 
+                        selectedEditHdr?.parentHdrId || null 
+                        
+                : selectedEditHdr ?
+                    formValues[1].value ? 
+                        formValues[1].value : 
+                        selectedEditHdr?.parentHdrId || null
+                    : selectedEditHdr?.parentHdrId || null,
+
+            roles: formValues[formValues.length-1].value ? JSON.stringify(formValues[formValues.length-1].value) : JSON.stringify(selectedEditHdr.roles) || null,
             submit: 1
         }
 
-        createParams(params)
+        createParams(bodyParams)
     }
 
     return (
@@ -163,4 +195,4 @@ const CreateHeader = ({ onClose, createParams, clickedNode, isAdminOrSuper, drop
     )
 }
 
-export default CreateHeader
+export default EditHeader

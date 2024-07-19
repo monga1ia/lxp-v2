@@ -78,8 +78,8 @@ const TreeView = ({
 
     const unMountContextMenus = () => {
         const wrapper = getContainer();
-        if (wrapper && root) {
-            root.unmount()
+        if (wrapper) {
+            ReactDOM.unmountComponentAtNode(wrapper);
         }
     }
 

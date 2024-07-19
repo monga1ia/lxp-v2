@@ -2,12 +2,59 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { useTranslation } from "react-i18next";
 import { translations } from 'utils/translations';
+import Forms from 'modules/Form/Forms';
+import { Row } from 'react-bootstrap';
 
 const locale = 'mn'
 
 const ViewHeader = ({ onClose, onSubmit, viewHdrData }) => {
     
     const { t } = useTranslation();
+
+    const viewFields = [
+        {
+            key: 'headerName',
+            label: `${t('newsfeedConfig.hdrName')}*`,
+            labelBold: true,
+            value: viewHdrData?.name,
+            type: 'text',
+            errorMessage: translations(locale).newsfeedConfig.insertNameError,
+            placeholder: '-',
+            disabled: true,
+            className: "form-control",
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+        },
+        {
+            key: 'header',
+            label: `${t('newsfeedConfig.parent_hdr')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: viewHdrData?.parentHdrName,
+            type: 'text',
+            disabled: true,
+            errorMessage: translations(locale).newsfeedConfig.insertParentHdrError,
+            placeholder: '-',
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+        },
+        {
+            key: 'newHeaderSchooldRole',
+            label: `${t('newsfeedConfig.hdr_roles')}*`,
+            className: "form-control",
+            labelBold: true,
+            value: viewHdrData?.roleNames?.toString(),
+            type: 'text',
+            disabled: true,
+            errorMessage: translations(locale).newsfeedConfig.insertRolesError,
+            placeholder: '-',
+            formContainerClassName: 'form-group m-form__group row',
+            labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+            fieldContainerClassName: 'col-6',
+        },
+    ]
 
     return (
         <Modal
@@ -24,7 +71,14 @@ const ViewHeader = ({ onClose, onSubmit, viewHdrData }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body style={{color: '#212529'}}>
-                <div className="row form-group">
+                <div className="row mt-4">
+                    <Row className='form-group'>
+                        <Forms
+                            fields={viewFields}
+                        />
+                    </Row>
+                </div>
+                {/* <div className="row form-group">
                     <div className="col-sm-12 col-md-4 d-flex align-items-center justify-content-end">
                         {translations(locale).newsfeedConfig.hdrName}*
                     </div>
@@ -56,7 +110,7 @@ const ViewHeader = ({ onClose, onSubmit, viewHdrData }) => {
                             disabled={true}
                             placeholder={translations(locale).newsfeedConfig.hdr_roles} />
                     </div>
-                </div>
+                </div> */}
             </Modal.Body>
             <Modal.Footer className='text-center'>
                 <button

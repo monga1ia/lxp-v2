@@ -12,6 +12,9 @@ import { translations } from 'utils/translations'
 import DeleteModal from './modals/deleteModal';
 import ViewHeader from './modals/viewHeaderModal';
 import CreateHeader from './modals/createHeaderModal';
+import EditHeader from './modals/editHeaderModal';
+import CreateRecipient from './modals/createRecipientModal';
+import DeleteHdr from './modals/deleteHeaderModal';
 import { Row, Col } from 'react-bootstrap';
 // import { NewsFeedConfigAddRecipients, NewsFeedConfigDeleteRecipient, NewsFeedConfigCreate, NewsFeedConfigDelete, NewsFeedConfigEdit, NewsFeedConfigInit, NewsFeedConfigRecipients, NewsFeedConfigView, NewsFeedConfigEditRecipient } from 'utils/url'
 import CloseIcon from '@mui/icons-material/Close';
@@ -642,6 +645,8 @@ const index = () => {
         ]
 }])
     const [selectedTab, setSelectedTab] = useState('school')
+    const [clickedTreeNode, setClickedTreeNode] = useState(null)
+    const [createParams, setCreateParams] = useState({})
     const [treeKey, setTreeKey] = useState('')
     const [showViewHdrModal, setShowViewHdrModal] = useState(false)
     const [showCreateHdrModal, setShowCreateHdrModal] = useState(false)
@@ -651,26 +656,154 @@ const index = () => {
     const [selectedSchoolRoles, setSelectedSchoolRoles] = useState([])
     const [newHdrName, setNewHdrName] = useState('')
     const [newSelectedHeaderType, setNewSelectedHeaderType] = useState(null)
-    const [isAdminOrSuper, setIsAdminOrSuper] = useState(null)
-    const [schoolRoles, setSchoolRoles] = useState([])
+    const [isAdminOrSuper, setIsAdminOrSuper] = useState(true)
+    const [schoolRoles, setSchoolRoles] = useState([{value: 1232, text: '123882'}, {value: '12382', text: 'this is test'}])
 
     const [showEditHdrModal, setShowEditHdrModal] = useState(false)
-    const [selectedEditHdr, setSelectedEditHdr] = useState(null)
+    const [selectedEditHdr, setSelectedEditHdr] = useState([])
     const [editSelectedHeaderType, setEditSelectedHeaderType] = useState(null)
-    const [headerTypes, setHeaderTypes] = useState([])
-    const [allHeaders, setAllHeaders] = useState([])
+    const [headerTypes, setHeaderTypes] = useState([{value: 1232, text: '123882'}, {value: '12382', text: 'this is test'}])
+    const [allHeaders, setAllHeaders] = useState([{value: 1232, text: '123882'}, {value: '12382', text: 'this is test'}])
 
     const [showCreateRecipientModal, setShowCreateRecipientModal] = useState(false)
     const [hdrDeleteModal, setHdrDeleteModal] = useState(false)
     const [showRecipientDeleteModal, setShowRecipientDeleteModal] = useState(false)
     const [newRecipientFilter, setNewRecipientFilter] = useState('')
     const [isRecipientAll, setIsRecipientAll] = useState(false)
-    const [recipientList, setRecipientList] = useState([])
+    const [recipientList, setRecipientList] = useState([
+        {
+            "id": "5390",
+            "lastName": "Гомбожав",
+            "firstName": "Эрдэнэцэцэг",
+            "avatar": "https://lxp-cdn.eschool.mn/u/633fe6e922658.png",
+            "roles": "Админ",
+            "roleIds": [
+                31
+            ]
+        },
+        {
+            "id": "180363",
+            "lastName": "test",
+            "firstName": "test",
+            "avatar": null,
+            "roles": "Админ",
+            "roleIds": [
+                31
+            ]
+        },
+        {
+            "id": "181813",
+            "lastName": "тест",
+            "firstName": "админ",
+            "avatar": null,
+            "roles": "Админ",
+            "roleIds": [
+                31
+            ]
+        },
+        {
+            "id": "94468",
+            "lastName": "Хүрэлбаатар",
+            "firstName": "Загдзүү",
+            "avatar": "https://lxp-cdn.eschool.mn/u/6541c6e626ed3.png",
+            "roles": "Админ",
+            "roleIds": [
+                31
+            ]
+        },
+        {
+            "id": "1797",
+            "lastName": "John",
+            "firstName": "Jack",
+            "avatar": null,
+            "roles": "Автобус хариуцсан ажилтан, Санхүүч, Админ, Хоолны газрын ажилтан, Жолооч",
+            "roleIds": [
+                632,
+                35,
+                31,
+                2025,
+                263,
+                623,
+                1731
+            ]
+        },
+        {
+            "id": "188808",
+            "lastName": "Содномдаржаа",
+            "firstName": "Цэндсайхан",
+            "avatar": "https://lxp-cdn.eschool.mn/main/6516a9b936d13.png",
+            "roles": "Санхүүч",
+            "roleIds": [
+                35
+            ]
+        },
+        {
+            "id": "136001",
+            "lastName": "Тулга",
+            "firstName": "Баярмаа",
+            "avatar": null,
+            "roles": "Захирал, Хоолны газрын ажилтан",
+            "roleIds": [
+                1256,
+                263,
+                2025
+            ]
+        }
+    ])
     const [selectedDeleteHdr, setSelectedDeleteHdr] = useState(null)
     const [deleteSelectedHdrUserId, setDeleteSelectedHdrUserId] = useState(null)
     const [totalCount, setTotalCount] = useState(0)
     const [searchValue, setSearchValue] = useState('')
-    const [roleList, setRoleList] = useState([])
+    const [roleList, setRoleList] = useState([
+        {
+            title: "Сургуулийн админ",
+            key: 31,
+            value: 31,
+            text: "Сургуулийн админ"
+        },
+        {
+            title: "Багш",
+            key: 33,
+            value: 33,
+            text: "Багш"
+        },
+        {
+            title: "Санхүүч",
+            key: 35,
+            value: 35,
+            text: "Санхүүч"
+        },
+        {
+            title: "Сэтгэл зүйч",
+            key: 769,
+            value: 769,
+            text: "Сэтгэл зүйч"
+        },
+        {
+            title: "Эмч",
+            key: 770,
+            value: 770,
+            text: "Эмч"
+        },
+        {
+            title: "Захирал",
+            key: 1256,
+            value: 1256,
+            text: "Захирал"
+        },
+        {
+            title: "Сургалтын менежер",
+            key: 1647,
+            value: 1647,
+            text: "Сургалтын менежер"
+        },
+        {
+            title: "Ахлах сургалтын менежер",
+            key: 2418,
+            value: 2418,
+            text: "Ахлах сургалтын менежер"
+        }
+    ])
     const [selectedRoleId, setSelectedRoleId] = useState(null)
     const [oldRecipientList, setOldRecipientList] = useState([])
 
@@ -901,6 +1034,7 @@ const index = () => {
 
     const onHdrCreate = (params) => {
         // console.log('onHdrCreate')
+        console.log(params)
         setShowCreateHdrModal(true)
 
         // setLoading(true)
@@ -947,7 +1081,8 @@ const index = () => {
     } 
 
     const onHdrEdit = (params) => {
-        console.log('onHdrEdit')
+        console.log('onHdrEdit', params)
+        setShowEditHdrModal(true)
         // setLoading(true)
         // fetchRequest(NewsFeedConfigEdit, 'POST', params)
         //     .then((res) => {
@@ -1032,7 +1167,8 @@ const index = () => {
     }
 
     const onHdrUser = (params) => {
-        console.log('onHdrUser')
+        console.log('onHdrUser', params)
+        setShowCreateRecipientModal(true)
         // setLoading(true)
         // fetchRequest(NewsFeedConfigRecipients, 'POST', params)
         //     .then((res) => {
@@ -1201,6 +1337,7 @@ const index = () => {
                 submit: 0
             }
 
+            setClickedTreeNode(params)
             onHdrCreate(params) 
         } else if (key === 'edit') {
             let params = {
@@ -1208,6 +1345,7 @@ const index = () => {
                 submit: 0
             }
 
+            setClickedTreeNode(params)
             onHdrEdit(params)
         } else if (key === 'delete') {
             setHdrDeleteModal(true)
@@ -1217,6 +1355,7 @@ const index = () => {
                 hdr: id
             }
 
+            setClickedTreeNode(params)
             onHdrView(params)
         }
     }
@@ -1238,77 +1377,37 @@ const index = () => {
         setNewHdrSelectedParent(null) 
         setSelectedSchoolRoles([])
         setNewHdrName('')
-        setIsAdminOrSuper(null)
+        // setIsAdminOrSuper(null)
         setNewSelectedHeaderType(null) 
     }
 
-    const _onNewNfNameChange = (e) => {
-        setNewHdrName(e.target.value) 
-    }
-
-    const _onEditNfNameChange = (e) => {
-        let cloneHdr = cloneDeep(selectedEditHdr);
-        cloneHdr['name'] = e.target.value;
-        setSelectedEditHdr(cloneHdr)
-    }
-
-    const _onHdrTypeChange = (e, data) => {
-        setNewSelectedHeaderType(data.value) 
-    }
-
-    const _onParentHdrChange = (e, data) => {
-        setNewHdrSelectedParent(data.value)
-    }
-
-    const _onEditHdrTypeChange = (e, data) => {
-        let cloneHdr = cloneDeep(selectedEditHdr);
-        cloneHdr['typeId'] = data.value;
-        setSelectedEditHdr(cloneHdr)
-    }
-
-    const _onEditParentHdrChange = (e, data) => {
-        let cloneHdr = cloneDeep(selectedEditHdr);
-        cloneHdr['parentHdrId'] = data.value;
-        setSelectedEditHdr(cloneHdr)
-    }
-
-    const _onNewHdrRoleChange = (e, data) => {
-        setSelectedSchoolRoles(data.value)
-    }
-
-    const _onEditHdrRoleChange = (e, data) => {
-        let cloneHdr = cloneDeep(selectedEditHdr);
-        cloneHdr['roles'] = data.value;
-        setSelectedEditHdr(cloneHdr)
-    }
-
     const _submitNewHdr = () => {
-        if (!newHdrName) {
-            message(translations(locale).newsfeedConfig.insertNameError);
-            return;
-        }
-        if (isAdminOrSuper) {
-            if (!newSelectedHeaderType) {
-                message(translations(locale).newsfeedConfig.insertHdrTypeError);
-                return;
-            }
-        }
-        if (!newHdrSelectedParent) {
-            message(translations(locale).newsfeedConfig.insertParentHdrError);
-            return;
-        }
-        if (!selectedSchoolRoles || selectedSchoolRoles.length === 0) {
-            message(translations(locale).newsfeedConfig.insertRolesError);
-            return;
-        }
+        // if (!newHdrName) {
+        //     message(translations(locale).newsfeedConfig.insertNameError);
+        //     return;
+        // }
+        // if (isAdminOrSuper) {
+        //     if (!newSelectedHeaderType) {
+        //         message(translations(locale).newsfeedConfig.insertHdrTypeError);
+        //         return;
+        //     }
+        // }
+        // if (!newHdrSelectedParent) {
+        //     message(translations(locale).newsfeedConfig.insertParentHdrError);
+        //     return;
+        // }
+        // if (!selectedSchoolRoles || selectedSchoolRoles.length === 0) {
+        //     message(translations(locale).newsfeedConfig.insertRolesError);
+        //     return;
+        // }
 
-        let params = {
-            name: newHdrName,
-            parentHdr: newHdrSelectedParent,
-            type: newSelectedHeaderType,
-            roles: JSON.stringify(selectedSchoolRoles),
-            submit: 1
-        }
+        // let params = {
+        //     name: newHdrName,
+        //     parentHdr: newHdrSelectedParent,
+        //     type: newSelectedHeaderType,
+        //     roles: JSON.stringify(selectedSchoolRoles),
+        //     submit: 1
+        // }
 
         onHdrCreate(params)
     }
@@ -1342,8 +1441,8 @@ const index = () => {
             }
         }
     }
-
-    const _submitRecipients = () => {
+    const _submitRecipients = (users) => {
+        
         let modalUsers = [...recipientList];
         let selectedUserIds = [];
         for (let i = 0; i < modalUsers.length; i++) {
@@ -1357,14 +1456,14 @@ const index = () => {
             let params = {
                 hdr: selectedTree,
                 selectedTab: selectedTab,
-                users: JSON.stringify(selectedUserIds),
+                users: users,
                 order: tableState?.order,
                 sort: tableState?.sort,
                 page: tableState?.page,
                 pageSize: tableState?.pageSize,
                 search: tableState?.search,
             }
-
+            // console.log(params)
             onHdrUserSubmit(params)
         } else {
             message(translations(locale).newsfeedConfig.selectHdrRecipient);
@@ -1389,25 +1488,6 @@ const index = () => {
         }
 
         onHdrUserDelete(params)
-    }
-
-    const filterUsers = () => {
-        let users = [...recipientList];
-        if (newRecipientFilter && newRecipientFilter.length > 0) {
-            let filtered = [];
-            for (let i = 0; i < users.length; i++) {
-                let userObj = users[i];
-                if ((userObj.lastName && userObj.lastName.toLowerCase().includes(newRecipientFilter.toLowerCase()))
-                    || (userObj.firstName && userObj.firstName.toLowerCase().includes(newRecipientFilter.toLowerCase()))
-                    || (userObj.roles && userObj.roles.toLowerCase().includes(newRecipientFilter.toLowerCase()))
-                ) {
-                    filtered.push(userObj)
-                }
-            }
-            users = filtered;
-        }
-
-        return users;
     }
 
     const _deleteHdr = () => {
@@ -1435,34 +1515,6 @@ const index = () => {
         }
 
         onHdrUser(params)
-    }
-
-    const onUserClick = (userId) => {
-        let modalUsers = [...recipientList]
-
-        let selectedUser = modalUsers.find((user) => user.id === userId)
-
-        if (selectedUser) {
-            if (selectedUser['checked']) {
-                selectedUser['checked'] = false;
-            } else {
-                selectedUser['checked'] = true;
-            }
-        }
-
-        setRecipientList(modalUsers) 
-    }
-
-    const _onRecipientAllChange = (isChecked) => {
-        let modalUsers = [...recipientList]
-
-        for (let i = 0; i < modalUsers.length; i++) {
-            let selectedUser = modalUsers[i];
-            selectedUser['checked'] = isChecked
-        }
-
-        setRecipientList(modalUsers)
-        setIsRecipientAll(isChecked)
     }
 
     const onUserInteraction = state => {
@@ -1502,26 +1554,6 @@ const index = () => {
             }
         } else {
         }
-    }
-
-    const handlerRole = (e, data) => {
-        let userList = [];
-        if(data.value){
-            if(oldRecipientList && oldRecipientList.length > 0){
-                for(let i = 0; i < oldRecipientList.length; i++){
-                    console.log(oldRecipientList[i].roleIds.find(roleId => roleId == data.value))
-                    if(oldRecipientList[i].roleIds.find(roleId => roleId == data.value)){
-                        userList.push(oldRecipientList[i])
-                    }
-                }
-            }
-
-            setRecipientList(userList);
-        } else {
-            setRecipientList(oldRecipientList);
-        }
-
-        setSelectedRoleId(data.value) 
     }
 
     const handleSearch = (value) => {
@@ -1627,6 +1659,52 @@ const index = () => {
                     onSubmit={() => closeViewHdrModal(true)}
                 />
             }
+            {
+                showCreateHdrModal &&
+                <CreateHeader
+                    onClose={closeModal}
+                    onSubmit={_submitNewHdr}
+                    isAdminOrSuper={isAdminOrSuper}
+                    clickedNode = {clickedTreeNode}
+                    createParams = {(data) => onHdrCreate(data)}
+                    dropdownOptions={{headerTypes, allHeaders, schoolRoles}}
+                />
+            }
+            {
+                showEditHdrModal &&
+                <EditHeader
+                    onClose={closeEditModal}
+                    onSubmit={_submitEditHdr}
+                    isAdminOrSuper={isAdminOrSuper}
+                    clickedNode = {clickedTreeNode}
+                    createParams = {(data) => onHdrEdit(data)}
+                    selectedEditHdr={selectedEditHdr}
+                    dropdownOptions={{headerTypes, allHeaders, schoolRoles}}
+                />
+            }
+            {
+                showCreateRecipientModal &&
+                <CreateRecipient
+                    onClose={closeRecipientModal}
+                    data = {{recipientList, oldRecipientList, roleList, selectedTree}}
+                    onSubmit={_submitRecipients}
+                />
+            }
+            {
+                showRecipientDeleteModal &&
+                <DeleteModal
+                    onClose={closeRecipientDeleteModal}
+                    onSubmit={_deleteRecipients}
+                    selectedTab={selectedTab}
+                />
+            }
+            {
+                hdrDeleteModal &&
+                <DeleteHdr
+                    onClose={closeHdrDeleteModal}
+                    onSubmit={_deleteHdr}
+                />
+            }
             {/* <Modal
                 size={'small'}
                 dimmer={'blurring'}
@@ -1695,15 +1773,7 @@ const index = () => {
                     </div>
                 </div>
             </Modal> */}
-            {/* {
-                showCreateHdrModal &&
-                <CreateHeader
-                    onClose={closeModal}
-                    onSubmit={_submitNewHdr}
-                    isAdminOrSuper={isAdminOrSuper}
-                />
-            } */}
-            <Modal
+            {/* <Modal
                 size={'small'}
                 dimmer={'blurring'}
                 open={showCreateHdrModal}
@@ -1804,8 +1874,8 @@ const index = () => {
                         </div>
                     </div>
                 </div>
-            </Modal>
-            <Modal
+            </Modal> */}
+            {/* <Modal
                 size={'small'}
                 dimmer={'blurring'}
                 open={showEditHdrModal}
@@ -1907,8 +1977,8 @@ const index = () => {
                         </div>
                     </div>
                 </div>
-            </Modal>
-            <Modal
+            </Modal> */}
+            {/* <Modal
                 size={'small'}
                 dimmer={'blurring'}
                 open={showCreateRecipientModal}
@@ -2043,16 +2113,8 @@ const index = () => {
                         </button>
                     </div>
                 </div>
-            </Modal>
-            {
-                showRecipientDeleteModal &&
-                <DeleteModal
-                    onClose={closeRecipientDeleteModal}
-                    onSubmit={_deleteRecipients}
-                    selectedTab={selectedTab}
-                />
-            }
-            <Modal
+            </Modal> */}
+            {/* <Modal
                 size={'tiny'}
                 dimmer={'blurring'}
                 open={hdrDeleteModal}
@@ -2087,7 +2149,7 @@ const index = () => {
                         </div>
                     </div>
                 </div>
-            </Modal>
+            </Modal> */}
             {
                 loading &&
                 <>
