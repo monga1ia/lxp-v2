@@ -2443,8 +2443,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-warning.focus, .btn-warning:focus {
-    -webkit-box-shadow: 0 0 0 .2rem rgba(255, 184, 34, .5);
-    box-shadow: 0 0 0 .2rem rgba(255, 184, 34, .5)
+    -webkit-box-shadow: #fbaa00;
+    box-shadow: #fbaa00
 }
 
 .btn-warning.disabled, .btn-warning:disabled {
