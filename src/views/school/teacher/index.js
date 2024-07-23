@@ -672,6 +672,7 @@ const MainGroup = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
