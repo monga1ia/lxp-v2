@@ -361,19 +361,19 @@ const index = () => {
                         </div>
                     </Col>
                     <Col xl="10" xxl="10">
-                        <Button
+                        <button
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             onClick={() => console.log('excelImportModal')}
                         >
                             <AddCircleOutlineRoundedIcon/>
                             <span className='ml-2'>{t('excel_import')}</span>
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-3'
                             onClick={() => setShowInsertModal(true)}
                         >
                             <span className='ml-2'>{t('student.create_user')}</span>
-                        </Button>
+                        </button>
                         {
                             // hasStudentRole
                             //     ?

@@ -166,7 +166,7 @@ const edit = ({ onClose, onSubmit, esisClass }) => {
                     className='btn m-btn--pill btn-success m-btn--wide'
                     onClick={handleSubmit}
                 >
-                    {t('connect')}
+                    {t('connect').toUpperCase()}
                 </button>
             </Modal.Footer>
             {
