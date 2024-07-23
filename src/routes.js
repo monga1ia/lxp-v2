@@ -49,10 +49,10 @@ const school = {
     group: lazy(() => import("views/school/groups/index")),
 }
 
-const classes = {
-    // student: lazy(() => import("views/class/student/studentBook/index")),
-    studentBook: lazy(() => import("views/class/student/studentBook/index"))
-}
+// const classes = {
+//     // student: lazy(() => import("views/class/student/studentBook/index")),
+//     studentBook: lazy(() => import("views/class/student/studentBook"))
+// }
 
 const esis = {
     employee: lazy(() => import("views/esis/employee/index")),
@@ -365,6 +365,16 @@ const routesAndMenuItems = {
                     label: "menu.class.reports",
                     component: group.reports,
                 },
+                // {
+                //     path: `/student/book`,
+                //     // path: `${appRoot}/student/book`,
+                //     component: classes.studentBook,
+                //     hideSideBar: true,
+                //     menuHidden: true,
+                //     // exact: true,
+                //     // redirect: true,
+                //     // to: `${appRoot}/student/book`
+                // },
             ],
         },
         {
@@ -793,16 +803,7 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/user/profile`,
             component: user.index,
-        },
-        {
-            path: `${appRoot}/student/book`,
-            component: classes.studentBook,
-            hideSideBar: true,
-            menuHidden: true,
-            exact: true,
-            redirect: true,
-            to: `${appRoot}/student/book`
-        },
+        }
     ],
     //student web
     studentMenuItems: [

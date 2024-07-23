@@ -12,7 +12,7 @@ import Loader from "../../modules/loader";
 const RouteIdentifier = ({
     routes,
     fallback = <div className="loading" />,
-    notFoundPath = DEFAULT_PATHS.NOTFOUND,
+    notFoundPath = DEFAULT_PATHS.NOTFOUND
 }) => {
     const { authToken } = useSelector((state) => state.auth);
     const { selectedSchool } = useSelector(state => state.schoolData);
@@ -40,26 +40,25 @@ const RouteIdentifier = ({
                 {
                     <Route path="/logout" component={LogoutPage} />
                 }
-
-                {routes.map((route, rIndex) => {
-                    if(selectedSchool && selectedSchool.inOrganization && route.path == '/online-exam/questions'){
-
-                    } else {
-                        if(isOrganizationUser && route.path == '/'){
-                            route.to = '/dashboard/exam'
-                            return (
-                                <RouteItem key={`r.${rIndex}`} {...route} />
-                            )
-                        } else if(selectedSchool && !selectedSchool.inOrganization && !isOrganizationUser && (route.path == '/admin-question' || route.path == '/admin-question/index')) {
+                    {routes.map((route, rIndex) => {
+                        if(selectedSchool && selectedSchool.inOrganization && route.path == '/online-exam/questions'){
 
                         } else {
-                            return (
-                                <RouteItem key={`r.${rIndex}`} {...route} />
-                            )
+                            if(isOrganizationUser && route.path == '/'){
+                                route.to = '/dashboard/exam'
+                                return (
+                                    <RouteItem key={`r.${rIndex}`} {...route} />
+                                )
+                            } else if(selectedSchool && !selectedSchool.inOrganization && !isOrganizationUser && (route.path == '/admin-question' || route.path == '/admin-question/index')) {
+
+                            } else {
+                                return (
+                                    <RouteItem key={`r.${rIndex}`} {...route} />
+                                )
+                            }
+                            
                         }
-                        
-                    }
-                })}
+                    })}
                 <Redirect to={notFoundPath} />
             </Switch>
         </Suspense>

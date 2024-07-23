@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap';
-import secureLocalStorage from 'react-secure-storage'
-import { useNavigate } from 'react-router';
+import secureLocalStorage from 'react-secure-storage';
 import { NavLink, useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import message from '../../../modules/message'
@@ -224,6 +224,12 @@ const index = () => {
     // }
     
     const onClickName = (row) => {
+        // history.push("/student-book", { state: {
+        //     id: row?.id,
+        //     urlData: {
+        //         backUrl: "/class/student",
+        //     }
+        // }}); 
         navigate("/student/book", { state: {
             id: row?.id,
             urlData: {
