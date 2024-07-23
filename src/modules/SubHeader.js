@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 // useNavigate || link
 
 const SubHeader = ({ locale = 'mn', links, title, secondaryTitle, additional = null }) => {
+    const { t } = useTranslation();
     return (
         <div className="m-subheader ">
             <div className="d-flex align-items-center">
