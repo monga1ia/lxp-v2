@@ -86,7 +86,8 @@ const Login = () => {
         fetchRequest(auth, 'POST', values)
             .then((res) => {
                 if (res.success) {
-                    const { token, eToken, person, schools, user } = res;
+                    const { token, eToken, person, user } = res;
+                    const schools = person?.schools || [];
                     // if (schools && schools.length > 0) {
                     dispatch(setAuth(Object.assign({ token }, { eToken })));
                     dispatch(setPersonInfo(person));

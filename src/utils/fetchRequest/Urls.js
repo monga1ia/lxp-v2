@@ -9,6 +9,8 @@ export const videoActionLog = 'system/vlogs'
 export const changePassword = "auth/change-password";
 
 // ============================= School =============================
+// teacher
+export const schoolTeacherIndex = 'school/index'
 // staff
 // export const schoolStaffIndex = 'api/employee/init'
 // export const schoolStaffSubmit = 'api/employee/submit'

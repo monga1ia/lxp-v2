@@ -29,22 +29,17 @@ const Schools = () => {
     } = useSelector((state) => state.menu);
     const { color } = useSelector((state) => state.settings);
 
-    const [schoolOptions, setSchoolOptions ] = useState([
-        {value: "1", code: '1', refId: "refId", gid: "2323", text: "School 1"},
-        {value: "221", code: '2', refId: "refId2", gid: "232", text: "School 2"},
-        {value: "34", refId: "refId3", gid: "23", text: "School 3"},
+    const [classOptions, setClassOptions] = useState([
+        { value: "1", refId: "refId", gid: "2323", text: "1A" },
+        { value: "2", refId: "refId2", gid: "232", text: "2B" },
     ])
 
-    const [classOptions, setClassOptions ] = useState([
-        {value: "1", refId: "refId", gid: "2323", text: "1A"},
-        {value: "2", refId: "refId2", gid: "232", text: "2B"},
-    ])
+    const { isStudent = false } = useSelector(state => state.person)
+    const { schools, selectedSchool } = useSelector((state) => state.schoolData);
 
-    const [selectedSchoolID, setSelectedSchoolID] = useState(0)
+    const [selectedSchoolID, setSelectedSchoolID] = useState(selectedSchool?.id || null)
     const [selectedClassID, setSelectedClassID] = useState(0)
 
-    const { isStudent = false, isOrganizationUser = false} = useSelector(state => state.person)
-    const { schools, selectedSchool } = useSelector((state) => state.schoolData);
     // const { showingNavMenu } = useSelector((state) => state.layout);
     const [searchValue, setSearchValue] = useState('');
 
@@ -83,17 +78,6 @@ const Schools = () => {
                 className="py-2 border-bottom border-separator-light d-flex school-option" onClick={() => {
                     dispatch(setSelectedSchool(obj))
                     dispatch(setLoading(true));
-                    secureLocalStorage.removeItem('exam_template_table_index')
-                    secureLocalStorage.removeItem('exam_table_index')
-                    secureLocalStorage.removeItem('exam_grade_index')
-                    secureLocalStorage.removeItem('exam_subject_index')
-                    secureLocalStorage.removeItem('group_teacher_table_index')
-                    secureLocalStorage.removeItem('group_student_table_index')
-                    secureLocalStorage.removeItem('podcast_index_table_index')
-                    secureLocalStorage.removeItem('podcast_index_grade_index')
-                    secureLocalStorage.removeItem('groups_index_table_index')
-                    secureLocalStorage.removeItem('groups_index_grade_index')
-
                     setTimeout(() => {
                         window.location.reload()
                     }, 100)
@@ -102,7 +86,7 @@ const Schools = () => {
                 <span className="label">{obj?.name}</span>
             </li>
         )
-    }  
+    }
 
     const myEl = document.getElementById('htmlHEAD')
     // console.log(myEl)
@@ -167,7 +151,7 @@ const Schools = () => {
     const SchoolsDropdownMenu = React.memo(
         React.forwardRef(({ style, className, labeledBy }, ref) => {
             return (
-                <div ref={ref} style={{transform: ''}} className={classNames('dropdown-menu wide user-menu', className)} aria-labelledby={labeledBy}>
+                <div ref={ref} style={{ transform: '' }} className={classNames('dropdown-menu wide user-menu', className)} aria-labelledby={labeledBy}>
                     {/* search */}
                     <input type='text' value={searchValue} autoFocus placeholder={t('action.search')} onInput={(e) => onSearch(e.target.value)} />
                     <OverlayScrollbarsComponent
@@ -204,24 +188,24 @@ const Schools = () => {
     );
     const customStyle = {
         option: (base, state) => {
-           let backgroundColor = 'white'
-           let fontWeight = '700'
-     
-           if (state.isSelected) {
+            let backgroundColor = 'white'
+            let fontWeight = '700'
+
+            if (state.isSelected) {
                 fontWeight = '700'
-           }
-     
-           if (state.isFocused) {
-             backgroundColor = "blue";
-           }
-     
-           return {
-             ...base,
-             backgroundColor
-           };
-         }
-     }
-    if (isOrganizationUser) {
+            }
+
+            if (state.isFocused) {
+                backgroundColor = "blue";
+            }
+
+            return {
+                ...base,
+                backgroundColor
+            };
+        }
+    }
+    if (schools && schools.length > 0 && !isStudent) {
         return (
             <div style={{
                 display: 'flex',
@@ -232,14 +216,24 @@ const Schools = () => {
                     aria-expanded='true' style={{}}>
                     <Select
                         clearable={false}
-                        searchable = {true}
+                        searchable={true}
                         fillArrow={true}
                         className="hideSelectArrow school"
+                        style={customStyle}
                         placeholder={t("teacher.select_school")}
-                        options={schoolOptions}
+                        options={schools?.map(obj => {
+                            return {
+                                value: obj?.id,
+                                text: obj?.shortName
+                            }
+                        })}
                         classNamePrefix='my-className-prefix'
                         value={selectedSchoolID}
-                        onChange={(e, data) => {setSelectedSchoolID(e), secureLocalStorage.setItem('selectedSchool', schoolOptions.filter(school => school.value === e)[0])}}
+                        onChange={(e) => {
+                            setSelectedSchoolID(e);
+                            dispatch(setSelectedSchool(schools.find(obj => obj?.id == e)))
+                            window.location.reload()
+                        }}
                     />
                 </div>
                 <div
@@ -248,7 +242,7 @@ const Schools = () => {
                     <Select
                         clearable={false}
                         fillArrow={true}
-                        searchable = {true}
+                        searchable={true}
                         className="hideSelectArrow class"
                         classNamePrefix='my-className-prefix'
                         placeholder={t("food.choose_class")}
@@ -260,49 +254,7 @@ const Schools = () => {
             </div>
         );
     } else {
-        if (schools && schools.length > 0 && !isStudent) {
-            return (
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}>
-                    <div
-                        className='m-0'
-                        aria-expanded='true' style={{}}>
-                        <Select
-                            clearable={false}
-                            searchable = {true}
-                            fillArrow={true}
-                            className="hideSelectArrow school"
-                            style={customStyle}
-                            placeholder={t("teacher.select_school")}
-                            options={schoolOptions}
-                            classNamePrefix='my-className-prefix'
-                            value={selectedSchoolID}
-                            onChange={(e, data) => {setSelectedSchoolID(e), 
-                                secureLocalStorage.setItem('selectedSchool', schoolOptions.filter(school => school.value === e)[0])}}
-                        />
-                    </div>
-                    <div
-                        className='mt-2'
-                        aria-expanded='true' style={{}}>
-                        <Select
-                            clearable={false}
-                            fillArrow={true}
-                            searchable = {true}
-                            className="hideSelectArrow class"
-                            classNamePrefix='my-className-prefix'
-                            placeholder={t("food.choose_class")}
-                            options={classOptions}
-                            value={selectedClassID}
-                            onChange={(e, data) => setSelectedClassID(e)}
-                        />
-                    </div>
-                </div>
-            );
-        } else {
-            return <></>;
-        }
+        return <></>;
     }
 };
 export default React.memo(Schools);
