@@ -648,13 +648,13 @@ const MainGroup = () => {
                     </Col>
 
                     <Col xl="10" xxl="10">
-                        <Button
+                        <button
                             onClick={() => setShowAddTeacherModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('action.register')}
-                        </Button>
+                        </button>
                         <div className='m-portlet tab br-12'>
                             <div className=''>
                                 <Tab
