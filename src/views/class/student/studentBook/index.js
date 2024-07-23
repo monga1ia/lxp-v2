@@ -15,7 +15,8 @@ import secureLocalStorage from 'react-secure-storage'
 import { Col, Container, Row } from 'react-bootstrap'
 import { fetchRequest } from 'utils/fetchRequest'
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { studentBookIndex, classStudentStudentBookEdit } from 'utils/fetchRequest/Urls'
 
@@ -26,7 +27,6 @@ const index = () => {
     const navigate = useNavigate();
     
 
-    // const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
     const [studentId, setStudentId] = useState(location?.state?.id)
     const [student, setStudent] = useState(null)
@@ -39,8 +39,10 @@ const index = () => {
         if (!studentId) {
             message(t('timetable.select_students'))
             navigate(urlData ? urlData.backUrl : '/class/student', { replace: true })
+            console.log('hiii')
         }
-        loadData()
+        // loadData()
+        console.log('hiii')
     }, [studentId])
 
     const loadData = () => {
@@ -91,7 +93,7 @@ const index = () => {
                 locale={locale}
                 title={t('student.book')}
                 secondaryTitle={student?.studentCode + '-' + student?.firstName}
-                additional={<button className='btn btn-link' onClick={() => navigate(urlData ? urlData.backUrl : '/class/student', { replace: true })}>
+                additional={<button className='btn btn-link' onClick={() => history.push(urlData ? urlData.backUrl : '/class/student', { replace: true })}>
                     {t('back_to_list')}
                 </button>}
             />

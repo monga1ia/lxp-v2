@@ -16,12 +16,12 @@ let RequestHeadersFile = {
     'charset': 'UTF-8',
 };
 
-export const ROOT_URL = 'https://lmsapi.eschool.mn/';
+export const ROOT_URL = 'https://lxp-test.eschool.mn/api/v2/';
 // export const ROOT_URL = 'https://localhost:8000/';
 
 const decrypt = (passphrase, encrypted) => {
-    var salt = CryptoJS.enc.Hex.parse("3664346235363338343433323435353237343332");
-    var iv = CryptoJS.enc.Hex.parse("35313732343833353561343137323432");
+    var salt = CryptoJS.enc.Hex.parse("3536373334653339353535373731373635363466");
+    var iv = CryptoJS.enc.Hex.parse("36333532333137383339353937383431");
 
     var key = CryptoJS.PBKDF2(passphrase, salt, { hasher: CryptoJS.algo.SHA512, keySize: 64 / 8, iterations: 999 });
     var decrypted = CryptoJS.AES.decrypt(encrypted, key, { iv: iv });
@@ -29,8 +29,8 @@ const decrypt = (passphrase, encrypted) => {
 }
 
 const encrypt = (passphrase, plain) => {
-    var salt = CryptoJS.enc.Hex.parse("3664346235363338343433323435353237343332");
-    var iv = CryptoJS.enc.Hex.parse("35313732343833353561343137323432");
+    var salt = CryptoJS.enc.Hex.parse("3536373334653339353535373731373635363466");
+    var iv = CryptoJS.enc.Hex.parse("36333532333137383339353937383431");
 
     var key = CryptoJS.PBKDF2(passphrase, salt, { hasher: CryptoJS.algo.SHA512, keySize: 8, iterations: 999 });
     var encrypted = CryptoJS.AES.encrypt(plain, key, { iv: iv });
@@ -50,15 +50,16 @@ export function fetchRequest(url, method, bodyParams, fileUpload = false, formDa
     if (authToken) {
         headerObject['Authorization'] = `Bearer ${authToken}`;
     }
+    console.log('body', bodyParams)
 
     if (bodyParams) {
         if (!formData) {
             bodyParams = {
-                data: encrypt("ESCHOOL_LMS", JSON.stringify(bodyParams))
+                data: encrypt("ESCHOOL_LXP", JSON.stringify(bodyParams))
             }
         }        
     }
-
+console.log('body', bodyParams)
     let methodObj = 'GET';
     let isPostRequest = false;
 
@@ -112,7 +113,7 @@ export function fetchRequest(url, method, bodyParams, fileUpload = false, formDa
             })
             .then((responseData) => {
                 const data = responseData?.data || null;
-                const decrypted = decrypt("ESCHOOL_LMS", data);
+                const decrypted = decrypt("ESCHOOL_LXP", data);
                 let result = JSON.parse(decrypted);
                 result['success'] = responseData?.success || false;
                 resolve(result);

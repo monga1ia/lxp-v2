@@ -116,7 +116,7 @@ const DownloadAttendanceModal = (
                         disabled={!selectedTeacherLog}
                         onClick={handleSubmit}
                     >
-                        {t('save')}
+                        {t('attendance.download')}
                     </button>
                 </div>
             </Modal.Footer>

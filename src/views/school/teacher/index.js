@@ -27,16 +27,15 @@ import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone'
 import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone'
 import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
-// import { groupCreate, groupDelete, groupIndex, groupView } from '../../utils/fetchRequest/Urls';
 import { fetchRequest } from 'utils/fetchRequest';
-import { groupIndex } from 'utils/fetchRequest/Urls';
+import { schoolTeacherIndex } from 'utils/fetchRequest/Urls';
 
-import {Tab} from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
 const MainGroup = () => {
 
-    const locale="mn"
+    const locale = "mn"
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
@@ -50,39 +49,22 @@ const MainGroup = () => {
         { to: "school/teacher", text: title }
     ];
 
+    const [statuses, setStatuses] = useState([])
     const [totalCount, setTotalCount] = useState(0);
-    const [tableData, setTableData] = useState([
-        {id: 11, code: 2323, firstName: "asdfsdf"}, 
-        {id: 12, code: 1232, firstName: "asasdfsdf"}
-    ]);
-    const [treeData, setTreeData] = useState([{
-        title: 'first level',
-        value: '0-0',
-        key: 1,
-        selectable: true,
-        children: [{
-                title: 'second level',
-                value: '0-0',
-                key: 2,
-                selectable: true,
-                children: [
-                    {
-                        title: 'third level',
-                        value: '0-0-0-0',
-                        key: 3,
-                        selectable: true,
-                    },{
-                        title: 'third level',
-                        value: '0-0-0-0',
-                        key: 4,
-                        selectable: true,
-                    },
-                ]
-            },]
-        }])
+    const [tableData, setTableData] = useState([]);
+    const [treeData, setTreeData] = useState([])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
-    const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
-    const [selectedTabData, setSelectedTabData] = useState(0)
+    const [selectedTreeDataId, setSelectedTreeDataId] = useState(null)
+    const [selectedStatusCode, setSelectedStatusCode] = useState('ACTIVE')
+
+    const [tableState, setTableState] = useState({
+        filter: {},
+        page: 1,
+        pageSize: 10,
+        search: '',
+        sort: 'firstName',
+        order: 'asc'
+    })
 
     const [showViewModal, setShowViewModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -100,49 +82,16 @@ const MainGroup = () => {
         columnButton: true,
         excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('teacher_title')}`,
         defaultSort: [{
-            dataField: 'firstName',
-            order: 'asc'
+            dataField: tableState?.sort || 'firstName',
+            order: tableState?.order || 'asc'
         }],
         defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
+            page: tableState?.page || 1,
+            sizePerPage: tableState?.pageSize || 10,
+            search: tableState?.search || '',
         }
     }
 
-    const [tableState, setTableState] = useState(
-        selectedTabData?.code == 'ACTIVE'
-            ?
-            secureLocalStorage.getItem(localeActiveTableState)
-                ?
-                secureLocalStorage.getItem(localeActiveTableState)
-                :
-                {
-                    filter: {},
-                    page: 1,
-                    pageSize: 10,
-                    search: '',
-                    sort: 'firstName',
-                    order: 'asc'
-                }
-            :
-            selectedTabData?.code == 'QUIT'
-                ?
-                secureLocalStorage.getItem(localeQuitTableState)
-                :
-                selectedTabData?.code == 'ABSENT'
-                    ?
-                    secureLocalStorage.getItem(localeAbsentTableState)
-                    :
-                    {
-                        filter: {},
-                        page: 1,
-                        pageSize: 10,
-                        search: '',
-                        sort: 'firstName',
-                        order: 'asc'
-                    }
-    )
-    
     const activeColumns = [
         {
             dataField: 'avatar',
@@ -152,12 +101,12 @@ const MainGroup = () => {
             align: 'center',
             formatter: (cell) =>
                 <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
-                     width={40} height={40} alt='profile picture'
-                     onError={(e) => {
-                         e.target.onError = null
-                         e.target.src = '/img/profile/avatar.png'
-                     }}
+                    src={cell || '/img/profile/placeholder.jpg'}
+                    width={40} height={40} alt='profile picture'
+                    onError={(e) => {
+                        e.target.onError = null
+                        e.target.src = '/img/profile/avatar.png'
+                    }}
                 />
         },
         {
@@ -223,8 +172,8 @@ const MainGroup = () => {
             align: 'center',
             formatter: (cell) =>
                 <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
-                     width={40} height={40} alt='profile picture'
+                    src={cell || '/img/profile/placeholder.jpg'}
+                    width={40} height={40} alt='profile picture'
                 />
         },
         {
@@ -274,42 +223,42 @@ const MainGroup = () => {
     const activeContextMenus = [
         {
             key: 'view',
-            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('view'),
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('edit')
         },
         {
             key: 'delete',
-            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('delete')
         },
         {
             key: 'statusChange',
-            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <CameraFrontTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('teacher.change_status')
         },
         {
             key: 'loginNameChange',
-            icon: <SettingsApplicationsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <SettingsApplicationsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('teacher.change_login_name'),
         },
         {
             key: 'passwordReset',
-            icon: <LockResetTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <LockResetTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('teacher.change_password'),
         },
         {
             key: 'roleChange',
-            icon: <ManageAccountsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <ManageAccountsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('manage_roles'),
         },
         {
             key: 'infoChange',
-            icon: <ImportContactsTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <ImportContactsTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('insert_information'),
         },
     ]
@@ -317,28 +266,58 @@ const MainGroup = () => {
     const otherContextMenus = [
         {
             key: 'view',
-            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('view'),
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('edit')
         },
         {
             key: 'delete',
-            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('delete')
         },
         {
             key: 'statusChange',
-            icon: <CameraFrontTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <CameraFrontTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('teacher.change_status')
         },
     ]
 
     const [columns, setColumns] = useState(activeColumns)
     const [contextMenus, setContextMenus] = useState(activeContextMenus)
+
+    const loadData = (params = {}) => {
+        setLoading(true)
+        setTableData([])
+        setTotalCount(0)
+        fetchRequest(schoolTeacherIndex, 'POST', params)
+            .then((res) => {
+                if (res?.success) {
+                    setStatuses((res?.statuses || []).map((obj, index) => {
+                        return {
+                            index: index,
+                            menuItem: obj.name,
+                            code: obj.code,
+                            id: obj.id
+                        }
+                    }))
+                    setTreeData(res?.grades || [])
+                    setTableData(res?.teachers || [])
+                    setTotalCount(res?.totalCount || 0)
+                }
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        loadData({
+            school: selectedSchool?.id,
+            status: selectedStatusCode
+        })
+    }, [])
 
     const closeModal = () => {
         setShowAddTeacherModal(false)
@@ -353,92 +332,50 @@ const MainGroup = () => {
         setShowLoginNameChangeModal(false)
     }
 
-    // useEffect(() => {
-    //     fetchRequest(groupIndex, 'POST')
-    //         .then ((res) => {
-    //             if (res) {
-    //                 console.log(res.data)
-    //             }
-    //         })
-    // }, [])
-    // const init = (params) => {
-    //     setLoading(true)
-    //     fetchRequest(groupIndex, 'POST', params)
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { groups, grades, subjects, totalCount } = res
-    //                 if (grades && grades.length > 0) {
-    //                     setFilterGrades(grades.map(grade => ({ value: grade.id, text: grade.name })))
-    //                 }
-
-    //                 if (subjects && subjects.length > 0) {
-    //                     setFilterSubjects(subjects.map(subject => ({ value: subject.id, text: subject.name })))
-    //                 }
-
-    //                 setTableData(groups)
-    //                 setTotalCount(totalCount)
-    //             } else {
-    //                 message(res.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('errorMessage.title'));
-    //             setLoading(false)
-    //         })
-    // }
-
-    
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
             setSelectedTreeDataId(key[0])
-            // secureLocalStorage.setItem(localStorageSelectedTree, key[0])
-
-            // let cloneData = {
-            //     page: 1,
-            //     pageSize: tableState.pageSize,
-            //     search: tableState.search,
-            //     order: tableState?.order,
-            //     sort: tableState?.sort,
-            //     filter: {
-            //         page: 1,
-            //         pageSize: tableState?.filter?.pageSize || 10
-            //     }
-            // };
-
-            // if (selectedTabData && selectedTabData.code == 'ACTIVE') {
-            //     secureLocalStorage.setItem(localeActiveTableState, cloneData)
-            // } else if (selectedTabData && selectedTabData.code == 'QUIT') {
-            //     secureLocalStorage.setItem(localeQuitTableState, cloneData)
-            // } else if (selectedTabData && selectedTabData.code == 'ABSENT') {
-            //     secureLocalStorage.setItem(localeAbsentTableState, cloneData)
-            // }
-
-            // setTableState(cloneData)
-
-            // init(cloneData, key[0], selectedTabData.code)
+            loadData({
+                school: selectedSchool?.id,
+                status: selectedStatusCode,
+                grade: key[0],
+                page: tableState?.page,
+                pageSize: tableState?.pageSize,
+                search: tableState?.search,
+                sort: tableState?.sort,
+                order: tableState?.order
+            })
         }
     }
-    
+
     const handleTabChange = (e, data) => {
-        console.log( e, data.activeIndex)
-        setSelectedTabData(data.activeIndex)
-        // setSelectedTabData({...data?.panes?.[data?.activeIndex]})
-        // secureLocalStorage.setItem(localeSelectedTab, data?.panes?.[data?.activeIndex])
+        let code = 'ACTIVE';
+        switch (data?.activeIndex) {
+            case 0:
+                code = 'ACTIVE'
+                break;
+            case 1:
+                code = 'ABSENT'
+                break;
+            case 2:
+                code = 'QUIT'
+                break;
+            case 3:
+                code = 'DELETE'
+                break;
 
-        // let selectedTableState = null;
-        // if (data?.panes?.[data?.activeIndex] && data?.panes?.[data?.activeIndex]?.code == 'ACTIVE') {
-        //     setTableState(secureLocalStorage.getItem(localeActiveTableState))
-        //     selectedTableState = secureLocalStorage.getItem(localeActiveTableState)
-        // } else if (data?.panes?.[data?.activeIndex]?.code == 'QUIT') {
-        //     setTableState(secureLocalStorage.getItem(localeQuitTableState))
-        //     selectedTableState = secureLocalStorage.getItem(localeQuitTableState)
-        // } else if (data?.panes?.[data?.activeIndex]?.code == 'ABSENT') {
-        //     setTableState(secureLocalStorage.getItem(localeAbsentTableState))
-        //     selectedTableState = secureLocalStorage.getItem(localeAbsentTableState)
-        // }
-
-        // init(selectedTableState, selectedTreeDataId, data?.panes?.[data?.activeIndex]?.code)
+        }
+        setSelectedStatusCode(code)
+        loadData({
+            school: selectedSchool?.id,
+            status: code,
+            grade: selectedTreeDataId,
+            page: tableState?.page,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+            sort: tableState?.sort,
+            order: tableState?.order
+        })
     }
 
     const handleAddTeacher = () => {
@@ -451,47 +388,29 @@ const MainGroup = () => {
 
     const onUserInteraction = state => {
         console.log('onUserInteraction')
-        // if (state.page && !secondRender) {
-        //     if (state.search != tableState.search) {
-        //         let cloneData = {
-        //             page: 1,
-        //             pageSize: state.pageSize,
-        //             search: state.search,
-        //             sort: state.sort,
-        //             order: state.order,
-        //             filter: {
-        //                 page: 1,
-        //                 pageSize: state?.filter?.pageSize || 10
-        //             }
-        //         };
+        let page = state?.page
+        if (state?.search && state?.search?.length > 0) {
+            page = 1;
+        }
 
-        //         setTableState(cloneData)
+        setTableState({
+            page: page,
+            pageSize: state?.pageSize,
+            search: state?.search,
+            sort: state?.sort,
+            order: state?.order
+        })
 
-        //         if (selectedTabData && selectedTabData.code == 'ACTIVE') {
-        //             secureLocalStorage.setItem(localeActiveTableState, cloneData)
-        //         } else if (selectedTabData && selectedTabData.code == 'QUIT') {
-        //             secureLocalStorage.setItem(localeQuitTableState, cloneData)
-        //         } else if (selectedTabData && selectedTabData.code == 'ABSENT') {
-        //             secureLocalStorage.setItem(localeAbsentTableState, cloneData)
-        //         }
-
-        //         init(cloneData, selectedTreeDataId, selectedTabData.code)
-        //     } else {
-        //         setTableState(state)
-
-        //         if (selectedTabData && selectedTabData.code == 'ACTIVE') {
-        //             secureLocalStorage.setItem(localeActiveTableState, state)
-        //         } else if (selectedTabData && selectedTabData.code == 'QUIT') {
-        //             secureLocalStorage.setItem(localeQuitTableState, state)
-        //         } else if (selectedTabData && selectedTabData.code == 'ABSENT') {
-        //             secureLocalStorage.setItem(localeAbsentTableState, state)
-        //         }
-
-        //         init(state, selectedTreeDataId, selectedTabData.code)
-        //     }
-        // } else {
-        //     setSecondRender(false)
-        // }
+        loadData({
+            school: selectedSchool?.id,
+            status: selectedStatusCode,
+            grade: selectedTreeDataId,
+            page: page,
+            pageSize: state?.pageSize,
+            search: state?.search,
+            sort: state?.sort,
+            order: state?.order
+        })
     }
 
     const handleContextMenuClick = (id, key) => {
@@ -519,14 +438,14 @@ const MainGroup = () => {
     }
 
     useEffect(() => {
-        if (selectedTabData == 0) {
+        if (selectedStatusCode === 'ACTIVE') {
             tableData?.forEach(el => {
                 el.contextMenuKeys = 'view, edit, delete, statusChange, loginNameChange, passwordReset, roleChange, infoChange'
             })
             setColumns(activeColumns)
             setContextMenus(activeContextMenus)
         } else {
-            if (selectedTabData === 3) {
+            if (selectedStatusCode === 'QUIT') {
                 tableData?.forEach(el => {
                     el.contextMenuKeys = 'view, statusChange'
                 })
@@ -538,95 +457,7 @@ const MainGroup = () => {
             setColumns(otherColumns)
             setContextMenus(otherContextMenus)
         }
-    }, [selectedTabData, tableData])
-
-    // useEffect(() => {
-    //     if (treeData.length && !selectedTreeDataId.length) {
-    //         setSelectedTreeDataId(treeData?.[0]?.key)
-    //     }
-    // }, [treeData])
-
-    // useEffect(() => {
-    //     if (tabData.length && !selectedTabData?.id) {
-    //         setSelectedTabData(tabData?.[0])
-
-    //         tabData.forEach(element => {
-    //             if (element.code == 'ACTIVE') {
-    //                 if (!secureLocalStorage.getItem(localeActiveTableState)) {
-    //                     secureLocalStorage.setItem(localeActiveTableState, {
-    //                             filter: {},
-    //                             page: 1,
-    //                             pageSize: 10,
-    //                             search: '',
-    //                             sort: 'firstName',
-    //                             order: 'asc'
-    //                         }
-    //                     )
-    //                 }
-    //             } else if (element.code == 'QUIT') {
-    //                 if (!secureLocalStorage.getItem(localeQuitTableState)) {
-    //                     secureLocalStorage.setItem(localeQuitTableState, {
-    //                             filter: {},
-    //                             page: 1,
-    //                             pageSize: 10,
-    //                             search: '',
-    //                             sort: 'firstName',
-    //                             order: 'asc'
-    //                         }
-    //                     )
-    //                 }
-    //             } else if (element.code == 'ABSENT') {
-    //                 if (!secureLocalStorage.getItem(localeAbsentTableState)) {
-    //                     secureLocalStorage.setItem(localeAbsentTableState, {
-    //                             filter: {},
-    //                             page: 1,
-    //                             pageSize: 10,
-    //                             search: '',
-    //                             sort: 'firstName',
-    //                             order: 'asc'
-    //                         }
-    //                     )
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, [tabData])
-
-    // const init = (pagination, gradeId, statusCode) => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherInit, 'POST', {
-    //         status: statusCode,
-    //         grade: gradeId,
-    //         filter: pagination?.filter,
-    //         order: pagination?.order,
-    //         sort: pagination?.sort,
-    //         page: pagination?.page,
-    //         pageSize: pagination?.pageSize,
-    //         search: pagination?.search,
-    //     })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const {teachers, statuses, grades, totalCount} = res.data
-    //                 setTreeData(grades || [])
-    //                 setTableData(teachers || [])
-    //                 setTabData(statuses?.map((el, index) => ({
-    //                     index: index,
-    //                     menuItem: el.name,
-    //                     code: el.code,
-    //                     id: el.id
-    //                 })) || [])
-    //                 setTotalCount(totalCount || 0)
-    //                 if (!firstRender) setLoading(false)
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
+    }, [selectedStatusCode, tableData])
 
     const handleDelete = () => {
         console.log('delete')
@@ -728,7 +559,7 @@ const MainGroup = () => {
         //         setLoading(false)
         //     })
     }
-    
+
     const handleRoleChange = roles => {
         console.log('roleChange')
         // setLoading(true)
@@ -799,7 +630,7 @@ const MainGroup = () => {
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
-            </div>  
+            </div>
 
             <div className='m-content'>
                 <Row className=''>
@@ -817,22 +648,22 @@ const MainGroup = () => {
                     </Col>
 
                     <Col xl="10" xxl="10">
-                        <button
+                        <Button
                             onClick={() => setShowAddTeacherModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('action.register')}
-                        </button>
+                        </Button>
                         <div className='m-portlet tab br-12'>
                             <div className=''>
                                 <Tab
-                                    menu={{secondary: true, pointing: true, className: 'primaryColor m-0 h-4'}}
+                                    menu={{ secondary: true, pointing: true, className: 'primaryColor m-0 h-4' }}
                                     onTabChange={(e, data) => handleTabChange(e, data)}
                                     className='m-portlet-header'
-                                    panes={[
-                                        {
-                                            menuItem: t('teacher.working'),
+                                    panes={statuses?.map(statusObj => {
+                                        return {
+                                            menuItem: statusObj?.menuItem,
                                             render: () => (
                                                 <div className='m-portlet__body'>
                                                     <DTable
@@ -842,68 +673,6 @@ const MainGroup = () => {
                                                         data={tableData}
                                                         columns={columns}
                                                         individualContextMenus
-                                                        clickContextMenu
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={handleContextMenuClick}
-                                                        onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
-                                                    />
-                                                </div>
-                                            )
-
-                                        },
-                                        {
-                                            menuItem: t('teacher.absent'),
-                                            render: () => (
-                                                <div className='m-portlet__body'>
-                                                    <DTable
-                                                        remote
-                                                        config={config}
-                                                        locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
-                                                        individualContextMenus
-                                                        clickContextMenu
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={handleContextMenuClick}
-                                                        onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
-                                                    />
-                                                </div>
-                                            )
-                                        },
-                                        {
-                                            menuItem: t('teacher.not_working'),
-                                            render: () => (
-                                                <div className='m-portlet__body'>
-                                                    <DTable
-                                                        remote
-                                                        config={config}
-                                                        locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
-                                                        individualContextMenus
-                                                        clickContextMenu
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={handleContextMenuClick}
-                                                        onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
-                                                    />
-                                                </div>
-                                            )
-                                        },
-                                        {
-                                            menuItem: t('teacher.deleted'),
-                                            render:() => (
-                                                <div className='m-portlet__body'>
-                                                    <DTable
-                                                        remote
-                                                        config={config}
-                                                        locale={locale}
-                                                        data={tableData}
-                                                        columns={columns}
-                                                        individualContextMenus
-                                                        clickContextMenu
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
                                                         onInteraction={onUserInteraction}
@@ -912,7 +681,7 @@ const MainGroup = () => {
                                                 </div>
                                             )
                                         }
-                                    ]}
+                                    })}
                                 />
                             </div>
                         </div>
@@ -945,7 +714,7 @@ const MainGroup = () => {
                 />
             }
             {
-                showStatusChangeModal && selectedTableDataId && 
+                showStatusChangeModal && selectedTableDataId &&
                 <StatusChangeModal
                     onClose={closeModal}
                     onSubmit={handleStatusChange}
@@ -953,7 +722,7 @@ const MainGroup = () => {
                 />
             }
             {
-                showLoginNameChangeModal && selectedTableDataId && 
+                showLoginNameChangeModal && selectedTableDataId &&
                 <LoginNameChangeModal
                     onClose={closeModal}
                     onSubmit={handleLoginNameChange}
@@ -978,7 +747,7 @@ const MainGroup = () => {
             }
             {
                 // selectedGroupId &&
-                showDeleteModal && 
+                showDeleteModal &&
                 <DeleteModal
                     show={showDeleteModal}
                     onClose={closeModal}
