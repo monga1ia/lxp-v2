@@ -30,7 +30,7 @@ const forceCreate = ({ onClose, onSubmit, message }) => {
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('no')}
                 </button>

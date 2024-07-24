@@ -326,7 +326,7 @@ const EditTeacherModal = ({ onClose, onSubmit, teacherId }) => {
             size='xl'
             dimmer='blurring'
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -432,7 +432,7 @@ const EditTeacherModal = ({ onClose, onSubmit, teacherId }) => {
             </Modal.Body>
             <Modal.Footer className="text-center">
                 <button
-                    onClick={onClose}
+                    onClick={() => onClose()}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
                     {t('back')}

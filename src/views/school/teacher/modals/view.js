@@ -37,7 +37,7 @@ const view = ({ onClose, id }) => {
             size='lg'
             dimmer='blurring'
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -122,7 +122,7 @@ const view = ({ onClose, id }) => {
             <Modal.Footer className="col-12 text-center">
                 <button
                     className="btn m-btn--pill btn-outline-metal"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('close').toUpperCase()}
                 </button>

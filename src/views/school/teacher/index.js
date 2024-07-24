@@ -28,7 +28,10 @@ import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone
 import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
 import { fetchRequest } from 'utils/fetchRequest';
-import { schoolTeacherIndex, schoolTeacherDelete, schoolTeacherStatusChange, schoolTeacherChangeUsername } from 'utils/fetchRequest/Urls';
+import {
+    schoolTeacherIndex, schoolTeacherDelete, schoolTeacherStatusChange,
+    schoolTeacherChangeUsername, schoolTeacherChangePassword, schoolTeacherChangeRole
+} from 'utils/fetchRequest/Urls';
 
 import { Tab } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
@@ -333,6 +336,7 @@ const MainGroup = () => {
     }
 
     const closeModal = (isLoadData = false) => {
+        console.log('load', isLoadData)
         if (isLoadData) {
             onListRefresh()
         }
@@ -483,7 +487,7 @@ const MainGroup = () => {
                     message(res?.message, true)
                 } else {
                     message(res?.message)
-                }                
+                }
                 setLoading(false)
             })
             .catch(e => {
@@ -497,7 +501,7 @@ const MainGroup = () => {
         fetchRequest(schoolTeacherStatusChange, 'POST', {
             school: selectedSchool?.id,
             teacher: selectedTableDataId,
-            to: toStatus,            
+            to: toStatus,
             grade: selectedTreeDataId,
             page: tableState?.page,
             pageSize: tableState?.pageSize,
@@ -518,7 +522,7 @@ const MainGroup = () => {
                     message(res?.message, true)
                 } else {
                     message(res?.message)
-                }                
+                }
                 setLoading(false)
             })
             .catch(e => {
@@ -583,7 +587,7 @@ const MainGroup = () => {
                     message(res?.message, true)
                 } else {
                     message(res?.message)
-                }                
+                }
                 setLoading(false)
             })
             .catch(e => {
@@ -593,26 +597,26 @@ const MainGroup = () => {
     }
 
     const handleRoleChange = roles => {
-        console.log('roleChange')
-        // setLoading(true)
-        // fetchRequest(schoolTeacherRoleChange, 'POST', {
-        //     teacher: selectedTableDataId,
-        //     roles: JSON.stringify(roles),
-        //     submit: 1
-        // })
-        //     .then((res) => {
-        //         if (res.success) {
-        //             message(res.data.message, res.success)
-        //             closeModal()
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+        setLoading(true)
+        fetchRequest(schoolTeacherChangeRole, 'POST', {
+            school: selectedSchool?.id,
+            teacher: selectedTableDataId,
+            submit: 1,
+            roles: JSON.stringify(roles)
+        })
+            .then((res) => {
+                if (res?.success) {
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     const handleInfoChange = param => {
@@ -634,38 +638,25 @@ const MainGroup = () => {
         //     })
     }
 
-    const handlePasswordReset = (password, passwordRepeat) => {
-        // let updateParams = Object.assign(params, {
-        //     school: selectedSchool?.id,
-        //     status: selectedStatusCode,
-        //     grade: selectedTreeDataId,
-        //     page: tableState?.page,
-        //     pageSize: tableState?.pageSize,
-        //     search: tableState?.search,
-        //     sort: tableState?.sort,
-        //     order: tableState?.order
-        // })
-        // setLoading(true)
-        // fetchRequest(schoolTeacherChangeUsername, 'POST', updateParams)
-        //     .then((res) => {
-        //         if (res?.success) {
-        //             if (res?.teachers) {
-        //                 setTableData(res?.teachers || [])
-        //                 setTotalCount(res?.totalCount || 0)
-        //             } else {
-        //                 onListRefresh()
-        //             }
-        //             closeModal()
-        //             message(res?.message, true)
-        //         } else {
-        //             message(res?.message)
-        //         }                
-        //         setLoading(false)
-        //     })
-        //     .catch(e => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+    const handlePasswordReset = params => {
+        let updateParams = Object.assign(params, {
+            school: selectedSchool?.id
+        })
+        setLoading(true)
+        fetchRequest(schoolTeacherChangePassword, 'POST', updateParams)
+            .then((res) => {
+                if (res?.success) {
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     return (
@@ -758,7 +749,7 @@ const MainGroup = () => {
                 <PasswordResetModal
                     onClose={closeModal}
                     onSubmit={handlePasswordReset}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                 />
             }
             {
@@ -784,7 +775,7 @@ const MainGroup = () => {
                 <RoleChangeModal
                     onClose={closeModal}
                     onSubmit={handleRoleChange}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                 />
             }
             {

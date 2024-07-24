@@ -89,7 +89,7 @@ const loginNameChange = ({ onClose, onSubmit, loginName, teacherId }) => {
         <Modal
             centered
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             size='xl'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
@@ -111,7 +111,7 @@ const loginNameChange = ({ onClose, onSubmit, loginName, teacherId }) => {
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>

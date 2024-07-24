@@ -6,30 +6,11 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
 const statusChange = ({ onClose, onSubmit, teacherId, statuses }) => {
-console.log('>>>', statuses)
+
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false)
 
     const [selectedStatus, setSelectedStatus] = useState(null)
-
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherStatusChange, 'POST', { teacher })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { statuses, statusId } = res?.data
-    //                 setSelectedStatus(statusId || null)
-    //                 setStatusOptions(statuses?.map(el => ({ value: el?.id, text: el?.name })) || [])
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }, [])
 
     const handleSave = () => {
         if (!selectedStatus) return message(t('err.fill_all_fields'))
@@ -41,7 +22,7 @@ console.log('>>>', statuses)
             centered
             show={true}
             size='lg'
-            onHide={onClose}
+            onHide={() => onClose()}
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
         >
@@ -76,7 +57,7 @@ console.log('>>>', statuses)
             <Modal.Footer className='text-center'>
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>

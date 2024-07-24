@@ -16,8 +16,8 @@ let RequestHeadersFile = {
     'charset': 'UTF-8',
 };
 
-// export const ROOT_URL = 'https://lxp-test.eschool.mn/api/v2/';
-export const ROOT_URL = 'http://localhost:8000/api/v2/';
+export const ROOT_URL = 'https://lxp-test.eschool.mn/api/v2/';
+// export const ROOT_URL = 'http://localhost:8000/api/v2/';
 
 const decrypt = (passphrase, encrypted) => {
     var salt = CryptoJS.enc.Hex.parse("3536373334653339353535373731373635363466");

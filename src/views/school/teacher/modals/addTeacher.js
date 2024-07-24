@@ -417,7 +417,7 @@ const AddTeacherModal = ({ onClose, onSubmit, data }) => {
             show={true}
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
-            onHide={onClose}
+            onHide={() => onClose()}
             centered
         >
             <Modal.Header closeButton style={{ padding: '1rem' }}>
@@ -521,7 +521,7 @@ const AddTeacherModal = ({ onClose, onSubmit, data }) => {
             </Modal.Body>
             <Modal.Footer className="text-center">
                 <button
-                    onClick={onClose}
+                    onClick={() => onClose()}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
                     {t('back')}
