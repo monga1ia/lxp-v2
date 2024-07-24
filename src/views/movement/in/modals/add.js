@@ -16,8 +16,6 @@ import { useNavigate } from 'react-router'
 const studentCodeRegex = /[A-Za-zА-Яа-яӨҮөүЁё0-9-]+$/
 const nameRegex = /^[A-Za-zА-Яа-яӨҮөүЁё-]+$/
 
-
-
 const AddStudentMovementIn = ({onClose}) => {
     const { t } = useTranslation();
     // const navigate = useNavigate()
@@ -137,10 +135,10 @@ const AddStudentMovementIn = ({onClose}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="row mt-4">
+                {/* <div className="row mt-4">
                 <div className='m-content'>
                 <div className='m-portlet'>
-                    <div className='m-portlet__body'>
+                    <div className='m-portlet__body'> */}
                         <table className='table table-bordered react-bootstrap-table mt-3'>
                             <thead>
                                 <tr>
@@ -252,8 +250,8 @@ const AddStudentMovementIn = ({onClose}) => {
                                         </tr>
                                     )
                                 }
-                                <tr>
-                                    <td colSpan={!isGenerateCode ? 8 : 7} style={{ borderBottomColor: 'white', borderLeftColor: 'white' }} />
+                                <tr style={{ borderBottomColor: 'white'}}>
+                                    <td colSpan={!isGenerateCode ? 8 : 7} style={{borderLeftColor: 'white' }}/>
                                     <td width={50} className='p-1 text-center'>
                                         <button
                                             className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
@@ -265,11 +263,11 @@ const AddStudentMovementIn = ({onClose}) => {
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    {/* </div>
                     
                 </div>
             </div>
-                </div>
+                </div> */}
             </Modal.Body>
             <Modal.Footer className="text-center">
                 <button 

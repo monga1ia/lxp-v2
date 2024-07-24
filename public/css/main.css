@@ -5579,6 +5579,22 @@ select.form-control:focus::-ms-value {
     gap: 1rem !important;
 }
 
+.blockOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.blockPage {
+    height: 100%;
+    align-items: center;
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+}
+
 .text-grey {
     color: #575962 !important;
 }

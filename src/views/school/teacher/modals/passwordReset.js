@@ -7,13 +7,11 @@ import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
 
-const passwordReset = ({ onClose, onSubmit, id }) => {
+const passwordReset = ({ onClose, onSubmit, teacherId }) => {
 
     const { t } = useTranslation();
     const formRef = useRef();
     
-    // const [password, setPassword] = useState({})
-
     const passwordFields = [
         {
             key: 'password',
@@ -32,7 +30,7 @@ const passwordReset = ({ onClose, onSubmit, id }) => {
             whiteSpaceClassName: 'col-md-2',
         },
         {
-            key: 'newPassword',
+            key: 'passwordRepeat',
             label: `${t('re_enter_new_password')}*`,
             className: "form-control",
             labelBold: true,
@@ -60,14 +58,14 @@ const passwordReset = ({ onClose, onSubmit, id }) => {
             } else if (formValues[0].value !== formValues[1].value) {
                 return message(t('password_re_enter_mismatch'))
             } else {
-                message('success', true)
+                let params = {
+                    teacher: teacherId
+                };
+                formValues?.map(obj => {
+                    params[obj?.key] = obj?.value;
+                })
+                onSubmit(params)
             }
-
-            // after success \/
-            // setLoading(true)
-            // onClose()
-            // console.log(formValues[0].value, formValues[1].value)
-            // onSubmit(formValues[0].value, formValues[1].value)
         } else {
             message(t('err.fill_all_fields'))
         }
@@ -77,7 +75,7 @@ const passwordReset = ({ onClose, onSubmit, id }) => {
         <Modal
             centered
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             size='xl'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
@@ -99,7 +97,7 @@ const passwordReset = ({ onClose, onSubmit, id }) => {
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>

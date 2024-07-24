@@ -148,10 +148,10 @@ const ImageModal = ({ onClose, onSubmit }) => {
 
     const handleSave = () => {
         if (isCropped) {
-            // onSubmit({
-            //     imageType,
-            //     image,
-            // })
+            onSubmit({
+                imageType,
+                image
+            })
             onClose()
         } else {
             message(t('error_crop_button'))

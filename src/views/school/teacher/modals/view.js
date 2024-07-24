@@ -1,44 +1,47 @@
 import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
+import { fetchRequest } from 'utils/fetchRequest';
+import { schoolTeacherView } from 'utils/fetchRequest/Urls';
 
 const view = ({ onClose, id }) => {
 
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
     const [loading, setLoading] = useState(false)
-    const [teacher, setTeacher] = useState({subjects: '1,3'})
+    const [teacher, setTeacher] = useState(null)
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherView, 'POST', { teacher: id })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { teacherData } = res.data
-    //                 setTeacher(teacherData)
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t(err.error_occurred))
-    //             setLoading(false)
-    //         })
-    // }, [])
+    useEffect(() => {
+        setLoading(true)
+        fetchRequest(schoolTeacherView, 'POST', { school: selectedSchool?.id, teacher: id })
+            .then((res) => {
+                if (res.success) {
+                    setTeacher(res)
+                } else {
+                    message(res.data.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }, [])
 
     return (
         <Modal
             size='lg'
             dimmer='blurring'
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                     {t('teacher.view')}
                 </Modal.Title>
@@ -87,12 +90,12 @@ const view = ({ onClose, id }) => {
                                         <td className="vertical">{t('teacher.teacher_class')}:</td>
                                         <th>
                                             {
-                                                teacher.classes ? 
-                                                teacher.classes?.split(',')?.map((el, key) =>
-                                                    <li key={key} className="subjectName">{el || '-'}</li>
-                                                )
-                                                :
-                                                <li key={'subjectKey'} className="subjectName">{'-'}</li>
+                                                teacher?.classes ?
+                                                    teacher?.classes?.split(',')?.map((el, key) =>
+                                                        <li key={key} className="subjectName">{el || '-'}</li>
+                                                    )
+                                                    :
+                                                    <li key={'subjectKey'} className="subjectName">{'-'}</li>
                                             }
                                         </th>
                                     </tr>
@@ -119,7 +122,7 @@ const view = ({ onClose, id }) => {
             <Modal.Footer className="col-12 text-center">
                 <button
                     className="btn m-btn--pill btn-outline-metal"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('close').toUpperCase()}
                 </button>
@@ -127,9 +130,10 @@ const view = ({ onClose, id }) => {
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay" >
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }

@@ -53,7 +53,7 @@ const infoChange = ({ onClose, onSubmit, id }) => {
         <Modal
             centered
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             size='lg'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
@@ -69,7 +69,7 @@ const infoChange = ({ onClose, onSubmit, id }) => {
                         <div className="col-4">
                             <img
                                 src={teacherData?.avatar || '/img/profile/placeholder.jpg'}
-                                alt={`photo of ${teacher?.firstName}`}
+                                alt={`photo of ${teacherData?.firstName}`}
                                 onError={(e) => {
                                     e.target.onError = null
                                     e.target.src = '/img/profile/avatar.png'
@@ -139,7 +139,7 @@ const infoChange = ({ onClose, onSubmit, id }) => {
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>

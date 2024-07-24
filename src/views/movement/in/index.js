@@ -1,40 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Row, Col, Card, Button } from 'react-bootstrap';
-import secureLocalStorage from 'react-secure-storage';
-import { NavLink, useLocation } from "react-router-dom";
-import { useNavigate } from 'react-router';
+import { Row, Col, Card, Button } from 'react-bootstrap'
+import secureLocalStorage from 'react-secure-storage'
+import { NavLink, useLocation } from "react-router-dom"
+import { useNavigate } from 'react-router'
 // import { Link, useNavigate } from 'react-router-dom'
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import message from 'modules/message'
-import TreeView from 'modules/TreeView';
-import HtmlHead from 'components/html-head/HtmlHead';
-import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import DTable from 'modules/DataTable/DTable';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import RegistrationMovementIn from './modal/addMovementIn'
-import RegistrationSheetModal from './modal/registrationSheet'
+import TreeView from 'modules/TreeView'
+import HtmlHead from 'components/html-head/HtmlHead'
+import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList'
+import DTable from 'modules/DataTable/DTable'
+import ControlPointIcon from '@mui/icons-material/ControlPoint'
+import AddModal from './modals/add'
+import RegistrationSheetModal from './modals/registrationSheet'
 import ImageModal from 'utils/imageModal'
 import PrintData from './components/printData'
 import { useReactToPrint } from 'react-to-print'
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined'
 import FolderSharedIcon from '@mui/icons-material/FolderShared'
-import DayPickerInput from "react-day-picker/DayPickerInput";
-
-
-
-import ExcelModal from './modal/excel'
+import DayPickerInput from "react-day-picker/DayPickerInput"
+import ExcelModal from './modals/excel'
 import { fetchRequest } from 'utils/fetchRequest'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import { movementInExcelUpload, movementInInit, movementInSubmitAvatar } from 'utils/fetchRequest/Urls'
 
-const localStorageSelectedTree = 'movement_in_selected_tree_index';
-const tableIndex = 'movement_in_table_index';
-
-
+const localStorageSelectedTree = 'movement_in_selected_tree_index'
+const tableIndex = 'movement_in_table_index'
 
 const index = () => {
     const locale="mn"
@@ -57,7 +52,7 @@ const index = () => {
     const [school, setSchool] = useState({})
 
     
-    const [showRegistrationMovementInModal, setShowRegistrationMovementInModal] = useState(false)    
+    const [showAddModal, setShowAddModal] = useState(false)    
     const [showExcelModal, setShowExcelModal] = useState(false)
     const [showImageModal, setShowImageModal] = useState(false)
     const [showRegistrationSheetModal, setShowRegistrationSheetModal] = useState(false)
@@ -118,7 +113,7 @@ const index = () => {
             align: 'center',
             formatter: (cell) =>
                 <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
+                     src={cell || '/img/profile/avatar.png'}
                      width={40} height={40} alt='profile picture'
                      onError={(e) => {
                          e.target.onError = null
@@ -356,7 +351,7 @@ const handleContextMenuClick = (student, key) => {
 
 const closeModal = () => {
     setShowExcelModal(false)
-    setShowRegistrationMovementInModal(false)
+    setShowAddModal(false)
     setShowImageModal(false)
     setSelectedTableData({})
     setShowRegistrationSheetModal(false)
@@ -471,7 +466,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                         <div className='d-flex gap-2'>
                             {/* { selectedTreeData?.key?.toString()?.startsWith('class') == 0 &&  */}
                             <Button
-                                onClick={() => setShowRegistrationMovementInModal(true)}
+                                onClick={() => setShowAddModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
@@ -548,8 +543,8 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                 />
             } */}
             {
-                showRegistrationMovementInModal && 
-                    <RegistrationMovementIn
+                showAddModal && 
+                    <AddModal
                         onClose={closeModal}
                     />
             }

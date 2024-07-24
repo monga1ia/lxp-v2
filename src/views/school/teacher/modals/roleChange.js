@@ -5,33 +5,48 @@ import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
+import { useSelector } from 'react-redux';
+import { fetchRequest } from 'utils/fetchRequest';
+import { schoolTeacherChangeRole } from 'utils/fetchRequest/Urls';
 
-const roleChange = ({ onClose, onSubmit, id }) => {
-    
+const roleChange = ({ onClose, onSubmit, teacherId }) => {
+
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
     const [loading, setLoading] = useState(false)
 
     const [selectedRoles, setSelectedRoles] = useState([])
-    const [roleOptions, setRoleOptions] = useState([{value: '121', text: '123123'}, {value: '23123', text: 'text2'}])
+    const [roleOptions, setRoleOptions] = useState([{ value: '121', text: '123123' }, { value: '23123', text: 'text2' }])
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherRoleChange, 'POST', { teacher })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { roles, roleIds } = res?.data
-    //                 setRoleOptions(roles || [])
-    //                 setSelectedRoles(roleIds || [])
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }, [])
+    const loadData = (params = {}) => {
+        setLoading(true)
+        fetchRequest(schoolTeacherChangeRole, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    setRoleOptions(res?.roles)
+                    setSelectedRoles(res?.roleIds)
+                } else {
+                    message(res.data.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        if (teacherId) {
+            loadData({
+                school: selectedSchool?.id,
+                teacher: teacherId
+            })
+        } else {
+            message(t('course_select_teacher'))
+            onClose()
+        }
+    }, [])
 
     const handleSave = () => {
         if (!selectedRoles.length) return message(t('err.fill_all_fields'))
@@ -42,14 +57,14 @@ const roleChange = ({ onClose, onSubmit, id }) => {
         <Modal
             centered
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             size='lg'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                {t('manage_roles')}
+                    {t('manage_roles')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -77,7 +92,7 @@ const roleChange = ({ onClose, onSubmit, id }) => {
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>
@@ -91,9 +106,10 @@ const roleChange = ({ onClose, onSubmit, id }) => {
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }
