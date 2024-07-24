@@ -5,13 +5,12 @@ import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
-const statusChange = ({ onClose, onSubmit, id }) => {
-
+const statusChange = ({ onClose, onSubmit, teacherId, statuses }) => {
+console.log('>>>', statuses)
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false)
 
     const [selectedStatus, setSelectedStatus] = useState(null)
-    const [statusOptions, setStatusOptions] = useState([])
 
     // useEffect(() => {
     //     setLoading(true)
@@ -57,19 +56,17 @@ const statusChange = ({ onClose, onSubmit, id }) => {
                         {t('status')}*
                     </label>
                     <div className="col-5">
-                        {/* <Select
-                            clearable
-                            searchable
-                            options={statusOptions}
-                            value={selectedStatus}
-                            onChange={(e, data) => setSelectedStatus(data)}
-                        /> */}
                         <Dropdown
                             fluid
                             selection
                             closeOnChange
                             value={selectedStatus}
-                            options={statusOptions}
+                            options={statuses?.map(obj => {
+                                return {
+                                    value: obj?.id,
+                                    text: obj?.menuItem
+                                }
+                            })}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
                             placeholder={'-' + t('select') + ' - '}
                         />

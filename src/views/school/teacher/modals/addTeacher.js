@@ -2,16 +2,20 @@ import { useState } from 'react'
 import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
 import React, { useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux';
 import ImageModal from 'utils/imageModal'
 import ForceCreateModal from './forceCreate'
 import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
+import { fetchRequest } from 'utils/fetchRequest';
+import { schoolTeacherCreate } from 'utils/fetchRequest/Urls';
 
-const AddTeacherModal = ({onClose, onSubmit, data}) => {
+const AddTeacherModal = ({ onClose, onSubmit, data }) => {
 
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
     const formRef = useRef();
 
     const [loading, setLoading] = useState(false)
@@ -19,14 +23,10 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
     const [viewForceCreateModal, setViewForceCreateModal] = useState(false)
 
     const [teacher, setTeacher] = useState({})
-    const [roleOptions, setRoleOptions] = useState([
-        {value: "ID22", refId: "refId", gid: "2323", text: "text 1"},
-        {value: "ID2", refId: "refId2", gid: "232", text: "text 2"},
-        {value: "ID345", refId: "refId3", gid: "23", text: "text 3"},
-    ])
+    const [roleOptions, setRoleOptions] = useState([])
     const [gradeOptions, setGradeOptions] = useState([])
     const [forceCreateMessage, setForceCreateMessage] = useState('')
-    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([{value: '11', text: '111'}, {value: '22', text: 'asdf'}])
+    const [gradeSubjectOptions, setGradeSubjectOptions] = useState([])
     const [gradeRows, setGradeRows] = useState([{
         grade: null,
         subjects: [],
@@ -42,283 +42,312 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             text: t('female'),
         }
     ])
-    const [schoolOptions, setSchoolOptions] = useState([
-        {value: "ID22", refId: "refId", gid: "2323", text: "text 1"},
-        {value: "ID2", refId: "refId2", gid: "232", text: "text 2"},
-        {value: "ID345", refId: "refId3", gid: "23", text: "text 3"},
-    ])
 
-    const addTeacherFields = [
-        {
-            key: 'teacherRole',
-            label: `${t('role')}*`,
-            labelBold: true,
-            value: '',
-            type: 'nDropdown',
-            required: true,
-            errorMessage: t('error.selectRole'),
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-8',
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0",
-            options: roleOptions,
-        },
-        {
-            key: 'teacherCode',
-            label: `${t('teacher.code')}*`,
-            className: "form-control",
-            labelBold: true,
-            value: '',
-            type: 'text',
-            required: true,
-            errorMessage: t('error.enterTeacherCode'),
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-8',
-            placeholder: t('teacher.code'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherLastName',
-            label: `${t('teacher.new_lastname')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'text',
-            required: true,
-            errorMessage: t('error.enterLastname'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('teacher.new_lastname_placeholder'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherFirstName',
-            label: `${t('teacher.new_name')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'text',
-            required: true,
-            errorMessage: t('error.enterFirstname'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('teacher.new_name_placeholder'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'register_number',
-            label: `${t('register_number')}`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'textUppercase',
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('register_number'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'loginName',
-            label: `${t('teacher.login_name')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'text',
-            required: true,
-            errorMessage: t('error.enterLoginname'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('teacher.login_name'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherEmail',
-            label: `${t('studentBook.email')}`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'text',
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('e_mail'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherPhone',
-            label: `${t('teacher.phone_number')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'number',
-            required: true,
-            errorMessage: t('error.enterPhone'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('teacher.phone_number'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherGender',
-            label: `${t('teacher.gender')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'nDropdown',
-            options: genderOptions,
-            required: true,
-            errorMessage: t('error.selectGender'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: '-' + t('teacher.select_gender') + '-',
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherSchool',
-            label: `${t('school')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'nDropdown',
-            required: true,
-            options: schoolOptions,
-            errorMessage: t('error.enterTeachersSchool'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: '-' + t('teacher.select_school') + ' - ',
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-        {
-            key: 'teacherTitle',
-            label: `${t('teacher.teacher_title')}*`,
-            labelBold: true,
-            className: "form-control",
-            fieldContainerClassName: 'col-8',
-            value: '',
-            type: 'text',
-            required: true,
-            errorMessage: t('error.enterTitle'),
-            formContainerClassName: 'form-group m-form__group row',
-            placeholder: t('teacher.insert_teacher_title'),
-            labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
-        },
-    ]
+    const teacherFields = (roles = [], selectedRole = null, grades = []) => {
+        return [
+            {
+                key: 'role',
+                label: `${t('role')}*`,
+                labelBold: true,
+                value: selectedRole,
+                type: 'nDropdown',
+                required: true,
+                errorMessage: t('error.selectRole'),
+                className: "form-control",
+                upperCase: true,
+                formContainerClassName: 'form-group m-form__group row',
+                fieldContainerClassName: 'col-8',
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0",
+                options: roles,
+            },
+            {
+                key: 'code',
+                label: `${t('teacher.code')}*`,
+                className: "form-control",
+                labelBold: true,
+                value: '',
+                type: 'text',
+                required: true,
+                errorMessage: t('error.enterTeacherCode'),
+                formContainerClassName: 'form-group m-form__group row',
+                fieldContainerClassName: 'col-8',
+                placeholder: t('teacher.code'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'lastName',
+                label: `${t('teacher.new_lastname')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'text',
+                required: true,
+                errorMessage: t('error.enterLastname'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('teacher.new_lastname_placeholder'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'firstName',
+                label: `${t('teacher.new_name')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'text',
+                required: true,
+                errorMessage: t('error.enterFirstname'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('teacher.new_name_placeholder'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'registerNumber',
+                label: `${t('register_number')}`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'textUppercase',
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('register_number'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'loginName',
+                label: `${t('teacher.login_name')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'text',
+                required: true,
+                errorMessage: t('error.enterLoginname'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('teacher.login_name'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'email',
+                label: `${t('studentBook.email')}`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'text',
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('e_mail'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'phone',
+                label: `${t('teacher.phone_number')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'number',
+                required: true,
+                errorMessage: t('error.enterPhone'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('teacher.phone_number'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'gender',
+                label: `${t('teacher.gender')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'nDropdown',
+                options: genderOptions,
+                required: true,
+                errorMessage: t('error.selectGender'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: '-' + t('teacher.select_gender') + '-',
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'grade',
+                label: `${t('school')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'nDropdown',
+                required: true,
+                options: grades,
+                errorMessage: t('error.enterTeachersSchool'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: '-' + t('teacher.select_school') + ' - ',
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            },
+            {
+                key: 'title',
+                label: `${t('teacher.teacher_title')}*`,
+                labelBold: true,
+                className: "form-control",
+                fieldContainerClassName: 'col-8',
+                value: '',
+                type: 'text',
+                required: true,
+                errorMessage: t('error.enterTitle'),
+                formContainerClassName: 'form-group m-form__group row',
+                placeholder: t('teacher.insert_teacher_title'),
+                labelClassName: "col-3 text-right label-pinnacle-bold mr-0"
+            }
+        ]
+    }
+
+    const loadData = (params = {}) => {
+        setLoading(true)
+        fetchRequest(schoolTeacherCreate, 'POST', params, false, true)
+            .then((res) => {
+                if (res.success) {
+                    let selectedRole = null;
+                    setRoleOptions(res?.roleLists || [])
+                    setGradeOptions(res?.grades || [])
+                    setGradeSubjectOptions(res?.gradeWithSubjects || [])
+                    if (res?.roleLists?.length === 1) {
+                        selectedRole = res?.roleLists[0]?.value;
+                    }
+                    formRef?.current?.updateFields && formRef.current?.updateFields(teacherFields(res?.roleLists, selectedRole, res?.grades));
+                } else {
+                    message(res.data.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        const formData = new FormData();
+        formData.append('school', selectedSchool?.id)
+        loadData(formData)
+    }, [])
 
     const handleSubmit = () => {
         const [formsValid, formValues] = formRef.current.validate();
 
         if (formsValid) {
-
             if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length) {
                 return message(t('err.fill_all_fields'))
-            } else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length })){
+            } else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length })) {
                 return message(t('err.fill_all_fields'))
             } else {
-                const dataCollectorArray = []
-                for (let x=0;x<formValues.length;x++) {
-                    dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value, options: formValues[x].options})
+                const formData = new FormData();
+                formData.append('school', selectedSchool?.id)
+                formData.append('subjects', JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))))
+                formData.append('submit', 1)
+                formData.append('menu', 'teacher')
+                formData.append('photo', teacher?.photo)
+                formData.append('fileType', teacher?.fileType)
+
+                const params = {
+                    ...teacher,
+                    subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
+                    submit: 1,
+                    menu: 'teacher'
                 }
-                message('success', true)
-    
-                // after success \/
-                // onClose()
-                // setLoading(true)
-                // console.log(dataCollectorArray)
+
+                let roleName = '';
+                for (let x = 0; x < formValues.length; x++) {
+                    if (formValues[x].key == 'role') {
+                        roleName = formValues[x]?.options?.find(obj => obj?.value === formValues[x].value)?.text;
+                    }
+                    formData.append(formValues[x].key, formValues[x].value)
+                    params[formValues[x].key] = formValues[x].value
+                }
+
+                formData.append('roleName', roleName)
+                params.roleName = roleName;
+
+                setLoading(true)
+                fetchRequest(schoolTeacherCreate, 'POST', formData, true, true)
+                    .then((res) => {
+                        if (res.success) {
+                            if (res.isForce) {
+                                setViewForceCreateModal(true)
+                                setForceCreateMessage(res.message)
+                            } else {
+                                message(res.message, true)
+                                onClose(true)
+                            }
+                        } else {
+                            message(res.message)
+                        }
+                        setLoading(false)
+                    })
+                    .catch(() => {
+                        message(t('err.error_occured'))
+                        setLoading(false)
+                    })
             }
-        } 
-        else{
+        }
+        else {
             message(t('err.fill_all_fields'))
-        } 
-
-        // if (formsValid) {
-        // //     if (formValues[1].value !== formValues[2].value){
-        // //         message(t('login_name_re_enter_mismatch'))
-        // //     }
-        // //     else {
-        // //         setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
-        // //         message('success', true)
-
-        // //         // after success \/
-        // //         // console.log(loginNames)
-        // //         // setLoading(true)
-        // //         // onClose()
-        // //     }
-        // // } else { 
-        // //     message(t('err.fill_all_fields'))
-        // // }
-
-        // if (!teacher?.lastName || !teacher?.firstName || !teacher?.role || !teacher?.code || !teacher?.loginName || !teacher?.phoneNumber || !teacher?.gender || !teacher?.title || !teacher?.grade)
-        //     return message(t('err.fill_all_fields'))
-        // else if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length)
-        //     return message(t('err.fill_all_fields'))
-        // else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length }))
-        //     return message(t('err.fill_all_fields'))
-        // else
-        //     return true
-
-        // if (validateFields()) {
-            // setLoading(true)
-            // const params = {
-            //     ...teacher,
-            //     subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
-            //     submit: 1,
-            //     menu: 'teacher'
-            // }
-            // fetchRequest(schoolTeacherSubmit, 'POST', params)
-            //     .then((res) => {
-            //         if (res.success) {
-            //             if (res.data.isForce) {
-            //                 setViewForceCreateModal(true)
-            //                 setForceCreateMessage(res.data.message)
-            //             } else {
-            //                 message(res.data.message, true)
-            //                 onSubmit()
-            //                 // console.log({...params, ...res.data.user})
-            //                 onClose()
-            //             }
-            //         } else {
-            //             message(res.data.message)
-            //         }
-            //         setLoading(false)
-            //     })
-            //     .catch(() => {
-            //         message(t('err.error_occurred'))
-            //         setLoading(false)
-            //     })
-        // }
+        }
     }
 
-    // const handleForceCreate = () => {
-    //     if (validateFields()) {
-    //         setLoading(true)
-    //         const params = {
-    //             ...teacher,
-    //             subjects: JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))),
-    //             submit: 1,
-    //             forceSave: 1,
-    //             menu: 'teacher'
-    //         }
-    //         fetchRequest(schoolTeacherSubmit, 'POST', params)
-    //             .then((res) => {
-    //                 if (res.success) {
-    //                     message(res.data.message, true)
-    //                     onSubmit()
-    //                     onClose()
-    //                 } else {
-    //                     message(res.data.message)
-    //                 }
-    //                 setLoading(false)
-    //             })
-    //             .catch(() => {
-    //                 message(t('err.error_occurred'))
-    //                 setLoading(false)
-    //             })
-    //     }
-    // }
+    const handleForceCreate = () => {
 
-    // const handleChange = (name, value) => {
-    //     setTeacher({ ...teacher, [name]: value })
-    // }
+        const [formsValid, formValues] = formRef.current.validate();
+
+        if (formsValid) {
+            if (gradeRows.length == 1 && gradeRows?.[0]?.grade && !gradeRows?.[0]?.subjects.length) {
+                return message(t('err.fill_all_fields'))
+            } else if (gradeRows.length > 1 && !gradeRows.every(el => { return el.grade && el.subjects.length })) {
+                return message(t('err.fill_all_fields'))
+            } else {
+                const formData = new FormData();
+                formData.append('school', selectedSchool?.id)
+                formData.append('subjects', JSON.stringify(gradeRows.map(el => ({ grade: el.grade, subjects: el.subjects }))))
+                formData.append('submit', 1)
+                formData.append('forceSave', 1)
+                formData.append('menu', 'teacher')
+                formData.append('photo', teacher?.photo)
+                formData.append('fileType', teacher?.fileType)
+
+
+                let roleName = '';
+                for (let x = 0; x < formValues.length; x++) {
+                    if (formValues[x].key == 'role') {
+                        roleName = formValues[x]?.options?.find(obj => obj?.value === formValues[x].value)?.text;
+                    }
+                    formData.append(formValues[x].key, formValues[x].value)
+                }
+
+                formData.append('roleName', roleName)
+                setLoading(true)
+                fetchRequest(schoolTeacherCreate, 'POST', formData, true, true)
+                    .then((res) => {
+                        if (res.success) {
+                            if (res.isForce) {
+                                setViewForceCreateModal(true)
+                                setForceCreateMessage(res.message)
+
+                                onClose(true)
+                            } else {
+                                message(res.message, true)
+                                window.location.reload()
+                            }
+                        } else {
+                            message(res.message)
+                        }
+                        setLoading(false)
+                    })
+                    .catch(() => {
+                        message(t('err.error_occured'))
+                        setLoading(false)
+                    })
+            }
+        }
+    }
 
     const handleAvatarUpload = params => {
         setTeacher({ ...teacher, photo: params.image, fileType: params.imageType, })
@@ -389,10 +418,9 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
             onHide={onClose}
-            // className='react-modal overflow-modal'
             centered
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                     {t('teacher.add_teacher')}
                 </Modal.Title>
@@ -429,7 +457,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                         <div className="form-group m-form__group row mb-0">
                             <Forms
                                 ref={formRef}
-                                fields={addTeacherFields}
+                                fields={teacherFields(roleOptions)}
                             />
                         </div>
                         {
@@ -469,7 +497,7 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                                             options={el?.subjectOptions}
                                             onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
                                         />
-                                        <div style={{ paddingRight: '0.71rem'}} className={index != 0 ? 'visible' : 'invisible'}>
+                                        <div style={{ paddingRight: '0.71rem' }} className={index != 0 ? 'visible' : 'invisible'}>
                                             <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                 <i className="la la-close" />
                                             </button>
@@ -492,11 +520,11 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
                 </div>
             </Modal.Body>
             <Modal.Footer className="text-center">
-                <button 
+                <button
                     onClick={onClose}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
-                    {t('back')}        
+                    {t('back')}
                 </button>
                 <button
                     onClick={handleSubmit}
@@ -525,9 +553,10 @@ const AddTeacherModal = ({onClose, onSubmit, data}) => {
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }
