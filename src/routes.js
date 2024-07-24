@@ -478,7 +478,7 @@ const routesAndMenuItems = {
                 {
                     path: "/timetable",
                     label: "menu.manager.timetable",
-                    component: manager.club_timetable,
+                    component: manager.timetable,
                 },
                 {
                     path: "/transcript",

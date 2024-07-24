@@ -9,12 +9,16 @@ import secureLocalStorage from 'react-secure-storage'
 // import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
+import { Row, Col } from 'react-bootstrap'
 // import { managerClubDelete, managerClubInit } from 'utils/url'
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+
+import AddClub from './modal/add'
+import EditClub from './modal/edit'
 
 const index = () => {
 
@@ -25,11 +29,11 @@ const index = () => {
     const localeActiveTableState = 'manager_club_table_index'
     const [loading, setLoading] = useState(false)
 
-    const title = t('omr_exam_template.subject_group');
+    const title = t('club.title');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
-        { to: "school/teacher", text: title }
+        { to: "manager/clubs", text: title }
     ];
 
     const [treeData, setTreeData] = useState([])
@@ -133,6 +137,8 @@ const index = () => {
     const [selectedTableDataId, setSelectedTableDataId] = useState([])
 
     const [showViewModal, setShowViewModal] = useState(false)
+    const [showAddClub, setShowAddClub] = useState(false)
+    const [showEditClub, setShowEditClub] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [totalCount, setTotalCount] = useState(0)
 
@@ -250,11 +256,14 @@ const index = () => {
             if (key === 'view') {
                 setShowViewModal(true)
             } else if (key === 'edit') {
+                setShowEditClub(true)
                 // navigate('/manager/clubs/edit', { state: { id, tab: 0 } })
                 console.log('edit page')
             } else if (key === 'delete') {
                 setShowDeleteModal(true)
             }
+        } else if (!id) {
+            return message('no_info')
         }
     }
 
@@ -290,6 +299,8 @@ const index = () => {
     }
 
     const closeModal = () => {
+        setShowAddClub(false)
+        setShowEditClub(false)
         setShowViewModal(false)
         setShowDeleteModal(false)
         setSelectedTableDataId(null)
@@ -343,14 +354,18 @@ const index = () => {
 
     return (
         <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            {/* <SubHeader
-                locale={locale}
-                title={translations(locale)?.club?.title}
-            /> */}
+            <HtmlHead title={title} description={description} />
+
+            <div className="page-title-container mb-2">
+                <Col md="7" className='p-0'>
+                    <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
+                    <BreadcrumbList items={breadcrumbs} />
+                </Col>
+            </div>
             <div className='m-content'>
                 <div className='row'>
-                    <div className='col-3 pr-0'>
-                        <div className='m-portlet'>
+                    <Col xl="2" xxl="2">
+                        <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>
                                 <TreeView
                                     defaultExpandAll
@@ -360,14 +375,16 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className='col-9'>
-                        {/* <Link to='/manager/clubs/create'
-                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'>
-                            <AddCircleOutlineRoundedIcon />
-                            <span className='ml-2'>{translations(locale)?.add}</span>
-                        </Link> */}
-                        <div className='m-portlet tab'>
+                    </Col>
+                    <Col xl="10" xxl="10">
+                        <button
+                            onClick={() => setShowAddClub(true)}
+                            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
+                        >
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            {t('add')}
+                        </button>
+                        <div className='m-portlet br-12 tab'>
                             <div className='m-portlet__body'>
                                 <DTable
                                     remote
@@ -382,7 +399,7 @@ const index = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </Col>
                 </div>
             </div>
             {
@@ -393,6 +410,19 @@ const index = () => {
                         <div className='m-loader m-loader--brand m-loader--lg' />
                     </div>
                 </>
+            }
+            {
+                showAddClub &&
+                <AddClub
+                    onClose={closeModal}
+                />
+            }
+            {
+                showEditClub && selectedTableDataId &&
+                <EditClub
+                    onClose={closeModal}
+                    selectedTableId={selectedTableDataId}
+                />
             }
             {
                 showViewModal && selectedTableDataId &&

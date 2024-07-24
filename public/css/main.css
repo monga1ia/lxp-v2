@@ -365,6 +365,18 @@ a {
     border-radius: 8px;
 }
 
+.br-09 {
+    border-radius: 9px;
+}
+
+.br-10 {
+    border-radius: 10px;
+}
+
+.br-11 {
+    border-radius: 11px;
+}
+
 .br-20{
     border-radius: 20px !important;
 }
@@ -5585,4 +5597,24 @@ select.form-control:focus::-ms-value {
 
 .text-grey {
     color: #575962 !important;
+}
+
+.vertical-inherit {
+    vertical-align: inherit !important;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.clubTableCell {
+    display: flex;
+    height: 85.5px;
+    align-items: center;
 }

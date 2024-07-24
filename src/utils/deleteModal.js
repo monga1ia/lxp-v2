@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { useTranslation } from "react-i18next";
 
-const deleteModal = ({ onClose, onDelete, title, locale, children }) => {
+const deleteModal = ({ onClose, onDelete, title, locale, children, className }) => {
     
     const { t } = useTranslation();
 
@@ -12,6 +12,7 @@ const deleteModal = ({ onClose, onDelete, title, locale, children }) => {
             dimmer='blurring'
             show={true}
             onHide={onClose}
+            className={className || ''}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >

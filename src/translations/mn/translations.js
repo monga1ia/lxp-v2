@@ -48,6 +48,11 @@ export const TRANSLATIONS_MN = {
         selectSubjectTitle: 'Хичээл сонгоно уу',
         selectSubjectType: 'Хичээлийн төрөл сонгоно уу',
         selectSubjectTeacher: 'Хичээлийн багш сонгоно уу',
+
+        selectClubSubjectType: 'Дугуйлангийн төрөл сонгоно уу',
+        selectClub: 'Дугуйлан сонгоно уу',
+        selectClubTeach: 'Дугуйлангийн багш сонгоно уу',
+        enterClubName: 'Дугуйлангийн нэр оруулахтун.',
     },
     day: 'өдрүүд',
     lessons: 'хичээлүүд',
