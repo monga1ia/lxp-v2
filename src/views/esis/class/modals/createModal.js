@@ -25,13 +25,13 @@ const createEsisClass = ({ onClose, onSubmit }) => {
 
     const [loading, setLoading] = useState(false)
     const [tableData, setTableData] = useState([
-        {id: 123, eschoolClassId: 123123, esisGradeName: 9000000495636, esisClassCode: 9000000495636, esisClassName: "Б.Золсайхан", esisClassTeacher: "Базарсад", eschoolClassName: 90000004952636, eschoolTeacher: "Базарсад", eschoolShift: "Б.Золсайхан", eschoolScoreType: "Ахлах  багш", eschoolUserId: 123123123},
-        {id: 232, eschoolClassId: 372432, esisGradeName: 9000000305129, esisClassCode: 9000000305129, esisClassName: "Д.Эрдэнэчимэг", esisClassTeacher: "Даржаа", eschoolClassName: 90000004956346, eschoolTeacher: "Базар", eschoolShift: "Б.сайхан", eschoolScoreType: "Ахлах ангийн цагийн багш"},
-        {id: 293,  esisGradeName: 9000000158302, esisClassCode: 9000000158302, esisClassName: "М.Сансармаа", esisClassTeacher: "Мухаршар", eschoolClassName: 90000004956326, eschoolTeacher: "Бааза", eschoolShift: "Б.Бааза", eschoolScoreType: "цагийн ангийн цагийн багш"}
+        {id: 123, eschoolClassId: 123123, esisGradeName: 9000000495636, esisClassCode: 9000000495636, esisClassName: "Б.Золсайхан", esisClassTeacher: "Базарсад", eschoolClassName: 90000004952636, eschoolTeacher: '', eschoolShift: '', eschoolScoreType: '', eschoolRoom: '', eschoolUserId: 123123123},
+        {id: 232, eschoolClassId: 372432, esisGradeName: 9000000305129, esisClassCode: 9000000305129, esisClassName: "Д.Эрдэнэчимэг", esisClassTeacher: "Даржаа", eschoolClassName: 90000004956346, eschoolTeacher: '', eschoolShift: '', eschoolScoreType: '', eschoolRoom: '',},
+        {id: 293,  esisGradeName: 9000000158302, esisClassCode: 9000000158302, esisClassName: "М.Сансармаа", esisClassTeacher: "Мухаршар", eschoolClassName: 90000004956326, eschoolTeacher: "Бааза", eschoolTeacher: '', eschoolShift: '', eschoolScoreType: '', eschoolRoom: '',}
     ])
 
     const [rooms, setRooms] = useState([{id: 1, value: '323', text: 'Room 1'}, {id: 12, value: '326', text: 'Room 2'}, {id: 13, value: '325', text: 'Room 3'}])
-    const [teachers, setTeachers] = useState([{id: 15, value: '323', text: 'Teach 1'}, {id: 123, value: '326', text: 'Teach 2'}, {id: 134, value: '325', text: 'Teach 3'}])
+    const [teachers, setTeachers] = useState([{id: 15, value: '323', text: 'Teach 1'}, {id: 1243, value: '326', text: 'Teach 2'}, {id: 134, value: '325', text: 'Teach 3'}])
     const [scoreTypes, setScoreTypes] = useState([{id: 152, value: '3231', text: 'scoreTypes 1'}, {id: 1232, value: '3264', text: 'scoreTypes 2'}, {id: 1341, value: '32567', text: 'scoreTypes 3'}])
     const [shifts, setShifts] = useState([{id: 154, value: '32325', text: 'shifts 1'}, {id: 1235, value: '32615', text: 'shifts 2'}, {id: 1348, value: '32534', text: 'shifts 3'}])
 
@@ -125,16 +125,20 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                 text: t('esis.classTeacher'),
                 style: { padding: 2 },
                 formatter: (cell, row) =>
-                    <Dropdown
-                        fluid
-                        clearable
-                        selection
-                        value={cell}
-                        closeOnChange
-                        options={teachers || []}
-                        placeholder={'-' + t('select') + '-'}
-                        onChange={(e, data) => handleChange(row?.id, 'eschoolTeacher', data?.value)}
-                    />
+                    <div>
+                        <Dropdown
+                            fluid
+                            clearable
+                            selection
+                            search
+                            value={cell}
+                            selectOnBlur={false}
+                            closeOnChange
+                            options={teachers || []}
+                            placeholder={'-' + t('select') + '-'}
+                            onChange={(e, data) => handleChange(row?.id, 'eschoolTeacher', data?.value)}
+                        />
+                    </div>
             },
             {
                 dataField: 'eschoolShift',
@@ -145,7 +149,9 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         fluid
                         clearable
                         selection
+                        search
                         value={cell}
+                        selectOnBlur={false}
                         closeOnChange
                         options={shifts || []}
                         placeholder={'-' + t('select') + '-'}
@@ -161,11 +167,13 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         fluid
                         clearable
                         selection
+                        search
                         value={cell}
+                        selectOnBlur={false}
                         closeOnChange
                         options={scoreTypes || []}
                         placeholder={'-' + t('select') + '-'}
-                        onChange={(e, data) => handleChange(row?.id, 'eschoolScoreType', data?.value)}
+                        onChange={(e, data) => handleChange(row?.id, 'eschoolScoreType', data?.value,e)}
                     />
             },
             {
@@ -177,6 +185,8 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                         fluid
                         clearable
                         selection
+                        search
+                        selectOnBlur={false}
                         value={cell}
                         closeOnChange
                         options={rooms || []}
@@ -205,7 +215,7 @@ const createEsisClass = ({ onClose, onSubmit }) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('action.create_user')}
+                    {t('esis.createClass')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -237,7 +247,7 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                     className="btn m-btn--pill btn-success m-btn--wide"
                     onClick={onSubmit}
                 >
-                    {t('save')}
+                    {t('save').toUpperCase()}
                 </button>
             </Modal.Footer>
             {

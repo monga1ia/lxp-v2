@@ -36,6 +36,7 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
     ])
 
     const config = {
+        showPagination: false,
         defaultSort: [{
             dataField: 'esisFirstName',
             order: 'asc'
@@ -238,7 +239,7 @@ const edit = ({ onClose, onSubmit, esisUser }) => {
                     className='btn m-btn--pill btn-success m-btn--wide'
                     onClick={handleSubmit}
                 >
-                    {t('connect')}
+                    {t('connect').toUpperCase()}
                 </button>
             </Modal.Footer>
             {

@@ -50,6 +50,7 @@ export function fetchRequest(url, method, bodyParams, fileUpload = false, formDa
     if (authToken) {
         headerObject['Authorization'] = `Bearer ${authToken}`;
     }
+    console.log('body', bodyParams)
 
     if (bodyParams) {
         if (!formData) {
@@ -58,7 +59,7 @@ export function fetchRequest(url, method, bodyParams, fileUpload = false, formDa
             }
         }        
     }
-
+console.log('body', bodyParams)
     let methodObj = 'GET';
     let isPostRequest = false;
 

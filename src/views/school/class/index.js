@@ -17,6 +17,7 @@ import EditClassModal from './modals/edit';
 import DeleteModal from 'utils/deleteModal';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import {Tab} from "semantic-ui-react";
+import { CheckBox } from '@mui/icons-material';
 
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -35,6 +36,7 @@ const index = () => {
     ];
 
     const [loading, setLoading] = useState(false)
+    const [isNewYear, setIsNewYear] = useState(false)
 
     const [treeData, setTreeData] = useState([{
         title: 'first level',
@@ -408,6 +410,10 @@ const index = () => {
         setSelectedTabData(data.activeIndex)
     }
 
+    const handleCheckbox = () => {
+        setIsNewYear(!isNewYear)
+    }
+
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -423,6 +429,19 @@ const index = () => {
                     <Col xl="2" xxl="2">
                         <div className="m-portlet br-12">
                             <div className="m-portlet__body">
+                                <div className='align-center align-items-center' style={{marginLeft: '17px'}}>
+                                    <input 
+                                        className="form-check-input modal-position form-modal-check mt-0" 
+                                        id='newYear' 
+                                        type="checkbox" 
+                                        style={{ borderRadius: '4px', fontSize: '18px'}} 
+                                        value={addAgain}
+                                        onChange={handleCheckbox}
+                                    />
+                                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '0.5rem', fontWeight: '400' }}>
+                                        {t('newYear')}
+                                    </label>
+                                </div>
                                 <TreeView
                                     treeData={treeData}
                                     selectedNodes={[selectedTreeDataId]}
@@ -434,20 +453,20 @@ const index = () => {
                     </Col>
                     <Col xl="10" xxl="10">
                         <div>
-                            <Button
+                            <button
                                 onClick={() => setShowAddClassModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                                 {t('action.register')}
-                            </Button>
-                            <Button
+                            </button>
+                            <button
                                 onClick={() => setShowAddToNewYear(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-2'
                             >
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                                 {t('action.addToNewYear')}
-                            </Button>
+                            </button>
                         </div>
                         <div className="m-portlet tab br-12">
                             <div className="">

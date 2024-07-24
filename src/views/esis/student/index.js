@@ -27,11 +27,11 @@ const index = () => {
     const [insertMode, setInsertMode] = useState(false)
     const [filter, setFilter] = useState({})
 
-    const title = t('menu.esis.class');
+    const title = t('menu.esis.student');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
-        { to: "esis/class", text: title }
+        { to: "esis/student", text: title }
     ];
 
     const [tableData, setTableData] = useState([])
@@ -440,7 +440,7 @@ const index = () => {
                         {
                             filterNonStudent(dummyData).length > 0 && <button
                             // filterNonStudent(tableData).length > 0 && <button
-                                className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
+                                className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
                                 onClick={() => {
                                     setShowCreateStudent(true)
                                 }}
