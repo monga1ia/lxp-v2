@@ -181,7 +181,7 @@ const edit = ({ onClose, onSubmit, esisStudent, eschoolClasses }) => {
                     className="btn m-btn--pill btn-success m-btn--wide"
                     onClick={handleSubmit}
                 >
-                    {t('save')}
+                    {t('connect')}
                 </button>
             </Modal.Footer>
             {

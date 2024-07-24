@@ -140,6 +140,106 @@ body,
     border: unset;
 }
 
+.unattached-tab {
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 0.95rem !important;
+    font-family: 'MulishBold' !important;
+}
+
+.unattached-tab .item {
+    text-transform: uppercase !important;
+    border: 1px solid #ff5b1d;
+    color: #ff5b1d !important;
+}
+
+.unattached-tab .active {
+    background-color: #ff5b1d !important;
+    color: white !important;
+}
+
+.myTimetable-addNewSubjectStyle>div>.menu {
+    display: block !important;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+
+.myTimetable-addNewSubjectStyle .menu a {
+    display: inline-block !important;
+    border: solid 1px #ff5b1d;
+    color: #ff5b1d !important;
+    font-size: 12px;
+    font-weight: bold !important;
+    font-family: 'MulishBold';
+}
+
+.myTimetable-addNewSubjectStyle .menu a.active {
+    background-color: #ff5b1d !important;
+    color: #fff !important;
+}
+
+.myTimetable-addNewSubjectStyle .menu a.active::before,
+.myTimetable-addNewSubjectStyle .menu a::before {
+    width: 0px !important;
+}
+
+/* .myTimetable-addNewSubjectStyle .menu a.active:hover {
+    background-color: #fff !important;
+    color: #ff5b1d !important;
+} */
+
+.myTimetable-addNewSubjectStyle .ui.bottom.attached.segment.active.tab {
+    border: none;
+}
+
+.myTimetable-addNewSubjectStyle .menu a:hover {
+    background-color: #ff5b1d !important;
+    color: #fff !important;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td:first-child {
+    width: 230px;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td:nth-child(2) {
+    width: 280px;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td .fa-times-circle {
+    font-size: 2.5rem !important
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td .la-plus-circle {
+    font-size: 3rem !important;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable thead tr th {
+    width: 120px;
+    text-align: right;
+    font-weight: bold;
+    border: none;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable td,
+.myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable th {
+    border: none;
+    vertical-align: middle;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable tbody tr td:first-child {
+    width: 120px;
+    text-align: right;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable tbody tr td:nth-child(2) {
+    width: 210px;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable tbody tr td:nth-child(3) {
+    width: 350px;
+}
+
 .font-mulish {
     font-family: Mulish !important
 }
@@ -231,6 +331,34 @@ a {
 
 .cursor {
     cursor: pointer !important;
+}
+
+.br-01 {
+    border-radius: 1px;
+}
+
+.br-02 {
+    border-radius: 2px;
+}
+
+.br-03 {
+    border-radius: 3px;
+}
+
+.br-04 {
+    border-radius: 4px;
+}
+
+.br-05 {
+    border-radius: 5px;
+}
+
+.br-06 {
+    border-radius: 6px;
+}
+
+.br-07 {
+    border-radius: 7px;
 }
 
 .br-08 {
@@ -620,9 +748,9 @@ table.viewTeacherTable>tr>th {
 /***************** date-picker-range-container css end **************/
 
 /***************** DTable css **************/
-.react-bootstrap-table table {
+/* .react-bootstrap-table table {
     table-layout: unset !important;
-}
+} */
 .dtableColumnCheckbox {
     padding: 9px;
 }
@@ -5453,4 +5581,8 @@ select.form-control:focus::-ms-value {
     display: inline-flex;
     width: 100%;
     justify-content: center;
+}
+
+.text-grey {
+    color: #575962 !important;
 }

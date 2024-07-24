@@ -20,32 +20,6 @@ table.react-bootstrap-table.custom-dt tbody tr td, table.react-bootstrap-table.c
     border: 1px solid #ebedf2;
     background: #fff;
 }
-/* 
-.MuiInputBase-root {
-    color: rgba(0, 0, 0, 0.87);
-    cursor: text;
-    display: inline-flex;
-    position: relative;
-    box-sizing: border-box;
-    align-items: center;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 400;
-    line-height: 1.1876em;
-    letter-spacing: 0.00938em;
-    font-size: 1rem !important;
-} */
-
-.SearchBarClass {
-    width: 220px;
-    border: 1px solid #EBEDF2;
-    height: 35px;
-    display: flex;
-    padding: 0px 4px;
-    font-size: 0.9rem;
-    box-shadow: none;
-    align-items: center;
-    border-radius: 8px;
-}
 
 .custom-size-per-page {
     border-radius: 6px;
@@ -156,3 +130,37 @@ tr.dt-drag-hover-bottom td {
 #pageDropDown {
     border-color: #ebedf2 !important;
 }
+
+.table thead th {
+    vertical-align: middle !important;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #575962;
+}
+
+.SearchBarClass {
+    width: 220px;
+    border: 1px solid #EBEDF2;
+    height: 35px;
+    display: flex;
+    padding: 0px 4px;
+    font-size: 0.9rem;
+    box-shadow: none;
+    align-items: center;
+    border-radius: 8px;
+}
+
+/* 
+.MuiInputBase-root {
+    color: rgba(0, 0, 0, 0.87);
+    cursor: text;
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    align-items: center;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.1876em;
+    letter-spacing: 0.00938em;
+    font-size: 1rem !important;
+} */

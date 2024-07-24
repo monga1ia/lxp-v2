@@ -565,13 +565,13 @@ const index = () => {
             <div className="m-content">
                 <Row className=''>
                     <Col className="col">
-                        <Button
+                        <button
                             onClick={()=>setShowAddWorkerModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('action.register')}
-                        </Button>
+                        </button>
                         <div className='m-portlet tab br-12'>
                             <div className=''>
                                 <Tab
@@ -589,6 +589,7 @@ const index = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
@@ -609,6 +610,7 @@ const index = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}
@@ -628,6 +630,7 @@ const index = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
                                                         onContextMenuItemClick={handleContextMenuClick}

@@ -51,6 +51,7 @@ export const TRANSLATIONS_MN = {
     },
     day: 'өдрүүд',
     lessons: 'хичээлүүд',
+    newYear: 'Шинэ хичээлийн жил',
     result: 'Үр дүн',
     not_registered: 'Бүртгэгдээгүй',
     addRole: 'Эрх нэмэх',

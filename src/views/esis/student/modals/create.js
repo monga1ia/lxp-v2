@@ -32,9 +32,9 @@ const create = ({ onClose, onSubmit, grades = [], classes = [], onFilter= () => 
     const [tableData, setTableData] = useState([
         {id: 123, esisId: '123', esisGradeName: 'Baa', esisClassName: 'asdf', esisLastName: 'asdf', esisFirstName: 'asdfe', esisBirthDay: 'asdfe', esisGender: 'asdf',
             eschoolClassName: 'asdf', eschoolStudentCode: '213', eschoolLastName: 'Mas', eschoolFirstName: '123', eschoolGender: 'M'},
-        {id: 123, eschoolId: 123, esisId: '123', esisGradeName: 'Baa', esisClassName: 'asdf', esisLastName: 'asdf', esisFirstName: 'asdfe', esisBirthDay: 'asdfe', esisGender: 'asdf',
+        {id: 1234, eschoolId: 123, esisId: '123', esisGradeName: 'Baa', esisClassName: 'asdf', esisLastName: 'asdf', esisFirstName: 'asdfe', esisBirthDay: 'asdfe', esisGender: 'asdf',
             eschoolClassName: 'asdf', eschoolStudentCode: '213', eschoolLastName: 'Mas', eschoolFirstName: '123', eschoolGender: 'M'},
-        {id: 123, eschoolId: '', esisId: '123', esisGradeName: 'Baa', esisClassName: 'asdf', esisLastName: 'asdf', esisFirstName: 'asdfe', esisBirthDay: 'asdfe', esisGender: 'asdf',
+        {id: 1235, eschoolId: '', esisId: '123', esisGradeName: 'Baa', esisClassName: 'asdf', esisLastName: 'asdf', esisFirstName: 'asdfe', esisBirthDay: 'asdfe', esisGender: 'asdf',
             eschoolClassName: 'asdf', eschoolStudentCode: '213', eschoolLastName: 'Mas', eschoolFirstName: '123', eschoolGender: 'M'},
     ])
 
@@ -266,7 +266,7 @@ const create = ({ onClose, onSubmit, grades = [], classes = [], onFilter= () => 
                     className="btn m-btn--pill btn-success m-btn--wide"
                     onClick={handleSubmit}
                 >
-                    {t('save')}
+                    {t('esis.createStudent').toUpperCase()}
                 </button>
             </Modal.Footer>
             {

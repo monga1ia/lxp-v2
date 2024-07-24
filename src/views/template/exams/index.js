@@ -187,6 +187,7 @@ const index = () => {
         {
             dataField: 'isPublic',
             text: '',
+            align: 'center',
             style: {verticalAlign: 'middle'},
             formatter: (cell) => {
                 return cell
@@ -454,13 +455,13 @@ const index = () => {
                         </div>
                     </Col>
                     <Col xl="10" xxl="10">
-                        <Button
+                        <button
                             onClick={() => setShowCreateTemplateModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('add')}
-                        </Button>
+                        </button>
                         <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>
                                 <DTable

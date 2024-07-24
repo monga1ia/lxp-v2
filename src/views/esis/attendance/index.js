@@ -652,7 +652,7 @@ const index = () => {
                                 <Col md={2}>
                                     <button
                                         className='btn m-btn--pill text-uppercase d-inline-flex align-content-center justify-content-center'
-                                        style={{backgroundColor: '#41c5dc', color: 'white'}}
+                                        style={{backgroundColor: '#41c5dc', color: 'white', fontSize: '13px'}}
                                         onClick={onLoadAttendance}
                                     >
                                         <span className='ml-2'>{translations(locale)?.esis.get_time}</span>
@@ -677,14 +677,14 @@ const index = () => {
 
                                 <button
                                     className='btn m-btn--pill text-uppercase d-inline-flex align-content-center justify-content-center'
-                                    style={{backgroundColor: '#41c5dc', color: 'black'}}
+                                    style={{backgroundColor: '#41c5dc', color: 'black', fontSize: '13px'}}
                                     onClick={onSubmitAttendance}
                                 >
                                     <span className='ml-2'>{translations(locale).send}</span>
                                 </button>
 
-                                <div className="table-responsive mt-4">
-                                    <table className='table table-striped table-bordered'>
+                                <div className="react-bootstrap-table table-responsive mt-4">
+                                    <table className='table table-striped table-bordered table custom-dt'>
                                         <thead>
                                         <tr>
                                             <th></th>
