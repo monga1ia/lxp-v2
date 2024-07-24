@@ -19,6 +19,7 @@ export const schoolTeacherStatusChange = 'school/teacher/change-status'
 export const schoolTeacherChangeUsername = 'school/teacher/change-username'
 export const schoolTeacherChangePassword = 'school/teacher/change-password'
 export const schoolTeacherChangeRole = 'school/teacher/change-role'
+export const schoolTeacherInfo = 'school/teacher/change-info'
 // staff
 // export const schoolStaffIndex = 'api/employee/init'
 // export const schoolStaffSubmit = 'api/employee/submit'
