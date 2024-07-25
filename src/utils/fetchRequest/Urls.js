@@ -24,6 +24,8 @@ export const schoolTeacherInfo = 'school/teacher/change-info'
 // class
 export const schoolClassIndex = 'school/class/index'
 export const schoolClassCreate = 'school/class/create'
+export const schoolClassEdit = 'school/class/edit'
+export const schoolClassDelete = 'school/class/delete'
 
 // staff
 // export const schoolStaffIndex = 'api/employee/init'

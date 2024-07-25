@@ -719,6 +719,7 @@ const MainGroup = () => {
                                                         data={tableData}
                                                         columns={columns}
                                                         currentPage={tableState?.page || 1}
+                                                        defaultPageSize={tableState?.pageSize || 10}
                                                         clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}

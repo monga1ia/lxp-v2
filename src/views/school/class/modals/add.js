@@ -67,7 +67,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
                     options: grades,
                 },
                 {
-                    key: 'cirruculum',
+                    key: 'curriculum',
                     labelBold: true,
                     value: '',
                     type: 'nDropdown',
@@ -247,6 +247,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
             fetchRequest(schoolClassCreate, 'POST', params)
                 .then((res) => {
                     if (res.success) {
+                        message(res.message, true)
                         if (addAgain) {
                             formRef?.current?.updateFields && formRef.current?.updateFields(classFields(gradeList, teacherList, schoolShifts, scoreTypeList, roomList, curriculums));
                         } else {
@@ -274,7 +275,6 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             onHide={() => onClose()}
-            // className='react-modal overflow-modal'
             centered
         >
             <Modal.Header closeButton style={{ padding: '1rem' }}>
@@ -288,7 +288,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
                         <div className="form-group m-form__group row mb-0">
                             <Forms
                                 ref={formRef}
-                                fields={classFields(gradeList, teacherList, schoolShifts, scoreTypeList, roomList)}
+                                fields={classFields(gradeList, teacherList, schoolShifts, scoreTypeList, roomList, curriculums)}
                             />
                         </div>
                     </div>

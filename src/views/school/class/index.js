@@ -21,7 +21,8 @@ import { Tab } from "semantic-ui-react";
 import { CheckBox } from '@mui/icons-material';
 import { fetchRequest } from 'utils/fetchRequest';
 import {
-    schoolClassIndex, schoolClassCreate
+    schoolClassIndex,
+    schoolClassDelete
 } from 'utils/fetchRequest/Urls';
 
 
@@ -243,7 +244,6 @@ const index = () => {
     }
 
     const closeModal = (reloadData = false) => {
-        console.log('Reload', reloadData)
         if (reloadData) {
             loadData(tableState, selectedTreeDataId)
         }
@@ -264,10 +264,9 @@ const index = () => {
                     sort: true,
                 },
                 {
-                    dataField: "classCurriculum",
+                    dataField: "curriculumName",
                     text: t('group.curriculum') || "",
                     sort: true,
-                    align: "right",
                 },
                 {
                     dataField: "studentCount",
@@ -345,43 +344,51 @@ const index = () => {
     }
 
     const deleteClass = () => {
-        console.log("delete " + classId)
-        // setLoading(true)
-        // fetchRequest(schoolClassDelete, 'POST', {
-        //     class: classId,
-        //     grade: selectedTreeDataId,
-        //     filter: tableState?.filter,
-        //     order: tableState?.order,
-        //     sort: tableState?.sort,
-        //     page: tableState?.page,
-        //     pageSize: tableState?.pageSize,
-        //     search: tableState?.search,
-        // })
-        //     .then((res) => {
-        //         if (res.success) {
-        //             const { classes, totalCount } = res.data
+        setLoading(true)
+        fetchRequest(schoolClassDelete, 'POST', {
+            school: selectedSchool?.id,
+            class: selectedTableDataId,
+            grade: selectedTreeDataId,
+            filter: tableState?.filter,
+            order: tableState?.order,
+            sort: tableState?.sort,
+            page: tableState?.page,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+        })
+            .then((res) => {
+                if (res.success) {
+                    setHasNextYear(res?.hasNextYear)
+                    setTreeData(res?.gradeList || [])
+                    let classes = res?.classes;
+                    if (classes && classes.length > 0) {
+                        for (let c = 0; c < classes?.length; c++) {
+                            if (classes[c].esisGroupId) {
+                                classes[c].contextMenuKeys = ['EDIT', 'DELETE', 'ESIS_CLEAR']
+                            } else {
+                                classes[c].contextMenuKeys = ['EDIT', 'DELETE']
+                            }
+                        }
+                    }
+                    setTableData(classes)
+                    setTotalCount(res?.totalCount || 0)
 
-        //             if (classes && classes.length > 0) {
-        //                 for (let c = 0; c < classes?.length; c++) {
-        //                     if (classes[c].esisGroupId) {
-        //                         classes[c].contextMenuKeys = ['EDIT', 'DELETE', 'ESIS_CLEAR']
-        //                     } else {
-        //                         classes[c].contextMenuKeys = ['EDIT', 'DELETE']
-        //                     }
-        //                 }
-        //             }
-        //             setTableData(classes || [])
-        //             setTotalCount(totalCount || 0)
-        //             setViewDeleteModal(false)
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('.err.error_occurred'))
-        //         setLoading(false)
-        //     })
+                    if (!selectedTreeDataId) {
+                        if (res?.gradeList?.length) {
+                            setSelectedTreeDataId(res?.gradeList[0].key)
+                        }
+                    }
+                    message(res.message, true)
+                    closeModal()
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     const handleTreeSelect = key => {
@@ -497,6 +504,7 @@ const index = () => {
                                                         locale={locale}
                                                         config={config}
                                                         currentPage={tableState?.page || 1}
+                                                        defaultPageSize={tableState?.pageSize || 10}
                                                         data={tableData}
                                                         columns={getColumns()}
                                                         individualContextMenus
@@ -517,6 +525,8 @@ const index = () => {
                                                         remote
                                                         locale={locale}
                                                         config={config}
+                                                        currentPage={tableState?.page || 1}
+                                                        defaultPageSize={tableState?.pageSize || 10}
                                                         data={tableData}
                                                         columns={getColumns()}
                                                         individualContextMenus
@@ -603,7 +613,7 @@ const index = () => {
             {
                 showEditClassModal &&
                 <EditClassModal
-                    data={selectedTableDataId}
+                    classId={selectedTableDataId}
                     onClose={closeModal}
                 />
             }
