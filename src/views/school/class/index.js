@@ -3,6 +3,7 @@ import message from 'modules/message';
 import TreeView from 'modules/TreeView';
 import DTable from 'modules/DataTable/DTable';
 import { Row, Col, Card, Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 import HtmlHead from 'components/html-head/HtmlHead';
@@ -16,8 +17,12 @@ import ViewClassModal from './modals/view'
 import EditClassModal from './modals/edit';
 import DeleteModal from 'utils/deleteModal';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import {Tab} from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 import { CheckBox } from '@mui/icons-material';
+import { fetchRequest } from 'utils/fetchRequest';
+import {
+    schoolClassIndex, schoolClassCreate
+} from 'utils/fetchRequest/Urls';
 
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -27,38 +32,27 @@ const localeActiveTableState = 'school_classes_table_index'
 const index = () => {
 
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
 
     const title = t('class_name');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
-        { to: "school/teacher", text: title }
+        { to: "school/classes", text: title }
     ];
 
     const [loading, setLoading] = useState(false)
     const [isNewYear, setIsNewYear] = useState(false)
 
-    const [treeData, setTreeData] = useState([{
-        title: 'first level',
-        value: '0-0',
-        key: 1,
-        selectable: true,
-        children: [{
-            title: 'second level',
-            value: '0-0-0',
-            key: 2,
-            selectable: true,
-        }]
-    }])
+    const [treeData, setTreeData] = useState([])
     const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || null)
 
-    const [tableData, setTableData] = useState([
-        {id: 11, class: 2323, teacherLastName: "asdfsdf", teacherFirstName: 'Jack' }, 
-        {id: 12, class: 1232, teacherLastName: "asasdfsdf", teacherFirstName: "Joe" },
-    ])
+    const [tableData, setTableData] = useState([])
     const [totalCount, setTotalCount] = useState([])
     const [selectedTabData, setSelectedTabData] = useState(0)
 
+    const [hasNextYear, setHasNextYear] = useState(false)
+    const [addAgain, setAddAgain] = useState(false)
     const [showAddClassModal, setShowAddClassModal] = useState(false)
     const [showViewModal, setShowViewModal] = useState(false)
     const [showEditClassModal, setShowEditClassModal] = useState(false)
@@ -102,8 +96,6 @@ const index = () => {
         printButton: true,
         columnButton: true,
         excelFileName: secureLocalStorage.getItem('selectedSchool')?.longname + ' - ' + t('class.class_list'),
-        // excelFileRemote: true,
-        // excelFileRemoteUrl: `/${schoolClassInit}?grade=${selectedTreeDataId}&excel=1&excelTotalCount=${totalCount}`,
         defaultSort: [
             {
                 dataField: tableState?.sort || 'class',
@@ -128,82 +120,80 @@ const index = () => {
                 }
             }
         }
-    })
+    }, [])
 
-    // useEffect(() => {
-    //     if (selectedTreeDataId) {
-    //         init(tableState, selectedTreeDataId)
-    //     } else {
-    //         init(tableState)
-    //     }
-    // }, [])
+    const loadData = (pagination, grade) => {
+        setLoading(true)
+        fetchRequest(schoolClassIndex, 'POST', {
+            school: selectedSchool?.id,
+            filter: pagination?.filter,
+            order: pagination?.order,
+            sort: pagination?.sort,
+            page: pagination?.page,
+            pageSize: pagination?.pageSize,
+            search: pagination?.search,
+            grade
+        })
+            .then((res) => {
+                if (res.success) {
+                    setHasNextYear(res?.hasNextYear)
+                    setTreeData(res?.gradeList || [])
+                    let classes = res?.classes;
+                    if (classes && classes.length > 0) {
+                        for (let c = 0; c < classes?.length; c++) {
+                            if (classes[c].esisGroupId) {
+                                classes[c].contextMenuKeys = ['EDIT', 'DELETE', 'ESIS_CLEAR']
+                            } else {
+                                classes[c].contextMenuKeys = ['EDIT', 'DELETE']
+                            }
+                        }
+                    }
+                    setTableData(classes)
+                    setTotalCount(res?.totalCount || 0)
 
-    // const init = (pagination, grade) => {
-    //     setLoading(true)
-    //     fetchRequest(schoolClassInit, 'POST', {
-    //         filter: pagination?.filter,
-    //         order: pagination?.order,
-    //         sort: pagination?.sort,
-    //         page: pagination?.page,
-    //         pageSize: pagination?.pageSize,
-    //         search: pagination?.search,
-    //         grade
-    //     })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { gradeList, classes, totalCount } = res.data
-    //                 setTreeData(gradeList || [])
-    //                 if (classes && classes.length > 0) {
-    //                     for (let c = 0; c < classes?.length; c++) {
-    //                         if (classes[c].esisGroupId) {
-    //                             classes[c].contextMenuKeys = ['EDIT', 'DELETE', 'ESIS_CLEAR']
-    //                         } else {
-    //                             classes[c].contextMenuKeys = ['EDIT', 'DELETE']
-    //                         }
-    //                     }
-    //                 }
-    //                 setTableData(classes)
-    //                 setTotalCount(totalCount || 0)
+                    if (!selectedTreeDataId) {
+                        if (res?.gradeList?.length) {
+                            setSelectedTreeDataId(res?.gradeList[0].key)
+                        }
+                    }
+                } else {
+                    message(res.data.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
 
-    //                 if (!selectedTreeDataId) {
-    //                     if (gradeList.length) {
-    //                         setSelectedTreeDataId(gradeList[0].key)
-    //                     }
-    //                 }
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('.err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }
+    useEffect(() => {
+        loadData(tableState, selectedTreeDataId)
+    }, [])
+
 
     const onUserInteraction = (state) => {
-        console.log('onUserInteraction')
-        // if (state.search) {
-        //     let cloneData = {
-        //         page: 1,
-        //         pageSize: state.pageSize,
-        //         search: state.search,
-        //         filter: {
-        //             page: 1,
-        //             pageSize: state?.filter?.pageSize || 10
-        //         }
-        //     };
+        if (state.search) {
+            let cloneData = {
+                page: 1,
+                pageSize: state.pageSize,
+                search: state.search,
+                filter: {
+                    page: 1,
+                    pageSize: state?.filter?.pageSize || 10
+                }
+            };
 
-        //     setTableState(cloneData)
-        //     secureLocalStorage.setItem(localeActiveTableState, cloneData)
-        //     init(cloneData, selectedTreeDataId)
-        // } else {
-        //     if (state.page) {
-        //         setTableState(state)
-        //         secureLocalStorage.setItem(localeActiveTableState, state)
-        //         init(state, selectedTreeDataId)
-        //     }
-        // }
+            setTableState(cloneData)
+            secureLocalStorage.setItem(localeActiveTableState, cloneData)
+            loadData(cloneData, selectedTreeDataId)
+        } else {
+            if (state.page) {
+                setTableState(state)
+                secureLocalStorage.setItem(localeActiveTableState, state)
+                loadData(state, selectedTreeDataId)
+            }
+        }
     }
 
     const esisRemove = (classId) => {
@@ -252,7 +242,11 @@ const index = () => {
         }
     }
 
-    const closeModal = () => {
+    const closeModal = (reloadData = false) => {
+        console.log('Reload', reloadData)
+        if (reloadData) {
+            loadData(tableState, selectedTreeDataId)
+        }
         setShowAddClassModal(false)
         setShowViewModal(false)
         setShowAddToNewYear(false)
@@ -363,23 +357,8 @@ const index = () => {
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
             setSelectedTreeDataId(key[0])
-            // secureLocalStorage.setItem(localStorageSelectedTree, key[0])
-
-            // let cloneData = {
-            //     page: 1,
-            //     pageSize: tableState.pageSize,
-            //     search: tableState.search,
-            //     sort: tableState.sort,
-            //     order: tableState.order,
-            //     filter: {
-            //         page: 1,
-            //         pageSize: tableState?.filter?.pageSize || 10
-            //     }
-            // };
-
-            // setTableState(cloneData)
-            // secureLocalStorage.setItem(localeActiveTableState, cloneData)
-            // init(cloneData, key[0])
+            secureLocalStorage.setItem(localStorageSelectedTree, key[0])
+            loadData(tableState, key[0])
         }
     }
 
@@ -406,7 +385,7 @@ const index = () => {
     }
 
     const handleTabChange = (e, data) => {
-        console.log( e, data.activeIndex)
+        console.log(e, data.activeIndex)
         setSelectedTabData(data.activeIndex)
     }
 
@@ -429,19 +408,21 @@ const index = () => {
                     <Col xl="2" xxl="2">
                         <div className="m-portlet br-12">
                             <div className="m-portlet__body">
-                                <div className='align-center align-items-center' style={{marginLeft: '17px'}}>
-                                    <input 
-                                        className="form-check-input modal-position form-modal-check mt-0" 
-                                        id='newYear' 
-                                        type="checkbox" 
-                                        style={{ borderRadius: '4px', fontSize: '18px'}} 
-                                        value={addAgain}
-                                        onChange={handleCheckbox}
-                                    />
-                                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '0.5rem', fontWeight: '400' }}>
-                                        {t('newYear')}
-                                    </label>
-                                </div>
+                                {
+                                    hasNextYear && <div className='align-center align-items-center' style={{ marginLeft: '17px', marginBottom: 15 }}>
+                                        <input
+                                            className="form-check-input modal-position form-modal-check mt-0"
+                                            id='newYear'
+                                            type="checkbox"
+                                            style={{ borderRadius: '4px', fontSize: '18px' }}
+                                            value={addAgain}
+                                            onChange={handleCheckbox}
+                                        />
+                                        <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '0.5rem', fontWeight: '400' }}>
+                                            {t('newYear')}
+                                        </label>
+                                    </div>
+                                }
                                 <TreeView
                                     treeData={treeData}
                                     selectedNodes={[selectedTreeDataId]}
@@ -460,18 +441,20 @@ const index = () => {
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                                 {t('action.register')}
                             </button>
-                            <button
-                                onClick={() => setShowAddToNewYear(true)}
-                                className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-2'
-                            >
-                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
-                                {t('action.addToNewYear')}
-                            </button>
+                            {
+                                hasNextYear && <button
+                                    onClick={() => setShowAddToNewYear(true)}
+                                    className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-2'
+                                >
+                                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                    {t('action.addToNewYear')}
+                                </button>
+                            }
                         </div>
                         <div className="m-portlet tab br-12">
                             <div className="">
                                 <Tab
-                                    menu={{secondary: true, pointing: true, className: 'primaryColor m-0 h-4'}}
+                                    menu={{ secondary: true, pointing: true, className: 'primaryColor m-0 h-4' }}
                                     onTabChange={(e, data) => handleTabChange(e, data)}
                                     className='m-portlet-header'
                                     panes={[
@@ -483,6 +466,7 @@ const index = () => {
                                                         remote
                                                         locale={locale}
                                                         config={config}
+                                                        currentPage={tableState?.page || 1}
                                                         data={tableData}
                                                         columns={columns}
                                                         individualContextMenus
@@ -566,17 +550,17 @@ const index = () => {
             {
                 loading &&
                 <>
-                    <div className='blockUI blockOverlay' />
-                    <div className='blockUI blockMsg blockPage'>
-                        <div className='m-loader m-loader--brand m-loader--lg' />
+                    <div className='blockUI blockOverlay'>
+                        <div className='blockUI blockMsg blockPage'>
+                            <div className='m-loader m-loader--brand m-loader--lg' />
+                        </div>
                     </div>
                 </>
             }
             {
-                showAddClassModal && 
+                showAddClassModal &&
                 <AddClassModal
-                    onClose = {closeModal}
-                    onSubmit = {console.log('submitted')}
+                    onClose={closeModal}
                 />
             }
             {
@@ -611,8 +595,8 @@ const index = () => {
             {
                 showAddToNewYear &&
                 <AddToNewYearModal
-                    onClose = {closeModal}
-                    onSubmit = {console.log('submitted new year')}
+                    onClose={closeModal}
+                    onSubmit={console.log('submitted new year')}
                 />
             }
         </>

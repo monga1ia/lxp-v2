@@ -455,7 +455,7 @@ const MainGroup = () => {
             setColumns(otherColumns)
             setContextMenus(otherContextMenus)
         }
-    }, [selectedStatusCode])
+    }, [selectedStatusCode, tableData])
 
     const handleDelete = () => {
         setLoading(true)
@@ -718,6 +718,7 @@ const MainGroup = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        currentPage={tableState?.page || 1}
                                                         clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
