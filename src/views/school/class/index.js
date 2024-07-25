@@ -435,7 +435,7 @@ const index = () => {
                                         id='newYear' 
                                         type="checkbox" 
                                         style={{ borderRadius: '4px', fontSize: '18px'}} 
-                                        value={addAgain}
+                                        value={isNewYear}
                                         onChange={handleCheckbox}
                                     />
                                     <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '0.5rem', fontWeight: '400' }}>
