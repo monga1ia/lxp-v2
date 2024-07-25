@@ -371,7 +371,7 @@ const MainGroup = () => {
     }
 
     const handleTabChange = (e, data) => {
-        let code = statuses?.find(obj => obj?.index === data?.index)?.code || 'ACTIVE';
+        let code = statuses?.find(obj => obj?.index === data?.activeIndex)?.code || 'ACTIVE';
         setSelectedStatusCode(code)
         loadData({
             school: selectedSchool?.id,
@@ -455,7 +455,7 @@ const MainGroup = () => {
             setColumns(otherColumns)
             setContextMenus(otherContextMenus)
         }
-    }, [selectedStatusCode])
+    }, [selectedStatusCode, tableData])
 
     const handleDelete = () => {
         setLoading(true)
@@ -718,6 +718,7 @@ const MainGroup = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        currentPage={tableState?.page || 1}
                                                         clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
