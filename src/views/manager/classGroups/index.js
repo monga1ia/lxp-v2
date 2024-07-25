@@ -13,6 +13,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 // import {managerClassGroups, managerClassGroupStudents} from 'Utilities/url'
 import message from "modules/message";
 import {Col, Row} from "react-bootstrap";
+import ViewStudents from "./modal/view";
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -37,47 +38,29 @@ const index = () => {
     const [columns, setColumns] = useState([])
 
     const [showStudentModal, setShowStudentModal] = useState(false)
-    const [modalStudents, setModalStudents] = useState([])
-
-    const modalConfig = {
-        showFilter: true,
-        showAllData: true,
-        showPagination: false,
-        defaultSort: [{dataField: 'firstName', order: 'asc'}],
-    };
-
-    const modalColumns = [
+    const [modalStudents, setModalStudents] = useState([
         {
-            dataField: 'avatar',
-            text: translations(locale)?.photo,
-            align: 'center',
-            formatter: (cell) => {
-                return <img className='img-responsive img-circle'
-                            src={cell || '/images/avatar.png'} width={40} height={40}
-                            alt='img'
-                            onError={(e) => {
-                                e.target.onError = null
-                                e.target.src = '/images/avatar.png'
-                            }}
-                />;
-            }
+            "id": 176980,
+            "code": "N123",
+            "avatar": null,
+            "firstName": "sdf",
+            "lastName": "dfg"
         },
         {
-            dataField: 'code',
-            text: translations(locale)?.studentCode,
-            sort: true,
+            "id": 176982,
+            "code": "N1234",
+            "avatar": null,
+            "firstName": "sdf",
+            "lastName": "dfg"
         },
         {
-            dataField: 'lastName',
-            text: translations(locale)?.studentLastName,
-            sort: true,
-        },
-        {
-            dataField: 'firstName',
-            text: translations(locale)?.studentFirstName,
-            sort: true,
-        },
-    ]
+            "id": 176984,
+            "code": "N12345",
+            "avatar": null,
+            "firstName": "sdf",
+            "lastName": "dfg"
+        }
+    ])
 
     const defaultColumns = [
         {
@@ -129,68 +112,151 @@ const index = () => {
         //     })
     }
 
+    // const loadIndex = (grade = null, subject = null) => {
+    //     console.log('loadIndex')
+    //     // setLoading(true)
+    //     // fetchRequest(managerClassGroups, 'POST', {
+    //     //     grade,
+    //     //     subject
+    //     // })
+    //     //     .then((res) => {
+    //     //         if (res?.success) {
+    //     //             if (subject) {
+    //     //                 setClasses(res?.data?.classes)
+    //     //                 const groupColumns = [];
+
+    //     //                 if (res?.data?.groups && res?.data?.groups?.length > 0) {
+    //     //                     for (let g = 0; g < res?.data?.groups.length; g++) {
+    //     //                         const groupObj = res?.data?.groups[g]
+    //     //                         groupColumns.push(
+    //     //                             {
+    //     //                                 dataField: 'group_' + groupObj?.id,
+    //     //                                 text: groupObj?.teacherCode + '-' + groupObj?.teacherFirstname + ' ' + groupObj?.name,
+    //     //                                 sort: true,
+    //     //                                 align: 'right',
+    //     //                                 formatter: (cell, row) => {
+    //     //                                     return cell && parseInt(cell) > 0 ? <div className='underline'
+    //     //                                                                              onClick={() => onClickStudentCount(row.id, groupObj.id)}>{cell}</div> : cell
+    //     //                                 }
+    //     //                             }
+    //     //                         )
+    //     //                     }
+    //     //                 }
+
+    //     //                 setColumns([...defaultColumns, ...groupColumns, ...[
+    //     //                     {
+    //     //                         dataField: 'noGroupCount',
+    //     //                         text: translations(locale)?.manager?.noGroupTitle,
+    //     //                         sort: true,
+    //     //                         align: 'right',
+    //     //                         formatter: (cell, row) => {
+    //     //                             return cell && parseInt(cell) > 0 ? <div className='underline'
+    //     //                                                                      onClick={() => onClickStudentCount(row.id, null, subject)}>{cell}</div> : cell
+    //     //                         }
+    //     //                     }
+    //     //                 ]])
+    //     //             } else {
+    //     //                 setClasses([])
+    //     //                 if (grade) {
+    //     //                     setSubjects(res?.data?.subjects)
+    //     //                 } else {
+    //     //                     setGrades(res?.data?.grades)
+    //     //                 }
+    //     //             }
+    //     //         } else {
+    //     //             message(res?.data?.message || translations(locale)?.err?.error_occurred)
+    //     //         }
+    //     //         setLoading(false)
+    //     //     })
+    //     //     .catch(() => {
+    //     //         message(translations(locale)?.err?.error_occurred)
+    //     //         setLoading(false)
+    //     //     })
+    // }
+
     const loadIndex = (grade = null, subject = null) => {
-        console.log('loadIndex')
-        // setLoading(true)
-        // fetchRequest(managerClassGroups, 'POST', {
-        //     grade,
-        //     subject
-        // })
-        //     .then((res) => {
-        //         if (res?.success) {
-        //             if (subject) {
-        //                 setClasses(res?.data?.classes)
-        //                 const groupColumns = [];
 
-        //                 if (res?.data?.groups && res?.data?.groups?.length > 0) {
-        //                     for (let g = 0; g < res?.data?.groups.length; g++) {
-        //                         const groupObj = res?.data?.groups[g]
-        //                         groupColumns.push(
-        //                             {
-        //                                 dataField: 'group_' + groupObj?.id,
-        //                                 text: groupObj?.teacherCode + '-' + groupObj?.teacherFirstname + ' ' + groupObj?.name,
-        //                                 sort: true,
-        //                                 align: 'right',
-        //                                 formatter: (cell, row) => {
-        //                                     return cell && parseInt(cell) > 0 ? <div className='underline'
-        //                                                                              onClick={() => onClickStudentCount(row.id, groupObj.id)}>{cell}</div> : cell
-        //                                 }
-        //                             }
-        //                         )
-        //                     }
-        //                 }
+        console.log('fronend testing')
+        const res = {
+            data: {
+                classes: [
+                    {
+                        id: "5293",
+                        class: "2A",
+                        studentCount: 3,
+                        noGroupCount: 3,
+                        group_76328: 0
+                    },
+                    {
+                        id: "10505",
+                        class: "2а",
+                        studentCount: 0,
+                        noGroupCount: 0,
+                        group_76328: 0
+                    },
+                    {
+                        id: "5294",
+                        class: "2в",
+                        studentCount: 1,
+                        noGroupCount: 1,
+                        group_76328: 0
+                    },
+                    {
+                        id: "5296",
+                        class: "2В",
+                        studentCount: 0,
+                        noGroupCount: 0,
+                        group_76328: 0
+                    }
+                ],
+                groups: [
+                    {
+                        id: "76328",
+                        name: "Англи хэл 2",
+                        teacherCode: "N0010",
+                        teacherFirstname: "Altanshagai"
+                    }
+                ],
+                message: "Амжилттай"
+            },
+            success: true
+        }
 
-        //                 setColumns([...defaultColumns, ...groupColumns, ...[
-        //                     {
-        //                         dataField: 'noGroupCount',
-        //                         text: translations(locale)?.manager?.noGroupTitle,
-        //                         sort: true,
-        //                         align: 'right',
-        //                         formatter: (cell, row) => {
-        //                             return cell && parseInt(cell) > 0 ? <div className='underline'
-        //                                                                      onClick={() => onClickStudentCount(row.id, null, subject)}>{cell}</div> : cell
-        //                         }
-        //                     }
-        //                 ]])
-        //             } else {
-        //                 setClasses([])
-        //                 if (grade) {
-        //                     setSubjects(res?.data?.subjects)
-        //                 } else {
-        //                     setGrades(res?.data?.grades)
-        //                 }
-        //             }
-        //         } else {
-        //             message(res?.data?.message || translations(locale)?.err?.error_occurred)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(translations(locale)?.err?.error_occurred)
-        //         setLoading(false)
-        //     })
+        setClasses(res?.data?.classes)
+        const groupColumns = [];
+
+        if (res?.data?.groups && res?.data?.groups?.length > 0) {
+            for (let g = 0; g < res?.data?.groups.length; g++) {
+                const groupObj = res?.data?.groups[g]
+                console.log(groupObj)
+                groupColumns.push(
+                    {
+                        dataField: 'group_' + groupObj?.id,
+                        text: groupObj?.teacherCode + '-' + groupObj?.teacherFirstname + ' ' + groupObj?.name,
+                        sort: true,
+                        align: 'right',
+                        formatter: (cell, row) => {
+                            return cell && parseInt(cell) > 0 ? <div className='underline'
+                                                                        onClick={() => onClickStudentCount(row.id, groupObj.id)}>{cell}</div> : cell
+                        }
+                    }
+                )
+            }
+        }
+
+        setColumns([...defaultColumns, ...groupColumns, ...[
+            {
+                dataField: 'noGroupCount',
+                text: translations(locale)?.manager?.noGroupTitle,
+                sort: true,
+                align: 'right',
+                formatter: (cell, row) => {
+                    return cell && parseInt(cell) > 0 ? <div className='underline'
+                                                                onClick={() => onClickStudentCount(row.id, null, subject)}>{cell}</div> : cell
+                }
+            }
+        ]])
     }
-
 
     const onGradeChange = (grade) => {
         setSelectedGrade(grade)
@@ -219,7 +285,7 @@ const index = () => {
                 </Col>
             </div>  
             <div className="m-content">
-                <div className="m-portlet m-portlet--rounded">
+                <div className="m-portlet br-12">
                     <div className="m-portlet__body">
                         <Row>
                             <Col>
@@ -307,14 +373,14 @@ const index = () => {
                     </div>
                 </div>
 
-                <div className="m-portlet m-portlet--rounded">
+                <div className="m-portlet br-12">
                     <div className="m-portlet__body">
                         <DTable
                             locale={locale}
                             columns={columns}
                             data={classes}
                             config={config}
-                            selectMode={'radio'}
+                            // selectMode={'radio'}
                         />
                     </div>
                 </div>
@@ -329,40 +395,11 @@ const index = () => {
                 </>
             }
             {
-                showStudentModal &&
-                <Modal
-                    centered
-                    open={true}
-                    size='large'
+                showStudentModal && 
+                <ViewStudents
                     onClose={onModalClose}
-                    dimmer='blurring'
-                    className='react-modal overflow-modal'
-                >
-                    <div className='header'>
-                        {translations(locale)?.view}
-                        <button type='button' className='close' aria-label='Close' onClick={onModalClose}>
-                            <CloseIcon/>
-                        </button>
-                    </div>
-                    <div className='content'>
-                        <DTable
-                            locale={locale}
-                            config={modalConfig}
-                            data={modalStudents}
-                            columns={modalColumns}
-                        />
-                    </div>
-                    <div className='actions modal-footer'>
-                        <div className='col-12 text-center'>
-                            <button
-                                className='btn m-btn--pill btn-outline-metal text-uppercase'
-                                onClick={onModalClose}
-                            >
-                                {translations(locale)?.close}
-                            </button>
-                        </div>
-                    </div>
-                </Modal>
+                    data={modalStudents}
+                />
             }
         </div>
     )
