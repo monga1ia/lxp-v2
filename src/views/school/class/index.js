@@ -255,64 +255,94 @@ const index = () => {
         setSelectedTableDataId(null)
     }
 
-    const columns = [
-        {
-            dataField: "class",
-            text: t('group.group_name') || "",
-            sort: true,
-        },
-        // {
-        //     dataField: "teacherLastName",
-        //     text: t('teacher.lastname') || "",
-        //     sort: true
-        // },
-        // {
-        //     dataField: "teacherFirstName",
-        //     text: t('teacher.name') || "",
-        //     sort: true,
-        //     formatter: (cell, row) => {
-        //         if (cell) {
-        //             return (
-        //                 <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
-        //             )
-        //         }
-        //     },
-        // },
-        {
-            dataField: "classCurriculum",
-            text: t('group.curriculum') || "",
-            sort: true,
-            align: "right",
-        },
-        {
-            dataField: "studentCount",
-            text: t('group.student_count') || "",
-            sort: true,
-            align: "right",
-        },
-        // {
-        //     dataField: "scoreType",
-        //     text: t('group.score_type') || "",
-        //     sort: true,
-        // },
-        {
-            dataField: "shift",
-            text: t('group.school_shift') || "",
-            sort: true,
+    const getColumns = () => {
+        if (selectedSchool?.isOnlineSchool) {
+            return [
+                {
+                    dataField: "class",
+                    text: t('group.group_name') || "",
+                    sort: true,
+                },
+                {
+                    dataField: "classCurriculum",
+                    text: t('group.curriculum') || "",
+                    sort: true,
+                    align: "right",
+                },
+                {
+                    dataField: "studentCount",
+                    text: t('group.student_count') || "",
+                    sort: true,
+                    align: "right",
+                },
+                {
+                    dataField: "shift",
+                    text: t('group.school_shift') || "",
+                    sort: true,
 
-        },
-        // {
-        //     dataField: "room",
-        //     text: t('group.classroom') || "",
-        //     sort: true,
-        // },
-        {
-            dataField: "esisGroupId",
-            text: t('esis.classCode') || "",
-            hidden: true,
-            sort: false,
+                }
+            ]
+        } else {
+            return [
+                {
+                    dataField: "class",
+                    text: t('group.group_name') || "",
+                    sort: true,
+                },
+                {
+                    dataField: "teacherLastName",
+                    text: t('teacher.lastname') || "",
+                    sort: true
+                },
+                {
+                    dataField: "teacherFirstName",
+                    text: t('teacher.name') || "",
+                    sort: true,
+                    formatter: (cell, row) => {
+                        if (cell) {
+                            return (
+                                <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
+                            )
+                        }
+                    },
+                },
+                {
+                    dataField: "classCurriculum",
+                    text: t('group.curriculum') || "",
+                    sort: true,
+                    align: "right",
+                },
+                {
+                    dataField: "studentCount",
+                    text: t('group.student_count') || "",
+                    sort: true,
+                    align: "right",
+                },
+                {
+                    dataField: "scoreType",
+                    text: t('group.score_type') || "",
+                    sort: true,
+                },
+                {
+                    dataField: "shift",
+                    text: t('group.school_shift') || "",
+                    sort: true,
+
+                },
+                {
+                    dataField: "room",
+                    text: t('group.classroom') || "",
+                    sort: true,
+                },
+                {
+                    dataField: "esisGroupId",
+                    text: t('esis.classCode') || "",
+                    hidden: true,
+                    sort: false,
+                }
+            ]
         }
-    ];
+    }
 
     const deleteClass = () => {
         console.log("delete " + classId)
@@ -468,7 +498,7 @@ const index = () => {
                                                         config={config}
                                                         currentPage={tableState?.page || 1}
                                                         data={tableData}
-                                                        columns={columns}
+                                                        columns={getColumns()}
                                                         individualContextMenus
                                                         clickContextMenu={true}
                                                         contextMenus={contextMenus}
@@ -488,7 +518,7 @@ const index = () => {
                                                         locale={locale}
                                                         config={config}
                                                         data={tableData}
-                                                        columns={columns}
+                                                        columns={getColumns()}
                                                         individualContextMenus
                                                         clickContextMenu={true}
                                                         contextMenus={contextMenus}
@@ -550,10 +580,10 @@ const index = () => {
             {
                 loading &&
                 <>
-                    <div className='blockUI blockOverlay'>
-                        <div className='blockUI blockMsg blockPage'>
-                            <div className='m-loader m-loader--brand m-loader--lg' />
-                        </div>
+                    <div className='loader-container'>
+                        <svg className="splash-spinner" viewBox="0 0 50 50">
+                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                        </svg>
                     </div>
                 </>
             }

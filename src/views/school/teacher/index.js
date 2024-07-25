@@ -371,7 +371,7 @@ const MainGroup = () => {
     }
 
     const handleTabChange = (e, data) => {
-        let code = statuses?.find(obj => obj?.index === data?.index)?.code || 'ACTIVE';
+        let code = statuses?.find(obj => obj?.index === data?.activeIndex)?.code || 'ACTIVE';
         setSelectedStatusCode(code)
         loadData({
             school: selectedSchool?.id,

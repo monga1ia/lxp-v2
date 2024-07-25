@@ -24,6 +24,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
     const [loading, setLoading] = useState(false)
 
     const [teacherList, setTeacherList] = useState([])
+    const [curriculums, setCurriculums] = useState([])
     const [schoolShifts, setSchoolShifts] = useState([])
     const [scoreTypeList, setScoreTypeList] = useState([])
     const [gradeList, setGradeList] = useState([])
@@ -31,100 +32,167 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
     const [addClassData, setAddClassData] = useState(['Add class information'])
     const [addAgain, setAddAgain] = useState(false)
 
-    const classFields = (grades = [], teachers = [], schoolShifts = [], scoreTypes = [], rooms = []) => {
-        return [
-            {
-                key: 'grade',
-                labelBold: true,
-                value: '',
-                type: 'nDropdown',
-                search: true,
-                label: t('className') + '*',
-                required: true,
-                errorMessage: t('error.selectClass'),
-                className: "form-control",
-                upperCase: true,
-                formContainerClassName: 'form-group m-form__group row grid-item',
-                fieldContainerClassName: 'col-6',
-                labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-                options: grades,
-            },
-            {
-                key: 'className',
-                labelBold: true,
-                value: '',
-                type: 'text',
-                label: t('group.title') + '*',
-                required: true,
-                errorMessage: t('error.selectGrade'),
-                className: "form-control",
-                upperCase: true,
-                formContainerClassName: 'form-group m-form__group row grid-item',
-                fieldContainerClassName: 'col-6',
-                labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-                options: grades,
-            },
-            {
-                key: 'teacher',
-                labelBold: true,
-                value: '',
-                type: 'nDropdown',
-                label: t('group.class_teacher') + '*',
-                className: "form-control",
-                required: true,
-                upperCase: true,
-                formContainerClassName: 'form-group m-form__group row grid-item',
-                fieldContainerClassName: 'col-6',
-                labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-                options: teachers,
-                clearable: true,
-            },
-            {
-                key: 'shift',
-                labelBold: true,
-                value: '',
-                type: 'nDropdown',
-                search: true,
-                label: t('group.school_shift') + '*',
-                required: true,
-                errorMessage: t('error.selectShift'),
-                className: "form-control",
-                upperCase: true,
-                formContainerClassName: 'form-group m-form__group row grid-item',
-                fieldContainerClassName: 'col-6',
-                labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-                options: schoolShifts,
-            },
-            {
-                key: 'scoreType',
-                labelBold: true,
-                value: '',
-                type: 'nDropdown',
-                label: t('group.score_type') + '*',
-                required: true,
-                errorMessage: t('error.selectEvaluationType'),
-                className: "form-control",
-                upperCase: true,
-                formContainerClassName: 'form-group m-form__group row grid-item',
-                fieldContainerClassName: 'col-6',
-                labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-                options: scoreTypes,
-            },
-            {
-                key: 'room',
-                labelBold: true,
-                value: '',
-                type: 'nDropdown',
-                label: t('group.classroom'),
-                className: "form-control",
-                upperCase: true,
-                formContainerClassName: 'form-group m-form__group row grid-item',
-                fieldContainerClassName: 'col-6',
-                labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
-                options: rooms,
-                clearable: true,
-            },
-        ]
+    const classFields = (grades = [], teachers = [], schoolShifts = [], scoreTypes = [], rooms = [], curriculums = []) => {
+        if (selectedSchool?.isOnlineSchool) {
+            return [
+                {
+                    key: 'grade',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    search: true,
+                    label: t('className') + '*',
+                    required: true,
+                    errorMessage: t('error.selectClass'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: grades,
+                },
+                {
+                    key: 'className',
+                    labelBold: true,
+                    value: '',
+                    type: 'text',
+                    label: t('group.title') + '*',
+                    required: true,
+                    errorMessage: t('error.selectGrade'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: grades,
+                },
+                {
+                    key: 'cirruculum',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    label: t('group.curriculum') + '*',
+                    className: "form-control",
+                    required: true,
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: curriculums,
+                    clearable: true,
+                },
+                {
+                    key: 'shift',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    search: true,
+                    label: t('group.school_shift') + '*',
+                    required: true,
+                    errorMessage: t('error.selectShift'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: schoolShifts,
+                }
+            ]
+        } else {
+            return [
+                {
+                    key: 'grade',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    search: true,
+                    label: t('className') + '*',
+                    required: true,
+                    errorMessage: t('error.selectClass'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: grades,
+                },
+                {
+                    key: 'className',
+                    labelBold: true,
+                    value: '',
+                    type: 'text',
+                    label: t('group.title') + '*',
+                    required: true,
+                    errorMessage: t('error.selectGrade'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: grades,
+                },
+                {
+                    key: 'teacher',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    label: t('group.class_teacher') + '*',
+                    className: "form-control",
+                    required: true,
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: teachers,
+                    clearable: true,
+                },
+                {
+                    key: 'shift',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    search: true,
+                    label: t('group.school_shift') + '*',
+                    required: true,
+                    errorMessage: t('error.selectShift'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: schoolShifts,
+                },
+                {
+                    key: 'scoreType',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    label: t('group.score_type') + '*',
+                    required: true,
+                    errorMessage: t('error.selectEvaluationType'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: scoreTypes,
+                },
+                {
+                    key: 'room',
+                    labelBold: true,
+                    value: '',
+                    type: 'nDropdown',
+                    label: t('group.classroom'),
+                    className: "form-control",
+                    upperCase: true,
+                    formContainerClassName: 'form-group m-form__group row grid-item',
+                    fieldContainerClassName: 'col-6',
+                    labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
+                    options: rooms,
+                    clearable: true,
+                },
+            ]
+        }
     }
 
     const loadData = (params = {}) => {
@@ -133,11 +201,12 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
             .then((res) => {
                 if (res.success) {
                     setScoreTypeList(res?.scoreTypes || [])
+                    setCurriculums(res?.curriculums || [])
                     setGradeList(res?.gradeList || [])
                     setTeacherList(res?.teachers || [])
                     setSchoolShifts(res?.schoolShifts || [])
                     setRoomList(res?.rooms || [])
-                    formRef?.current?.updateFields && formRef.current?.updateFields(classFields(res?.gradeList, res?.teachers, res?.schoolShifts, res?.scoreTypes, res?.rooms));
+                    formRef?.current?.updateFields && formRef.current?.updateFields(classFields(res?.gradeList, res?.teachers, res?.schoolShifts, res?.scoreTypes, res?.rooms, res?.curriculums));
                 } else {
                     message(res.data.message)
                 }
@@ -179,7 +248,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
                 .then((res) => {
                     if (res.success) {
                         if (addAgain) {
-                            formRef?.current?.updateFields && formRef.current?.updateFields(classFields(gradeList, teacherList, schoolShifts, scoreTypeList, roomList));
+                            formRef?.current?.updateFields && formRef.current?.updateFields(classFields(gradeList, teacherList, schoolShifts, scoreTypeList, roomList, curriculums));
                         } else {
                             onClose(true)
                         }
