@@ -435,7 +435,7 @@ const EditTeacherModal = ({ onClose, onSubmit, teacherId }) => {
                                                                 options={gradeSubjectObj?.subjects}
                                                                 onChange={(e, data) => handleRowSubjectsChange(s, data?.value)}
                                                             />
-                                                            <div style={{ paddingRight: '0.71rem' }} className={s != 0 ? 'visible' : 'invisible'}>
+                                                            <div className={s != 0 ? 'visible' : 'invisible'}>
                                                                 <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
                                                                     <i className="la la-close" />
                                                                 </button>
@@ -469,13 +469,23 @@ const EditTeacherModal = ({ onClose, onSubmit, teacherId }) => {
                                                 marginLeft: 10,
                                                 width: 'auto'
                                             }}>
-                                                <Row>
+                                                <Row className='m-0'>
                                                     <Col md={5} style={{
                                                         paddingLeft: 0,
                                                         paddingRight: 10
                                                     }}></Col>
                                                     <Col md={7} className='d-flex p-0 justify-content-end'>
-                                                        <div style={{ paddingRight: '0.71rem' }}>
+                                                        <Dropdown
+                                                            placeholder={'-' + t('absent.select_subject') + ' - '}
+                                                            fluid
+                                                            selection
+                                                            additionPosition='bottom'
+                                                            upward={false}
+                                                            multiple={true}
+                                                            className='mr-2 invisible'
+                                                            selectOnBlur={false}
+                                                        />
+                                                        <div>
                                                             <button onClick={() => addGradeRow()}
                                                                 type='button'
                                                                 className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
