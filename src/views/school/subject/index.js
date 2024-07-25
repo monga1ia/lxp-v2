@@ -18,12 +18,16 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import PreviewTwoToneIcon from '@mui/icons-material/PreviewTwoTone'
 import LockResetTwoToneIcon from '@mui/icons-material/LockResetTwoTone'
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
-import {Tab} from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { fetchRequest } from 'utils/fetchRequest';
+import {
+    schoolSubjectIndex
+} from 'utils/fetchRequest/Urls';
 
 const MainGroup = () => {
 
-    const locale="mn"
+    const locale = "mn"
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
@@ -39,36 +43,15 @@ const MainGroup = () => {
 
     const [totalCount, setTotalCount] = useState(0);
     const [tableData, setTableData] = useState([
-        {id: 11, code: 2323, firstName: "asdfsdf", teachers: [{id: "10867", name: "Elbegzaya (Т1111)"}, {id: "11518", name: "ауау (sensei)"}]}, 
-        {id: 12, code: 1232, firstName: "asasdfsdf"}
+        { id: 11, code: 2323, firstName: "asdfsdf", teachers: [{ id: "10867", name: "Elbegzaya (Т1111)" }, { id: "11518", name: "ауау (sensei)" }] },
+        { id: 12, code: 1232, firstName: "asasdfsdf" }
     ]);
-    const [treeData, setTreeData] = useState([{
-        title: 'first level',
-        value: '0-0',
-        key: 1,
-        selectable: true,
-        children: [{
-                title: 'second level',
-                value: '0-0',
-                key: 2,
-                selectable: true,
-                children: [
-                    {
-                        title: 'third level',
-                        value: '0-0-0-0',
-                        key: 3,
-                        selectable: true,
-                    },{
-                        title: 'third level',
-                        value: '0-0-0-0',
-                        key: 4,
-                        selectable: true,
-                    },
-                ]
-            },]
-        }])
+    const [treeData, setTreeData] = useState([])
+    const [selectedTreeDataId, setSelectedTreeDataId] = useState(null)
+    const [selectedCurriculumId, setSelectedCurriculumId] = useState(null)
+    const [selectedSubjectTypeId, setSelectedSubjectTypeId] = useState(null)
+
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
-    const [selectedTreeDataId, setSelectedTreeDataId] = useState([32])
 
     const [showTeacherViewModal, setShowTeacherViewModal] = useState(false)
     const [showSubjectViewModal, setShowSubjectViewModal] = useState(false)
@@ -82,21 +65,31 @@ const MainGroup = () => {
     // }, [secureLocalStorage])
     // console.log(secureLocalStorage.getItem('selectedSchool'))
 
+    const [tableState, setTableState] = useState({
+        filter: {},
+        page: 1,
+        pageSize: 10,
+        search: '',
+        sort: 'firstName',
+        order: 'asc'
+    })
+
     const config = {
         excelExport: true,
         printButton: true,
         columnButton: true,
         excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('subject.subjects')}`,
         defaultSort: [{
-            dataField: 'firstName',
-            order: 'asc'
+            dataField: tableState?.sort || 'subjectName',
+            order: tableState?.order || 'asc'
         }],
         defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
+            page: tableState?.page || 1,
+            sizePerPage: tableState?.pageSize || 10,
+            search: tableState?.search || '',
         }
     }
-    
+
     const activeColumns = [
         {
             dataField: "code",
@@ -139,23 +132,61 @@ const MainGroup = () => {
     const activeContextMenus = [
         {
             key: 'view',
-            icon: <PreviewTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <PreviewTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('view'),
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('edit')
         },
         {
             key: 'delete',
-            icon: <DeleteTwoToneIcon sx={{fontSize: '2rem !important', color: '#ff5b1d'}}/>,
+            icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: t('delete')
         },
     ]
 
     const [columns, setColumns] = useState(activeColumns)
     const [contextMenus, setContextMenus] = useState(activeContextMenus)
+
+    const loadData = (params = {}) => {
+        setLoading(true)
+        setTableData([])
+        setTotalCount(0)
+        fetchRequest(schoolSubjectIndex, 'POST', params)
+            .then((res) => {
+                if (res?.success) {
+                    const curriculums = res?.curriculums || []
+                    for (let c = 0; c < curriculums.length; c++) {
+                        const subjectTypes = [];
+                        for (let st = 0; st < (curriculums[c]?.subjectTypes || [])?.length; st++) {
+                            let cst = curriculums[c]?.subjectTypes[st]
+                            subjectTypes.push({
+                                key: 'st_' + cst?.id,
+                                title: cst?.name
+                            })
+                        }
+                        curriculums[c].children = subjectTypes;
+                    }
+                    setTreeData(curriculums)
+                }
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        loadData({
+            school: selectedSchool?.id,
+            curriculum: selectedCurriculumId,
+            type: selectedSubjectTypeId,
+            page: tableState?.page,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+            sort: tableState?.sort,
+            order: tableState?.order
+        })
+    }, [selectedCurriculumId, selectedSubjectTypeId])
 
     const closeModal = () => {
         setShowAddSubjectModal(false)
@@ -165,10 +196,24 @@ const MainGroup = () => {
         setShowSubjectViewModal(false)
         setSelectedTableDataId(null)
     }
-    
+
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
-            setSelectedTreeDataId(key[0])
+            let id = key[0]
+            setSelectedTreeDataId(id)
+            if (id?.startsWith('st_')) {
+                const typeId = id?.split('st_')[1];
+
+                const selectedCurriculum = treeData?.find(obj => {
+                    const childFound = obj.subjectTypes.find(stObj => stObj.id === typeId);
+                    return childFound ? obj : null
+                })
+                setSelectedCurriculumId(selectedCurriculum?.key)
+                setSelectedSubjectTypeId(typeId)
+            } else {
+                setSelectedCurriculumId(id)
+                setSelectedSubjectTypeId(null)
+            }
         }
     }
 
@@ -221,7 +266,7 @@ const MainGroup = () => {
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
-            </div>  
+            </div>
 
             <div className='m-content'>
                 <Row className=''>
@@ -293,7 +338,7 @@ const MainGroup = () => {
             }
             {
                 // selectedGroupId &&
-                showDeleteModal && 
+                showDeleteModal &&
                 <DeleteModal
                     show={showDeleteModal}
                     onClose={closeModal}

@@ -158,7 +158,7 @@ const index = () => {
                         }
                     }
                 } else {
-                    message(res.data.message)
+                    message(res.message)
                 }
                 setLoading(false)
             })
