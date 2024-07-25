@@ -158,6 +158,44 @@ body,
     color: white !important;
 }
 
+.vertical-tab {
+    padding: 20px 15px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    border: solid 4px rgba(255, 91, 29, 0.1) !important;
+    background-color: #fff !important;
+    font-family: 'MulishRegular' !important;
+    font-weight: normal !important;
+    line-height: 2.5;
+    letter-spacing: normal;
+}
+
+div.vertical-tab>a.item {
+    padding: 10px !important;
+    font-size: 14px !important;
+}
+
+div.vertical-tab>a.active.item {
+    color: #ff5b1d !important;
+    font-weight: bold !important;
+    background-color: #fff !important;
+}
+
+div.vertical-tab>a.item:hover {
+    color: #ff5b1d !important;
+    font-weight: bold !important;
+    background-color: #fff !important;
+}
+
+.m-grid__item.m-grid__item--fluid.m-wrapper.mt-2 .ui.grid .three.wide.column {
+    padding-right: 0px !important;
+}
+
+div.vertical-tab>a {
+    display: list-item !important;
+    list-style-position: inside !important;
+}
+
 .myTimetable-addNewSubjectStyle>div>.menu {
     display: block !important;
     border: none;

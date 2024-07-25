@@ -46,7 +46,7 @@ const index = () => {
     const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage?.getItem(treeIndex) || [])
     const { t } = useTranslation()
 
-    const title = t('teacher.title');
+    const title = t('manager.detention');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
@@ -1446,8 +1446,9 @@ const index = () => {
                                     data={detentions}
                                     totalDataSize={totalCount}
                                     onInteraction={onUserInteraction}
+                                    clickContextMenu
                                     config={config}
-                                    selectMode={'radio'}
+                                    // selectMode={'radio'}
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={(id, key, row) => handleContextMenuClick(row, key)}
                                 />

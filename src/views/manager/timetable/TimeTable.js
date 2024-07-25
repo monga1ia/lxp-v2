@@ -404,7 +404,7 @@ const TimeTable = ({
                                 }}
                                 onClick={() => onEdit(data?.id || null)}
                             >
-                                <i className="flaticon-edit-1"/>
+                                <i className="flaticon-edit"/>
                             </button>
                             <button
                                 className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center'

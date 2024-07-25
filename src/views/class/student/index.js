@@ -282,13 +282,13 @@ const index = () => {
 
     return (
         <>
-                <div className='d-none'>
-                    <PrintData
-                        ref={printRef}
-                        school={school}
-                        student={selectedStudent}
-                    />
-                </div>  
+            <div className='d-none'>
+                <PrintData
+                    ref={printRef}
+                    school={school}
+                    student={selectedStudent}
+                />
+            </div>  
             <HtmlHead title={title} description={description} />
 
             <div className="page-title-container mb-2">
@@ -315,13 +315,13 @@ const index = () => {
 
                     <Col xl="10" xxl="10">
                     { selectedTabData == 0 && 
-                        <Button
+                        <button
                             onClick={() => setShowRegistrationStudentModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                             {t('action.register')}
-                        </Button>
+                        </button>
                     }
                         
                         <div className='m-portlet tab br-12'>
