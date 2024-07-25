@@ -235,13 +235,13 @@ const index = () => {
                 <Row className=''>
                     <Col xl="12" xxl="12">
                         <div className='d-flex gap-2'>
-                            <Button
+                            <button
                                 onClick={() => setShowAddModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                                 {t('action.register')}
-                            </Button>                        
+                            </button>                        
                         </div>
                         <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>

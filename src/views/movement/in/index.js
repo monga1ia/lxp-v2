@@ -58,11 +58,11 @@ const index = () => {
     const [showRegistrationSheetModal, setShowRegistrationSheetModal] = useState(false)
     const [canMultiPrint, setCanMultiPrint] = useState(true)
 
-    const [page, setPage] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).page : 1);
-    const [pageSize, setPageSize] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).pageSize : 50);
-    const [search, setSearch] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).search : '');
-    const [order, setOrder] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).order : 'asc');
-    const [sort, setSort] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).sort : 'firstName');
+    // const [page, setPage] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).page : 1);
+    // const [pageSize, setPageSize] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).pageSize : 50);
+    // const [search, setSearch] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).search : '');
+    // const [order, setOrder] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).order : 'asc');
+    // const [sort, setSort] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).sort : 'firstName');
 
     const [totalCount, setTotalCount] = useState(0);
 
@@ -408,7 +408,6 @@ const onUserInteraction = (object) => {
 };
 
 const onCheckedChange = (key, rowIndex, checked, id) => {
-    console.log('key', key, "rowIndex", rowIndex, "checked", checked, "id",id);
     const data = [...tableData]
     if (key === 'allCheck') {
         for (let d = 0; d < data?.length; d++) {
@@ -426,18 +425,18 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
 }
     return (
         <>
-                <div className='d-none'>
-                    <PrintData
-                        ref={printRef}
-                        school={school}
-                        students={[selectedTableData]}
-                    />
-                    <PrintData
-                        ref={printMultiRef}
-                        school={school}
-                        students={getCheckedStudents()}
-                    />
-                </div>  
+            <div className='d-none'>
+                <PrintData
+                    ref={printRef}
+                    school={school}
+                    students={[selectedTableData]}
+                />
+                <PrintData
+                    ref={printMultiRef}
+                    school={school}
+                    students={getCheckedStudents()}
+                />
+            </div>  
             <HtmlHead title={title} description={description} />
 
             <div className="page-title-container mb-2">
@@ -465,13 +464,13 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                     <Col xl="10" xxl="10">
                         <div className='d-flex gap-2'>
                             {/* { selectedTreeData?.key?.toString()?.startsWith('class') == 0 &&  */}
-                            <Button
+                            <button
                                 onClick={() => setShowAddModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
                                 {t('action.register')}
-                            </Button>
+                            </button>
                         {/* } */}
                         {/* { ROOT CODE
                             selectedTreeData?.key?.toString()?.startsWith('class') &&
@@ -513,6 +512,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                                     data={tableData}
                                     checkable={canMultiPrint}
                                     onCheckable={onCheckedChange}
+                                    clickContextMenu
                                     columns={columns}
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={(id, key, row) => handleContextMenuClick(row, key)}

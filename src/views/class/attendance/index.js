@@ -1,23 +1,23 @@
 import { React, useState, useEffect } from 'react'
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import HtmlHead from 'components/html-head/HtmlHead';
-import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import DTable from 'modules/DataTable/DTable';
-import {Tab} from "semantic-ui-react";
-import { useTranslation } from "react-i18next";
-import {dateFormat} from 'utils/Util';
-import message from '../../../modules/message'
-import {cloneDeep} from 'lodash';
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import TimelineIcon from '@mui/icons-material/Timeline';
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import HtmlHead from 'components/html-head/HtmlHead'
+import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList'
+import DTable from 'modules/DataTable/DTable'
+import {Tab} from "semantic-ui-react"
+import { useTranslation } from "react-i18next"
+import {dateFormat} from 'utils/Util'
+import message from 'modules/message'
+import {cloneDeep} from 'lodash'
+import DayPickerInput from "react-day-picker/DayPickerInput"
+import TimelineIcon from '@mui/icons-material/Timeline'
 import {Link} from 'react-router-dom'
 import {Dropdown, Modal} from 'semantic-ui-react'
 import CloseIcon from '@mui/icons-material/Close'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import { CleaningServices } from '@mui/icons-material';
+import { CleaningServices } from '@mui/icons-material'
 import DownloadAttendanceModal from './modals/downloadAttendance'
 
 const WEEKDAYS_LONG = {
@@ -621,7 +621,7 @@ const index = () => {
                                                         value={startDate}
                                                         hideOnDayClick={true}
                                                         inputProps={{className: 'form-control'}}
-                                                        placeholder={t('err.select_date')}
+                                                        placeholder={t('datePickerPlaceholder')}
                                                         dayPickerProps={{
                                                             disabledDays: seasonStart && seasonEnd
                                                                 ? {
@@ -651,7 +651,7 @@ const index = () => {
                                                         value={endDate}
                                                         hideOnDayClick={true}
                                                         inputProps={{className: 'form-control'}}
-                                                        placeholder={t('err.select_date')}
+                                                        placeholder={t('datePickerPlaceholder')}
                                                         dayPickerProps={{
                                                             disabledDays: seasonStart && seasonEnd
                                                                 ? {
@@ -671,7 +671,7 @@ const index = () => {
                                                     />
                                                     <div
                                                         className="actions justify-content-center d-flex align-items-center ml-4">
-                                                        <Button
+                                                        <button
                                                             className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex br-8'
                                                             style={{
                                                                 backgroundColor: '#41c5dc',
@@ -699,7 +699,7 @@ const index = () => {
                                                                     marginLeft: '0.5rem',
                                                                     marginRight: '0.5rem'
                                                                 }}>{t('view')}</span>
-                                                        </Button>
+                                                        </button>
                                                     </div>
                                                     
                                                 </div>
