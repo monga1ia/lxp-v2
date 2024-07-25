@@ -50,53 +50,6 @@ const TimeTable = ({
     const prevLoading = useSelector(state => state.clubTimetablePrevSeasonData?.loading || false)
     const prevSuccess = useSelector(state => state.clubTimetablePrevSeasonData?.success || false)
     const prevMessage = useSelector(state => state.clubTimetablePrevSeasonData?.data?.message || '')
-    
-    // const prepareToPrint = () => {
-    //     hideOnPrintRef.current.map(x => {
-    //         if (x) {
-    //             x.style.display = 'none'
-    //         }
-    //     })
-    //     styleOnPrintRef.current.map(x => {
-    //         if (x) {
-    //             x.style.padding = '0.2rem'
-    //         }
-    //     })
-    //     printRef.current.children[0].style.display = 'block'
-    // }
-
-    // const unPrepareToPrint = () => {
-    //     hideOnPrintRef.current.map(x => {
-    //         if (x) {
-    //             x.style.display = 'table-cell'
-    //         }
-    //     })
-    //     styleOnPrintRef.current.map(x => {
-    //         if (x) {
-    //             x.style.padding = '0.75rem'
-    //         }
-    //     })
-    //     printRef.current.children[0].style.display = 'none'
-    // }
-    
-    const config = {
-        excelExport: true,
-        printButton: true,
-        columnButton: true,
-        isTableStriped: false,
-        // onBeforePrint: prepareToPrint(),
-        // onAfterPrint: unPrepareToPrint()
-        // excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('teacher_title')}`,
-        // defaultSort: [{
-        //     dataField: tableState?.sort || 'firstName',
-        //     order: tableState?.order || 'asc'
-        // }],
-        // defaultPageOptions: {
-        //     page: tableState?.page || 1,
-        //     sizePerPage: tableState?.pageSize || 10,
-        //     search: tableState?.search || '',
-        // }
-    }
 
     const days = {
         mon: lang === 'mn' ? 'Даваа' : 'Monday',
@@ -108,12 +61,49 @@ const TimeTable = ({
         sun: lang === 'mn' ? 'Ням' : 'Sunday',
     }
 
+    const columns = [
+        {
+            key: 'club',
+            text: translations(lang).club?.title
+        },
+        {
+            key: '1',
+            text: days.mon
+        },
+        {
+            key: '2',
+            text: days.tue
+        },
+        {
+            key: '3',
+            text: days.wed
+        },
+        {
+            key: '4',
+            text: days.thur
+        },
+        {
+            key: '5',
+            text: days.fri
+        },
+        {
+            key: '6',
+            text: days.sat
+        },
+        {
+            key: '7',
+            text: days.sun
+        },
+        {
+            key: 'buttons',
+        },
+    ]
+
     const getCellData = (cell, row, col) => {
         const clubDataClone =   [...row?.clubs] || []
-
         return (clubDataClone.map((data, index) => {
             return(
-                <div className='clubTableCell d-flex' style={index>0 ? {borderTop: '1px solid rgb(235, 237, 242)' } : {}}>
+            <div style={index===0 ? {borderBottom: '1px solid rgb(235, 237, 242)' } : {borderTop: '1px solid rgb(235, 237, 242)'}}>
                     <div className='pl-3'>
                         <img className='img-circle' src={data?.teacherAvatar || '/img/profile/avatar.png'} width={40}
                             height={40} alt='profile picture'
@@ -140,11 +130,14 @@ const TimeTable = ({
 
     const getCellText = (cell, row, key) => {
         const clubDataClone =   [...row?.clubs] || []
+        console.log(key)
 
+        const length = clubDataClone.length
+        const tempa = 3
         return (clubDataClone.map((data, index) => {
             if (data[key]){
                 return (
-                    <div className='clubTableCell d-flex' style={index>0 ? {borderTop: '1px solid rgb(235, 237, 242)'} : {}}>
+                    <div style={index===0 ? {borderBottom: '1px solid rgb(235, 237, 242)' } : {borderTop: '1px solid rgb(235, 237, 242)'}}>
                         {data[key].map((dt, index) => {
                             return <React.Fragment key={index}>
                                 <div className='text-center'>
@@ -159,138 +152,14 @@ const TimeTable = ({
                 )
             } else {
                 return (
-                    <div className='clubTableCell d-flex' style={index>0 ? {borderTop: '1px solid rgb(235, 237, 242)', height: 86} : {}}>
+                    <div style={index===0 ? {borderBottom: '1px solid rgb(235, 237, 242)', height: 86} : {borderTop: '1px solid rgb(235, 237, 242)', height:86}}>
                     </div>
                 )
             }
+              
         }))
     }
-
-    const getCellButton = (cell, row) => {
-        const clubDataClone =   [...row?.clubs] || []
-
-        return clubDataClone.map((data, index) => {
-            if (currentSeason === tabKey) {
-                return (
-                <div ref={ref => {
-                    hideOnPrintRef.current.push(ref)
-                }}>
-                    <div className='clubTableCell' style={index>0 ? {borderTop: '1px solid rgb(235, 237, 242)'} : {}}>
-                        <button
-                            className='btn btn-primary m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center mr-2'
-                            style={{
-                                backgroundColor: '#716aca',
-                            }}
-                            onClick={() => onEdit(data?.id || null)}
-                        >
-                            <i className="flaticon-edit"/>
-                        </button>
-                        <button
-                            className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center'
-                            onClick={() => {
-                                setDeleteId(data?.id || null)
-                                setViewDeleteModal(true)
-                            }}
-                        >
-                            <CloseIcon/>
-                        </button>
-                    </div>
-                </div>
-                )
-            } else {
-                return null
-            }
-        })
-    }
-    const column = [
-        {
-            key: 'subject',
-            dataField: 'subject',
-            text: '',
-            // rowStyle: styles.green,
-        },
-        {
-            key: 'club',
-            dataField: 'club',
-            text: translations(lang).club?.title,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellData(cell, row, col)
-            }
-        },
-        {
-            key: '1',
-            dataField: '1',
-            text: days.mon,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 1)
-            }
-        },
-        {
-            key: '2',
-            dataField: '2',
-            text: days.tue,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 2)
-            }
-        },
-        {
-            key: '3',
-            dataField: '3',
-            text: days.wed,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 3)
-            }
-        },
-        {
-            key: '4',
-            dataField: '4',
-            text: days.thur,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 4)
-            }
-        },
-        {
-            key: '5',
-            dataField: '5',
-            text: days.fri,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 5)
-            }
-        },
-        {
-            key: '6',
-            dataField: '6',
-            text: days.sat,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 6)
-            }
-        },
-        {
-            key: '7',
-            dataField: '7',
-            text: days.sun,
-            style: {padding: 0},
-            formatter: (cell, row, col) => {
-                return getCellText(cell, row, 7)
-            }
-        },
-        {
-            key: 'buttons',
-            dataField: 'action',
-            text: '',
-            style: {padding: 0},
-            formatter: (cell, row) => {
-                return getCellButton(cell, row)
-            }
-        },
-    ]
+    
     const [tabKey, setTabKey] = useState(currentSeason)
     const [tabIndex, setTabIndex] = useState(null)
     const [tabPanes, setTabPanes] = useState(null)
@@ -298,50 +167,49 @@ const TimeTable = ({
     const [searchKey, setSearchKey] = useState('')
     const [viewModal, setViewModal] = useState(false)
     const [viewDeleteModal, setViewDeleteModal] = useState(false)
-    const [deleteId, setDeleteId] = useState(null)
+    const [tempId, setTempId] = useState(null)
     const [viewClicked, setViewClicked] = useState(false)
     const [prevClicked, setPrevClicked] = useState(false)
 
     const [updateView, setUpdateView] = useState(false)
 
     const onEdit = value => {
-        console.log(value)
         setGroup(value)
         toAdd()
     }
 
-    // const onSearch = key => {
-    //     setSearchKey(key)
-    //     if (tableData) {
-    //         if (key) {
-    //             const tempList = []
-    //             records[tabKey].map(record => {
-    //                 let childFound = false;
-    //                 if (record?.clubs && record?.clubs?.length > 0) {
-    //                     for (let c = 0; c < record?.clubs?.length; c++) {
-    //                         const clubObj = record?.clubs[c];
-    //                         if (clubObj?.groupName?.toLowerCase().includes(key.toLowerCase()) ||
-    //                             clubObj?.teacherFirstName?.toLowerCase().includes(key.toLowerCase()) ||
-    //                             clubObj?.subjectName?.toLowerCase().includes(key.toLowerCase())) {
-    //                             childFound = true;
-    //                             break;
-    //                         }
-    //                     }
-    //                 }
-    //                 if (record?.subject?.toLowerCase().includes(key.toLowerCase()) ||
-    //                     record?.groupName?.toLowerCase().includes(key.toLowerCase()) ||
-    //                     record?.teacherFirstName?.toLowerCase().includes(key.toLowerCase()) ||
-    //                     record?.subjectName?.toLowerCase().includes(key.toLowerCase()) ||
-    //                     childFound) {
-    //                     tempList.push(record)
-    //                 }
-    //             })
-    //             setTableData(tempList)
-    //         } else {
-    //             setTableData(records[tabKey])
-    //         }
-    //     }
-    // }
+    const onSearch = key => {
+        setSearchKey(key)
+        if (tableData) {
+            if (key) {
+                const tempList = []
+                records[tabKey].map(record => {
+                    let childFound = false;
+                    if (record?.clubs && record?.clubs?.length > 0) {
+                        for (let c = 0; c < record?.clubs?.length; c++) {
+                            const clubObj = record?.clubs[c];
+                            if (clubObj?.groupName?.toLowerCase().includes(key.toLowerCase()) ||
+                                clubObj?.teacherFirstName?.toLowerCase().includes(key.toLowerCase()) ||
+                                clubObj?.subjectName?.toLowerCase().includes(key.toLowerCase())) {
+                                childFound = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (record?.subject?.toLowerCase().includes(key.toLowerCase()) ||
+                        record?.groupName?.toLowerCase().includes(key.toLowerCase()) ||
+                        record?.teacherFirstName?.toLowerCase().includes(key.toLowerCase()) ||
+                        record?.subjectName?.toLowerCase().includes(key.toLowerCase()) ||
+                        childFound) {
+                        tempList.push(record)
+                    }
+                })
+                setTableData(tempList)
+            } else {
+                setTableData(records[tabKey])
+            }
+        }
+    }
 
     const callViewModal = id => {
         if (id) {
@@ -353,6 +221,67 @@ const TimeTable = ({
         }
     }
 
+    const toExcel = () => {
+        if (tableData) {
+            let filterRecords = tableData;
+            let excel = [];
+            if (filterRecords) {
+                filterRecords.map(data => {
+                    const clubData = data.clubs
+                    if (clubData) {
+                        clubData.map(cd => {
+                            let recordCol = {};
+                            recordCol[translations(lang).subject?.title] = data.subject
+                            columns.map(col => {
+                                if (col.key === 'club' && cd) {
+                                    recordCol[translations(lang).club?.title] = cd.groupName
+                                    recordCol[translations(lang).teacher?.title] = cd.teacherFirstName
+                                } else {
+                                    if (col.text && cd) {
+                                        if (isArray(cd[col.key])) {
+                                            let tempText = ''
+                                            cd[col.key].map(d => {
+                                                if (tempText) {
+                                                    tempText += ', ' + d.time + ' - ' + (d.room || '')
+                                                } else {
+                                                    tempText = d.time + ' - ' + (d.room || '')
+                                                }
+                                            })
+                                            recordCol[col.text] = tempText
+                                        } else {
+                                            recordCol[col.text] = ''
+                                        }
+                                    }
+                                }
+                            })
+                            excel.push(recordCol);
+                        })
+                    }
+                })
+            }
+
+            let fileName = translations(lang).timetable?.club_title;
+
+            const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+            const fileExtension = '.xlsx';
+            const season = seasons.find(s => s.key === tabKey)
+            let label = 'data'
+            if (season) {
+                label = season.text
+            }
+            const sheets = {}
+            const ws = XLSX.utils.json_to_sheet(excel);
+            sheets[label] = ws
+            const wb = {
+                Sheets: sheets,
+                SheetNames: [label]
+            };
+            const excelBuffer = XLSX.write(wb, {bookType: 'xlsx', type: 'array'});
+            const excelData = new Blob([excelBuffer], {type: fileType});
+            FileSaver.saveAs(excelData, fileName + fileExtension);
+        }
+    }
+
     const onPrevSeasonData = () => {
         if (tabKey) {
             const params = {
@@ -360,6 +289,168 @@ const TimeTable = ({
             }
             // dispatch(fetchPrev(params))
             setPrevClicked(true)
+        }
+    }
+
+    const renderTh = () => {
+        return columns.map(col => {
+            if (col.key === 'buttons') {
+                if (currentSeason === tabKey) {
+                    if (printRef.current) {
+                        return <th
+                            ref={ref => {
+                                hideOnPrintRef.current.push(ref)
+                            }}
+                            key={col.key}></th>
+                    }
+                } else {
+                    return null
+                }
+            }
+            return <th style={{fontSize: '12px'}} className='bolder p-4' key={col.key}>{col.text}</th>
+        })
+    }
+
+    const renderTr = () => {
+        if (tableData) {
+            return tableData.map((rec, tIndex) => {
+                if (rec.clubs.length > 1) {
+                    return <React.Fragment key={rec.id}>
+                        <tr key={rec.id}>
+                            <td rowSpan={rec.clubs.length} className='text-center vertical-inherit'>
+                                <span style={{color: '#4a4a4a', fontSize: '14px'}}>{rec.subject}</span>
+                            </td>
+                            {renderTd(rec.clubs[0])}
+                        </tr>
+                        {
+                            rec.clubs.map((club, index) => {
+                                if (index > 0 && club?.id) {
+                                    return (
+                                        <tr key={club?.id + rec.id + 'childTr'}>
+                                            {
+                                                index === 0 &&
+                                                <td rowSpan={rec.clubs.length} className='text-center vertical-inherit'>
+                                                    <span style={{
+                                                        color: '#4a4a4a',
+                                                        fontSize: '14px'
+                                                    }}>{rec.subject}</span>
+                                                </td>
+                                            }
+                                            {renderTd(club, index)}
+                                        </tr>
+                                    )
+                                } else {
+                                    return null
+                                }
+                            })
+                        }
+                    </React.Fragment>
+                } else {
+                    return <tr key={rec.id}>
+                        <td rowSpan={rec.clubs.length} className='text-center vertical-inherit'>
+                            <span style={{color: '#4a4a4a', fontSize: '14px'}}>{rec.subject}</span>
+                        </td>
+                        {renderTd(rec.clubs[0])}
+                    </tr>
+                }
+            })
+        }
+    }
+
+    const renderTd = (data, index) => {
+        if (data) {
+            return columns.map(col => {
+                if (col.key === 'club') {
+                    return <td
+                        ref={ref => {
+                            styleOnPrintRef.current.push(ref)
+                        }}
+                        className='vertical-inherit' key={col.key}>
+                        <Row>
+                            <div className='pl-3'>
+                                <img className='img-circle' src={data?.teacherAvatar || '/img/profile/avatar.png'} width={40}
+                                     height={40} alt='profile picture'
+                                     onError={(e) => {
+                                         e.target.onError = null
+                                         e.target.src = '/img/profile/avatar.png'
+                                     }}
+                                />
+                            </div>
+                            <div className='d-flex flex-column justify-content-center pl-3'>
+                                <span
+                                    className='bolder underline'
+                                    style={{color: '#5867dd'}}
+                                    onClick={() => callViewModal(data.groupId)}
+                                >
+                                    {data?.groupName}
+                                </span>
+                                <span>{data?.teacherFirstName}</span>
+                            </div>
+                        </Row>
+                    </td>
+                } else if (col.key === 'buttons') {
+                    if (currentSeason === tabKey) {
+                        return <td
+                            ref={ref => {
+                                hideOnPrintRef.current.push(ref)
+                            }}
+                            key={col.key}
+                            className='text-center vertical-inherit'
+                            width={100}>
+                            <button
+                                className='btn btn-primary m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center mr-2'
+                                style={{
+                                    backgroundColor: '#716aca',
+                                }}
+                                onClick={() => onEdit(data?.id || null)}
+                            >
+                                <i className="flaticon-edit-1"/>
+                            </button>
+                            <button
+                                className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center'
+                                onClick={() => {
+                                    setTempId(data?.id || null)
+                                    setViewDeleteModal(true)
+                                }}
+                            >
+                                <CloseIcon/>
+                            </button>
+                        </td>
+                    } else {
+                        return null
+                    }
+                } else {
+                    if (isArray(data[col.key])) {
+                        return <td
+                            ref={ref => {
+                                styleOnPrintRef.current.push(ref)
+                            }}
+                            className='vertical-inherit' key={col.key}>
+                            {
+                                data[col.key].map((dt, index) => {
+                                    return <React.Fragment key={index}>
+                                        <div className='text-center'>
+                                            <span>{dt.time}</span>
+                                        </div>
+                                        <div className='text-center'>
+                                            <span>{dt.room}</span>
+                                        </div>
+                                    </React.Fragment>
+                                })
+                            }
+                        </td>
+                    } else {
+                        return <td
+                            ref={ref => {
+                                styleOnPrintRef.current.push(ref)
+                            }}
+                            key={col.key}></td>
+                    }
+
+                }
+            })
+        } else {
+            return null
         }
     }
 
@@ -418,6 +509,34 @@ const TimeTable = ({
             setUpdateView(!updateView)
         }
     }, [tabKey, records])
+
+    const prepareToPrint = () => {
+        hideOnPrintRef.current.map(x => {
+            if (x) {
+                x.style.display = 'none'
+            }
+        })
+        styleOnPrintRef.current.map(x => {
+            if (x) {
+                x.style.padding = '0.2rem'
+            }
+        })
+        printRef.current.children[0].style.display = 'block'
+    }
+
+    const unPrepareToPrint = () => {
+        hideOnPrintRef.current.map(x => {
+            if (x) {
+                x.style.display = 'table-cell'
+            }
+        })
+        styleOnPrintRef.current.map(x => {
+            if (x) {
+                x.style.padding = '0.75rem'
+            }
+        })
+        printRef.current.children[0].style.display = 'none'
+    }
 
     const getSeasonTabIndex = (sId) => {
         let index = null;
@@ -480,19 +599,78 @@ const TimeTable = ({
                             }
                         </>
                 }
-                <DTable
-                    remote
-                    config={config}
-                    // locale={locale}
-                    data={tableData}
-                    columns={column}
-                    individualContextMenus
-                    showOrdering={false}
-                    // contextMenus={contextMenus}
-                    // onContextMenuItemClick={handleContextMenuClick}
-                    // onInteraction={onUserInteraction}
-                    // totalDataSize={totalCount}
-                />
+
+                <div className='d-flex justify-content-end mb-4'>
+                    <button
+                        onClick={toExcel}
+                        type="button"
+                        className="react-bs-table-csv-btn btn btn-default m-btn m-btn--icon m-btn--icon-only p-1 mx-2"
+                        style={{
+                            backgroundColor: '#ff5b1d',
+                            boxShadow: '0 2px 10px 0 #ff5b1d',
+                            border: 'none',
+                            height: '33px',
+                            alignItems: 'center'
+                        }}>
+                        <i className='la la-file-excel-o' style={{fontSize: '22px', color: 'rgb(255, 255, 255)'}}/>
+                    </button>
+                    <ReactToPrint
+                        trigger={() => <button
+                            className="btn m-btn m-btn--icon m-btn--icon-only"
+                            style={{
+                                backgroundColor: '#ff5b1d',
+                                boxShadow: '0 2px 10px 0 #ff5b1d',
+                                border: 'none',
+                                width: '33px',
+                                height: '33px',
+                                alignItems: 'center',
+                                marginRight: '0.5rem'
+                            }}
+                        >
+                            <i
+                                className="la la-print m-0 p-0"
+                                style={{
+                                    fontSize: '22px',
+                                    color: '#ffffff',
+                                }}
+                            />
+                        </button>
+                        }
+                        pageStyle='@page {margin: 0.2cm 1cm !important;}'
+                        content={() => printRef.current}
+                        onBeforeGetContent={() => prepareToPrint()}
+                        onAfterPrint={() => unPrepareToPrint()}
+                        suppressErrors={true}
+                    />
+
+                    <input
+                        className='form-control'
+                        placeholder={translations(lang).search}
+                        style={{borderRadius: '8px', width: '200px'}}
+                        value={searchKey}
+                        onChange={e => onSearch(e.target.value)}
+                    />
+                </div>
+                <div ref={printRef}>
+                    <h4 className='text-center mb-3'
+                        style={{display: 'none'}}>{translations(lang).timetable?.club_title}</h4>
+                    <table className='table table-bordered'>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            {renderTh()}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {renderTr()}
+                        </tbody>
+                    </table>
+                </div>
+                {
+                    !tableData?.length
+                    &&
+                    <div className='text-center'>{translations(lang).empty}</div>
+                }
             </div>
             {
                 viewModal &&
@@ -500,7 +678,7 @@ const TimeTable = ({
             }
             {
                 viewDeleteModal &&
-                <DeleteModal id={deleteId} tab={'group'} onClose={() => setViewDeleteModal(false)} lang={lang}/>
+                <DeleteModal id={tempId} tab={'group'} onClose={() => setViewDeleteModal(false)} lang={lang}/>
             }
             {
                 loading || prevLoading
