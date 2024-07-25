@@ -48,7 +48,7 @@ const view = ({detentionId, onClose}) => {
         <Modal
             dimmer='blurring'
             show={true}
-            size="xl"
+            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             onHide={() => onClose()}
             centered
