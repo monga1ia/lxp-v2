@@ -2,48 +2,58 @@ import message from 'modules/message'
 import draftToHtml from 'draftjs-to-html'
 import { Editor } from 'react-draft-wysiwyg'
 import { Modal } from 'react-bootstrap'
+import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 import { useTranslation } from "react-i18next";
+import { fetchRequest } from 'utils/fetchRequest';
+import { schoolTeacherInfo } from 'utils/fetchRequest/Urls';
 
-const infoChange = ({ onClose, onSubmit, id }) => {
-    
+const infoChange = ({ onClose, onSubmit, teacherId }) => {
+
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
     const [teacherData, setTeacherData] = useState([])
     const [info, setInfo] = useState(EditorState.createEmpty())
-    // const blocksFromHTML = convertFromHTML(info);
-    // const content = ContentState.createFromBlockArray(
-    //     blocksFromHTML.contentBlocks,
-    //     blocksFromHTML.entityMap
-    // );
-    // setInfo(EditorState.createWithContent((content)))
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherInfoChange, 'POST', { teacher })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { info, teacherInfo } = res?.data
-    //                 const blocksFromHTML = convertFromHTML(info);
-    //                 const content = ContentState.createFromBlockArray(
-    //                     blocksFromHTML.contentBlocks,
-    //                     blocksFromHTML.entityMap
-    //                 );
-    //                 setInfo(EditorState.createWithContent((content)))
-    //                 setTeacherData(teacherInfo || {})
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }, [])
+
+    const loadData = (params = {}) => {
+        setLoading(true)
+        fetchRequest(schoolTeacherInfo, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    const blocksFromHTML = convertFromHTML(res?.info);
+                    const content = ContentState.createFromBlockArray(
+                        blocksFromHTML.contentBlocks,
+                        blocksFromHTML.entityMap
+                    );
+                    setInfo(EditorState.createWithContent((content)))
+                    setTeacherData(res?.teacherInfo)
+                } else {
+                    message(res.data.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        if (teacherId) {
+            loadData({
+                school: selectedSchool?.id,
+                teacher: teacherId
+            })
+        } else {
+            message(t('course_select_teacher'))
+            onClose()
+        }
+    }, [])
 
     const handleSave = () => {
         onSubmit({ info: draftToHtml(convertToRaw(info?.getCurrentContent())) })
@@ -53,12 +63,12 @@ const infoChange = ({ onClose, onSubmit, id }) => {
         <Modal
             centered
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             size='lg'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                     {t('teacher.info_add')}
                 </Modal.Title>
@@ -69,7 +79,7 @@ const infoChange = ({ onClose, onSubmit, id }) => {
                         <div className="col-4">
                             <img
                                 src={teacherData?.avatar || '/img/profile/placeholder.jpg'}
-                                alt={`photo of ${teacher?.firstName}`}
+                                alt={`photo of ${teacherData?.firstName}`}
                                 onError={(e) => {
                                     e.target.onError = null
                                     e.target.src = '/img/profile/avatar.png'
@@ -116,19 +126,7 @@ const infoChange = ({ onClose, onSubmit, id }) => {
                     editorClassName="profile-info-edit-input"
                     onEditorStateChange={setInfo}
                     toolbar={{
-                        inline: { className: 'editor-link-div' },
-                        list: { className: 'editor-link-div' },
-                        textAlign: { className: 'editor-link-div' },
-                        history: { className: 'editor-link-div' },
-                        blockType: { className: 'editor-hide-icon' },
-                        fontSize: { className: 'editor-hide-icon', defaultTargetOption: '13' },
-                        fontFamily: { className: 'editor-hide-icon' },
-                        colorPicker: { className: 'editor-link-div' },
-                        emoji: { className: 'editor-hide-icon' },
-                        embedded: { className: 'editor-hide-icon' },
-                        image: { className: 'editor-hide-icon' },
-                        remove: { className: 'editor-hide-icon' },
-                        link: { className: 'editor-link-div', defaultTargetOption: '_blank' },
+                        options: ['list', 'textAlign', 'link', 'history']
                     }}
                     stripPastedStyles={true}
                     localization={{
@@ -139,7 +137,7 @@ const infoChange = ({ onClose, onSubmit, id }) => {
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>
@@ -153,9 +151,10 @@ const infoChange = ({ onClose, onSubmit, id }) => {
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }

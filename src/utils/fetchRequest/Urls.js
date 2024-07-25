@@ -10,7 +10,23 @@ export const changePassword = "auth/change-password";
 
 // ============================= School =============================
 // teacher
-export const schoolTeacherIndex = 'school/index'
+export const schoolTeacherIndex = 'school/teacher/index'
+export const schoolTeacherView = 'school/teacher/view'
+export const schoolTeacherCreate = 'school/teacher/create'
+export const schoolTeacherEdit = 'school/teacher/edit'
+export const schoolTeacherDelete = 'school/teacher/delete'
+export const schoolTeacherStatusChange = 'school/teacher/change-status'
+export const schoolTeacherChangeUsername = 'school/teacher/change-username'
+export const schoolTeacherChangePassword = 'school/teacher/change-password'
+export const schoolTeacherChangeRole = 'school/teacher/change-role'
+export const schoolTeacherInfo = 'school/teacher/change-info'
+
+// class
+export const schoolClassIndex = 'school/class/index'
+export const schoolClassCreate = 'school/class/create'
+export const schoolClassEdit = 'school/class/edit'
+export const schoolClassDelete = 'school/class/delete'
+
 // staff
 // export const schoolStaffIndex = 'api/employee/init'
 // export const schoolStaffSubmit = 'api/employee/submit'

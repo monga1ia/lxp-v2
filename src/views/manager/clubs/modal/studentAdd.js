@@ -1,21 +1,119 @@
-import message from 'Src/message'
+import message from 'modules/message'
 import { cloneDeep } from 'lodash'
 import { Col, Row } from 'react-bootstrap'
 import AddIcon from '@mui/icons-material/Add'
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
-import { Checkbox, Modal } from 'semantic-ui-react'
-import { managerClubStudentAdd } from 'Utilities/url'
+import { Checkbox } from 'semantic-ui-react'
+import { Modal } from 'react-bootstrap'
+// import { managerClubStudentAdd } from 'utils/url'
 import secureLocalStorage from 'react-secure-storage'
-import { translations } from 'Utilities/translations'
-import { fetchRequest } from 'Utilities/fetchRequest'
-import { NDropdown as Dropdown } from 'Widgets/Dropdown'
+import { translations } from 'utils/translations'
+// import { fetchRequest } from 'utils/fetchRequest'
+import { NDropdown as Dropdown } from 'widgets/Dropdown'
+import { useTranslation } from 'react-i18next'
 
-const studentAdd = ({ onClose, group, onSubmit }) => {
+const studentAdd = ({ onClose, group, onSubmit, modalClassName }) => {
+
+    const { t } = useTranslation()
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
-    const [gradeOptions, setGradeOptions] = useState([])
+    const [gradeOptions, setGradeOptions] = useState([
+        {
+            id: "2116",
+            name: "Бага анги",
+            code: "PRIMARY",
+            classOptions: [
+                {
+                    value: "11715",
+                    text: "h",
+                    details: {
+                        gradeId: "2117",
+                        gradeCode: "1",
+                        gradeName: "1-р анги",
+                        classId: "11715",
+                        className: "h"
+                    },
+                    studentOptions: [
+                        {
+                            value: "234881",
+                            text: "nasanjargal",
+                            code: "02315",
+                            studentId: "246413",
+                            firstName: "nasanjargal",
+                            lastName: "nasanbayr"
+                        }
+                    ]
+                },
+                {
+                    value: "9974",
+                    text: "1А",
+                    details: {
+                        gradeId: "2117",
+                        gradeCode: "1",
+                        gradeName: "1-р анги",
+                        classId: "9974",
+                        className: "1А"
+                    },
+                    studentOptions: []
+                },
+                {
+                    value: "11789",
+                    text: "9А",
+                    details: {
+                        gradeId: "2126",
+                        gradeCode: "9",
+                        gradeName: "9-р анги",
+                        classId: "11789",
+                        className: "9А"
+                    },
+                    studentOptions: []
+                }
+            ],
+            value: "2122",
+            text: "Дунд анги",
+            ids: [
+                "2123",
+                "2124",
+                "2125",
+                "2126"
+            ],
+            classes: [
+                {
+                    value: "5300",
+                    text: "8А",
+                    students: []
+                }
+            ]
+        },
+        {
+            id: "3985",
+            name: "Цэцэрлэг",
+            code: "KINDERGARTEN",
+            classOptions: [
+                {
+                    value: "11822",
+                    text: "ENGLISH",
+                    details: {
+                        gradeId: "3986",
+                        gradeCode: "KINDER_HIGH",
+                        gradeName: "Ахлах бүлэг",
+                        classId: "11822",
+                        className: "ENGLISH"
+                    },
+                    studentOptions: []
+                }
+            ],
+            value: "3985",
+            text: "Цэцэрлэг",
+            ids: [
+                "3986",
+                "3987"
+            ],
+            classes: []
+        }
+    ])
     const [rows, setRows] = useState([{
         grade: null,
         class: null,
@@ -23,23 +121,23 @@ const studentAdd = ({ onClose, group, onSubmit }) => {
         students: [],
     }])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(managerClubStudentAdd, 'POST', { group })
-            .then((res) => {
-                if (res.success) {
-                    const { gradesWithClassStudents } = res.data
-                    setGradeOptions(gradesWithClassStudents || [])
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(managerClubStudentAdd, 'POST', { group })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { gradesWithClassStudents } = res.data
+    //                 setGradeOptions(gradesWithClassStudents || [])
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleSubmit = () => {
         if (validateFields()) {
@@ -109,20 +207,26 @@ const studentAdd = ({ onClose, group, onSubmit }) => {
 
     return (
         <Modal
-            centered
-            open={true}
-            size='large'
-            onClose={onClose}
             dimmer='blurring'
-            className='react-modal overflow-modal'
+            show={true}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={onClose}
+            className={modalClassName}
+            centered
         >
-            <div className='header'>
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {t('movement.add')}
+                </Modal.Title>
+            </Modal.Header>
+            {/* <div className='header'>
                 {translations(locale)?.movement?.add}
                 <button type='button' className='close' aria-label='Close' onClick={onClose}>
                     <CloseIcon />
                 </button>
-            </div>
-            <div className='content'>
+            </div> */}
+            <Modal.Body>
                 {
                     rows?.map((row, index) => (
                         <Row key={index} className='my-2'>
@@ -206,23 +310,21 @@ const studentAdd = ({ onClose, group, onSubmit }) => {
                         </Row>
                     ))
                 }
-            </div>
-            <div className='actions modal-footer'>
-                <div className='col-12 text-center'>
-                    <button
-                        className='btn m-btn--pill btn-outline-metal text-uppercase mr-3'
-                        onClick={onClose}
-                    >
-                        {translations(locale)?.close}
-                    </button>
-                    <button
-                        className='btn m-btn--pill btn-success text-uppercase'
-                        onClick={handleSubmit}
-                    >
-                        {translations(locale)?.movement?.add}
-                    </button>
-                </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer className="text-center">
+                <button
+                    className='btn m-btn--pill btn-outline-metal text-uppercase mr-3'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.close}
+                </button>
+                <button
+                    className='btn m-btn--pill btn-success text-uppercase'
+                    onClick={handleSubmit}
+                >
+                    {translations(locale)?.movement?.add}
+                </button>
+            </Modal.Footer>
             {
                 loading &&
                 <>

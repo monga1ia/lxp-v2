@@ -28,7 +28,10 @@ import ManageAccountsTwoToneIcon from '@mui/icons-material/ManageAccountsTwoTone
 import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone'
 import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplicationsTwoTone'
 import { fetchRequest } from 'utils/fetchRequest';
-import { schoolTeacherIndex } from 'utils/fetchRequest/Urls';
+import {
+    schoolTeacherIndex, schoolTeacherDelete, schoolTeacherStatusChange,
+    schoolTeacherChangeUsername, schoolTeacherChangePassword, schoolTeacherChangeRole, schoolTeacherInfo
+} from 'utils/fetchRequest/Urls';
 
 import { Tab } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
@@ -37,7 +40,6 @@ const MainGroup = () => {
 
     const locale = "mn"
     const { t } = useTranslation();
-    const history = useHistory();
     const [loading, setLoading] = useState(false);
 
     const { selectedSchool } = useSelector(state => state.schoolData);
@@ -48,6 +50,8 @@ const MainGroup = () => {
         { to: "", text: "Home" },
         { to: "school/teacher", text: title }
     ];
+
+    const [initLoaded, setInitLoaded] = useState(false)
 
     const [statuses, setStatuses] = useState([])
     const [totalCount, setTotalCount] = useState(0);
@@ -307,6 +311,8 @@ const MainGroup = () => {
                     setTreeData(res?.grades || [])
                     setTableData(res?.teachers || [])
                     setTotalCount(res?.totalCount || 0)
+
+                    setInitLoaded(true)
                 }
                 setLoading(false)
             })
@@ -319,7 +325,23 @@ const MainGroup = () => {
         })
     }, [])
 
-    const closeModal = () => {
+    const onListRefresh = () => {
+        loadData({
+            school: selectedSchool?.id,
+            status: selectedStatusCode,
+            grade: selectedTreeDataId,
+            page: tableState?.page,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+            sort: tableState?.sort,
+            order: tableState?.order
+        })
+    }
+
+    const closeModal = (isLoadData = false) => {
+        if (isLoadData) {
+            onListRefresh()
+        }
         setShowAddTeacherModal(false)
         setShowEditTeacherModal(false)
         setShowDeleteModal(false)
@@ -349,22 +371,7 @@ const MainGroup = () => {
     }
 
     const handleTabChange = (e, data) => {
-        let code = 'ACTIVE';
-        switch (data?.activeIndex) {
-            case 0:
-                code = 'ACTIVE'
-                break;
-            case 1:
-                code = 'ABSENT'
-                break;
-            case 2:
-                code = 'QUIT'
-                break;
-            case 3:
-                code = 'DELETE'
-                break;
-
-        }
+        let code = statuses?.find(obj => obj?.index === data?.activeIndex)?.code || 'ACTIVE';
         setSelectedStatusCode(code)
         loadData({
             school: selectedSchool?.id,
@@ -378,43 +385,34 @@ const MainGroup = () => {
         })
     }
 
-    const handleAddTeacher = () => {
-        setShowAddTeacherModal(true)
-    }
-
-    const handleEditTeacher = () => {
-        console.log('edited')
-    }
-
     const onUserInteraction = state => {
-        console.log('onUserInteraction')
-        let page = state?.page
-        if (state?.search && state?.search?.length > 0) {
-            page = 1;
+        if (initLoaded) {
+            let page = state?.page
+            if (state?.search && state?.search?.length > 0) {
+                page = 1;
+            }
+
+            setTableState({
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            })
+            loadData({
+                school: selectedSchool?.id,
+                status: selectedStatusCode,
+                grade: selectedTreeDataId,
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            })
         }
-
-        setTableState({
-            page: page,
-            pageSize: state?.pageSize,
-            search: state?.search,
-            sort: state?.sort,
-            order: state?.order
-        })
-
-        loadData({
-            school: selectedSchool?.id,
-            status: selectedStatusCode,
-            grade: selectedTreeDataId,
-            page: page,
-            pageSize: state?.pageSize,
-            search: state?.search,
-            sort: state?.sort,
-            order: state?.order
-        })
     }
 
     const handleContextMenuClick = (id, key) => {
-        console.log(id, key)
         if (id && key) {
             setSelectedTableDataId(id)
             if (key === 'view') {
@@ -460,39 +458,65 @@ const MainGroup = () => {
     }, [selectedStatusCode, tableData])
 
     const handleDelete = () => {
-        console.log('delete')
-        // setLoading(true)
-        // fetchRequest(schoolTeacherDelete, 'POST', {
-        //     teacher: selectedTableDataId,
-        //     grade: selectedTreeDataId,
-        //     status: selectedTabData?.code,
-        //     filter: tableState?.filter,
-        //     order: tableState?.order,
-        //     sort: tableState?.sort,
-        //     page: tableState?.page,
-        //     pageSize: tableState?.pageSize,
-        //     search: tableState?.search,
-        // })
-        //     .then((res) => {
-        //         if (res.success) {
-        //             message(res.data.message, res.data.success)
-        //             const {teachers, totalCount} = res.data
-        //             setTableData(teachers || [])
-        //             setTotalCount(totalCount || 0)
-        //             closeModal()
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+        setLoading(true)
+        fetchRequest(schoolTeacherDelete, 'POST', {
+            school: selectedSchool?.id,
+            teacher: selectedTableDataId
+        })
+            .then((res) => {
+                if (res?.success) {
+                    if (res?.teachers) {
+                        setTableData(res?.teachers || [])
+                        setTotalCount(res?.totalCount || 0)
+                    } else {
+                        onListRefresh()
+                    }
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
-    const handleStatusChange = () => {
-        console.log('statusChange')
+    const handleStatusChange = (toStatus = null) => {
+        setLoading(true)
+        fetchRequest(schoolTeacherStatusChange, 'POST', {
+            school: selectedSchool?.id,
+            teacher: selectedTableDataId,
+            to: toStatus,
+            grade: selectedTreeDataId,
+            page: tableState?.page,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+            sort: tableState?.sort,
+            order: tableState?.order,
+            status: statuses?.find(obj => obj.code === selectedStatusCode)?.id
+        })
+            .then((res) => {
+                if (res?.success) {
+                    if (res?.teachers) {
+                        setTableData(res?.teachers || [])
+                        setTotalCount(res?.totalCount || 0)
+                    } else {
+                        onListRefresh()
+                    }
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
         // setLoading(true)
         // fetchRequest(schoolTeacherStatusChange, 'POST', {
         //     teacher: selectedTableDataId,
@@ -526,65 +550,85 @@ const MainGroup = () => {
         //     })
     }
 
-    const handleLoginNameChange = loginNames => {
-        console.log('loginNameChange')
-        // setLoading(true)
-        // fetchRequest(schoolTeacherLoginNameChange, 'POST', {
-        //     ...loginNames,
-        //     teacher: selectedTableDataId,
-        //     menu: 'teacher',
-        //     tab: selectedTabData?.id,
-        //     grade: selectedTreeDataId,
-        //     filter: tableState?.filter,
-        //     order: tableState?.order,
-        //     sort: tableState?.sort,
-        //     page: tableState?.page,
-        //     pageSize: tableState?.pageSize,
-        //     search: tableState?.search,
-        // })
-        //     .then((res) => {
-        //         if (res.success) {
-        //             message(res.data.message, res.success)
-        //             const {teachers, totalCount} = res?.data
-        //             setTableData(teachers || [])
-        //             setTotalCount(totalCount || 0)
-        //             closeModal()
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+    const handleLoginNameChange = params => {
+        let updateParams = Object.assign(params, {
+            school: selectedSchool?.id,
+            status: selectedStatusCode,
+            grade: selectedTreeDataId,
+            page: tableState?.page,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+            sort: tableState?.sort,
+            order: tableState?.order
+        })
+        setLoading(true)
+        fetchRequest(schoolTeacherChangeUsername, 'POST', updateParams)
+            .then((res) => {
+                if (res?.success) {
+                    if (res?.teachers) {
+                        setTableData(res?.teachers || [])
+                        setTotalCount(res?.totalCount || 0)
+                    } else {
+                        onListRefresh()
+                    }
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     const handleRoleChange = roles => {
-        console.log('roleChange')
-        // setLoading(true)
-        // fetchRequest(schoolTeacherRoleChange, 'POST', {
-        //     teacher: selectedTableDataId,
-        //     roles: JSON.stringify(roles),
-        //     submit: 1
-        // })
-        //     .then((res) => {
-        //         if (res.success) {
-        //             message(res.data.message, res.success)
-        //             closeModal()
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+        setLoading(true)
+        fetchRequest(schoolTeacherChangeRole, 'POST', {
+            school: selectedSchool?.id,
+            teacher: selectedTableDataId,
+            submit: 1,
+            roles: JSON.stringify(roles)
+        })
+            .then((res) => {
+                if (res?.success) {
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
-    const handleInfoChange = param => {
-        console.log('infoChange')
+    const handleInfoChange = params => {
+        let updateParams = Object.assign(params, {
+            school: selectedSchool?.id,
+            teacher: selectedTableDataId,
+            submit: 1
+        })
+        setLoading(true)
+        fetchRequest(schoolTeacherInfo, 'POST', updateParams)
+            .then((res) => {
+                if (res?.success) {
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+
         // setLoading(true)
         // fetchRequest(schoolTeacherInfoChange, 'POST', {...param, teacher: selectedTableDataId, submit: 1})
         //     .then((res) => {
@@ -602,23 +646,25 @@ const MainGroup = () => {
         //     })
     }
 
-    const handlePasswordReset = (password, passwordRepeat) => {
-        console.log('passwordReset')
-        // setLoading(true)
-        // fetchRequest(schoolTeacherPasswordReset, 'POST', {teacher: selectedTableDataId, password, passwordRepeat})
-        //     .then((res) => {
-        //         if (res.success) {
-        //             message(res.data.message, res.data.success)
-        //             closeModal()
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+    const handlePasswordReset = params => {
+        let updateParams = Object.assign(params, {
+            school: selectedSchool?.id
+        })
+        setLoading(true)
+        fetchRequest(schoolTeacherChangePassword, 'POST', updateParams)
+            .then((res) => {
+                if (res?.success) {
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(e => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     return (
@@ -672,6 +718,8 @@ const MainGroup = () => {
                                                         locale={locale}
                                                         data={tableData}
                                                         columns={columns}
+                                                        currentPage={tableState?.page || 1}
+                                                        defaultPageSize={tableState?.pageSize || 10}
                                                         clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}
@@ -711,7 +759,7 @@ const MainGroup = () => {
                 <PasswordResetModal
                     onClose={closeModal}
                     onSubmit={handlePasswordReset}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                 />
             }
             {
@@ -719,7 +767,8 @@ const MainGroup = () => {
                 <StatusChangeModal
                     onClose={closeModal}
                     onSubmit={handleStatusChange}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
+                    statuses={statuses}
                 />
             }
             {
@@ -727,7 +776,8 @@ const MainGroup = () => {
                 <LoginNameChangeModal
                     onClose={closeModal}
                     onSubmit={handleLoginNameChange}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
+                    loginName={tableData?.find(obj => obj?.id === selectedTableDataId)?.username}
                 />
             }
             {
@@ -735,7 +785,7 @@ const MainGroup = () => {
                 <RoleChangeModal
                     onClose={closeModal}
                     onSubmit={handleRoleChange}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                 />
             }
             {
@@ -743,7 +793,7 @@ const MainGroup = () => {
                 <InfoChangeModal
                     onClose={closeModal}
                     onSubmit={handleInfoChange}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                 />
             }
             {
@@ -766,15 +816,13 @@ const MainGroup = () => {
                 showAddTeacherModal &&
                 <AddTeacherModal
                     onClose={closeModal}
-                    onSubmit={handleAddTeacher}
                 />
             }
             {
-                showEditTeacherModal &&
+                showEditTeacherModal && selectedTableDataId &&
                 <EditTeacherModal
-                    data={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                     onClose={closeModal}
-                    onSubmit={handleEditTeacher}
                 />
             }
         </>

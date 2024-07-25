@@ -5,32 +5,12 @@ import secureLocalStorage from 'react-secure-storage'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from "react-i18next";
 
-const statusChange = ({ onClose, onSubmit, id }) => {
+const statusChange = ({ onClose, onSubmit, teacherId, statuses }) => {
 
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false)
 
     const [selectedStatus, setSelectedStatus] = useState(null)
-    const [statusOptions, setStatusOptions] = useState([])
-
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetchRequest(schoolTeacherStatusChange, 'POST', { teacher })
-    //         .then((res) => {
-    //             if (res.success) {
-    //                 const { statuses, statusId } = res?.data
-    //                 setSelectedStatus(statusId || null)
-    //                 setStatusOptions(statuses?.map(el => ({ value: el?.id, text: el?.name })) || [])
-    //             } else {
-    //                 message(res.data.message)
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(() => {
-    //             message(t('err.error_occurred'))
-    //             setLoading(false)
-    //         })
-    // }, [])
 
     const handleSave = () => {
         if (!selectedStatus) return message(t('err.fill_all_fields'))
@@ -42,7 +22,7 @@ const statusChange = ({ onClose, onSubmit, id }) => {
             centered
             show={true}
             size='lg'
-            onHide={onClose}
+            onHide={() => onClose()}
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
         >
@@ -57,19 +37,17 @@ const statusChange = ({ onClose, onSubmit, id }) => {
                         {t('status')}*
                     </label>
                     <div className="col-5">
-                        {/* <Select
-                            clearable
-                            searchable
-                            options={statusOptions}
-                            value={selectedStatus}
-                            onChange={(e, data) => setSelectedStatus(data)}
-                        /> */}
                         <Dropdown
                             fluid
                             selection
                             closeOnChange
                             value={selectedStatus}
-                            options={statusOptions}
+                            options={statuses?.map(obj => {
+                                return {
+                                    value: obj?.id,
+                                    text: obj?.menuItem
+                                }
+                            })}
                             onChange={(e, data) => setSelectedStatus(data?.value)}
                             placeholder={'-' + t('select') + ' - '}
                         />
@@ -79,7 +57,7 @@ const statusChange = ({ onClose, onSubmit, id }) => {
             <Modal.Footer className='text-center'>
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>

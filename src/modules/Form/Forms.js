@@ -28,6 +28,7 @@ const Forms = (({
     const { t } = useTranslation();
     const fileUploaderRef = useRef([]);
     const textRef = useRef([]);
+    const numberInputRef = useRef([]);
     useImperativeHandle(ref, () => ({
         validate() {
             return validateFields();
@@ -159,19 +160,19 @@ const Forms = (({
                     setFields(clone);
                     isFalse = false;
 
-                    if(clone[index].accept == "image/*"){
+                    if (clone[index].accept == "image/*") {
                         clone[index].showErrorMessage = true;
                         clone[index].errorMessage = t('newsfeed.imageTypeImageError');
                         setFields(clone);
                         isFalse = false;
                     }
-    
-                    if(clone[index].accept == ".mp4,video/*"){
+
+                    if (clone[index].accept == ".mp4,video/*") {
                         clone[index].showErrorMessage = true;
                         clone[index].errorMessage = t('newsfeed.imageTypeVideoError');
                         setFields(clone);
                         isFalse = false;
-                    }    
+                    }
                 }
             }
             return isFalse;
@@ -362,7 +363,7 @@ const Forms = (({
     const handlerCopyValue = (value, index) => {
         const clone = [...fields];
         const field = { ...clone[index] };
-        
+
         field.value = value;
 
         clone[index] = field;
@@ -374,13 +375,13 @@ const Forms = (({
         // let lastValue = textRef?.current.lastHtml
         let valueArray = lastValue.split(/<div ?\/?>/)
 
-        if(e.shiftKey && e.which == 65) {
+        if (e.shiftKey && e.which == 65) {
             let updatedValue = ''
-            if(valueArray && valueArray.length > 1){
+            if (valueArray && valueArray.length > 1) {
                 let lastArrayValue = valueArray[valueArray.length - 1]
                 var textValueArray = lastArrayValue.split('</div>');
 
-                for(let i = 0; i < valueArray.length - 1; i++){
+                for (let i = 0; i < valueArray.length - 1; i++) {
                     updatedValue += '<div>' + valueArray[i]
                 }
                 updatedValue += '<div>' + textValueArray[0] + '\u202F' + textValueArray[1];
@@ -390,7 +391,7 @@ const Forms = (({
 
             const clone = [...fields];
             const field = { ...clone[index] };
-            
+
             field.value = updatedValue;
 
             clone[index] = field;
@@ -399,13 +400,13 @@ const Forms = (({
             e.stopPropagation();
         }
 
-        if(e.shiftKey && e.which == 71) {
+        if (e.shiftKey && e.which == 71) {
             let updatedValue = ''
-            if(valueArray && valueArray.length > 1){
+            if (valueArray && valueArray.length > 1) {
                 let lastArrayValue = valueArray[valueArray.length - 1]
                 var textValueArray = lastArrayValue.split('</div>');
 
-                for(let i = 0; i < valueArray.length - 1; i++){
+                for (let i = 0; i < valueArray.length - 1; i++) {
                     updatedValue += '<div>' + valueArray[i]
                 }
                 updatedValue += '<div>' + textValueArray[0] + '\u180E' + textValueArray[1];
@@ -415,7 +416,7 @@ const Forms = (({
 
             const clone = [...fields];
             const field = { ...clone[index] };
-            
+
             field.value = updatedValue;
 
             clone[index] = field;
@@ -424,83 +425,83 @@ const Forms = (({
             e.stopPropagation();
         }
 
-        if(e.shiftKey && (e.which == 48 || e.which == 49 || e.which == 50 || e.which == 51 || e.which == 52 || e.which == 53 || e.which == 54 || e.which == 55 || e.which == 56 || e.which == 57)) {
+        if (e.shiftKey && (e.which == 48 || e.which == 49 || e.which == 50 || e.which == 51 || e.which == 52 || e.which == 53 || e.which == 54 || e.which == 55 || e.which == 56 || e.which == 57)) {
             let updatedValue = ''
-            if(valueArray && valueArray.length > 1){
+            if (valueArray && valueArray.length > 1) {
                 let lastArrayValue = valueArray[valueArray.length - 1]
                 var textValueArray = lastArrayValue.split('</div>');
 
-                for(let i = 0; i < valueArray.length - 1; i++){
+                for (let i = 0; i < valueArray.length - 1; i++) {
                     updatedValue += '<div>' + valueArray[i]
                 }
 
-                if(e.which == 48){
+                if (e.which == 48) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1810' + textValueArray[1];
-                } else if(e.which == 49){
+                } else if (e.which == 49) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1811' + textValueArray[1];
-                } else if(e.which == 50){
+                } else if (e.which == 50) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1812' + textValueArray[1];
-                } else if(e.which == 51){
+                } else if (e.which == 51) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1813' + textValueArray[1];
-                } else if(e.which == 52){
+                } else if (e.which == 52) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1814' + textValueArray[1];
-                } else if(e.which == 53){
+                } else if (e.which == 53) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1815' + textValueArray[1];
-                } else if(e.which == 54){
+                } else if (e.which == 54) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1816' + textValueArray[1];
-                } else if(e.which == 55){
+                } else if (e.which == 55) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1817' + textValueArray[1];
-                } else if(e.which == 56){
+                } else if (e.which == 56) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1818' + textValueArray[1];
-                } else if(e.which == 57){
+                } else if (e.which == 57) {
                     updatedValue += '<div>' + textValueArray[0] + '\u1819' + textValueArray[1];
                 }
             } else {
                 // 0
-                if(e.which == 48){
+                if (e.which == 48) {
                     updatedValue = lastValue + '\u1810'
-                } 
+                }
                 // 1
-                else if(e.which == 49){
+                else if (e.which == 49) {
                     updatedValue = lastValue + '\u1811'
-                } 
+                }
                 // 2
-                else if(e.which == 50){
+                else if (e.which == 50) {
                     updatedValue = lastValue + '\u1812'
-                } 
+                }
                 // 3
-                else if(e.which == 51){
+                else if (e.which == 51) {
                     updatedValue = lastValue + '\u1813'
                 }
                 // 4
-                else if(e.which == 52){
+                else if (e.which == 52) {
                     updatedValue = lastValue + '\u1814'
-                } 
+                }
                 // 5
-                else if(e.which == 53){
+                else if (e.which == 53) {
                     updatedValue = lastValue + '\u1815'
-                } 
+                }
                 // 6
-                else if(e.which == 54){
+                else if (e.which == 54) {
                     updatedValue = lastValue + '\u1816'
-                } 
+                }
                 // 7
-                else if(e.which == 55){
+                else if (e.which == 55) {
                     updatedValue = lastValue + '\u1817'
                 }
                 // 8 
-                else if(e.which == 56){
+                else if (e.which == 56) {
                     updatedValue = lastValue + '\u1818'
                 }
                 // 9
-                else if(e.which == 57){
+                else if (e.which == 57) {
                     updatedValue = lastValue + '\u1819'
                 }
             }
 
             const clone = [...fields];
             const field = { ...clone[index] };
-            
+
             field.value = updatedValue;
 
             clone[index] = field;
@@ -511,8 +512,8 @@ const Forms = (({
     }
 
     const renderTab = (field, index, type) => {
-        if(field.selectedType == 'editor' || (!field.selectedType && field?.defaultType == 'editor')){
-            if(!field.selectedType){
+        if (field.selectedType == 'editor' || (!field.selectedType && field?.defaultType == 'editor')) {
+            if (!field.selectedType) {
                 field.selectedType = field?.defaultType
             }
             return (
@@ -548,8 +549,8 @@ const Forms = (({
                     }}
                 />
             )
-        } if(field.selectedType == 'traditionalMb' || (!field.selectedType && field?.defaultType == 'traditionalMb')){
-            if(!field.selectedType){
+        } if (field.selectedType == 'traditionalMb' || (!field.selectedType && field?.defaultType == 'traditionalMb')) {
+            if (!field.selectedType) {
                 field.selectedType = field?.defaultType
             }
             return (
@@ -559,7 +560,7 @@ const Forms = (({
                             className="resize-container mb-1"
                             // onSizeChanged={handleSizeChanged}
                             // updateDatasetBySize={getDatasetBySize}
-                            style={{width: 538}}
+                            style={{ width: 538 }}
                         >
                             <ContentEditable
                                 ref={el => textRef.current[index] = el}
@@ -585,7 +586,7 @@ const Forms = (({
                             />
                         </ResizeConsumer>
                     </ResizeProvider>
-                    <div style={{fontSize: 12}}>
+                    <div style={{ fontSize: 12 }}>
                         <div>Үгийн орхиц "а" үсэг оруулахдаа "shift + a" дараад дахин "a" үсэг дарна</div>
                         <div>Үгийн адагт ордог "г", "н"  үсэг оруулахдаа "shift + g" дараад орхиц "а" үсэг оруулах бол "а" үсэг дахин дарна</div>
                         <div>Тоо оруулах бол "shift" + "тоогоо" оруулна уу</div>
@@ -732,13 +733,13 @@ const Forms = (({
                                                 :
                                                 <div
                                                     className={whiteSpaceClassName}
-                                                    // style={{
-                                                    //     display: 'flex',
-                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
-                                                    //     flexDirection: 'column',
-                                                    //     marginLeft: 10,
-                                                    //     width: field?.inputWidth || 'auto',
-                                                    // }}
+                                                // style={{
+                                                //     display: 'flex',
+                                                //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                //     flexDirection: 'column',
+                                                //     marginLeft: 10,
+                                                //     width: field?.inputWidth || 'auto',
+                                                // }}
                                                 />
                                         }
                                     </div>
@@ -833,16 +834,16 @@ const Forms = (({
                                     :
                                     <div className="form-input-group input-group" key={index} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -895,54 +896,59 @@ const Forms = (({
                                     ?
                                     <div key={index} />
                                     :
-                                <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
-                                    <label
-                                        style={{
-                                            display: 'flex',
-                                            flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            justifyContent: 'flex-end',
-                                            alignItems: field.alignItems ? field.alignItems : 'center',
-                                            marginRight: 10,
-                                            marginBottom: 0,
-                                            width: field?.labelWidth || 'auto',
-                                            ...field.labelStyle
-                                        }}
-                                        className={labelClassName}
-                                    >
-                                        {field.label}
-                                    </label>
-                                    <div
-                                        // style={{
-                                        //     display: 'flex',
-                                        //     flex: field.inputWidth ? undefined : field?.inputFlex || 1,
-                                        //     flexDirection: 'column',
-                                        //     marginLeft: 10,
-                                        //     width: field?.inputWidth || 'auto',
-                                        // }}
-                                        className={fieldContainerClassName}
-                                    >
-                                        <input
-                                            disabled={!!field.disabled}
-                                            className={className}
-                                            placeholder={field.placeholder || t('field.enterValue')}
-                                            type='number'
-                                            onChange={(e) => {
-                                                field?.onChange?.(e, field);
-                                                onInputChange(e, index);
+                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                        <label
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle
                                             }}
-                                            value={field.value}
-                                        />
-                                        <div className={feedbackClassName}>
-                                            {message}
+                                            className={labelClassName}
+                                        >
+                                            {field.label}
+                                        </label>
+                                        <div
+                                            // style={{
+                                            //     display: 'flex',
+                                            //     flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                            //     flexDirection: 'column',
+                                            //     marginLeft: 10,
+                                            //     width: field?.inputWidth || 'auto',
+                                            // }}
+                                            className={fieldContainerClassName}
+                                        >
+                                            <input
+                                                ref={numberInputRef}
+                                                disabled={!!field.disabled}
+                                                className={className}
+                                                placeholder={field.placeholder || t('field.enterValue')}
+                                                type='number'
+                                                onChange={(e) => {
+                                                    const re = /^[0-9\b]+$/;
+                                                    if (e.target.value === '' || re.test(e.target.value)) {
+                                                        field?.onChange?.(e, field);
+                                                        onInputChange(e, index);
+                                                    }
+                                                }}
+                                                onWheel={(e) => e?.target?.blur()}
+                                                value={field.value}
+                                            />
+                                            <div className={feedbackClassName}>
+                                                {message}
+                                            </div>
                                         </div>
-                                    </div>
-                                    {
-                                        field.inputWidth
-                                            ?
-                                            null
-                                            :
-                                            <div
-                                                className={whiteSpaceClassName}
+                                        {
+                                            field.inputWidth
+                                                ?
+                                                null
+                                                :
+                                                <div
+                                                    className={whiteSpaceClassName}
                                                 // style={{
                                                 //     display: 'flex',
                                                 //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
@@ -950,9 +956,9 @@ const Forms = (({
                                                 //     marginLeft: 10,
                                                 //     width: field?.inputWidth || 'auto',
                                                 // }}
-                                            />
-                                    }
-                                </div>
+                                                />
+                                        }
+                                    </div>
                             )
                         }
                         if (field.type === 'numberOnly') {
@@ -963,16 +969,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -996,6 +1002,7 @@ const Forms = (({
                                                         onInputChange(e, index);
                                                     }
                                                 }}
+                                                onWheel={(e) => e?.target?.blur()}
                                                 value={field.value}
                                                 inputMode='numeric'
                                             />
@@ -1037,7 +1044,7 @@ const Forms = (({
                                             className={className}
                                             onChange={(value, evt) => handleDropdownChange(value, evt, index, field)}
                                             value={field.value}
-                                            style={{width: field?.inputWidth}}
+                                            style={{ width: field?.inputWidth }}
                                             upward={false}
                                             disabled={!!field.disabled}
                                             fluid
@@ -1130,13 +1137,13 @@ const Forms = (({
                                                 :
                                                 <div
                                                     className={whiteSpaceClassName}
-                                                    // style={{
-                                                    //     display: 'flex',
-                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
-                                                    //     flexDirection: 'column',
-                                                    //     marginLeft: 10,
-                                                    //     width: field?.inputWidth || 'auto',
-                                                    // }}
+                                                // style={{
+                                                //     display: 'flex',
+                                                //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                //     flexDirection: 'column',
+                                                //     marginLeft: 10,
+                                                //     width: field?.inputWidth || 'auto',
+                                                // }}
                                                 />
                                         }
                                     </div>
@@ -1196,13 +1203,13 @@ const Forms = (({
                                                 :
                                                 <div
                                                     className={whiteSpaceClassName}
-                                                    // style={{
-                                                    //     display: 'flex',
-                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
-                                                    //     flexDirection: 'column',
-                                                    //     marginLeft: 10,
-                                                    //     width: field?.inputWidth || 'auto',
-                                                    // }}
+                                                // style={{
+                                                //     display: 'flex',
+                                                //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                //     flexDirection: 'column',
+                                                //     marginLeft: 10,
+                                                //     width: field?.inputWidth || 'auto',
+                                                // }}
                                                 />
                                         }
                                     </div>
@@ -1216,16 +1223,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -1239,31 +1246,31 @@ const Forms = (({
                                         >
                                             {
                                                 field?.path
-                                                ?
+                                                    ?
                                                     field?.pathType == 'image'
-                                                    ?
-                                                        <img className='eschool-image' src={field?.path} style={field?.pathStyle}/>
+                                                        ?
+                                                        <img className='eschool-image' src={field?.path} style={field?.pathStyle} />
+                                                        :
+                                                        field?.pathType == 'video'
+                                                            ?
+                                                            <div className='col d-flex justify-content-center'>
+                                                                {
+                                                                    field?.isPlayable
+                                                                        ?
+                                                                        <iframe
+                                                                            src={`https://player.vimeo.com/video/${field?.path.split('/').at(-1)}`}
+                                                                            width={field?.pathWidth}
+                                                                            height="300"
+                                                                            allow="autoplay; fullscreen; picture-in-picture"
+                                                                            title="Untitled"
+                                                                        />
+                                                                        :
+                                                                        <div className='black-color fs-20 d-flex align-items-center justify-content-center' style={{ height: 300, width: field?.pathWidth }}>{t('onlineLesson.videoInTranscode')}</div>
+                                                                }
+                                                            </div>
+                                                            :
+                                                            null
                                                     :
-                                                    field?.pathType == 'video'
-                                                    ?
-                                                        <div className='col d-flex justify-content-center'>
-                                                            {
-                                                                field?.isPlayable
-                                                                ?
-                                                                    <iframe
-                                                                        src={`https://player.vimeo.com/video/${field?.path.split('/').at(-1)}`}
-                                                                        width={field?.pathWidth}
-                                                                        height="300"
-                                                                        allow="autoplay; fullscreen; picture-in-picture"
-                                                                        title="Untitled"
-                                                                    />
-                                                                :
-                                                                    <div className='black-color fs-20 d-flex align-items-center justify-content-center' style={{height: 300, width: field?.pathWidth}}>{t('onlineLesson.videoInTranscode')}</div>
-                                                            }
-                                                        </div>
-                                                    : 
-                                                        null
-                                                :
                                                     <>
                                                         <input
                                                             ref={el => fileUploaderRef.current[index] = el}
@@ -1398,13 +1405,13 @@ const Forms = (({
                                                 :
                                                 <div
                                                     className={whiteSpaceClassName}
-                                                    // style={{
-                                                    //     display: 'flex',
-                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
-                                                    //     flexDirection: 'column',
-                                                    //     marginLeft: 10,
-                                                    //     width: field?.inputWidth || 'auto',
-                                                    // }}
+                                                // style={{
+                                                //     display: 'flex',
+                                                //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                //     flexDirection: 'column',
+                                                //     marginLeft: 10,
+                                                //     width: field?.inputWidth || 'auto',
+                                                // }}
                                                 />
                                         }
                                     </div>
@@ -1430,7 +1437,7 @@ const Forms = (({
                                                 width: field?.labelWidth || 'auto',
                                                 ...field.labelStyle,
                                             }}
-                                            className= {labelClassName}
+                                            className={labelClassName}
                                         >
                                             {field.label}
                                         </label>
@@ -1448,7 +1455,7 @@ const Forms = (({
                                                 className={className}
                                                 onChange={(value, evt) => handleDropdownChange(value, evt, index, field)}
                                                 value={field.value ? field.value : ''}
-                                                style={{width: field?.inputWidth}}
+                                                style={{ width: field?.inputWidth }}
                                                 upward={false}
                                                 disabled={!!field.disabled}
                                                 fluid
@@ -1461,7 +1468,7 @@ const Forms = (({
                                                 search={!!field.search}
                                                 clearable={!!field.clearable}
                                                 options={field.options}
-                                                // {...field.searchable ? {searchable} : ''}
+                                            // {...field.searchable ? {searchable} : ''}
                                             />
                                             <div style={{ display: 'block' }} className={feedbackClassName}>
                                                 {message}
@@ -1480,13 +1487,13 @@ const Forms = (({
                                                 :
                                                 <div
                                                     className='whiteSpaceClassName'
-                                                    // style={{
-                                                    //     display: 'flex',
-                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
-                                                    //     flexDirection: 'column',
-                                                    //     marginLeft: 10,
-                                                    //     width: field?.inputWidth || 'auto',
-                                                    // }}
+                                                // style={{
+                                                //     display: 'flex',
+                                                //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                //     flexDirection: 'column',
+                                                //     marginLeft: 10,
+                                                //     width: field?.inputWidth || 'auto',
+                                                // }}
                                                 />
                                         }
                                     </div>
@@ -1512,7 +1519,7 @@ const Forms = (({
                                                 width: field?.labelWidth || 'auto',
                                                 ...field.labelStyle,
                                             }}
-                                            className= {labelClassName}
+                                            className={labelClassName}
                                         >
                                             {field.label}
                                         </label>
@@ -1553,13 +1560,13 @@ const Forms = (({
                                                 :
                                                 <div
                                                     className='whiteSpaceClassName'
-                                                    // style={{
-                                                    //     display: 'flex',
-                                                    //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
-                                                    //     flexDirection: 'column',
-                                                    //     marginLeft: 10,
-                                                    //     width: field?.inputWidth || 'auto',
-                                                    // }}
+                                                // style={{
+                                                //     display: 'flex',
+                                                //     flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                //     flexDirection: 'column',
+                                                //     marginLeft: 10,
+                                                //     width: field?.inputWidth || 'auto',
+                                                // }}
                                                 />
                                         }
                                     </div>
@@ -1609,7 +1616,7 @@ const Forms = (({
                                                     <Checkbox
                                                         className='custom-cbox eschool-checkbox'
                                                         checked={!!field.value}
-                                                        style={{marginLeft: '10px'}}
+                                                        style={{ marginLeft: '10px' }}
                                                         onChange={() => handleCheckboxClick(!!field.value, index)}
                                                         label={field.label}
                                                         disabled={!!field.disabled}
@@ -1646,16 +1653,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -1705,16 +1712,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -1761,16 +1768,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -2010,16 +2017,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>
@@ -2093,23 +2100,23 @@ const Forms = (({
                                         <div className='d-flex justify-content-center mb-3 mt-3'>
                                             {
                                                 field.isTab && field.tabs && field.tabs.length > 0 &&
-                                                    <div className="register-tab-container d-flex">
-                                                        {
-                                                            field.tabs.map((tab, tIndex) => {
-                                                                return (
-                                                                    <span
-                                                                        key={'form_tab_' + tIndex}
-                                                                        onClick={() => {
-                                                                            onSelectTab(tab.type, index)
-                                                                        }}
-                                                                        className={`tab cursor-pointer ${field.selectedType && field.selectedType === tab.type ? "active" : (!field.selectedType && field.defaultType && field.defaultType == tab.type ? "active" : "")}`}
-                                                                    >
-                                                                        {tab.label}
-                                                                    </span>
-                                                                )
-                                                            })
-                                                        }
-                                                    </div>
+                                                <div className="register-tab-container d-flex">
+                                                    {
+                                                        field.tabs.map((tab, tIndex) => {
+                                                            return (
+                                                                <span
+                                                                    key={'form_tab_' + tIndex}
+                                                                    onClick={() => {
+                                                                        onSelectTab(tab.type, index)
+                                                                    }}
+                                                                    className={`tab cursor-pointer ${field.selectedType && field.selectedType === tab.type ? "active" : (!field.selectedType && field.defaultType && field.defaultType == tab.type ? "active" : "")}`}
+                                                                >
+                                                                    {tab.label}
+                                                                </span>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
                                             }
                                         </div>
                                         <div style={{ display: 'flex', marginTop: '0.8rem' }}>
@@ -2166,16 +2173,16 @@ const Forms = (({
                                     :
                                     <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
-                                            //     justifyContent: 'flex-end',
-                                            //     alignItems: field.alignItems ? field.alignItems : 'center',
-                                            //     marginRight: 10,
-                                            //     marginBottom: 0,
-                                            //     width: field?.labelWidth || 'auto',
-                                            //     ...field.labelStyle
-                                            // }}
+                                        // style={{
+                                        //     display: 'flex',
+                                        //     flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                        //     justifyContent: 'flex-end',
+                                        //     alignItems: field.alignItems ? field.alignItems : 'center',
+                                        //     marginRight: 10,
+                                        //     marginBottom: 0,
+                                        //     width: field?.labelWidth || 'auto',
+                                        //     ...field.labelStyle
+                                        // }}
                                         >
                                             {field.label}
                                         </label>

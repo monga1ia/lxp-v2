@@ -17,7 +17,7 @@ let RequestHeadersFile = {
 };
 
 export const ROOT_URL = 'https://lxp-test.eschool.mn/api/v2/';
-// export const ROOT_URL = 'https://localhost:8000/';
+// export const ROOT_URL = 'http://localhost:8000/api/v2/';
 
 const decrypt = (passphrase, encrypted) => {
     var salt = CryptoJS.enc.Hex.parse("3536373334653339353535373731373635363466");
@@ -50,7 +50,6 @@ export function fetchRequest(url, method, bodyParams, fileUpload = false, formDa
     if (authToken) {
         headerObject['Authorization'] = `Bearer ${authToken}`;
     }
-    console.log('body', bodyParams)
 
     if (bodyParams) {
         if (!formData) {
@@ -59,7 +58,6 @@ export function fetchRequest(url, method, bodyParams, fileUpload = false, formDa
             }
         }        
     }
-console.log('body', bodyParams)
     let methodObj = 'GET';
     let isPostRequest = false;
 

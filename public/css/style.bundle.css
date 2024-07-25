@@ -1804,6 +1804,15 @@ div.ui.dropdown.disabled {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out
 }
 
+.form-control.smaller {
+    height: 35px !important;
+}
+
+.icon-set-custom-size {
+    height: 35px !important;
+    width: 35px !important
+}
+
 @media screen and (prefers-reduced-motion: reduce) {
     .form-control {
         -webkit-transition: none;

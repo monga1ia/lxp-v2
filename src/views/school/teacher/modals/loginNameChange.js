@@ -6,18 +6,17 @@ import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
 import Forms from 'modules/Form/Forms'
 
-const loginNameChange = ({ onClose, onSubmit, id }) => {
-    
+const loginNameChange = ({ onClose, onSubmit, loginName, teacherId }) => {
+
     const { t } = useTranslation();
     const formRef = useRef();
 
-    const [loginNames, setLoginNames] = useState({})
     const loginNameFields = [
         {
-            key: 'loginName',
+            key: 'existingUsername',
             label: `${t('teacher.current_login_name')}*`,
             labelBold: true,
-            value: '',
+            value: loginName,
             type: 'text',
             required: true,
             errorMessage: t('auth.errorMessage.enterLoginName'),
@@ -30,7 +29,7 @@ const loginNameChange = ({ onClose, onSubmit, id }) => {
             whiteSpaceClassName: 'col-md-2',
         },
         {
-            key: 'newLoginName',
+            key: 'newUsername',
             label: `${t('teacher.new_login_name')}*`,
             className: "form-control",
             labelBold: true,
@@ -45,7 +44,7 @@ const loginNameChange = ({ onClose, onSubmit, id }) => {
             whiteSpaceClassName: 'col-md-2',
         },
         {
-            key: 'newLoginNameRepeat',
+            key: 'newUsernameRepeat',
             label: `${t('teacher.new_login_name_repeat')}*`,
             labelBold: true,
             className: "form-control",
@@ -60,7 +59,7 @@ const loginNameChange = ({ onClose, onSubmit, id }) => {
             whiteSpaceClassName: 'col-md-2',
         },
     ];
-    
+
     // const handleInputChange = (name, value) => {
     //     setLoginNames({ ...loginNames, [name]: value })
     // }
@@ -68,19 +67,20 @@ const loginNameChange = ({ onClose, onSubmit, id }) => {
     const handleSave = () => {
         const [formsValid, formValues] = formRef.current.validate();
         if (formsValid) {
-            if (formValues[1].value !== formValues[2].value){
+            if (formValues[1].value !== formValues[2].value) {
                 return message(t('login_name_re_enter_mismatch'))
             }
             else {
-                setLoginNames({existingUsername: formValues[0].value, newUsername: formValues[1].value})
-                message('success', true)
+                let params = {
+                    teacher: teacherId
+                };
+                formValues?.map(obj => {
+                    params[obj?.key] = obj?.value;
+                })
 
-                // after success \/
-                // console.log(loginNames)
-                // setLoading(true)
-                // onClose()
+                onSubmit(params)
             }
-        } else { 
+        } else {
             message(t('err.fill_all_fields'))
         }
     }
@@ -89,29 +89,29 @@ const loginNameChange = ({ onClose, onSubmit, id }) => {
         <Modal
             centered
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             size='xl'
             dimmer='blurring'
             aria-labelledby="contained-modal-title-vcenter"
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                     {t('teacher.change_login_name')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p style={{ color: '#848691'}} className='fs-11 pb-4 pl-4'>{t('teacher.change_login_name_description')}</p>
+                <p style={{ color: '#848691' }} className='fs-11 pb-4 pl-4'>{t('teacher.change_login_name_description')}</p>
                 <Row className='form-group'>
-                    <Forms 
-                        ref={formRef} 
-                        fields={loginNameFields} 
+                    <Forms
+                        ref={formRef}
+                        fields={loginNameFields}
                     />
                 </Row>
             </Modal.Body>
             <Modal.Footer className="text-center">
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back')}
                 </button>

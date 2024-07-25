@@ -1,6 +1,6 @@
 import message from 'modules/message'
-import { Modal } from 'semantic-ui-react'
-import { Col, Row } from 'react-bootstrap'
+// import { Modal } from 'semantic-ui-react'
+import { Col, Row, Modal } from 'react-bootstrap'
 // import { managerClubView } from 'Utilities/url'
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
@@ -14,9 +14,47 @@ const view = ({ onClose, group }) => {
     const [loading, setLoading] = useState(false)
 
     const [title, setTitle] = useState('')
-    const [students, setStudents] = useState([])
+    const [students, setStudents] = useState([
+        {
+            "id": "137817",
+            "studentCode": "DE14",
+            "avatar": "https://lxp-cdn.eschool.mn/u/642bde4bdec29.png",
+            "gender": "F",
+            "firstName": "Энхдэлгэр",
+            "lastName": "Анхбаяр",
+            "className": "9A"
+        },
+        {
+            "id": "137818",
+            "studentCode": "DE15",
+            "avatar": "https://lxp-cdn.eschool.mn/u/63dcb6b0f0c3a.png",
+            "gender": "M",
+            "firstName": "Ган-Эрдэнэ",
+            "lastName": "Бямбажав",
+            "className": "8Б"
+        }
+    ])
     const [searchKey, setSearchKey] = useState('')
-    const [filteredStudents, setFilteredStudents] = useState([])
+    const [filteredStudents, setFilteredStudents] = useState([
+        {
+            "id": "137817",
+            "studentCode": "DE14",
+            "avatar": "https://lxp-cdn.eschool.mn/u/642bde4bdec29.png",
+            "gender": "F",
+            "firstName": "Энхдэлгэр",
+            "lastName": "Анхбаяр",
+            "className": "9A"
+        },
+        {
+            "id": "137818",
+            "studentCode": "DE15",
+            "avatar": "https://lxp-cdn.eschool.mn/u/63dcb6b0f0c3a.png",
+            "gender": "M",
+            "firstName": "Ган-Эрдэнэ",
+            "lastName": "Бямбажав",
+            "className": "8Б"
+        }
+    ])
 
     // useEffect(() => {
     //     setLoading(true)
@@ -79,20 +117,20 @@ const view = ({ onClose, group }) => {
 
     return (
         <Modal
-            centered
-            open={true}
-            size='large'
-            onClose={onClose}
             dimmer='blurring'
-            className='react-modal overflow-modal'
+            show={true}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={onClose}
+            // className='react-modal overflow-modal'
+            centered
         >
-            <div className='header'>
-                {title}
-                <button type='button' className='close' aria-label='Close' onClick={onClose}>
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className='content'>
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <Row className='align-items-center mb-4 ml-1 mr-1'>
                     <Col>
                         <span className='bolder fs-11' style={{ color: '#575962' }}>{`${translations(locale)?.total}: ${students?.length}`}</span>
@@ -133,13 +171,13 @@ const view = ({ onClose, group }) => {
                                         <div className='m-portlet__body'>
                                             <div className='text-center my-3'>
                                                 <img
-                                                    src={student?.avatar || '/images/avatar.png'}
+                                                    src={student?.avatar || '/img/profile/avatar.png'}
                                                     alt={`photo of ${student?.firstName}`}
                                                     width='100' height='100'
                                                     className='img-circle'
                                                     onError={(e) => {
                                                         e.target.onError = null
-                                                        e.target.src = '/images/avatar.png'
+                                                        e.target.src = '/img/profile/avatar.png'
                                                     }}
                                                 />
                                             </div>
@@ -162,8 +200,8 @@ const view = ({ onClose, group }) => {
                             : <div className='text-center w-100 p-4' style={{ color: '#575962' }}>{translations(locale)?.emptyStudent}</div>
                     }
                 </Row>
-            </div>
-            <div className='actions modal-footer'>
+            </Modal.Body>
+            <Modal.Footer className="text-center">
                 <div className='col-12 text-center'>
                     <button
                         className='btn m-btn--pill btn-outline-metal text-uppercase'
@@ -172,7 +210,7 @@ const view = ({ onClose, group }) => {
                         {translations(locale)?.close}
                     </button>
                 </div>
-            </div>
+            </Modal.Footer>
             {
                 loading &&
                 <>

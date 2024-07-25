@@ -47,7 +47,8 @@ const defaultConfig = {
     leftButtonClassName: "",
     leftButtonStyle: {},
     leftButtonText: "",
-
+    onBeforePrint: {},
+    onAfterPrint: {},
     showSecondaryLeftButton: false,
     secondaryLeftButtonClassName: '',
     secondaryLeftButtonStyle: {},
@@ -65,6 +66,7 @@ const defaultConfig = {
     headerFilter: false,
     isTableEdit: false,
     blurToSave: false,
+    isTableStriped: true,
     defaultPageOptions: {
         custom: true,
         paginationSize: 5,
@@ -1099,6 +1101,8 @@ const DTable = ({
                                                                     </button>
                                                                 )}
                                                                 content={() => tableRef.current}
+                                                                onAfterPrint={() => config?.onAfterPrint}
+                                                                onBeforePrint={() => config?.onBeforePrint}
                                                             />
                                                             : null
                                                     }
@@ -1150,7 +1154,7 @@ const DTable = ({
                                                 {...props.baseProps}
                                                 ref={tableRef}
                                                 keyField="id"
-                                                striped
+                                                striped = {config?.isTableStriped}
                                                 wrapperClasses={`table-responsive ${wrapperClassName}`}
                                                 classes={`table custom-dt ${className}`}
                                                 remote={remote}
