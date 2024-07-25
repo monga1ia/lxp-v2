@@ -445,7 +445,7 @@ const MainGroup = () => {
         } else {
             if (selectedStatusCode === 'QUIT') {
                 tableData?.forEach(el => {
-                    el.contextMenuKeys = 'view, statusChange'
+                    el.contextMenuKeys = 'view, edit, delete, statusChange'
                 })
             } else if (selectedStatusCode === 'DELETED') {
                 tableData?.forEach(el => {
