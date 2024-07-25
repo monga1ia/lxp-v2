@@ -447,6 +447,10 @@ const MainGroup = () => {
                 tableData?.forEach(el => {
                     el.contextMenuKeys = 'view, statusChange'
                 })
+            } else if (selectedStatusCode === 'DELETED') {
+                tableData?.forEach(el => {
+                    el.contextMenuKeys = 'view, statusChange'
+                })
             } else {
                 tableData?.forEach(el => {
                     el.contextMenuKeys = 'view, edit, delete, statusChange'

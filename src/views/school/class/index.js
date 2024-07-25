@@ -358,8 +358,6 @@ const index = () => {
         })
             .then((res) => {
                 if (res.success) {
-                    setHasNextYear(res?.hasNextYear)
-                    setTreeData(res?.gradeList || [])
                     let classes = res?.classes;
                     if (classes && classes.length > 0) {
                         for (let c = 0; c < classes?.length; c++) {
@@ -372,12 +370,7 @@ const index = () => {
                     }
                     setTableData(classes)
                     setTotalCount(res?.totalCount || 0)
-
-                    if (!selectedTreeDataId) {
-                        if (res?.gradeList?.length) {
-                            setSelectedTreeDataId(res?.gradeList[0].key)
-                        }
-                    }
+                    
                     message(res.message, true)
                     closeModal()
                 } else {

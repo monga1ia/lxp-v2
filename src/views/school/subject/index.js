@@ -42,10 +42,7 @@ const MainGroup = () => {
     ];
 
     const [totalCount, setTotalCount] = useState(0);
-    const [tableData, setTableData] = useState([
-        { id: 11, code: 2323, firstName: "asdfsdf", teachers: [{ id: "10867", name: "Elbegzaya (Т1111)" }, { id: "11518", name: "ауау (sensei)" }] },
-        { id: 12, code: 1232, firstName: "asasdfsdf" }
-    ]);
+    const [tableData, setTableData] = useState([]);
     const [treeData, setTreeData] = useState([])
     const [selectedTreeDataId, setSelectedTreeDataId] = useState(null)
     const [selectedCurriculumId, setSelectedCurriculumId] = useState(null)
@@ -170,7 +167,15 @@ const MainGroup = () => {
                         curriculums[c].children = subjectTypes;
                     }
                     setTreeData(curriculums)
+                    setTotalCount(res?.totalCount)
+                    setTableData(res?.subjects || [])
+                } else {
+                    message(res.message)
                 }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
                 setLoading(false)
             })
     }

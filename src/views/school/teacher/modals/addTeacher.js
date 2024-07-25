@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import message from 'modules/message'
-import { Modal } from 'react-bootstrap'
+import { Modal, Row, Col } from 'react-bootstrap'
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import ImageModal from 'utils/imageModal'
@@ -460,62 +460,123 @@ const AddTeacherModal = ({ onClose, onSubmit, data }) => {
                                 fields={teacherFields(roleOptions)}
                             />
                         </div>
-                        {
-                            gradeRows?.map((el, index) => (
-                                <div key={index} className="form-group m-form__group row">
-                                    <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                                        {index == 0 && t('teacher.subjects')}
-                                    </label>
-                                    <div className="col-3">
-                                        <Dropdown
-                                            placeholder={'-' + t('err.select_class') + ' - '}
-                                            fluid
-                                            selection
-                                            additionPosition='bottom'
-                                            upward={false}
-                                            closeOnChange
-                                            clearable
-                                            selectOnBlur={false}
-                                            value={el?.grade}
-                                            options={gradeSubjectOptions}
-                                            onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
-                                        />
-                                    </div>
-                                    <div className="col-5 d-flex p-0 align-items-center">
-                                        <Dropdown
-                                            placeholder={'-' + t('absent.select_subject') + ' - '}
-                                            fluid
-                                            selection
-                                            additionPosition='bottom'
-                                            upward={false}
-                                            multiple={true}
-                                            search
-                                            className='mr-2'
-                                            clearable
-                                            selectOnBlur={false}
-                                            value={el?.subjects}
-                                            options={el?.subjectOptions}
-                                            onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
-                                        />
-                                        <div style={{ paddingRight: '0.71rem' }} className={index != 0 ? 'visible' : 'invisible'}>
-                                            <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
-                                                <i className="la la-close" />
-                                            </button>
+
+                        <div className="form-group m-form__group row mb-0">
+                            <div>
+                                <form>
+                                    {
+                                        gradeRows?.map((el, index) => (
+                                            <div key={index} className="form-group m-form__group row" style={{
+                                                display: 'flex'
+                                            }}>
+                                                <label className="col-form-label col-3 text-right label-pinnacle-bold mr-0" style={{
+                                                    display: 'flex',
+                                                    flex: '1 1 0%',
+                                                    justifyContent: 'flex-end',
+                                                    alignItems: 'center',
+                                                    marginRight: 10,
+                                                    marginBottom: 0,
+                                                    width: 'auto'
+                                                }}>
+                                                    {index == 0 && t('teacher.subjects')}
+                                                </label>
+                                                <div class="col-form-field-container col-8" style={{
+                                                    display: 'flex',
+                                                    flex: '1 1 0%',
+                                                    flexDirection: 'column',
+                                                    marginLeft: 10,
+                                                    width: 'auto'
+                                                }}>
+                                                    <Row className='m-0'>
+                                                        <Col md={5} style={{
+                                                            paddingLeft: 0,
+                                                            paddingRight: 10
+                                                        }}>
+                                                            <Dropdown
+                                                                placeholder={'-' + t('err.select_class') + ' - '}
+                                                                fluid
+                                                                selection
+                                                                additionPosition='bottom'
+                                                                upward={false}
+                                                                closeOnChange
+                                                                clearable
+                                                                selectOnBlur={false}
+                                                                value={el?.grade}
+                                                                options={gradeSubjectOptions}
+                                                                onChange={(e, data) => handleRowGradeChange(index, data?.value, data?.options)}
+                                                            />
+                                                        </Col>
+                                                        <Col md={7} className='d-flex p-0 align-items-center'>
+                                                            <Dropdown
+                                                                placeholder={'-' + t('absent.select_subject') + ' - '}
+                                                                fluid
+                                                                selection
+                                                                additionPosition='bottom'
+                                                                upward={false}
+                                                                multiple={true}
+                                                                search
+                                                                className='mr-2'
+                                                                clearable
+                                                                selectOnBlur={false}
+                                                                value={el?.subjects}
+                                                                options={el?.subjectOptions}
+                                                                onChange={(e, data) => handleRowSubjectsChange(index, data?.value)}
+                                                            />
+                                                            <div style={{ paddingRight: '0.71rem' }} className={index != 0 ? 'visible' : 'invisible'}>
+                                                                <button onClick={() => removeGradeRow(index)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                                                    <i className="la la-close" />
+                                                                </button>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    {
+                                        gradeSubjectOptions?.length > gradeRows?.length &&
+                                        <div className="form-group m-form__group row" style={{
+                                            display: 'flex'
+                                        }}>
+
+                                            <label className="col-form-label col-3 text-right label-pinnacle-bold mr-0" style={{
+                                                display: 'flex',
+                                                flex: '1 1 0%',
+                                                justifyContent: 'flex-end',
+                                                alignItems: 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: 'auto'
+                                            }}></label>
+
+                                            <div class="col-form-field-container col-8" style={{
+                                                display: 'flex',
+                                                flex: '1 1 0%',
+                                                flexDirection: 'column',
+                                                marginLeft: 10,
+                                                width: 'auto'
+                                            }}>
+                                                <Row>
+                                                    <Col md={5} style={{
+                                                        paddingLeft: 0,
+                                                        paddingRight: 10
+                                                    }}></Col>
+                                                    <Col md={7} className='d-flex p-0 justify-content-end'>
+                                                        <div style={{ paddingRight: '0.71rem' }}>
+                                                            <button onClick={() => addGradeRow()}
+                                                                type='button'
+                                                                className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                                                <i className="la la-plus" />
+                                                            </button>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                        {
-                            gradeSubjectOptions?.length > gradeRows?.length &&
-                            <div className="form-group m-form__group row">
-                                <div className="col-11 d-flex justify-content-end align-items-center">
-                                    <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
-                                        <i className="la la-plus" />
-                                    </button>
-                                </div>
+                                    }
+                                </form>
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
             </Modal.Body>
