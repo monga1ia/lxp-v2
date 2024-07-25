@@ -30,7 +30,7 @@ import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplica
 import { fetchRequest } from 'utils/fetchRequest';
 import {
     schoolTeacherIndex, schoolTeacherDelete, schoolTeacherStatusChange,
-    schoolTeacherChangeUsername, schoolTeacherChangePassword, schoolTeacherChangeRole
+    schoolTeacherChangeUsername, schoolTeacherChangePassword, schoolTeacherChangeRole, schoolTeacherInfo
 } from 'utils/fetchRequest/Urls';
 
 import { Tab } from "semantic-ui-react";
@@ -40,7 +40,6 @@ const MainGroup = () => {
 
     const locale = "mn"
     const { t } = useTranslation();
-    const history = useHistory();
     const [loading, setLoading] = useState(false);
 
     const { selectedSchool } = useSelector(state => state.schoolData);
@@ -51,6 +50,8 @@ const MainGroup = () => {
         { to: "", text: "Home" },
         { to: "school/teacher", text: title }
     ];
+
+    const [initLoaded, setInitLoaded] = useState(false)
 
     const [statuses, setStatuses] = useState([])
     const [totalCount, setTotalCount] = useState(0);
@@ -310,6 +311,8 @@ const MainGroup = () => {
                     setTreeData(res?.grades || [])
                     setTableData(res?.teachers || [])
                     setTotalCount(res?.totalCount || 0)
+
+                    setInitLoaded(true)
                 }
                 setLoading(false)
             })
@@ -336,7 +339,6 @@ const MainGroup = () => {
     }
 
     const closeModal = (isLoadData = false) => {
-        console.log('load', isLoadData)
         if (isLoadData) {
             onListRefresh()
         }
@@ -369,22 +371,7 @@ const MainGroup = () => {
     }
 
     const handleTabChange = (e, data) => {
-        let code = 'ACTIVE';
-        switch (data?.activeIndex) {
-            case 0:
-                code = 'ACTIVE'
-                break;
-            case 1:
-                code = 'ABSENT'
-                break;
-            case 2:
-                code = 'QUIT'
-                break;
-            case 3:
-                code = 'DELETE'
-                break;
-
-        }
+        let code = statuses?.find(obj => obj?.index === data?.index)?.code || 'ACTIVE';
         setSelectedStatusCode(code)
         loadData({
             school: selectedSchool?.id,
@@ -399,29 +386,30 @@ const MainGroup = () => {
     }
 
     const onUserInteraction = state => {
-        let page = state?.page
-        if (state?.search && state?.search?.length > 0) {
-            page = 1;
+        if (initLoaded) {
+            let page = state?.page
+            if (state?.search && state?.search?.length > 0) {
+                page = 1;
+            }
+
+            setTableState({
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            })
+            loadData({
+                school: selectedSchool?.id,
+                status: selectedStatusCode,
+                grade: selectedTreeDataId,
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            })
         }
-
-        setTableState({
-            page: page,
-            pageSize: state?.pageSize,
-            search: state?.search,
-            sort: state?.sort,
-            order: state?.order
-        })
-
-        loadData({
-            school: selectedSchool?.id,
-            status: selectedStatusCode,
-            grade: selectedTreeDataId,
-            page: page,
-            pageSize: state?.pageSize,
-            search: state?.search,
-            sort: state?.sort,
-            order: state?.order
-        })
     }
 
     const handleContextMenuClick = (id, key) => {
@@ -467,7 +455,7 @@ const MainGroup = () => {
             setColumns(otherColumns)
             setContextMenus(otherContextMenus)
         }
-    }, [selectedStatusCode, tableData])
+    }, [selectedStatusCode])
 
     const handleDelete = () => {
         setLoading(true)
@@ -619,8 +607,28 @@ const MainGroup = () => {
             })
     }
 
-    const handleInfoChange = param => {
-        console.log('infoChange')
+    const handleInfoChange = params => {
+        let updateParams = Object.assign(params, {
+            school: selectedSchool?.id,
+            teacher: selectedTableDataId,
+            submit: 1
+        })
+        setLoading(true)
+        fetchRequest(schoolTeacherInfo, 'POST', updateParams)
+            .then((res) => {
+                if (res?.success) {
+                    closeModal()
+                    message(res?.message, true)
+                } else {
+                    message(res?.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+
         // setLoading(true)
         // fetchRequest(schoolTeacherInfoChange, 'POST', {...param, teacher: selectedTableDataId, submit: 1})
         //     .then((res) => {
@@ -783,7 +791,7 @@ const MainGroup = () => {
                 <InfoChangeModal
                     onClose={closeModal}
                     onSubmit={handleInfoChange}
-                    id={selectedTableDataId}
+                    teacherId={selectedTableDataId}
                 />
             }
             {
