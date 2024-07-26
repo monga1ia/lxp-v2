@@ -85,7 +85,7 @@ const index = () => {
 
     const [selectedDate, setSelectedDate] = useState(null)
     const [weekdayIndex, setWeekdayIndex] = useState(null)
-    const [students, setStudents] = useState([])
+    // const [students, setStudents] = useState([])
 
     const [selectedClass, setSelectedClass] = useState(null)
 
@@ -94,7 +94,7 @@ const index = () => {
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
 
-    const [studentReports, setStudentReports] = useState([])
+    // const [studentReports, setStudentReports] = useState([])
     const [selectedStudent, setSelectedStudent] = useState(null)
 
     const [tmpDescription, setTmpDescription] = useState('')
@@ -103,11 +103,17 @@ const index = () => {
 
     const [updateView, setUpdateView] = useState(false)
 
-    const [tableData, setTableData] = useState([
-        {id: 11, code: 555, firstName: "john", lastName: "snow"}, 
-        {id: 12, code: 333, firstName: "joy", lastName: "summer"}, 
-        {id: 13, code: 888, firstName: "julie", lastName: "spring"}, 
-        {id: 14, code: 77, firstName: "julia", lastName: "winter"}, 
+    const [students, setStudents] = useState([
+        {id: 11, code: 555, firstName: "john", lastName: "snow", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss, delete'}, 
+        {id: 12, code: 333, firstName: "joy", lastName: "summer", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss, delete'}, 
+        {id: 13, code: 888, firstName: "julie", lastName: "spring", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss'}, 
+        {id: 14, code: 77, firstName: "julia", lastName: "winter", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss'} 
+    ]);
+    const [studentReports, setStudentReports] = useState([
+        {id: 11, code: 555, relationType: "john", requestUser: "snow"}, 
+        {id: 12, code: 333, relationType: "john", requestUser: "snow"}, 
+        {id: 13, code: 888, relationType: "john", requestUser: "snow"}, 
+        {id: 14, code: 77, relationType: "john", requestUser: "snow"} 
     ]);
     
     const getCheckedStudents = () => {
@@ -323,12 +329,12 @@ const index = () => {
         //     })
     }
 
-    useEffect(() => {
-        tableData?.forEach(el => {
-            el.contextMenuKeys = 'dismiss, delete'
-        })
+    // useEffect(() => {
+    //     students?.forEach(el => {
+    //         el.contextMenuKeys = 'dismiss, delete'
+    //     })
         
-    }, [tableData])
+    // }, [students])
 
     // useEffect(() => {
     //     loadData(selectedDate, startDate, endDate, selectedStudent)
@@ -341,7 +347,7 @@ const index = () => {
     const onDayChange = (day) => {
         let selectedDay = dateFormat(new Date(day));
         setSelectedDate(selectedDay)
-        loadData(selectedDay)
+        // loadData(selectedDay)
     }
 
     const dateChange = (type, date) => {
@@ -360,10 +366,10 @@ const index = () => {
         }
         if (start && end) {
             if (activeIndex === 1) {
-                loadData(null, start, end)
+                // loadData(null, start, end)
             } else if (activeIndex === 2) {
                 if (selectedStudent) {
-                    loadData(null, start, end, selectedStudent)
+                    // loadData(null, start, end, selectedStudent)
                 }
 
             }
@@ -399,34 +405,34 @@ const index = () => {
     }
 
     const onReply = () => {
-        if (getCheckedStudents().length > 0) {
-            const studentIds = [];
-            for (let st = 0; st < getCheckedStudents()?.length; st++) {
-                studentIds.push(getCheckedStudents()[st]?.id)
-            }
+        // if (getCheckedStudents().length > 0) {
+        //     const studentIds = [];
+        //     for (let st = 0; st < getCheckedStudents()?.length; st++) {
+        //         studentIds.push(getCheckedStudents()[st]?.id)
+        //     }
 
-            const params = {
-                date: selectedDate,
-                students: studentIds
-            }
-            setLoading(true)
-            // fetchRequest(teacherHandToHandReply, 'POST', params)
-            //     .then((res) => {
-            //         if (res.success) {
-            //             setStudents(res?.data?.students)
-            //         } else {
-            //             message(res.data.message)
-            //         }
-            //         setLoading(false)
-            //     })
-            //     .catch(() => {
-            //         message(t('err.error_occurred'))
-            //         setLoading(false)
-            //     })
+        //     const params = {
+        //         date: selectedDate,
+        //         students: studentIds
+        //     }
+        //     setLoading(true)
+        //     fetchRequest(teacherHandToHandReply, 'POST', params)
+        //         .then((res) => {
+        //             if (res.success) {
+        //                 setStudents(res?.data?.students)
+        //             } else {
+        //                 message(res.data.message)
+        //             }
+        //             setLoading(false)
+        //         })
+        //         .catch(() => {
+        //             message(t('err.error_occurred'))
+        //             setLoading(false)
+        //         })
 
-        } else {
-            message(t('handToHand.replyEmpty'))
-        }
+        // } else {
+        //     message(t('handToHand.replyEmpty'))
+        // }
     }
 
     const onDailyInteraction = (params) => {
@@ -441,7 +447,7 @@ const index = () => {
         setSelectedStudent(studentId)
 
         if (startDate && endDate) {
-            loadData(null, startDate, endDate, studentId)
+            // loadData(null, startDate, endDate, studentId)
         }
     }
 
@@ -512,12 +518,12 @@ const index = () => {
     }
 
     const submitDelete = (studentObj = null) => {
-        if (studentObj) {
-            const params = {
-                date: selectedDate,
-                student: studentObj?.id
-            }
-            setLoading(true)
+        // if (studentObj) {
+        //     const params = {
+        //         date: selectedDate,
+        //         student: studentObj?.id
+        //     }
+        //     setLoading(true)
             // fetchRequest(teacherHandToHandDelete, 'POST', params)
             //     .then((res) => {
             //         if (res.success) {
@@ -531,7 +537,7 @@ const index = () => {
             //         message(t('err.error_occurred'))
             //         setLoading(false)
             //     })
-        }
+        // }
     }
     return (
         <>
@@ -610,19 +616,18 @@ const index = () => {
                                                         clickContextMenu
                                                         locale={locale}
                                                         config={dayConfig}
-                                                        data={tableData}
+                                                        data={students}
                                                         rowStyle={handleRowStyle}
                                                         columns={dayColumns}
                                                         individualContextMenus={true}
                                                         contextMenus={contextMenus}
-                                                        onContextMenuItemClick={(id, key, row) => onContextMenuClick(id, key)}
+                                                        onContextMenuItemClick={onContextMenuClick}
                                                         onInteraction={onDailyInteraction}
                                                         totalDataSize={students?.length}
                                                         onLeftButtonClick={onReply}
                                                     />
                                                 </div>
                                             )
-
                                         },
                                         {
                                             menuItem: t('handToHand.report'),
@@ -686,7 +691,7 @@ const index = () => {
                                                     <DTable
                                                         locale={locale}
                                                         config={reportConfig}
-                                                        data={tableData}
+                                                        data={students}
                                                         columns={reportColumns}
                                                         onInteraction={onReportInteraction}
                                                         totalDataSize={students?.length}
@@ -814,7 +819,7 @@ const index = () => {
                         <div className='content'>
                             <Row className={'mb-4'}>
                                 <Col md={3} className={"text-right"}>
-                                    <img src={tmpDismiss?.avatar || '/images/avatar.png'}
+                                    <img src={tmpDismiss?.avatar || '/img/profile/avatar.png'}
                                         className="m--img-rounded m--marginless m--img-centered"
                                         width={80}
                                         height={80}

@@ -29,6 +29,7 @@ export const TRANSLATIONS_MN = {
         selectClass: 'Анги сонгоно уу',
         selectCurriculum: 'Хөтөлбөр сонгоно уу',
         enterTeacherCode: "Багшийн код оруулна уу",
+        enterStudentCode: "Сурагчийн код оруулна уу",
         enterLastname: "Овог оруулна уу",
         enterFirstname: "Нэр оруулна уу",
 
@@ -455,7 +456,15 @@ export const TRANSLATIONS_MN = {
         health_num: 'ЭМДугаар',
         phone_number: 'Сурагчийн утасны дугаар',
         health: 'Эрүүл мэндийн үзүүлэлт',
-        userRoleNotFound: 'Сурагч эрхтэй хэрэглэгчийн тохиргоо хийгдээгүй байна. Системийн админд хандана уу'
+        userRoleNotFound: 'Сурагч эрхтэй хэрэглэгчийн тохиргоо хийгдээгүй байна. Системийн админд хандана уу',
+        enter_student_code: 'Сурагчийн код оруулна уу',
+        enter_last_name: 'Овог оруулна уу',
+        enter_first_name: 'Нэр оруулна уу',
+        enter_birth_date: 'Төрсөн өдөр оруулна уу',
+        enter_entry_date: 'Элссэн огноо оруулна уу',
+        enter_register_number: 'Регистрийн дугаар оруулна уу',
+        enter_phone_number: 'Утасны дугаар оруулна уу',
+        enter_gender: 'Хүйс оруулна уу',
     },
     nav: {
         choose_school: 'Сургууль сонгох',

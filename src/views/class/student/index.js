@@ -12,6 +12,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import DTable from 'modules/DataTable/DTable';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RegistrationSheetModal from './modals/registrationSheet'
+import AddStudentModal from './modals/addStudent'
 import ImageModal from '../../../utils/imageModal'
 import PrintData from './components/printData'
 import { useReactToPrint } from 'react-to-print'
@@ -33,6 +34,7 @@ const index = () => {
 
     const [selectedStudent, setSelectedStudent] = useState(null)
 
+    const [showAddStudentModal, setShowAddStudentModal] = useState(false)
     const [showImageModal, setShowImageModal] = useState(false)
     const [showRegistrationStudentModal, setShowRegistrationStudentModal] = useState(false)
     const [showRegistrationSheetModal, setShowRegistrationSheetModal] = useState(false)
@@ -253,7 +255,7 @@ const index = () => {
     }
 
     const closeModal = () => {
-        // setRegisterAddStudentModal(false)
+        setShowAddStudentModal(false)
         setSelectedStudent(null)
         setShowImageModal(false)
         setShowRegistrationSheetModal(false)
@@ -316,7 +318,7 @@ const index = () => {
                     <Col xl="10" xxl="10">
                     { selectedTabData == 0 && 
                         <button
-                            onClick={() => setShowRegistrationStudentModal(true)}
+                            onClick={() => setShowAddStudentModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
@@ -383,6 +385,12 @@ const index = () => {
                         </svg>
                     </div>
                 </>
+            }
+            {
+                showAddStudentModal && // selectedClass &&
+                <AddStudentModal
+                    onClose={closeModal}
+                />
             }
             {
                 showImageModal && selectedStudent &&
