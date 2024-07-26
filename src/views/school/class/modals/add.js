@@ -22,6 +22,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
     const formRef = useRef();
 
     const [loading, setLoading] = useState(false)
+    const [closeWithReload, setCloseWithReload] = useState(false)
 
     const [teacherList, setTeacherList] = useState([])
     const [curriculums, setCurriculums] = useState([])
@@ -249,6 +250,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
                     if (res.success) {
                         message(res.message, true)
                         if (addAgain) {
+                            setCloseWithReload(true)
                             formRef?.current?.updateFields && formRef.current?.updateFields(classFields(gradeList, teacherList, schoolShifts, scoreTypeList, roomList, curriculums));
                         } else {
                             onClose(true)
@@ -274,7 +276,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
             show={true}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
-            onHide={() => onClose()}
+            onHide={() => onClose(closeWithReload)}
             centered
         >
             <Modal.Header closeButton style={{ padding: '1rem' }}>
@@ -308,7 +310,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
                     </label>
                 </div>
                 <button
-                    onClick={() => onClose()}
+                    onClick={() => onClose(closeWithReload)}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
                 >
                     {t('back')}

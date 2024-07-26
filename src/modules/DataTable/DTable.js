@@ -122,7 +122,7 @@ const CustomToggleList = ({
                                 {
                                     columns.map(column => {
                                         if (column?.dataField === 'dt-row-order-number' || column?.dataField === 'dt-row-click-context') return
-                                        return(
+                                        return (
                                             <FormControlLabel
                                                 key={column.dataField}
                                                 control={
@@ -320,9 +320,9 @@ const DTable = ({
     const config = { ...defaultConfig, ...propsConfig };
 
     const [pageNumber, setPageNumber] = useState(currentPage);
-    const [sizePerPage, setSizePerPage] = useState(defaultPageSize);
-    const [searchValue, setSearchValue] = useState('');
-	const [date, setDate] = useState(null);
+    const [sizePerPage, setSizePerPage] = useState(config.defaultPageOptions.sizePerPage || 10);
+    const [searchValue, setSearchValue] = useState(config.defaultPageOptions.search || '');
+    const [date, setDate] = useState(null);
 
     // const [searchValue, setSearchValue] = useState(config.defaultPageOptions.search || '');
     // const [sizePerPage, setSizePerPage] = useState(config.defaultPageOptions.sizePerPage || 10);
@@ -420,14 +420,14 @@ const DTable = ({
                 getUserInteraction({
                     page: newState.page ? newState.page : 1,
                     pageSize: newState.sizePerPage
-                });
+                }, searchValue);
                 break;
             }
             case "sort": {
                 getUserInteraction({
                     sort: newState.sortField,
                     order: newState.sortOrder,
-                });
+                }, searchValue);
                 break;
             }
             case "cellEdit": {
@@ -450,7 +450,7 @@ const DTable = ({
     const handleSearch = () => {
         if (remote) {
             setPageNumber(1)
-			getUserInteraction({}, searchValue, date);
+            getUserInteraction({}, searchValue, date);
         }
     };
 
@@ -523,7 +523,7 @@ const DTable = ({
                                     }}
                                     key={menu.key}
                                 >
-                                    <div style={{transform: 'translate(0px, -2px)'}}>{menu.icon ? menu.icon : null}</div>
+                                    <div style={{ transform: 'translate(0px, -2px)' }}>{menu.icon ? menu.icon : null}</div>
                                     <span className="black-color">{menu.title}</span>
                                 </div>
                             );
@@ -573,7 +573,7 @@ const DTable = ({
                                     }}
                                     key={menu.key}
                                 >
-                                    <div style={{transform: 'translate(0px, -2px)'}}>{menu.icon ? menu.icon : null}</div>
+                                    <div style={{ transform: 'translate(0px, -2px)' }}>{menu.icon ? menu.icon : null}</div>
                                     <span className="black-color">{menu.title}</span>
                                 </div>
                             );
@@ -1052,8 +1052,8 @@ const DTable = ({
                                                                     :
                                                                     // config.secondaryLeftButtonText
                                                                     <span className='ml-2'>
-                                                                            {config.secondaryLeftButtonText}
-                                                                        </span>
+                                                                        {config.secondaryLeftButtonText}
+                                                                    </span>
                                                             }
                                                         </button>
                                                         :
@@ -1132,10 +1132,10 @@ const DTable = ({
                                                                     getUserInteraction({}, '', date)
                                                                 }
                                                             }}
-                                                            
+
                                                             onSubmit={(query) => {
                                                                 if (query && query.length > 0) {
-                                                                    handleSearch()    
+                                                                    handleSearch()
                                                                 }
                                                             }}
                                                             locale={locale}
@@ -1154,7 +1154,7 @@ const DTable = ({
                                                 {...props.baseProps}
                                                 ref={tableRef}
                                                 keyField="id"
-                                                striped = {config?.isTableStriped}
+                                                striped={config?.isTableStriped}
                                                 wrapperClasses={`table-responsive ${wrapperClassName}`}
                                                 classes={`table custom-dt ${className}`}
                                                 remote={remote}
