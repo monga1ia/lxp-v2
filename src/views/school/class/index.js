@@ -174,27 +174,24 @@ const index = () => {
 
 
     const onUserInteraction = (state) => {
-        if (state.search) {
-            let cloneData = {
-                page: 1,
-                pageSize: state.pageSize,
-                search: state.search,
-                filter: {
-                    page: 1,
-                    pageSize: state?.filter?.pageSize || 10
-                }
-            };
-
-            setTableState(cloneData)
-            secureLocalStorage.setItem(localeActiveTableState, cloneData)
-            loadData(cloneData, selectedTreeDataId)
-        } else {
-            if (state.page) {
-                setTableState(state)
-                secureLocalStorage.setItem(localeActiveTableState, state)
-                loadData(state, selectedTreeDataId)
-            }
+        let page = state?.page
+        if (tableState?.search !== state?.search) {
+            page = 1;
         }
+
+        let newState = {
+            page: page,
+            pageSize: state?.pageSize,
+            search: state?.search,
+            sort: state?.sort,
+            order: state?.order
+        }
+
+        setTableState(newState)
+
+        secureLocalStorage.setItem(localeActiveTableState, newState)
+
+        loadData(state, selectedTreeDataId)
     }
 
     const esisRemove = (classId) => {
