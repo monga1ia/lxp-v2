@@ -399,8 +399,6 @@ const MainGroup = () => {
     const onUserInteraction = state => {
         if (initLoaded) {
             let page = state?.page
-            console.log('>>> 0', tableState)
-            console.log('>>> 1', state)
             if (tableState?.search !== state?.search) {
                 page = 1;
             }

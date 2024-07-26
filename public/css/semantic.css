@@ -18697,7 +18697,7 @@ select.ui.dropdown {
 }
 
 .ui.default.dropdown:not(.button) > .text, .ui.dropdown:not(.button) > .default.text {
-    color: hsla(0, 0%, 75%, .87);
+    color: #575962;
 }
 
 .ui.default.dropdown:not(.button) > input:focus ~ .text, .ui.dropdown:not(.button) > input:focus ~ .default.text {
