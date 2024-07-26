@@ -31,27 +31,27 @@ const SubjectViewModal = ({ onClose, subject = {} }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td className="text-right pr-3" width={'40%'}>{t('subject.index') || null}:</td>
+                                        <td className="text-right pr-3" width={'50%'}>{t('subject.index') || null}:</td>
                                         <th>{subject.code || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="text-right pr-3" width={'40%'}>{t('subject.name') || null}:</td>
+                                        <td className="text-right pr-3" width={'50%'}>{t('subject.name') || null}:</td>
                                         <th>{subject.name || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="text-right pr-3" width={'40%'}>{t('subject.credit') || null}:</td>
+                                        <td className="text-right pr-3" width={'50%'}>{t('subject.credit') || null}:</td>
                                         <th>{subject.credit || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="text-right pr-3" width={'40%'}>{t('subject.subject_type') || null}:</td>
+                                        <td className="text-right pr-3" width={'50%'}>{t('subject.subject_type') || null}:</td>
                                         <th>{subject.type || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="text-right pr-3" width={'40%'}>{t('subject.grade') || null}:</td>
+                                        <td className="text-right pr-3" width={'50%'}>{t('subject.grade') || null}:</td>
                                         <th>{subject.grades || '-'}</th>
                                     </tr>
                                     <tr>
-                                        <td className="text-right pr-3" width={'40%'} style={{ verticalAlign: 'top' }}> {t('subject.teacher') || null}:</td>
+                                        <td className="text-right pr-3" width={'50%'} style={{ verticalAlign: 'top' }}> {t('subject.teacher') || null}:</td>
                                         <th>{subject.teachers || '-'}</th>
                                     </tr>
                                 </tbody>

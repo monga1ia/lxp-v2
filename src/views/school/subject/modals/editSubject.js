@@ -241,22 +241,39 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                             </label>
                             <div className="col-6">
-                                <Checkbox
-                                    checked={isAll}
-                                    onChange={() => setIsAll(!isAll)}
-                                    label={t('subject.isAll') || ""}
-                                />
+
+                                <div className='align-center align-items-center d-flex' style={{ marginLeft: '17px' }}>
+                                    <input
+                                        className="form-check-input form-modal-check mt-0"
+                                        id='subjectIsAll'
+                                        type="checkbox"
+                                        style={{ borderRadius: '4px', fontSize: '18px' }}
+                                        value={isAll}
+                                        onChange={() => setIsAll(!isAll)}
+                                    />
+                                    <label className="form-check-label font-mulish" htmlFor="subjectIsAll" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
+                                        {t('subject.isAll')}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div className="form-group m-form__group row">
                             <label className="col-4 col-form-label text-right label-pinnacle-bold">
                             </label>
                             <div className="col-6">
-                                <Checkbox
-                                    checked={isResult}
-                                    onChange={() => setIsResult(!isResult)}
-                                    label={t('subject.isResult') || ""}
-                                />
+                                <div className='align-center align-items-center d-flex' style={{ marginLeft: '17px' }}>
+                                    <input
+                                        className="form-check-input form-modal-check mt-0"
+                                        id='subjectIsResult'
+                                        type="checkbox"
+                                        style={{ borderRadius: '4px', fontSize: '18px' }}
+                                        value={isResult}
+                                        onChange={() => setIsResult(!isResult)}
+                                    />
+                                    <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
+                                        {t('subject.isResult')}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

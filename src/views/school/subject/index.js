@@ -195,7 +195,7 @@ const MainGroup = () => {
                     setSelectedSubjectTypeId(null)
                 }
             }
-        } 
+        }
     }, [treeData])
 
     useEffect(() => {
@@ -346,6 +346,8 @@ const MainGroup = () => {
                     setTotalCount(res?.totalCount)
                     setTableData(res?.subjects || [])
 
+                    message(res.message, true)
+
                     closeModal()
                 } else {
                     message(res.message)
@@ -379,12 +381,19 @@ const MainGroup = () => {
                     <Col xl="2" xxl="2">
                         <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>
-                                <TreeView
-                                    treeData={treeData}
-                                    selectedNodes={[selectedTreeDataId]}
-                                    onSelect={handleTreeSelect}
-                                    defaultExpandAll
-                                />
+                                {
+                                    treeData?.length > 0 && <TreeView
+                                        treeData={[{
+                                            key: 'all',
+                                            title: t('common.all'),
+                                            children: treeData
+                                        }]}
+                                        selectedNodes={[selectedTreeDataId]}
+                                        onSelect={handleTreeSelect}
+                                        defaultExpandAll
+                                    />
+                                }
+
                             </div>
                         </div>
                     </Col>
@@ -400,7 +409,7 @@ const MainGroup = () => {
                             }}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize' />
                             {t('action.register')}
                         </button>
                         <div className='m-portlet tab br-12'>
