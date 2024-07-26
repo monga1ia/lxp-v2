@@ -183,17 +183,23 @@ const AddToNewYearModal = ({onClose, onSubmit, data}) => {
                                 ref={formRef}
                                 fields={newYearFields}
                             />
-                            <div className="mb-3 form-check col-10 d-flex justify-content-end align-items-center" style={{ transform: 'translate(4px, 0px)' }}>
-                                <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px', paddingRight: '16px' }}>
-                                    {t('action.repetetive_add')}
-                                </label>
-                                <input className="form-check-input" id='reAdd' type="checkbox" value={addAgain} onChange={handleCheckbox} style={{ borderRadius: '4px', fontSize: '16px !important', transform : 'translate(0, -2px)'}} />
-                            </div>
                         </div>
                     </div>
                 </div>
             </Modal.Body>
             <Modal.Footer className="text-center">
+                <div className='align-center align-items-center' style={{ marginLeft: '17px', position: 'absolute', left: '1.5rem', bottom: '1.5rem' }}>
+                    <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px', fontWeight: '400' }}>
+                        <input
+                            className="form-check-input modal-position form-modal-check mt-0"
+                            id='reAdd'
+                            type="checkbox"
+                            style={{ borderRadius: '4px', fontSize: '18px' }}
+                            value={addAgain}
+                            onChange={handleCheckbox}
+                        />&nbsp;&nbsp;{t('action.repetetive_add')}
+                    </label>
+                </div>
                 <button 
                     onClick={onClose}
                     className="btn m-btn--pill btn-link m-btn m-btn--custom"
