@@ -396,7 +396,7 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                     newSubjectGroupRow.map((obj, i) => {
                                         return (
                                             <tr key={'tr_group_' + i}>
-                                                <td style={{ verticalAlign: 'top' }} className="label-pinnacle-bold">
+                                                <td style={{ verticalAlign: 'top' }} className="label-pinnacle-bold vertical-align-middle">
                                                     {t('group.title') || null}
                                                 </td>
                                                 <td className="p-2">
@@ -554,12 +554,17 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
             <Modal.Footer className='text-center'>
                 {
                     modalTabIndex == 1 &&
-                    <div className="position-absolute" style={{ bottom: '16px', left: '16px' }}>
-                        <Checkbox
-                            checked={addAgain}
-                            label={t('group.addAgain')}
-                            onClick={(e, data) => setAddAgain(data.checked)}
-                        />
+                    <div className='align-center align-items-center' style={{ marginLeft: '17px', position: 'absolute', left: '1.5rem', bottom: '1.6rem' }}>
+                        <label className="form-check-label font-mulish" htmlFor="reAdd" style={{ color: '#575962', fontSize: '14px', fontWeight: '400' }}>
+                            <input
+                                className="form-check-input modal-position form-modal-check mt-0"
+                                id='reAdd'
+                                type="checkbox"
+                                style={{ borderRadius: '4px', fontSize: '18px' }}
+                                value={addAgain}
+                                onChange={(e, data) => setAddAgain(e?.target?.checked)}
+                            />&nbsp;&nbsp;{t('group.addAgain')}
+                        </label>
                     </div>
                 }
                 <button
