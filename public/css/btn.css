@@ -207,7 +207,8 @@
 .btn-success {
     color: #000 !important;
     background-color: #5dd75c !important;
-    border-color: #5dd75c !important
+    border-color: #5dd75c !important;
+    max-height: 33px;
 }
 
 .btn-success:hover {
