@@ -34,6 +34,7 @@ import {
 } from 'utils/fetchRequest/Urls';
 
 import { Tab } from "semantic-ui-react";
+import {cloneDeep} from 'lodash'
 import { useTranslation } from "react-i18next";
 
 const MainGroup = () => {
@@ -357,11 +358,16 @@ const MainGroup = () => {
     const handleTreeSelect = key => {
         if (key && key.length > 0) {
             setSelectedTreeDataId(key[0])
+
+            const clone = cloneDeep(tableState)
+            clone.page = 1;
+            setTableState(clone)
+
             loadData({
                 school: selectedSchool?.id,
                 status: selectedStatusCode,
                 grade: key[0],
-                page: tableState?.page,
+                page: 1,
                 pageSize: tableState?.pageSize,
                 search: tableState?.search,
                 sort: tableState?.sort,
@@ -373,11 +379,16 @@ const MainGroup = () => {
     const handleTabChange = (e, data) => {
         let code = statuses?.find(obj => obj?.index === data?.activeIndex)?.code || 'ACTIVE';
         setSelectedStatusCode(code)
+
+        const clone = cloneDeep(tableState)
+        clone.page = 1;
+        setTableState(clone)
+
         loadData({
             school: selectedSchool?.id,
             status: code,
             grade: selectedTreeDataId,
-            page: tableState?.page,
+            page: 1,
             pageSize: tableState?.pageSize,
             search: tableState?.search,
             sort: tableState?.sort,
@@ -388,7 +399,7 @@ const MainGroup = () => {
     const onUserInteraction = state => {
         if (initLoaded) {
             let page = state?.page
-            if (state?.search && state?.search?.length > 0) {
+            if (tableState?.search !== state?.search) {
                 page = 1;
             }
 
@@ -444,6 +455,10 @@ const MainGroup = () => {
             setContextMenus(activeContextMenus)
         } else {
             if (selectedStatusCode === 'QUIT') {
+                tableData?.forEach(el => {
+                    el.contextMenuKeys = 'view, edit, delete, statusChange'
+                })
+            } else if (selectedStatusCode === 'DELETED') {
                 tableData?.forEach(el => {
                     el.contextMenuKeys = 'view, statusChange'
                 })
@@ -698,7 +713,7 @@ const MainGroup = () => {
                             onClick={() => setShowAddTeacherModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('action.register')}
                         </button>
                         <div className='m-portlet tab br-12'>
@@ -719,7 +734,6 @@ const MainGroup = () => {
                                                         data={tableData}
                                                         columns={columns}
                                                         currentPage={tableState?.page || 1}
-                                                        defaultPageSize={tableState?.pageSize || 10}
                                                         clickContextMenu
                                                         individualContextMenus
                                                         contextMenus={contextMenus}

@@ -158,7 +158,7 @@ const index = () => {
                         }
                     }
                 } else {
-                    message(res.data.message)
+                    message(res.message)
                 }
                 setLoading(false)
             })
@@ -174,27 +174,24 @@ const index = () => {
 
 
     const onUserInteraction = (state) => {
-        if (state.search) {
-            let cloneData = {
-                page: 1,
-                pageSize: state.pageSize,
-                search: state.search,
-                filter: {
-                    page: 1,
-                    pageSize: state?.filter?.pageSize || 10
-                }
-            };
-
-            setTableState(cloneData)
-            secureLocalStorage.setItem(localeActiveTableState, cloneData)
-            loadData(cloneData, selectedTreeDataId)
-        } else {
-            if (state.page) {
-                setTableState(state)
-                secureLocalStorage.setItem(localeActiveTableState, state)
-                loadData(state, selectedTreeDataId)
-            }
+        let page = state?.page
+        if (tableState?.search !== state?.search) {
+            page = 1;
         }
+
+        let newState = {
+            page: page,
+            pageSize: state?.pageSize,
+            search: state?.search,
+            sort: state?.sort,
+            order: state?.order
+        }
+
+        setTableState(newState)
+
+        secureLocalStorage.setItem(localeActiveTableState, newState)
+
+        loadData(state, selectedTreeDataId)
     }
 
     const esisRemove = (classId) => {
@@ -358,8 +355,6 @@ const index = () => {
         })
             .then((res) => {
                 if (res.success) {
-                    setHasNextYear(res?.hasNextYear)
-                    setTreeData(res?.gradeList || [])
                     let classes = res?.classes;
                     if (classes && classes.length > 0) {
                         for (let c = 0; c < classes?.length; c++) {
@@ -372,12 +367,7 @@ const index = () => {
                     }
                     setTableData(classes)
                     setTotalCount(res?.totalCount || 0)
-
-                    if (!selectedTreeDataId) {
-                        if (res?.gradeList?.length) {
-                            setSelectedTreeDataId(res?.gradeList[0].key)
-                        }
-                    }
+                    
                     message(res.message, true)
                     closeModal()
                 } else {
@@ -475,15 +465,15 @@ const index = () => {
                                 onClick={() => setShowAddClassModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
-                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                 {t('action.register')}
                             </button>
                             {
-                                hasNextYear && <button
+                                <button
                                     onClick={() => setShowAddToNewYear(true)}
                                     className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3 ml-2'
                                 >
-                                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                     {t('action.addToNewYear')}
                                 </button>
                             }

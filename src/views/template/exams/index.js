@@ -22,8 +22,8 @@ import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded'
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import AddTemplate from './add';
-import EditTemplate from './edit';
+import AddTemplate from './modal/add';
+import EditTemplate from './modal/edit';
 
 // import { templateExamDelete, templateExamInit, templateExamSetPublic, templateExamSetUnPublish } from 'utils/url'
 
@@ -231,7 +231,7 @@ const index = () => {
         },
         {
             key: 'edit',
-            icon: <BorderColorTwoToneIcon sx={{ fontSize: '1.8rem !important', color: '#ff5b1d' }} />,
+            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
             title: translations(locale)?.edit
         },
         {
@@ -459,7 +459,7 @@ const index = () => {
                             onClick={() => setShowCreateTemplateModal(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('add')}
                         </button>
                         <div className='m-portlet br-12'>
@@ -469,6 +469,7 @@ const index = () => {
                                     config={config}
                                     data={tableData}
                                     columns={columns}
+                                    clickContextMenu
                                     individualContextMenus
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={handleContextMenuClick}

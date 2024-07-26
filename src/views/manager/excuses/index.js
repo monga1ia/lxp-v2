@@ -860,7 +860,7 @@ const index = () => {
                                 className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
                                 onClick={() => setShowRegisterModal(true)}
                             >
-                                <AddCircleOutlineRoundedIcon />
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{translations(locale)?.absent?.register}</span>
                             </button>
                         }

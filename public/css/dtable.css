@@ -26,7 +26,7 @@ table.react-bootstrap-table.custom-dt tbody tr td, table.react-bootstrap-table.c
 }
 .custom-size-per-page button {
     background-color: #fff !important;
-    color: #575962;
+    color: #575962 !important;
     font-family: MulishRegular !important;
 }
 
@@ -150,6 +150,9 @@ tr.dt-drag-hover-bottom td {
     border-radius: 8px;
 }
 
+.overflowXVisible {
+    overflow-x: visible !important;
+}
 /* 
 .MuiInputBase-root {
     color: rgba(0, 0, 0, 0.87);

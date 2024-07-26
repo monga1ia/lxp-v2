@@ -329,6 +329,7 @@ const index = () => {
     const attendanceLogConfig = {
         excelExport: true,
         printButton: true,
+        isTableStriped: false,
         excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${translations(locale)?.esis.attendance_daily}`,
         defaultSort: [{
             dataField: tableState?.sort || 'date',
@@ -684,7 +685,7 @@ const index = () => {
                                 </button>
 
                                 <div className="react-bootstrap-table table-responsive mt-4">
-                                    <table className='table table-striped table-bordered table custom-dt'>
+                                    <table className='table table-bordered table custom-dt'>
                                         <thead>
                                         <tr>
                                             <th></th>
@@ -735,7 +736,7 @@ const index = () => {
                                                                         {ttObj.studentCount}
                                                                     </td>
                                                                     <td style={{backgroundColor: ttObj.hasTeacherLog ? '#c9eae3' : '#f3aab6'}}>
-                                                                        {ttObj.hasTeacherLog ? 'Тийм' : 'Үгүй'}
+                                                                        {ttObj.hasTeacherLog ? t('yes') : t('no')}
                                                                     </td>
                                                                     {
                                                                         attendanceTypes && attendanceTypes.map(attTypeObj => {
@@ -768,12 +769,14 @@ const index = () => {
                                                                         ? <span style={{
                                                                             padding: '5px 10px',
                                                                             borderRadius: 10,
+                                                                            color: 'black',
                                                                             background: classObj?.esisAttendanceLogColor
                                                                         }}>{classObj?.esisAttendanceLog}</span>
                                                                         : <span style={{
                                                                             padding: '5px 10px',
                                                                             borderRadius: 10,
-                                                                            background: '#cfd0d1'
+                                                                            background: '#cfd0d1',
+                                                                            color: 'black',
                                                                         }}>{translations(locale)?.esis.notSent}</span>}</td>
                                                                     <td rowSpan={classObj.timetables && classObj.timetables.length > 0 ? classObj.timetables.length : 1}>{classObj.className}</td>
                                                                     <td>
@@ -786,7 +789,7 @@ const index = () => {
                                                                         {ttObj.studentCount}
                                                                     </td>
                                                                     <td style={{backgroundColor: ttObj.hasTeacherLog ? '#c9eae3' : '#f3aab6'}}>
-                                                                        {ttObj.hasTeacherLog ? 'Тийм' : 'Үгүй'}
+                                                                        {ttObj.hasTeacherLog ? t('yes') : t('no')}
                                                                     </td>
                                                                     {
                                                                         attendanceTypes && attendanceTypes.map(attTypeObj => {
@@ -824,12 +827,14 @@ const index = () => {
                                                                     ? <span style={{
                                                                         padding: '5px 10px',
                                                                         borderRadius: 10,
-                                                                        background: classObj?.esisAttendanceLogColor
+                                                                        background: classObj?.esisAttendanceLogColor,
+                                                                        color: 'black',
                                                                     }}>{classObj?.esisAttendanceLog}</span>
                                                                     : <span style={{
                                                                         padding: '5px 10px',
                                                                         borderRadius: 10,
-                                                                        background: '#cfd0d1'
+                                                                        background: '#cfd0d1',
+                                                                        color: 'black',
                                                                     }}>{translations(locale)?.esis.notSent}</span>}
                                                             </td>
                                                             <td>{classObj.className}</td>

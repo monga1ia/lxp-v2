@@ -26,7 +26,7 @@ const index = () => {
     const [roleId, setRoleId] = useState(null)
     const [roleName, setRoleName] = useState(null)
 
-    const title = t('esis.title');
+    const title = t('esis.teacherStaff');
     const description = "E-learning";
     const breadcrumbs = [
         { to: "", text: "Home" },
@@ -223,7 +223,7 @@ const index = () => {
                                 onClick={() => inputModalHandle()}
                                 // {/* onClick={() => inputTableRef?.current?.submit()} */}
                             >
-                                <AddCircleOutlineRoundedIcon />
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{t('esis.createUser')}</span>
                             </button>
                         }

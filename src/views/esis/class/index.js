@@ -174,7 +174,7 @@ const index = () => {
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
                                 onClick={() => setShowCreateClassModal(true)}
                             >
-                                <AddCircleOutlineRoundedIcon/>
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{t('esis.createClass')}</span>
                             </button>
                         }

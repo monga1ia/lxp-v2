@@ -1,6 +1,6 @@
 import message from 'modules/message'
 import React, { useEffect, useState, useRef } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Row, Col } from 'react-bootstrap'
 import ImageModal from 'utils/imageModal'
 import { useSelector } from 'react-redux';
 import secureLocalStorage from 'react-secure-storage'
@@ -98,6 +98,7 @@ const EditTeacherModal = ({ onClose, onSubmit, teacherId }) => {
                 className: "form-control",
                 fieldContainerClassName: 'col-8',
                 value: teacherObj?.loginName,
+                disabled: true,
                 type: 'text',
                 required: true,
                 errorMessage: t('error.enterLoginname'),
@@ -370,63 +371,135 @@ const EditTeacherModal = ({ onClose, onSubmit, teacherId }) => {
                                 fields={teacherFields(gradeOptions, teacher)}
                             />
                         </div>
-                        {
-                            gradeSubjectOptions?.map((gradeSubjectObj, s) => {
-                                const renderRow = gradeSubjectObj?.visible || (gradeSubjectObj?.teacherSubjects?.length > 0);
-                                return renderRow && <div key={s} className="form-group m-form__group row">
-                                    <label className="col-3 col-form-label text-right label-pinnacle-bold">
-                                        {s === 0 && t('teacher.subjects')}
-                                    </label>
-                                    <div className="col-3">
-                                        <Dropdown
-                                            placeholder={'-' + t('err.select_class') + ' - '}
-                                            fluid
-                                            selection
-                                            additionPosition='bottom'
-                                            upward={false}
-                                            closeOnChange
-                                            disabled={true}
-                                            selectOnBlur={false}
-                                            value={gradeSubjectObj?.value}
-                                            options={gradeOptions}
-                                            onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
-                                        />
-                                    </div>
-                                    <div className="col-5 d-flex p-0 align-items-center">
-                                        <Dropdown
-                                            placeholder={'-' + t('absent.select_subject') + ' - '}
-                                            fluid
-                                            selection
-                                            additionPosition='bottom'
-                                            upward={false}
-                                            multiple={true}
-                                            search
-                                            className='mr-2'
-                                            clearable
-                                            selectOnBlur={false}
-                                            value={gradeSubjectObj?.teacherSubjects?.map(obj => gradeSubjectObj?.value + '_s_' + obj) || []}
-                                            options={gradeSubjectObj?.subjects}
-                                            onChange={(e, data) => handleRowSubjectsChange(s, data?.value, gradeSubjectObj?.subjects)}
-                                        />
-                                        <div style={{ paddingRight: "0.71rem" }} className={s != 0 ? 'visible' : 'invisible'}>
-                                            <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
-                                                <i className="la la-close" />
-                                            </button>
+
+                        <div className="form-group m-form__group row mb-0">
+                            <div>
+                                <form>
+                                    {
+                                        gradeSubjectOptions?.map((gradeSubjectObj, s) => {
+                                            const renderRow = gradeSubjectObj?.visible || (gradeSubjectObj?.teacherSubjects?.length > 0);
+
+                                            return renderRow && <div key={s} className="form-group m-form__group row" style={{
+                                                display: 'flex'
+                                            }}>
+                                                <label className="col-form-label col-3 text-right label-pinnacle-bold mr-0" style={{
+                                                    display: 'flex',
+                                                    flex: '1 1 0%',
+                                                    justifyContent: 'flex-end',
+                                                    alignItems: 'center',
+                                                    marginRight: 10,
+                                                    marginBottom: 0,
+                                                    width: 'auto'
+                                                }}>
+                                                    {s == 0 && t('teacher.subjects')}
+                                                </label>
+                                                <div class="col-form-field-container col-8" style={{
+                                                    display: 'flex',
+                                                    flex: '1 1 0%',
+                                                    flexDirection: 'column',
+                                                    marginLeft: 10,
+                                                    width: 'auto'
+                                                }}>
+                                                    <Row className='m-0'>
+                                                        <Col md={5} style={{
+                                                            paddingLeft: 0,
+                                                            paddingRight: 10
+                                                        }}>
+                                                            <Dropdown
+                                                                placeholder={'-' + t('err.select_class') + ' - '}
+                                                                fluid
+                                                                selection
+                                                                additionPosition='bottom'
+                                                                upward={false}
+                                                                closeOnChange
+                                                                clearable
+                                                                selectOnBlur={false}
+                                                                value={gradeSubjectObj?.value}
+                                                                options={gradeSubjectOptions}
+                                                                onChange={(e, data) => handleRowGradeChange(s, data?.value, data?.options)}
+                                                            />
+                                                        </Col>
+                                                        <Col md={7} className='d-flex p-0 align-items-center'>
+                                                            <Dropdown
+                                                                placeholder={'-' + t('absent.select_subject') + ' - '}
+                                                                fluid
+                                                                selection
+                                                                additionPosition='bottom'
+                                                                upward={false}
+                                                                multiple={true}
+                                                                search
+                                                                className='mr-2'
+                                                                clearable
+                                                                selectOnBlur={false}
+                                                                value={gradeSubjectObj?.teacherSubjects?.map(obj => gradeSubjectObj?.value + '_s_' + obj) || []}
+                                                                options={gradeSubjectObj?.subjects}
+                                                                onChange={(e, data) => handleRowSubjectsChange(s, data?.value)}
+                                                            />
+                                                            <div className={s != 0 ? 'visible' : 'invisible'}>
+                                                                <button onClick={() => removeGradeRow(s)} className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                                                    <i className="la la-close" />
+                                                                </button>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            </div>
+                                        })
+                                    }
+                                    {
+                                        gradeSubjectOptions?.length > 0 &&
+                                        <div className="form-group m-form__group row" style={{
+                                            display: 'flex'
+                                        }}>
+
+                                            <label className="col-form-label col-3 text-right label-pinnacle-bold mr-0" style={{
+                                                display: 'flex',
+                                                flex: '1 1 0%',
+                                                justifyContent: 'flex-end',
+                                                alignItems: 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: 'auto'
+                                            }}></label>
+
+                                            <div class="col-form-field-container col-8" style={{
+                                                display: 'flex',
+                                                flex: '1 1 0%',
+                                                flexDirection: 'column',
+                                                marginLeft: 10,
+                                                width: 'auto'
+                                            }}>
+                                                <Row className='m-0'>
+                                                    <Col md={5} style={{
+                                                        paddingLeft: 0,
+                                                        paddingRight: 10
+                                                    }}></Col>
+                                                    <Col md={7} className='d-flex p-0 justify-content-end'>
+                                                        <Dropdown
+                                                            placeholder={'-' + t('absent.select_subject') + ' - '}
+                                                            fluid
+                                                            selection
+                                                            additionPosition='bottom'
+                                                            upward={false}
+                                                            multiple={true}
+                                                            className='mr-2 invisible'
+                                                            selectOnBlur={false}
+                                                        />
+                                                        <div>
+                                                            <button onClick={() => addGradeRow()}
+                                                                type='button'
+                                                                className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
+                                                                <i className="la la-plus" />
+                                                            </button>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            })
-                        }
-                        {
-                            gradeSubjectOptions?.length > 0 &&
-                            <div className="form-group m-form__group row">
-                                <div className="col-12s d-flex justify-content-end align-items-center">
-                                    <button onClick={addGradeRow} className='btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'>
-                                        <i className="la la-plus" />
-                                    </button>
-                                </div>
+                                    }
+                                </form>
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
             </Modal.Body>

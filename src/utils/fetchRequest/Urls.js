@@ -27,6 +27,12 @@ export const schoolClassCreate = 'school/class/create'
 export const schoolClassEdit = 'school/class/edit'
 export const schoolClassDelete = 'school/class/delete'
 
+// subject
+export const schoolSubjectIndex = 'school/subject/index'
+export const schoolSubjectCreate = 'school/subject/create'
+export const schoolSubjectEdit = 'school/subject/edit'
+export const schoolSubjectDelete = 'school/subject/delete'
+
 // staff
 // export const schoolStaffIndex = 'api/employee/init'
 // export const schoolStaffSubmit = 'api/employee/submit'

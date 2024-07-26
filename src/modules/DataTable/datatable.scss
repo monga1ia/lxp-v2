@@ -27,6 +27,10 @@
   }
 }
 
+.react-bootstrap-table.white-space-unset thead tr th {
+  white-space: unset !important;
+}
+
 .react-bootstrap-table tbody tr td {
   color: #575962;
   font-weight: 400;
@@ -54,14 +58,14 @@ table.custom-dt {
   }
 }
 
-.custom-size-per-page {
-  // border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  > button {
-    background-color: #fff !important;
-    color: #4e4e4e !important;
-  }
-}
+// .custom-size-per-page {
+//   // border: 1px solid #dcdcdc;
+//   border-radius: 6px;
+//   > button {
+//     background-color: #fff !important;
+//     color: #4e4e4e !important;
+//   }
+// }
 
 .dt-cm-wrapper {
   padding: 5px 0 5px 0;
@@ -159,7 +163,7 @@ tr.dt-drag-hover-bottom {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: black !important;
+  color: #575962 !important;
   padding-left: 0;
   padding-right: 0;
 }

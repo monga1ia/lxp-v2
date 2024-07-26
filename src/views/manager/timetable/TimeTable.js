@@ -571,7 +571,7 @@ const TimeTable = ({
                                 className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex align-items-center"
                                 onClick={toAdd}
                             >
-                                <AddCircleOutlineRoundedIcon/>
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{translations(lang).add.toLocaleUpperCase()}</span>
                             </button>
                         </div>
@@ -585,7 +585,7 @@ const TimeTable = ({
                                             className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex align-items-center"
                                             onClick={toAdd}
                                         >
-                                            <AddCircleOutlineRoundedIcon/>
+                                            <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                             <span className='ml-2'>{translations(lang).add.toLocaleUpperCase()}</span>
                                         </button>
                                         <button

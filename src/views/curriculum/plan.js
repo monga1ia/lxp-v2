@@ -925,7 +925,7 @@ const plan = () => {
                                     className="mb-2 add-button text-uppercase"
                                     onClick={() => newUnitHandler()}
                                 >
-                                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                     Шинэ нэгж бүртгэх
                                 </Button>
                                 {
@@ -935,7 +935,7 @@ const plan = () => {
                                         style={{ backgroundColor: '#36A3F7' }}
                                         onClick={() => newUnitMedleHandler()}
                                     >
-                                        <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                        <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                         MEDLE-с татах
                                     </Button>
                                 }
@@ -961,7 +961,7 @@ const plan = () => {
                                             className="mb-2 mr-2 add-button text-uppercase"
                                             onClick={() => newChildTopicHandler()}
                                         >
-                                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                             Шинэ ээлжит бүртгэх
                                         </Button>
                                         {
@@ -972,7 +972,7 @@ const plan = () => {
                                                 style={{ backgroundColor: '#36a3f7' }}
                                                 onClick={() => newRepeatMedleHandler()}
                                             >
-                                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                                 MEDLE-с татах
                                             </Button>
                                         }

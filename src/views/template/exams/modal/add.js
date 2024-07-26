@@ -174,7 +174,7 @@ const AddTemplate = ({onClose}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('exam_template.title')}
+                    {t('exam_template.add')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -253,7 +253,7 @@ const AddTemplate = ({onClose}) => {
                             <Row className='form-group'>
                                 <Col md={4} className='col-form-label text-right label-pinnacle-bold'>
                                 </Col>
-                                <Col md={8}>
+                                <Col md={8} style={{color: '#575962'}}>
                                     <Checkbox
                                         checked={template?.isOnlyMe}
                                         label={translations(locale)?.exam_template?.only_me}
@@ -321,14 +321,14 @@ const AddTemplate = ({onClose}) => {
                                         <div className='d-flex gap-03 pl-4'>
                                             <button
                                                 onClick={() => moveUp(index)}
-                                                style={{ border: '1px solid #ebedf2' }}
+                                                style={{ border: '1px solid #ebedf2', color: 'black' }}
                                                 className={`${index != 0 ? 'visible' : 'invisible'} btn m-btn--icon btn-sm m-btn--icon-only br-04 bg-white d-inline-flex justify-content-center align-items-center`}
                                             >
                                                 <ArrowUpwardRoundedIcon />
                                             </button>
                                             <button
                                                 onClick={() => moveDown(index)}
-                                                style={{ border: '1px solid #ebedf2' }}
+                                                style={{ border: '1px solid #ebedf2', color: 'black' }}
                                                 className={`${details?.length != index + 1 ? 'visible' : 'invisible'} btn m-btn--icon btn-sm m-btn--icon-only br-04 bg-white d-inline-flex justify-content-center align-items-center`}
                                             >
                                                 <ArrowDownwardRoundedIcon />

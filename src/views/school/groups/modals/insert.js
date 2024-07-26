@@ -187,10 +187,12 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
                         <label className="col-4 col-form-label text-right label-pinnacle-bold">
                             {translations(locale)?.grade + ':'}
                         </label>
-                        <div className="col-4 col-form-label" style={{background: '#f4f5f8', borderRadius: 6}}>
-                            {/* {location?.state?.gradeName} */}
-                            {'GradeName'}
-                        </div>
+                        <input 
+                            className="col-4 col-form-label" 
+                            style={{background: '#EBEDF2', border: '1px solid #EBEDF2', borderRadius: 6}} 
+                            disabled={true} 
+                            placeholder={data ? data + "'s gradename" : 'gradename'}
+                        />
                         <div className='col-4'/>
                     </div>
                     <div className='col-12'>
@@ -203,7 +205,7 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
                                     <th className='border-less text-left pl-4 label-pinnacle-bold'>
                                         {translations(locale).students || null}
                                     </th>
-                                    <th width="210" className='border-less text-left pl-4 label-pinnacle-bold'/>
+                                    <th width="160" className='border-less text-left pl-4 label-pinnacle-bold'/>
                                     <th width="40" className='border-less' />
                                 </tr>
                             </thead>
@@ -212,7 +214,7 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
                                     details && details.length > 0 &&
                                     details.map((row, i) => {
                                         return (
-                                            <tr key={i}>
+                                            <tr key={i} style={{border: '5px solid transparent'}}>
                                                 <td>
                                                     <Dropdown
                                                         placeholder={'-' + translations(locale).select + '-' || ""}
@@ -316,6 +318,7 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
                 <button
                     onClick={handleSubmit}
                     className="btn m-btn--pill btn-success text-uppercase"
+                    style={{margin: -4}}
                 >
                     {t('save')}
                 </button>
