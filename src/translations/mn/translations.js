@@ -1826,6 +1826,7 @@ export const TRANSLATIONS_MN = {
         respondedUser: 'Хариулсан хэрэглэгч',
     },
     exam_template: {
+        add: 'Шалгалтын загвар нэмэх',
         question_number: 'Асуултын №',
         answer: 'Хариу',
         title: 'Шалгалтын загвар',
@@ -1863,7 +1864,8 @@ export const TRANSLATIONS_MN = {
         select_exam_type: 'Шалгалтын төрөл сонгоно уу',
         exam_complete: 'Бүрэн хийсэн',
         exam_incomplete: 'Дутуу хийсэн',
-        exam_no_score: 'Огт хийгээгүй'
+        exam_no_score: 'Огт хийгээгүй',
+        edit: 'Шалгалтын загвар засах',
     },
     omr_exam_template: {
         title: 'Нэгдмэл шалгалтын загвар',
@@ -2613,6 +2615,7 @@ export const TRANSLATIONS_MN = {
         eschoolFirstName: 'eSchool нэр',
         eschoolClassName: 'eSchool ангийн нэр',
         eschoolTitle: 'eSchool албан тушаал',
+        teacherStaff: 'Багш, ажилтан',
         linkTeacherStaff: 'Багш, ажилтан холбох',
         selectTeacherStaff: 'Багш, ажилтан сонгоно уу!',
         selectGrade: 'Анги сонгоно уу!',

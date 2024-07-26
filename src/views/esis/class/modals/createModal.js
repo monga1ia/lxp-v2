@@ -224,7 +224,7 @@ const createEsisClass = ({ onClose, onSubmit }) => {
                     locale={locale}
                     data={tableData}
                     columns={setColumns()}
-                    wrapperClassName='overflowXVisible'
+                    wrapperClassName='overflowXVisible white-space-unset'
                 />
                 {/* {
                     updated && <DTable

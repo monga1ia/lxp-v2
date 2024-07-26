@@ -753,7 +753,7 @@ const index = () => {
                                 onClick={() => setShowAddGroupModal(true)}
                                 className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
                             >
-                                <AddCircleOutlineRoundedIcon />
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{translations(locale).add || null}</span>
                             </button>
                         }

@@ -1035,7 +1035,6 @@ const index = () => {
                         tabContent()
                     }
             </div>
-
             {
                 showEditModal && selectedTableData &&
                 <EditModal

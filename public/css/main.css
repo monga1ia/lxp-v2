@@ -2957,6 +2957,11 @@ input[type="color"]::-webkit-color-swatch {
     border: 1px solid #ccc !important;
 }
 
+.MuiSvg-customSize {
+    height: 22px !important;
+    width: 22px !important;
+}
+
 .council-accordion div.MuiButtonBase-root > div:nth-child(2){
     position: relative;
     bottom: 55px

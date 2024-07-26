@@ -312,7 +312,7 @@ const routesAndMenuItems = {
                 },
                 {
                     path: "/curriculum",
-                    label: "menu.esis.curriculum",
+                    label: "esis.curriculum_and_plan",
                     component: esis.curriculum,
                 },
                 {

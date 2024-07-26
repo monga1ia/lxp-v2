@@ -233,7 +233,7 @@ const CrosswordModal = ({
                             key={'tab_#'}
                             className='cross-add-style'
                             icon={
-                                <AddCircleOutlineRoundedIcon />
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                             } 
                             onClick={onHandlerCrosswordWordAdd}
                             label={t('common.add')}

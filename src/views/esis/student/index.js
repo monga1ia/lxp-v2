@@ -432,7 +432,7 @@ const index = () => {
                         {/*            className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'*/}
                         {/*            onClick={() => setInsertMode(true)}*/}
                         {/*        >*/}
-                        {/*            <AddCircleOutlineRoundedIcon/>*/}
+                        {/*            <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>*/}
                         {/*            <span className='ml-2'>{t('esis.createStudent')}</span>*/}
                         {/*        </button>*/}
                         {/*    }*/}
@@ -445,7 +445,7 @@ const index = () => {
                                     setShowCreateStudent(true)
                                 }}
                             >
-                                <AddCircleOutlineRoundedIcon/>
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{t('esis.createStudent')}</span>
                             </button>
                         }

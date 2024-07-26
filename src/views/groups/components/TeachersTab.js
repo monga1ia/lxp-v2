@@ -338,7 +338,7 @@ const TeachersTab = ({
                     variant="primary"
                     className="mb-3 add-button text-uppercase"
                 >
-                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                    <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                     Хэрэглэгч нэмэх
                 </Button>
 

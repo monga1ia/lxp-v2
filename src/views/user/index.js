@@ -230,7 +230,7 @@ const UserProfile = () => {
                 <Col xl="8" xxl="10">
                     <div className="d-flex flex-row">
                         <Button variant="primary" className="mb-2 add-button bio pinnacle-bold" onClick={uploadPersonalInformation}>
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />{t("profile.upload_personal_information").toUpperCase()}
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>{t("profile.upload_personal_information").toUpperCase()}
                         </Button>
                     </div>
 
