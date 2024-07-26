@@ -393,7 +393,7 @@ const MainGroup = () => {
                         variant="primary"
                         className="mb-2 add-button text-uppercase"
                     >
-                        <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                        <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                         {t('menu.createGroup')}
                     </Button>
                     <Card className="mb-5">

@@ -178,13 +178,13 @@ const index = () => {
             <div className="m-content">
                 <Row className=''>
                     <Col className="col">
-                        <Button
+                        <button
                             onClick={() => { setShowAddModal(true) }}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('action.register')}
-                        </Button>
+                        </button>
                         <div className="m-portlet">
                             <div className="m-portlet__body full-calendar-custom-style">
                                 <FullCalendar

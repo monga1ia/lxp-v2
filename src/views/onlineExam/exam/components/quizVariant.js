@@ -478,7 +478,7 @@ export default function QuizVariant({
                             variant="primary"
                             className="btn-sm"
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             Шинэ даалгавар
                         </Button>
                     }

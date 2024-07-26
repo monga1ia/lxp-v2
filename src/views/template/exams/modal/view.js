@@ -48,29 +48,29 @@ const view = ({ onClose, id }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Row className='bolder'>
+                <Row className='bolder fs-11'>
                     <Col className='px-2 py-1 text-md-right' style={{ color: '#3c3f42' }}>{translations(locale)?.grade}</Col>
-                    <Col className='px-2 py-1' style={{ color: '#ff5b1d' }}>{template?.gradeName || '-'}</Col>
+                    <Col className='px-2 py-1' style={{ color: '#575962' }}>{template?.gradeName || '-'}</Col>
                 </Row>
-                <Row className='bolder'>
+                <Row className='bolder fs-11'>
                     <Col className='px-2 py-1 text-md-right' style={{ color: '#3c3f42' }}>{translations(locale)?.exam_template?.exam_type}</Col>
-                    <Col className='px-2 py-1' style={{ color: '#ff5b1d' }}>{template?.examTypeName || '-'}</Col>
+                    <Col className='px-2 py-1' style={{ color: '#575962' }}>{template?.examTypeName || '-'}</Col>
                 </Row>
-                <Row className='bolder'>
+                <Row className='bolder fs-11'>
                     <Col className='px-2 py-1 text-md-right' style={{ color: '#3c3f42' }}>{translations(locale)?.subject?.title}</Col>
-                    <Col className='px-2 py-1' style={{ color: '#ff5b1d' }}>{template?.subjectName || '-'}</Col>
+                    <Col className='px-2 py-1' style={{ color: '#575962' }}>{template?.subjectName || '-'}</Col>
                 </Row>
-                <Row className='bolder'>
+                <Row className='bolder fs-11'>
                     <Col className='px-2 py-1 text-md-right' style={{ color: '#3c3f42' }}>{translations(locale)?.exam_template?.name}</Col>
-                    <Col className='px-2 py-1' style={{ color: '#ff5b1d' }}>{template?.name || '-'}</Col>
+                    <Col className='px-2 py-1' style={{ color: '#575962' }}>{template?.name || '-'}</Col>
                 </Row>
-                <Row className='bolder'>
+                <Row className='bolder fs-11'>
                     <Col className='px-2 py-1 text-md-right' style={{ color: '#3c3f42' }}>{translations(locale)?.total_score}</Col>
-                    <Col className='px-2 py-1' style={{ color: '#ff5b1d' }}>{template?.totalScore || '-'}</Col>
+                    <Col className='px-2 py-1' style={{ color: '#575962' }}>{template?.totalScore || '-'}</Col>
                 </Row>
-                <Row className='bolder'>
+                <Row className='bolder fs-11'>
                     <Col className='px-2 py-1 text-md-right' style={{ color: '#3c3f42' }}></Col>
-                    <Col className='px-2 py-1' style={{ color: '#ff5b1d' }}>{template?.isPublic ? translations(locale)?.exam_template?.only_me : translations(locale)?.exam_template?.not_only_me}</Col>
+                    <Col className='px-2 py-1' style={{ color: '#575962' }}>{template?.isPublic ? translations(locale)?.exam_template?.only_me : translations(locale)?.exam_template?.not_only_me}</Col>
                 </Row>
                 <Row>
                     <Col md={1} />

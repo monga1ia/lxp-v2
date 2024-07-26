@@ -54,6 +54,7 @@ const AddToNewYearModal = ({onClose, onSubmit, data}) => {
             fieldContainerClassName: 'col-6',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             options: classList,
+            search: true,
         },
         {
             key: 'classGrade',
@@ -98,6 +99,7 @@ const AddToNewYearModal = ({onClose, onSubmit, data}) => {
             fieldContainerClassName: 'col-6',
             labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
             options: schoolShift,
+            search: true,
         },
         {
             key: 'classEvaluation',
@@ -197,7 +199,7 @@ const AddToNewYearModal = ({onClose, onSubmit, data}) => {
                             style={{ borderRadius: '4px', fontSize: '18px' }}
                             value={addAgain}
                             onChange={handleCheckbox}
-                        />&nbsp;&nbsp;{t('action.repetetive_add')}
+                        />&nbsp;&nbsp;{t('action.recreate')}
                     </label>
                 </div>
                 <button 

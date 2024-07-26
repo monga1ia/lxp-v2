@@ -27,6 +27,10 @@
   }
 }
 
+.react-bootstrap-table.white-space-unset thead tr th {
+  white-space: unset !important;
+}
+
 .react-bootstrap-table tbody tr td {
   color: #575962;
   font-weight: 400;

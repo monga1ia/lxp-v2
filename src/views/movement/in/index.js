@@ -468,7 +468,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                                 onClick={() => setShowAddModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
-                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                                 {t('action.register')}
                             </button>
                         {/* } */}
@@ -479,7 +479,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                                 state={{ grade: selectedTreeData?.key, isGenerateCode: school?.isGenerateCode }}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
-                                <AddCircleOutlineRoundedIcon />
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                                 <span className='ml-2'>{t('action.register')}</span>
                             </Link>
                             }*/}

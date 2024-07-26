@@ -132,7 +132,7 @@ export const students = ({ group }) => {
                     className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                     onClick={() => setShowStudentAddModal(true)}
                 >
-                    <AddCircleOutlineRoundedIcon />
+                    <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                     <span className='ml-2'>{translations(locale)?.movement?.add}</span>
                 </button>
                 <DTable

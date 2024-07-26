@@ -185,7 +185,7 @@ const EditTemplate = ({onClose}) => {
         >
             <Modal.Header closeButton style={{padding: '1rem'}}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('exam_template.title')}
+                    {t('exam_template.edit')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -260,7 +260,7 @@ const EditTemplate = ({onClose}) => {
                         <Row className='form-group'>
                             <Col md={4} className='col-form-label text-right label-pinnacle-bold'>
                             </Col>
-                            <Col md={8}>
+                            <Col md={8} style={{color: '#575962'}}>
                                 <Checkbox
                                     checked={template?.isOnlyMe}
                                     label={translations(locale)?.exam_template?.only_me}

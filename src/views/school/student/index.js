@@ -365,7 +365,7 @@ const index = () => {
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             onClick={() => console.log('excelImportModal')}
                         >
-                            <AddCircleOutlineRoundedIcon/>
+                            <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                             <span className='ml-2'>{t('excel_import')}</span>
                         </button>
                         <button
@@ -382,7 +382,7 @@ const index = () => {
                             //         className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             //         onClick={() => setShowExcelUploadModal(true)}
                             //     >
-                            //         <AddCircleOutlineRoundedIcon/>
+                            //         <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                             //         <span className='ml-2'>{t('excel_import')}</span>
                             //     </button>
                             //         <button

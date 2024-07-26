@@ -381,7 +381,7 @@ const index = () => {
                             onClick={() => setShowAddClub(true)}
                             className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                         >
-                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} />
+                            <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('add')}
                         </button>
                         <div className='m-portlet br-12 tab'>
