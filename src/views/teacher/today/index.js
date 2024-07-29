@@ -300,6 +300,7 @@ const index = () => {
     const [homeworkDisableNew, setHomeworkDisableNew] = useState(false)
     const [selectedSchoolShiftId, setSelectedSchoolShiftId] = useState(null)
     const [selectedTimeTableId, setSelectedTimeTableId] = useState(null)
+
     // Attendance students modal action
     const [attendanceAble, setAttendanceAble] = useState(false)
     const [contextMenuId, setContextMenuId] = useState(null)
@@ -308,12 +309,13 @@ const index = () => {
     const [attendanceStudentList, setAttendanceStudentList] = useState([])
     const [fetchAttendanceStudentDetail, setFetchAttendanceStudentDetail] = useState(false)
     const [fetchAttSend, setFetchAttSend] = useState(false)
-    const [attendanceDate, setAttendanceDate] = useState('')
-    const [attendanceTime, setAttendanceTime] = useState('')
+    // const [attendanceDate, setAttendanceDate] = useState('')
+    // const [attendanceTime, setAttendanceTime] = useState('')
     const [attendanceGroup, setAttendanceGroup] = useState({})
-    const [existingAttendance, setExistingAttendance] = useState(false)
-    const [attendanceTeacherLog, setAttendanceTeacherLog] = useState(false)
+    // const [existingAttendance, setExistingAttendance] = useState(false)
+    // const [attendanceTeacherLog, setAttendanceTeacherLog] = useState(false)
     const [attendanceReport, setAttendanceReport] = useState([])
+
     // Other attendance modal action
     const [fetchOtherAttSend, setFetchOtherAttSend] = useState(false)
     const [otherAttModal, setOtherAttModal] = useState(false)
@@ -322,6 +324,7 @@ const index = () => {
     const [otherTimetableDescription, setOtherTimetableDescription] = useState('')
     const [selectedTimeTableIds, setSelectedTimeTableIds] = useState([])
     const [otherModalMessage, setOtherModalMessage] = useState(null)
+
     // Homework modal action
     const [fetchHomeworkStudentModal, setFetchHomeworkStudentModal] = useState(false)
     const [fetchHomeworkInfo, setFetchHomeworkInfo] = useState(false)
@@ -338,8 +341,8 @@ const index = () => {
     const [fileClickStudentInfo, setFileClickStudentInfo] = useState([])
     const [fileClickDetails, setFileClickDetails] = useState([])
     const [fileClickModalTitle, setFileClickModalTitle] = useState(null)
-    const [homeworkSelectedDay, setHomeworkSelectedDay] = useState('')
-    const [homeworkDescription, setHomeworkDescription] = useState('')
+    // const [homeworkSelectedDay, setHomeworkSelectedDay] = useState('')
+    // const [homeworkDescription, setHomeworkDescription] = useState('')
     const [homeworkAssignSelectedDay, setHomeworkAssignSelectedDay] = useState(dateFormat(new Date()))
     const [homeworkAssignDescription, setHomeworkAssignDescription] = useState('')
     const [homeworkAssignScore, setHomeworkAssignScore] = useState(100)
@@ -363,8 +366,8 @@ const index = () => {
     const [deleteHomeworkDetailModalShow, setDeleteHomeworkDetailModalShow] = useState(false)
     const [deleteHomeworkDetailStudentId, setDeleteHomeworkDetailStudentId] = useState(null)
     const [showLoaderDeleteModal, setShowLoaderDeleteModal] = useState(false)
-    const [fetchHomeworkRemove, setFetchHomeworkRemove] = useState(false)
-    const [removeMessage, setRemoveMessage] = useState(null)
+    // const [fetchHomeworkRemove, setFetchHomeworkRemove] = useState(false)
+    // const [removeMessage, setRemoveMessage] = useState(null)
     const [mainModalMessage, setMainModalMessage] = useState(null)
     const [fetchHomeworkSendAction, setFetchHomeworkSendAction] = useState(false)
     const [editorState, setEditorState] = useState('')
@@ -373,13 +376,15 @@ const index = () => {
     const [homeworkEditScore, setHomeworkEditScore] = useState(null)
     const [deleteHomeworkModalShow, setDeleteHomeworkModalShow] = useState(false)
     const [fetchDeleteHomework, setFetchDeleteHomework] = useState(false)
+
     // homework error messages
     const [errorGroupsMessage, setErrorGroupsMessage] = useState(null)
     const [errorDateMessage, setErrorDateMessage] = useState(null)
     const [errorHomeworkMessage, setErrorHomeworkMessage] = useState(null)
     const [successHomeworkMessage, setSuccessHomeworkMessage] = useState(null)
     const [errorHomeworkCheckMessage, setErrorHomeworkCheckMessage] = useState(null)
-    const [errorEditMessage, setErrorEditMessage] = useState(null)
+    // const [errorEditMessage, setErrorEditMessage] = useState(null)
+
     // online lesson
     const [onlineLessonTabActiveIndex, setOnlineLessonTabActiveIndex] = useState(0)
     const [onlineLessonTabName, setOnlineLessonTabName] = useState('link')
@@ -397,24 +402,25 @@ const index = () => {
     const [googleDriverFiles, setGoogleDriverFiles] = useState([])
     const [videos, setVideos] = useState([])
     const [noneOrBlock, setNoneOrBlock] = useState('block')
-    const [fileTest, setFileTest] = useState('')
+    // const [fileTest, setFileTest] = useState('')
     const [annotationData, setAnnotationData] = useState([])
     const [fileEditData, setFileEditData] = useState([])
-    const [g_file_path, setG_file_path] = useState('')
-    const [newImage, setNewImage] = useState('')
+    // const [g_file_path, setG_file_path] = useState('')
+    // const [newImage, setNewImage] = useState('')
     const [editing, setEditing] = useState(false)
+
     // behavior
     const [fetchBehaviorStudentModal, setFetchBehaviorStudentModal] = useState(false)
     const [showBehaviorModal, setShowBehaviorModal] = useState(false)
     const [behaviorModalParam, setBehaviorModalParam] = useState(null)
-    const [fetchSubmitBehavior, setFetchSubmitBehavior] = useState(false)
+    // const [fetchSubmitBehavior, setFetchSubmitBehavior] = useState(false)
     const [attendanceCheckable, setAttendanceCheckable] = useState([])
     const [attendanceCheckEnabled, setAttendanceCheckEnabled] = useState(false)
+
     // approve student
     const [showApproveStudentModal, setShowApproveStudentModal] = useState(false)
     const [approveStudentModalParam, setApproveStudentModalParam] = useState(null)
     const [fetchApproveStudent, setFetchApproveStudent] = useState(false)
-    const [fetchSubmitApproveStudent, setFetchSubmitApproveStudent] = useState(false)
     const[selectedHomeworkValue, setSelectedHomeworkValue] = useState('')
 
     const [showLoader, setShowLoader] = useState(false)
@@ -1944,7 +1950,7 @@ const index = () => {
                 studentObj[0].isAuto = false;
                 studentObj[0].takenScore = false;
 
-                setFetchHomeworkRemove(true)
+                // setFetchHomeworkRemove(true)
                 setShowLoaderDeleteModal(true)
                 setHomeworkStudents(students)
 
@@ -2203,9 +2209,9 @@ const index = () => {
     }
 
     const submitBehavior = (params) => {
-        setFetchSubmitBehavior(true)
+        // setFetchSubmitBehavior(true)
         // setshowloader(true)
-        props.fetchMyBehaviorSubmit(params);
+        // props.fetchMyBehaviorSubmit(params);
     }
 
     const submitApproveStudent = () => {

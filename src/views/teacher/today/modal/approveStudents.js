@@ -31,7 +31,7 @@ const approveStudents = ({onClose, onSubmit, props}) => {
     const [name, setName] = useState('')
     const [classes, setClasses] = useState([])
     const [selectedClassId, setSelectedClassId] = useState(null)
-    const [students, setStudents] = useState([])
+    const [students, setStudents] = useState([{id: "1656", studentId: "1656", avatar: null, code: "26582", lastName: "Ганбаатар"}])
     const [initStudents, setInitStudents] = useState([])
     const [initClasses, setInitClasses] = useState([])
     const [initSelectedClassId, setInitSelectedClassId] = useState(null)
@@ -55,11 +55,11 @@ const approveStudents = ({onClose, onSubmit, props}) => {
             formatter: (cell) =>
                 <img
                     className='img-responsive img-circle'
-                    src={cell || '/images/avatar.png'}
+                    src={cell || '/img/profile/avatar.png'}
                     width={40} height={40} alt='img'
                     onError={(e) => {
                         e.target.onError = null
-                        e.target.src = '/images/avatar.png'
+                        e.target.src = '/img/profile/avatar.png'
                     }}
                 />
         },
@@ -111,11 +111,11 @@ const approveStudents = ({onClose, onSubmit, props}) => {
             formatter: (cell) =>
                 <img
                     className='img-responsive img-circle'
-                    src={cell || '/images/avatar.png'}
+                    src={cell || '/img/profile/avatar.png'}
                     width={40} height={40} alt='img'
                     onError={(e) => {
                         e.target.onError = null
-                        e.target.src = '/images/avatar.png'
+                        e.target.src = '/img/profile/avatar.png'
                     }}
                 />
         },
