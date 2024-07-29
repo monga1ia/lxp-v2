@@ -30,6 +30,8 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
         subjectOptions: []
     }])
 
+    const [updateView, setUpdateView] = useState(false)
+
     const subjectFields = (subjectObj = {}, subjectTypes = [], grades = [], teachers = []) => {
         return [
             {
@@ -115,7 +117,7 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
                 className: "form-control",
                 labelBold: true,
                 search: true,
-                value: subjectObj.gradeIds,
+                value: subjectObj.gradeIds || [],
                 required: true,
                 multiple: true,
                 placeholder: t('group.select_grade'),
@@ -132,7 +134,7 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
                 labelBold: true,
                 search: true,
                 multiple: true,
-                value: subjectObj.teacherIds,
+                value: subjectObj.teacherIds || [],
                 formContainerClassName: 'form-group m-form__group row',
                 labelClassName: "col-4 text-right label-pinnacle-bold mr-0",
                 fieldContainerClassName: 'col-6',
@@ -155,6 +157,8 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
                     setIsResult(res?.subject?.isResult || false)
 
                     formRef?.current?.updateFields && formRef.current?.updateFields(subjectFields(res?.subject, res?.subjectTypes, res?.grades, res?.teachers));
+
+                    setUpdateView(!updateView)
                 } else {
                     message(res.data.message)
                 }
@@ -248,7 +252,7 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
                                         id='subjectIsAll'
                                         type="checkbox"
                                         style={{ borderRadius: '4px', fontSize: '18px' }}
-                                        value={isAll}
+                                        checked={isAll}
                                         onChange={() => setIsAll(!isAll)}
                                     />
                                     <label className="form-check-label font-mulish" htmlFor="subjectIsAll" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
@@ -267,7 +271,7 @@ const EditSubjectModal = ({ onClose, onSubmit, subjectId, curriculumId, curricul
                                         id='subjectIsResult'
                                         type="checkbox"
                                         style={{ borderRadius: '4px', fontSize: '18px' }}
-                                        value={isResult}
+                                        checked={isResult}
                                         onChange={() => setIsResult(!isResult)}
                                     />
                                     <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>

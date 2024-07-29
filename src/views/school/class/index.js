@@ -48,9 +48,14 @@ const index = () => {
     const [treeData, setTreeData] = useState([])
     const [selectedTreeDataId, setSelectedTreeDataId] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || null)
 
-    const [tableData, setTableData] = useState([])
-    const [totalCount, setTotalCount] = useState([])
+
     const [selectedTabData, setSelectedTabData] = useState(0)
+
+    const [tableData, setTableData] = useState([])
+    const [totalCount, setTotalCount] = useState(0)
+
+    const [graduatedTableData, setGraduatedTableData] = useState([])
+    const [graduatedTotalCount, setGraduatedTotalCount] = useState(0)
 
     const [hasNextYear, setHasNextYear] = useState(false)
     const [addAgain, setAddAgain] = useState(false)
@@ -252,92 +257,97 @@ const index = () => {
         setSelectedTableDataId(null)
     }
 
-    const getColumns = () => {
-        if (selectedSchool?.isOnlineSchool) {
-            return [
-                {
-                    dataField: "class",
-                    text: t('group.group_name') || "",
-                    sort: true,
-                },
-                {
-                    dataField: "curriculumName",
-                    text: t('group.curriculum') || "",
-                    sort: true,
-                },
-                {
-                    dataField: "studentCount",
-                    text: t('group.student_count') || "",
-                    sort: true,
-                    align: "right",
-                },
-                {
-                    dataField: "shift",
-                    text: t('group.school_shift') || "",
-                    sort: true,
-
-                }
-            ]
-        } else {
-            return [
-                {
-                    dataField: "class",
-                    text: t('group.group_name') || "",
-                    sort: true,
-                },
-                {
-                    dataField: "teacherLastName",
-                    text: t('teacher.lastname') || "",
-                    sort: true
-                },
-                {
-                    dataField: "teacherFirstName",
-                    text: t('teacher.name') || "",
-                    sort: true,
-                    formatter: (cell, row) => {
-                        if (cell) {
-                            return (
-                                <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
-                            )
-                        }
+    const getColumns = (tabIndex = 0) => {
+        if (tabIndex === 0) {
+            if (selectedSchool?.isOnlineSchool) {
+                return [
+                    {
+                        dataField: "class",
+                        text: t('group.group_name') || "",
+                        sort: true,
                     },
-                },
-                {
-                    dataField: "classCurriculum",
-                    text: t('group.curriculum') || "",
-                    sort: true,
-                    align: "right",
-                },
-                {
-                    dataField: "studentCount",
-                    text: t('group.student_count') || "",
-                    sort: true,
-                    align: "right",
-                },
-                {
-                    dataField: "scoreType",
-                    text: t('group.score_type') || "",
-                    sort: true,
-                },
-                {
-                    dataField: "shift",
-                    text: t('group.school_shift') || "",
-                    sort: true,
-
-                },
-                {
-                    dataField: "room",
-                    text: t('group.classroom') || "",
-                    sort: true,
-                },
-                {
-                    dataField: "esisGroupId",
-                    text: t('esis.classCode') || "",
-                    hidden: true,
-                    sort: false,
-                }
-            ]
+                    {
+                        dataField: "curriculumName",
+                        text: t('group.curriculum') || "",
+                        sort: true,
+                    },
+                    {
+                        dataField: "studentCount",
+                        text: t('group.student_count') || "",
+                        sort: true,
+                        align: "right",
+                    },
+                    {
+                        dataField: "shift",
+                        text: t('group.school_shift') || "",
+                        sort: true,
+    
+                    }
+                ]
+            } else {
+                return [
+                    {
+                        dataField: "class",
+                        text: t('group.group_name') || "",
+                        sort: true,
+                    },
+                    {
+                        dataField: "teacherLastName",
+                        text: t('teacher.lastname') || "",
+                        sort: true
+                    },
+                    {
+                        dataField: "teacherFirstName",
+                        text: t('teacher.name') || "",
+                        sort: true,
+                        formatter: (cell, row) => {
+                            if (cell) {
+                                return (
+                                    <span className="underline" onClick={() => _onTdClick(row.teacherId)}>{cell}</span>
+                                )
+                            }
+                        },
+                    },
+                    {
+                        dataField: "classCurriculum",
+                        text: t('group.curriculum') || "",
+                        sort: true,
+                        align: "right",
+                    },
+                    {
+                        dataField: "studentCount",
+                        text: t('group.student_count') || "",
+                        sort: true,
+                        align: "right",
+                    },
+                    {
+                        dataField: "scoreType",
+                        text: t('group.score_type') || "",
+                        sort: true,
+                    },
+                    {
+                        dataField: "shift",
+                        text: t('group.school_shift') || "",
+                        sort: true,
+    
+                    },
+                    {
+                        dataField: "room",
+                        text: t('group.classroom') || "",
+                        sort: true,
+                    },
+                    {
+                        dataField: "esisGroupId",
+                        text: t('esis.classCode') || "",
+                        hidden: true,
+                        sort: false,
+                    }
+                ]
+            }
+        } else {
+            return []
         }
+        
     }
 
     const deleteClass = () => {
@@ -412,8 +422,11 @@ const index = () => {
     }
 
     const handleTabChange = (e, data) => {
-        console.log(e, data.activeIndex)
         setSelectedTabData(data.activeIndex)
+        if (data?.activeIndex !== 0) {
+            setGraduatedTableData([])
+            setGraduatedTotalCount(0)
+        }
     }
 
     const handleCheckbox = () => {
@@ -496,7 +509,7 @@ const index = () => {
                                                         currentPage={tableState?.page || 1}
                                                         defaultPageSize={tableState?.pageSize || 10}
                                                         data={tableData}
-                                                        columns={getColumns()}
+                                                        columns={getColumns(0)}
                                                         individualContextMenus
                                                         clickContextMenu={true}
                                                         contextMenus={contextMenus}
@@ -517,14 +530,14 @@ const index = () => {
                                                         config={config}
                                                         currentPage={tableState?.page || 1}
                                                         defaultPageSize={tableState?.pageSize || 10}
-                                                        data={tableData}
-                                                        columns={getColumns()}
-                                                        individualContextMenus
-                                                        clickContextMenu={true}
-                                                        contextMenus={contextMenus}
-                                                        onContextMenuItemClick={_contextMenuItemClick}
-                                                        onInteraction={onUserInteraction}
-                                                        totalDataSize={totalCount}
+                                                        data={graduatedTableData}
+                                                        columns={getColumns(1)}
+                                                        // individualContextMenus
+                                                        // clickContextMenu={true}
+                                                        // contextMenus={contextMenus}
+                                                        // onContextMenuItemClick={_contextMenuItemClick}
+                                                        // onInteraction={onUserInteraction}
+                                                        totalDataSize={graduatedTotalCount}
                                                     />
                                                 </div>
                                             )
