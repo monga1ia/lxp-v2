@@ -356,7 +356,7 @@ const DTable = ({
     const pgOptions = {
         custom: true,
         paginationSize: 5,
-        sizePerPageList: [10, 25, 50, 100],
+        sizePerPageList: config.defaultPageOptions.sizePerPageList || [10, 25, 50, 100],
         totalSize: remote ? totalDataSize : data && data.length > 0 ? data.length : 0,
         page: currentPage,
         sizePerPage,
@@ -1061,6 +1061,9 @@ const DTable = ({
                                                 }
                                                 <SizePerPageDropdownStandalone
                                                     className={`custom-size-per-page btn-sizePP ${!config.showPagination ? 'height-0' : ''}`}
+                                                    style={{
+                                                        height: 33
+                                                    }}
                                                     {...paginationProps}
                                                     sizePerPage={paginationProps.sizePerPage}
                                                     hidden={!config.showPagination}

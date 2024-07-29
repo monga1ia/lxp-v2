@@ -129,6 +129,7 @@ tr.dt-drag-hover-bottom td {
 }
 #pageDropDown {
     border-color: #ebedf2 !important;
+    height: 33px !important;
 }
 
 .table thead th {

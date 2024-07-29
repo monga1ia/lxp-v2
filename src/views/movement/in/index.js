@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
 import { NavLink, useLocation } from "react-router-dom"
-import { useNavigate } from 'react-router'
-// import { Link, useNavigate } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import message from 'modules/message'
@@ -26,37 +24,47 @@ import ExcelModal from './modals/excel'
 import { fetchRequest } from 'utils/fetchRequest'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import { movementInExcelUpload, movementInInit, movementInSubmitAvatar } from 'utils/fetchRequest/Urls'
+import { movementInIndex, movementInInit, movementInSubmitAvatar } from 'utils/fetchRequest/Urls'
 
 const localStorageSelectedTree = 'movement_in_selected_tree_index'
 const tableIndex = 'movement_in_table_index'
 
 const index = () => {
-    const locale="mn"
+    const locale = "mn"
     const { t } = useTranslation();
-    // const navigate = useNavigate()
+    const { selectedSchool } = useSelector(state => state.schoolData);
+    const history = useHistory();
+
     const printRef = useRef()
     const printMultiRef = useRef()
+
+    const [initLoaded, setInitLoaded] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
     // const [treeData, setTreeData] = useState([])
-    const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || {})
+    const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || [])
 
-    const [tableData, setTableData] = useState([
-        {id: 11, className: '3a', code: 2323, firstName: "AAA", lastName: "SS"}, 
-        {id: 12, className: '11a', code: 1232, firstName: "Julia", lastName: "Julie"}
-    ]);
+    const [tableData, setTableData] = useState([]);
     const [selectedTableData, setSelectedTableData] = useState({})
 
-    const [school, setSchool] = useState({})
+    const [schoolInfo, setSchoolInfo] = useState({})
 
-    
-    const [showAddModal, setShowAddModal] = useState(false)    
+    const [showAddModal, setShowAddModal] = useState(false)
     const [showExcelModal, setShowExcelModal] = useState(false)
     const [showImageModal, setShowImageModal] = useState(false)
     const [showRegistrationSheetModal, setShowRegistrationSheetModal] = useState(false)
     const [canMultiPrint, setCanMultiPrint] = useState(true)
+
+    const [tableState, setTableState] = useState({
+        filter: {},
+        page: 1,
+        pageSize: 50,
+        search: '',
+        sort: 'firstName',
+        order: 'asc'
+    })
+
 
     // const [page, setPage] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).page : 1);
     // const [pageSize, setPageSize] = useState(secureLocalStorage?.getItem(tableIndex) ? secureLocalStorage?.getItem(tableIndex).pageSize : 50);
@@ -78,19 +86,15 @@ const index = () => {
         printButton: true,
         excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.in')}`,
         defaultSort: [{
-            dataField: 'firstName',
-            order: 'asc'
+            dataField: tableState?.sort || 'firstName',
+            order: tableState?.order || 'asc'
         }],
         defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
+            page: tableState?.page || 1,
+            sizePerPage: tableState?.pageSize || 50,
+            search: tableState?.search || '',
+            sizePerPageList: [50, 100]
         }
-        // defaultPageOptions: {
-        //     page: page,
-        //     sizePerPage: pageSize,
-        //     search: search,
-        //     sizePerPageList: [50, 100]
-        // },
     }
 
     const columns = [
@@ -113,12 +117,12 @@ const index = () => {
             align: 'center',
             formatter: (cell) =>
                 <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/avatar.png'}
-                     width={40} height={40} alt='profile picture'
-                     onError={(e) => {
-                         e.target.onError = null
-                         e.target.src = '/img/profile/avatar.png'
-                     }}
+                    src={cell || '/img/profile/avatar.png'}
+                    width={40} height={40} alt='profile picture'
+                    onError={(e) => {
+                        e.target.onError = null
+                        e.target.src = '/img/profile/avatar.png'
+                    }}
                 />
         },
         {
@@ -186,257 +190,200 @@ const index = () => {
         }
     ]
 
-const [treeData, setTreeData] = useState([{
-    title: 'first level',
-    value: '0-0',
-    key: 1,
-    selectable: true,
-    children: [{
-            title: 'second level',
-            value: '0-0',
-            key: 2,
-            selectable: true,
-            children: [
-                {
-                    title: 'third level',
-                    value: '0-0-0-0',
-                    key: 3,
-                    selectable: true,
-                },{
-                    title: 'third level',
-                    value: '0-0-0-0',
-                    key: 4,
-                    selectable: true,
-                },
-            ]
-        },]
-    }])
+    const [treeData, setTreeData] = useState([])
 
-   
-// useEffect(() => {
-//     if (selectedTreeData) {
-//         init(selectedTreeData.key, {
-//             page: page,
-//             sizePerPage: pageSize,
-//             search: search,
-//             sort,
-//             order
-//         })
-//     } else {
-//         init()
-//     }
+    const loadData = (treeId, pagination) => {
+        setLoading(true)
+        fetchRequest(movementInIndex, 'POST', {
+            school: selectedSchool?.id,
+            grade: treeId || selectedTreeData?.key,
+            page: pagination?.page,
+            pageSize: pagination?.pageSize,
+            search: pagination?.search || '',
+            sort: pagination?.sort,
+            order: pagination?.order,
+        })
+            .then((res) => {
+                if (res.success) {
+                    setSchoolInfo(res?.schoolInfo)
+                    setTreeData(res?.grades)
+                    setTableData(res?.movements)
+                    setTotalCount(res?.totalCount)
 
-// }, [selectedTreeData])
-
-const init = (treeId, pagination) => {
-    setLoading(true)
-    // fetchRequest(movementInInit, 'POST', {
-    //     grade: treeId || selectedTreeData?.key,
-    //     page: pagination?.page || page,
-    //     pageSize: pagination?.pageSize || pageSize,
-    //     search: pagination?.search || '',
-    //     sort: pagination?.sort,
-    //     order: pagination?.order,
-    // })
-        // .then((res) => {
-        //     if (res.success) {
-        //         const { grades, school, movements, totalCount, multiRegistrationSheet } = res.data
-        //         setSchool(school || [])
-        //         setTreeData(grades || [])
-        //         setTableData(movements || [])
-        //         setTotalCount(totalCount)
-        //         setCanMultiPrint(multiRegistrationSheet)
-        //         if (Object.keys(selectedTreeData).length === 0) {
-        //             if (grades && grades.length > 0) {
-        //                 setSelectedTreeData({
-        //                     key: grades[0].key
-        //                 })
-        //             }
-        //         }
-        //     } else {
-        //         message(res.data.message)
-        //     }
-        //     setLoading(false)
-        // })
-        // .catch(() => {
-        //     message(t('err.error_occurred'))
-        //     setLoading(false)
-        // })
-}
-
-const handleExcelUpload = data => {
-    setLoading(true)
-    // fetchRequest(movementInExcelUpload, 'POST', { details: JSON.stringify(data), submit: 1 })
-    //     .then((res) => {
-    //         if (res.success) {
-    //             init()
-    //             closeModal()
-    //             message(res.data.message, res.success)
-    //         } else {
-    //             message(res.data.message)
-    //         }
-    //         setLoading(false)
-    //     })
-    //     .catch(() => {
-    //         message(t('err.error_occurred'))
-    //         setLoading(false)
-    //     })
-}
-
-const handleAvatarUpload = params => {
-    setLoading(true)
-    // fetchRequest(movementInSubmitAvatar, 'POST', { photo: params?.image, student: selectedTableData?.studentId })
-    //     .then((res) => {
-    //         if (res.success) {
-    //             init()
-    //             closeModal()
-    //             message(res.data.message, res.success)
-    //         } else {
-    //             message(res.data.message)
-    //         }
-    //         setLoading(false)
-    //     })
-    //     .catch(() => {
-    //         message(t('err.error_occurred'))
-    //         setLoading(false)
-    //     })
-}
-
-const getCheckedStudents = () => {
-    const data = [...tableData]
-    const checkedStudents = []
-    for (let d = 0; d < data?.length; d++) {
-        if (data[d].checkable) {
-            checkedStudents.push(data[d])
-        }
-    }
-    return checkedStudents
-}
-
-const handlePrint = useReactToPrint({
-    suppressErrors: true,
-    content: () => printRef.current,
-    onPrintError: () => { message(t('err.error_occurred')) },
-    pageStyle: '@page{size: auto!important; margin: 0cm 1cm!important}',
-    documentTitle: `${selectedTableData ? (selectedTableData?.firstName + ' - ') : ''}${t('movement.register_sheet')}`,
-})
-
-const handleMultiPrint = useReactToPrint({
-    suppressErrors: true,
-    content: () => printMultiRef.current,
-    onPrintError: () => { message(t('err.error_occurred')) },
-    pageStyle: '@page{size: auto!important; margin: 0cm 1cm!important}',
-    documentTitle: `${getCheckedStudents()?.length === 1 ? (getCheckedStudents()[0]?.firstName + ' - ') : ''}${t('movement.register_sheet')}`,
-})
-
-const handleContextMenuClick = (student, key) => {
-    if (student?.id && key) {
-        setSelectedTableData(student)
-        if (key === 'avatar') {
-            setShowImageModal(true)
-        } else if (key === 'sheet') {
-            setShowRegistrationSheetModal(true)
-        } else if (key === 'studentBook') {
-            navigate('/student/book', {
-                state: {
-                    id: student?.studentId,
-                    urlData: {
-                        backUrl: '/movement/in',
-                    }
+                } else {
+                    message(res.message)
                 }
+                setInitLoaded(true)
+                setLoading(false)
             })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        loadData(selectedTreeData, tableState)
+    }, [])
+
+    const handleExcelUpload = data => {
+        setLoading(true)
+        // fetchRequest(movementInExcelUpload, 'POST', { details: JSON.stringify(data), submit: 1 })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             init()
+        //             closeModal()
+        //             message(res.data.message, res.success)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(t('err.error_occurred'))
+        //         setLoading(false)
+        //     })
+    }
+
+    const handleAvatarUpload = params => {
+        setLoading(true)
+        // fetchRequest(movementInSubmitAvatar, 'POST', { photo: params?.image, student: selectedTableData?.studentId })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             init()
+        //             closeModal()
+        //             message(res.data.message, res.success)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(t('err.error_occurred'))
+        //         setLoading(false)
+        //     })
+    }
+
+    const getCheckedStudents = () => {
+        const data = [...tableData]
+        const checkedStudents = []
+        for (let d = 0; d < data?.length; d++) {
+            if (data[d].checkable) {
+                checkedStudents.push(data[d])
+            }
+        }
+        return checkedStudents
+    }
+
+    const handlePrint = useReactToPrint({
+        suppressErrors: true,
+        content: () => printRef.current,
+        onPrintError: () => { message(t('err.error_occurred')) },
+        pageStyle: '@page{size: auto!important; margin: 0cm 1cm!important}',
+        documentTitle: `${selectedTableData ? (selectedTableData?.firstName + ' - ') : ''}${t('movement.register_sheet')}`,
+    })
+
+    const handleMultiPrint = useReactToPrint({
+        suppressErrors: true,
+        content: () => printMultiRef.current,
+        onPrintError: () => { message(t('err.error_occurred')) },
+        pageStyle: '@page{size: auto!important; margin: 0cm 1cm!important}',
+        documentTitle: `${getCheckedStudents()?.length === 1 ? (getCheckedStudents()[0]?.firstName + ' - ') : ''}${t('movement.register_sheet')}`,
+    })
+
+    const handleContextMenuClick = (student, key) => {
+        if (student?.id && key) {
+            setSelectedTableData(student)
+            if (key === 'avatar') {
+                setShowImageModal(true)
+            } else if (key === 'sheet') {
+                setShowRegistrationSheetModal(true)
+            } else if (key === 'studentBook') {
+                history.push('/student/book', {
+                    state: {
+                        id: student?.studentId,
+                        urlData: {
+                            backUrl: '/movement/in',
+                        }
+                    }
+                })
+            }
         }
     }
-}
 
-const closeModal = () => {
-    setShowExcelModal(false)
-    setShowAddModal(false)
-    setShowImageModal(false)
-    setSelectedTableData({})
-    setShowRegistrationSheetModal(false)
-}
-
-const handleTreeChange = node => {
-    setPage(1);
-
-    let object = {
-        page: 1,
-        pageSize: pageSize,
-        search: search,
-        sort: sort,
-        order: order
+    const closeModal = () => {
+        setShowExcelModal(false)
+        setShowAddModal(false)
+        setShowImageModal(false)
+        setSelectedTableData({})
+        setShowRegistrationSheetModal(false)
     }
 
-    setSelectedTreeData(node)
-    secureLocalStorage?.setItem(localStorageSelectedTree, node);
-    secureLocalStorage?.setItem(tableIndex, object);
-}
+    const handleTreeChange = key => {
+        setSelectedTreeData(key[0])
+        secureLocalStorage.setItem(localStorageSelectedTree, key[0])
+        const object = {
+            page: 1,
+            pageSize: tableState?.pageSize,
+            search: tableState?.search,
+            sort: tableState?.sort,
+            order: tableState?.order
+        }
 
-const onUserInteraction = (object) => {
-    if (object.page) {
-        if (object.search) {
-            let cloneData = {
-                page: 1,
-                pageSize: object.pageSize,
-                search: object.search,
-                sort: object.sort,
-                order: object.order
+        loadData(key[0], object)
+    }
+
+    const onUserInteraction = (state) => {
+        if (initLoaded) {
+            let page = state?.page
+            if (tableState?.search !== state?.search) {
+                page = 1;
             }
 
-            setPage(1);
-            setPageSize(object.pageSize);
-            setSearch(object.search);
-            setOrder(object.order);
-            setSort(object.sort);
+            let params = {
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            }
 
-            secureLocalStorage?.setItem(tableIndex, cloneData);
+            setTableState(params)
 
-            init(selectedTreeData.key, cloneData)
-        } else {
-            setPage(object.page);
-            setPageSize(object.pageSize);
-            setSearch(object.search);
-            setOrder(object.order);
-            setSort(object.sort);
-
-            secureLocalStorage?.setItem(tableIndex, object);
-
-            init(selectedTreeData.key, object)
+            loadData(selectedTreeData, params)
         }
-    }
-};
+    };
 
-const onCheckedChange = (key, rowIndex, checked, id) => {
-    const data = [...tableData]
-    if (key === 'allCheck') {
-        for (let d = 0; d < data?.length; d++) {
-            data[d].checkable = checked
-        }
-    } else if (key === 'row') {
-        for (let d = 0; d < data?.length; d++) {
-            if (data[d].id === id) {
+    const onCheckedChange = (key, rowIndex, checked, id) => {
+        const data = [...tableData]
+        if (key === 'allCheck') {
+            for (let d = 0; d < data?.length; d++) {
                 data[d].checkable = checked
-                break;
+            }
+        } else if (key === 'row') {
+            for (let d = 0; d < data?.length; d++) {
+                if (data[d].id === id) {
+                    data[d].checkable = checked
+                    break;
+                }
             }
         }
+        setTableData(data)
     }
-    setTableData(data)
-}
     return (
         <>
             <div className='d-none'>
                 <PrintData
                     ref={printRef}
-                    school={school}
+                    school={schoolInfo}
                     students={[selectedTableData]}
                 />
                 <PrintData
                     ref={printMultiRef}
-                    school={school}
+                    school={schoolInfo}
                     students={getCheckedStudents()}
                 />
-            </div>  
+            </div>
             <HtmlHead title={title} description={description} />
 
             <div className="page-title-container mb-2">
@@ -444,7 +391,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                     <h1 className="mb-0 pb-0 display-4 relative">{title}</h1>
                     <BreadcrumbList items={breadcrumbs} />
                 </Col>
-            </div>  
+            </div>
 
             <div className='m-content'>
                 <Row className=''>
@@ -452,11 +399,11 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                         <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>
                                 <TreeView
-                                        defaultExpandAll
-                                        treeData={treeData}
-                                        selectedNodes={[selectedTreeData?.key]}
-                                        onSelect={(key, info) => handleTreeChange(info?.node)}
-                                    />
+                                    defaultExpandAll
+                                    treeData={treeData}
+                                    selectedNodes={[selectedTreeData]}
+                                    onSelect={handleTreeChange}
+                                />
                             </div>
                         </div>
                     </Col>
@@ -468,11 +415,11 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                                 onClick={() => setShowAddModal(true)}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
-                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
+                                <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize' />
                                 {t('action.register')}
                             </button>
-                        {/* } */}
-                        {/* { ROOT CODE
+                            {/* } */}
+                            {/* { ROOT CODE
                             selectedTreeData?.key?.toString()?.startsWith('class') &&
                             <Link
                                 to='/movement/in/create'
@@ -484,24 +431,24 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                             </Link>
                             }*/}
                             {
-                                    // secureLocalStorage?.getItem('personInfo')?.roles?.includes('ROLE_EXCEL_UPLOADER') && secureLocalStorage?.getItem('selectedSchool')?.value &&
-                                    <button
-                                        onClick={() => setShowExcelModal(true)}
-                                        className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex align-items-center mb-3'
-                                    >
-                                        <UploadFileRoundedIcon />
-                                        <span className='ml-2'>{t('excel_import')}</span>
-                                    </button>
-                                }
-                                {
-                                    getCheckedStudents() && getCheckedStudents()?.length > 0 &&
-                                    <button
-                                        onClick={handleMultiPrint}
-                                        className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex align-items-center mb-3'
-                                    >
-                                        <span className='ml-2'>{t('movement.print_register_sheet')}</span>
-                                    </button>
-                                }
+                                // secureLocalStorage?.getItem('personInfo')?.roles?.includes('ROLE_EXCEL_UPLOADER') && secureLocalStorage?.getItem('selectedSchool')?.value &&
+                                <button
+                                    onClick={() => setShowExcelModal(true)}
+                                    className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex align-items-center mb-3'
+                                >
+                                    <UploadFileRoundedIcon />
+                                    <span className='ml-2'>{t('excel_import')}</span>
+                                </button>
+                            }
+                            {
+                                getCheckedStudents() && getCheckedStudents()?.length > 0 &&
+                                <button
+                                    onClick={handleMultiPrint}
+                                    className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex align-items-center mb-3'
+                                >
+                                    <span className='ml-2'>{t('movement.print_register_sheet')}</span>
+                                </button>
+                            }
                         </div>
                         <div className='m-portlet br-12'>
                             <div className='m-portlet__body'>
@@ -514,6 +461,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                                     onCheckable={onCheckedChange}
                                     clickContextMenu
                                     columns={columns}
+                                    currentPage={tableState?.page}
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={(id, key, row) => handleContextMenuClick(row, key)}
                                     onInteraction={onUserInteraction}
@@ -529,7 +477,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                 <>
                     <div className='loader-container'>
                         <svg className="splash-spinner" viewBox="0 0 50 50">
-                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"/>
+                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
                         </svg>
                     </div>
                 </>
@@ -543,17 +491,17 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                 />
             } */}
             {
-                showAddModal && 
-                    <AddModal
-                        onClose={closeModal}
-                    />
+                showAddModal &&
+                <AddModal
+                    onClose={closeModal}
+                />
             }
             {
                 showImageModal && selectedTableData?.id &&
                 <ImageModal
                     onClose={closeModal}
                     onSubmit={handleAvatarUpload}
-                /> 
+                />
             }
             {
                 showRegistrationSheetModal && selectedTableData?.id &&
@@ -561,7 +509,7 @@ const onCheckedChange = (key, rowIndex, checked, id) => {
                     onClose={closeModal}
                     onSubmit={handlePrint}
                 />
-            }             
+            }
         </>
     );
 }
