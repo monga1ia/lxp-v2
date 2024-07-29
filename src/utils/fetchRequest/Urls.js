@@ -35,6 +35,7 @@ export const schoolSubjectDelete = 'school/subject/delete'
 
 // movement
 export const movementInIndex = 'movement/in/index'
+export const movementInCreate = 'movement/in/create'
 
 // staff
 // export const schoolStaffIndex = 'api/employee/init'

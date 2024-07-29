@@ -622,7 +622,7 @@ const DTable = ({
             setAllCheckValue(e.target.checked);
             onCheckable?.("allCheck", rowIndex, e.target.checked);
         } else {
-            onCheckable?.("row", rowIndex, e.target.checked);
+            onCheckable?.("row", rowIndex, e.target.checked, id);
         }
     };
 

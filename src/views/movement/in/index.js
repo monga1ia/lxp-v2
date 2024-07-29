@@ -24,7 +24,7 @@ import ExcelModal from './modals/excel'
 import { fetchRequest } from 'utils/fetchRequest'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import { movementInIndex, movementInInit, movementInSubmitAvatar } from 'utils/fetchRequest/Urls'
+import { movementInIndex, movementInCreate, movementInSubmitAvatar } from 'utils/fetchRequest/Urls'
 
 const localStorageSelectedTree = 'movement_in_selected_tree_index'
 const tableIndex = 'movement_in_table_index'
@@ -33,6 +33,7 @@ const index = () => {
     const locale = "mn"
     const { t } = useTranslation();
     const { selectedSchool } = useSelector(state => state.schoolData);
+
     const history = useHistory();
 
     const printRef = useRef()
@@ -42,7 +43,6 @@ const index = () => {
 
     const [loading, setLoading] = useState(false)
 
-    // const [treeData, setTreeData] = useState([])
     const [selectedTreeData, setSelectedTreeData] = useState(secureLocalStorage.getItem(localStorageSelectedTree) || [])
 
     const [tableData, setTableData] = useState([]);
@@ -54,7 +54,7 @@ const index = () => {
     const [showExcelModal, setShowExcelModal] = useState(false)
     const [showImageModal, setShowImageModal] = useState(false)
     const [showRegistrationSheetModal, setShowRegistrationSheetModal] = useState(false)
-    const [canMultiPrint, setCanMultiPrint] = useState(true)
+    const [canMultiPrint, setCanMultiPrint] = useState(false)
 
     const [tableState, setTableState] = useState({
         filter: {},
@@ -205,6 +205,7 @@ const index = () => {
         })
             .then((res) => {
                 if (res.success) {
+                    setCanMultiPrint(res?.multiRegistrationSheet || false)
                     setSchoolInfo(res?.schoolInfo)
                     setTreeData(res?.grades)
                     setTableData(res?.movements)
@@ -370,6 +371,34 @@ const index = () => {
         }
         setTableData(data)
     }
+
+    const onMovementSubmit = (students = []) => {
+        if (students && students?.length > 0) {
+            setLoading(true)
+            fetchRequest(movementInCreate, 'POST', {
+                school: selectedSchool?.id,
+                grade: selectedTreeData,
+                listGrade: selectedTreeData,
+                students: JSON.stringify(students)
+            })
+                .then((res) => {
+                    if (res.success) {
+                        setTableData(res?.movements)
+                        setTotalCount(res?.totalCount)
+
+                        setShowAddModal(false)
+                    } else {
+                        message(res.message)
+                    }
+                    setLoading(false)
+                })
+                .catch(() => {
+                    message(t('err.error_occurred'))
+                    setLoading(false)
+                })
+        }
+    }
+
     return (
         <>
             <div className='d-none'>
@@ -413,6 +442,7 @@ const index = () => {
                             {/* { selectedTreeData?.key?.toString()?.startsWith('class') == 0 &&  */}
                             <button
                                 onClick={() => setShowAddModal(true)}
+                                disabled={!selectedTreeData?.toString()?.startsWith('class')}
                                 className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3'
                             >
                                 <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize' />
@@ -494,6 +524,9 @@ const index = () => {
                 showAddModal &&
                 <AddModal
                     onClose={closeModal}
+                    onSubmit={onMovementSubmit}
+                    generateCode={schoolInfo?.isGenerateCode}
+                    grade={selectedTreeData}
                 />
             }
             {
