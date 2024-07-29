@@ -244,12 +244,24 @@ div.vertical-tab>a {
     width: 280px;
 }
 
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr:last-child {
+    border: 1px solid white
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td:last-child {
+    border: 1px solid #EBEDF2
+}
+
 .myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td .fa-times-circle {
     font-size: 2.5rem !important
 }
 
 .myTimetable-addNewSubjectStyle table.newSubjectClassDatatable tbody tr td .la-plus-circle {
     font-size: 3rem !important;
+}
+
+.myTimetable-addNewSubjectStyle table.newSubjectClassDatatable thead tr th {
+    border-bottom: none;
 }
 
 .myTimetable-addNewSubjectStyle table.newSubjectGroupDatatable thead tr th {
@@ -625,6 +637,88 @@ a {
 }
 
 /***************** date-picker-range-container css end **************/
+
+
+/************************************* Custom time picker css start ***************************************************************/
+.timePickerContainer {
+    position: absolute;
+    width: 100%;
+}
+
+.timePickerInput {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: .65rem 1rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ebedf2;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+}
+
+div.timePickerContainer>div.timePickerPopout {
+    padding: 4px;
+    width: 175px;
+    box-shadow: 0 0 15px 1px rgba(81, 77, 92, .2);
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+div.timePickerContainer>div.timePickerPopout>table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #575962;
+    table-layout: fixed;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+
+div.timePickerContainer>div.timePickerPopout>table td {
+    text-align: center;
+    height: 30px;
+    margin: 0;
+    padding: 2px;
+}
+
+div.timePickerContainer>div.timePickerPopout>table>tbody>tr>td:nth-of-type(2) {
+    width: 20px;
+}
+
+div.timePickerContainer>div.timePickerPopout>table td>div {
+    width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 8px 0;
+    outline: 0;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+div.timePickerContainer>div.timePickerPopout>table td>div:hover {
+    background: #ebedf2;
+    cursor: pointer;
+}
+
+/************************************* Custom time picker css end ***************************************************************/
 /***************** dropdown css **************/
 .eschool-select.is-invalid>div:first-of-type {
     border: 1px solid #F64E60 !important;
@@ -637,8 +731,8 @@ a {
 }
 
 div.ui.dropdown.disabled {
-    background-color: #f4f5f8;
-    border-color: #f4f5f8;
+    background-color: #EBEDF2;
+    border-color: #EBEDF2;
     opacity: unset;
     color: #6f727d;
 }
@@ -1012,6 +1106,11 @@ table.viewTeacherTable>tr>th {
     -ms-flex-align: center !important;
     align-items: center !important
 }
+
+.vertical-align-middle {
+    vertical-align: middle !important;
+}
+
 .btn {
     display: inline-block;
     font-weight: 400;
@@ -3900,6 +3999,146 @@ select.form-control:focus::-ms-value {
 }
 
 /************************************* ClassTimetable css end ***************************************************************/
+
+
+.full-calendar-custom-style .fc-button {
+    box-shadow: none !important;
+}
+
+.full-calendar-custom-style .fc-prev-button,
+.fc-next-button,
+.fc-button-primary,
+.fc-today-button {
+    height: 30px !important;
+    border: none !important;
+    font-size: 12px !important;
+    color: #36a3f7 !important;
+    border-radius: 6px !important;
+    line-height: normal !important;
+    padding: 0.6rem 1.8rem !important;
+    letter-spacing: -0.5px !important;
+    background-color: #cde9fd !important;
+    font-family: 'PinnacleBold' !important;
+}
+
+.full-calendar-custom-style .fc-prev-button,
+.fc-next-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    padding: 0.6rem !important;
+}
+
+.full-calendar-custom-style .fc-next-button {
+    margin-left: 3px !important;
+}
+
+.full-calendar-custom-style .fc-button-active {
+    background-color: #36a3f7 !important;
+    color: white !important;
+}
+
+.full-calendar-custom-style .fc-toolbar-title {
+    font-family: 'PinnacleBold' !important;
+    font-size: 16px !important;
+    line-height: normal !important;
+    letter-spacing: -0.5px !important;
+    color: rgb(255, 91, 29) !important;
+}
+
+.full-calendar-custom-style .fc-list-heading-alt {
+    float: right;
+}
+
+.full-calendar-custom-style .fc-list-heading td {
+    border: 1px solid #ebedf2 !important;
+}
+
+.full-calendar-custom-style .fc-scrollgrid-sync-inner > a {
+    color: #575962;
+}
+
+.full-calendar-custom-style .fc-widget-header {
+    background: #f4f5f8 !important;
+}
+
+.full-calendar-custom-style .fc-list-table {
+    width: 100% !important;
+}
+
+.full-calendar-custom-style .fc-list-table>thead {
+    display: none !important;
+}
+
+.full-calendar-custom-style .fc-list-day-cushion {
+    height: 41px !important;
+    background-color: rgb(223, 226, 234) !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    padding-left: 37px !important;
+    font-size: 12px !important;
+    letter-spacing: -0.5px !important;
+    text-transform: uppercase !important;
+}
+
+.full-calendar-custom-style a{
+    color: #575962;
+}
+
+.full-calendar-custom-style .fc-list-event {
+    height: 86px;
+    border: solid 1px rgb(235, 237, 242);
+    border-top: none;
+    background-color: rgb(255, 255, 255);
+    display: flex !important;
+    align-items: center !important;
+    font-size: 14px !important;
+}
+
+.full-calendar-custom-style .fc-list-event:hover {
+    color: #5867dd !important;
+    text-decoration: underline;
+}
+
+.full-calendar-custom-style .fc-list-event-time {
+    border: none !important;
+    width: 150px !important;
+    padding-left: 20px !important;
+}
+
+.full-calendar-custom-style .fc-list-event-title {
+    border: none !important;
+    padding-left: 20px !important;
+}
+
+.full-calendar-custom-style .fc-list-event-title>a {
+    color: unset !important;
+}
+
+.full-calendar-custom-style .fc-list-event-graphic {
+    display: flex !important;
+    border: none !important;
+}
+
+.full-calendar-custom-style .fc-list-event-dot {
+    border-radius: 6px;
+    border: 15px solid;
+}
+
+.full-calendar-custom-style .fc-list-item-marker,
+.fc-list-item-time {
+    white-space: nowrap !important;
+    width: 1px !important;
+    border-width: 1px 0 0 !important;
+}
+
+.full-calendar-custom-style .fc-list-item-title {
+    border-width: 1px 0 0 !important;
+}
+
+
 /************************************* My Today css  ***************************************************************/
 .myToday-DayPicker>input {
     border: none;

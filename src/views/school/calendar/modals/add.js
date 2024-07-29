@@ -1,10 +1,12 @@
 import message from 'modules/message'
 import React, { useState, useRef } from 'react'
-import { Row } from 'react-bootstrap'
-import { Modal } from 'react-bootstrap'
+import { Row, Col, Modal } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
+import { Checkbox } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
-import Forms from 'modules/Form/Forms'
+import { translations } from 'utils/translations'
+import CustomTimePicker from 'modules/CustomTimePicker'
+import DayPickerInput from 'react-day-picker/DayPickerInput'
 
 const add = ({ onClose, onSubmit }) => {
 
@@ -17,135 +19,26 @@ const add = ({ onClose, onSubmit }) => {
     const [endTime, setEndTime] = useState(null)
 
     const [first, setFirst] = useState(true)
-    const [fullDay, setFullDay] = useState(false)
-
-    
-    const isFullDay = (value, id) => {
-        setFullDay(value)
-        addCalendarFields[4].hidden = value
-        addCalendarFields[4].required = false
-    }
-
-    const setTime = (value) => {
-        setStartTime(value[0].startTime)
-        setEndTime(value[0].endTime)
-    }
 
     const handleSave = () => {
-        
-        const [formsValid, formValues] = formRef.current.validate();
-
-        if (formsValid) {
-            if (fullDay && startTime == endTime) {
-                message(t('calendar.time_duplicate'))
-            } else {
-                const dataCollectorArray = []
-                for (let x=0;x<formValues.length;x++) {
-                    dataCollectorArray.push({key: formValues[x].key, value: formValues[x].value})
-                }
-                message('success', true)
-                // after success \/
-                // onClose()
-                // setLoading(true)
-                console.log(dataCollectorArray)
-            }
-        } 
-        else{
-            message(t('err.fill_all_fields'))
-        } 
-        // if (!event?.title || !event?.start || !event?.end) return message(t('err.fill_all_fields'))
-        // if (!event?.allDay && (!startTime || !endTime)) return message(t('err.fill_all_fields'))
-        // if (!event?.allDay && (startTime == endTime)) return message(t('calendar.time_duplicate'))
-        // onSubmit({ ...event, startTime, endTime, allDay: event?.allDay ? 1 : 0 })
+        if (!event?.title || !event?.start || !event?.end) return message(translations(locale)?.err?.fill_all_fields)
+        if (!event?.allDay && (!startTime || !endTime)) return message(translations(locale)?.err?.fill_all_fields)
+        if (!event?.allDay && (startTime == endTime)) return message(translations(locale)?.calendar?.time_duplicate)
+        onSubmit({ ...event, startTime, endTime, allDay: event?.allDay ? 1 : 0 })
     }
 
-    const [addCalendarFields, setAddCalendarFields] = useState([
-        {
-            key: 'calendarEventName',
-            label: `${t('calendar.activity_name')}*`,
-            labelBold: true,
-            value: '',
-            type: 'text',
-            required: true,
-            errorMessage: t('error.enterEventName'),
-            placeholder: t('calendar.activity_name'),
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-5',
-            labelClassName: "col-5 text-right label-pinnacle-bold mr-0",
-        },
-        {
-            key: 'calendarEventColor',
-            label: `${t('calendar.color')}*`,
-            labelBold: true,
-            value: '',
-            type: 'color',
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-5',
-            labelClassName: "col-5 text-right label-pinnacle-bold mr-0",
-        },
-        {
-            key: 'calendarEventDate',
-            label: `${t('date')}*`,
-            labelBold: true,
-            value: '',
-            type: 'daterange',
-            required: true,
-            errorMessage: t('error.enterDateRange'),
-            firstPlaceHolder: t('datePickerPlaceholder'),
-            lastPlaceHolder: t('datePickerPlaceholder'),
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-5',
-            labelClassName: "col-5 text-right label-pinnacle-bold mr-0",
-        },
-        {
-            key: 'calendarFullDay',
-            label: `${t('calendar.is_full_day')}*`,
-            labelBold: true,
-            value: fullDay,
-            type: 'checkbox',
-            onChange: isFullDay,
-            // className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-5',
-            labelClassName: "col-5 text-right label-pinnacle-bold mr-0",
-        },
-        {
-            key: 'calendarEventTime',
-            label: `${t('calendar.length')}*`,
-            labelBold: true,
-            value: '',
-            type: 'timerange',
-            required: true,
-            errorMessage: t('error.enterTimeRange'),
-            onChange: setTime,
-            className: "form-control",
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: fullDay ? "w-0" : 'col-5',
-            labelClassName: "col-5 text-right label-pinnacle-bold mr-0",
-            hidden: fullDay,
-        },
-        {
-            key: 'calendarEventDescription',
-            label: `${t('description')}`,
-            labelBold: true,
-            value: '',
-            type: 'textArea',
-            className: "form-control",
-            placeholder: t('description'),
-            upperCase: true,
-            formContainerClassName: 'form-group m-form__group row',
-            fieldContainerClassName: 'col-5',
-            labelClassName: "col-5 text-right label-pinnacle-bold mr-0 align-items-start",
-        },
-    ])
+    const handleChange = (name, value) => {
+        const values = { [name]: value }
+        if (name == 'allDay' && value == true) {
+            setStartTime(null)
+            setEndTime(null)
+        }
+        if (name == 'start' && first) {
+            setFirst(false)
+            values.end = value
+        }
+        setEvent({ ...event, ...values })
+    }
 
     return (
         <Modal
@@ -163,11 +56,128 @@ const add = ({ onClose, onSubmit }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
+            <Row className='form-group'>
+                    <Col className='text-right'>
+                        <label className="text-right label-pinnacle-bold col-form-label">
+                            {translations(locale)?.calendar?.activity_name}*
+                        </label>
+                    </Col>
+                    <Col>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={event?.title || ''}
+                            placeholder={translations(locale)?.calendar?.activity_name}
+                            onChange={(e) => handleChange('title', e.target.value)}
+                        />
+                    </Col>
+                    <Col md={2} />
+                </Row>
                 <Row className='form-group'>
-                    <Forms
-                        ref={formRef}
-                        fields={addCalendarFields}
-                    />
+                    <Col className='text-right'>
+                        <label className="text-right label-pinnacle-bold col-form-label">
+                            {translations(locale)?.calendar?.color}
+                        </label>
+                    </Col>
+                    <Col>
+                        <input
+                            type="color"
+                            value={event?.color}
+                            onChange={(e) => handleChange('color', e.target.value)}
+                        />
+                    </Col>
+                    <Col md={2} />
+                </Row>
+                <Row className='form-group'>
+                    <Col className='text-right'>
+                        <label className="text-right label-pinnacle-bold col-form-label">
+                            {translations(locale)?.date}*
+                        </label>
+                    </Col>
+                    <Col>
+                        <Row>
+                            <Col className='pr-0'>
+                                <DayPickerInput
+                                    value={event?.start}
+                                    inputProps={{ className: 'form-control' }}
+                                    placeholder={translations(locale)?.datePickerPlaceholder}
+                                    dayPickerProps={{ disabledDays: { after: new Date(event?.end) } }}
+                                    onDayChange={(day) => handleChange('start', day?.toISOString()?.split('T')?.[0])}
+                                    classNames={{ overlay: 'DayPickerInputOverlay', container: 'position-relative' }}
+                                />
+                            </Col>
+                            <div className="pickerSeparator">
+                                <i className="la la-ellipsis-h" />
+                            </div>
+                            <Col className='pl-0'>
+                                <DayPickerInput
+                                    value={event?.end}
+                                    inputProps={{ className: 'form-control' }}
+                                    placeholder={translations(locale)?.datePickerPlaceholder}
+                                    dayPickerProps={{ disabledDays: { before: new Date(event?.start) } }}
+                                    onDayChange={(day) => handleChange('end', day?.toISOString()?.split('T')?.[0])}
+                                    classNames={{ overlay: 'DayPickerInputOverlay', container: 'position-relative' }}
+                                />
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col md={2} />
+                </Row>
+                <Row className='form-group'>
+                    <Col />
+                        <Col style={{color: '#575962'}}>
+                            <Checkbox
+                                checked={event?.allDay}
+                                onChange={(e, data) => handleChange('allDay', data?.checked)}
+                                label={translations(locale)?.calendar?.is_full_day}
+                            />
+                        </Col>
+                    <Col md={2} />
+                </Row>
+                {
+                    !event?.allDay &&
+                    <Row className='form-group'>
+                        <Col className='text-right'>
+                            <label className="text-right label-pinnacle-bold col-form-label">
+                                {translations(locale)?.calendar?.length}*
+                            </label>
+                        </Col>
+                        <Col>
+                            <Row>
+                                <Col className='pr-0'>
+                                    <CustomTimePicker
+                                        onChange={setStartTime}
+                                    />
+                                </Col>
+                                <div className="pickerSeparator">
+                                    <i className="la la-ellipsis-h" />
+                                </div>
+                                <Col className='pl-0'>
+                                    <CustomTimePicker
+                                        onChange={setEndTime}
+                                    />
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col md={2} />
+                    </Row>
+                }
+                <Row className='form-group'>
+                    <Col className='text-right'>
+                        <label className="text-right label-pinnacle-bold col-form-label">
+                            {translations(locale)?.description}
+                        </label>
+                    </Col>
+                    <Col>
+                        <textarea
+                            rows={5}
+                            className="form-control"
+                            value={event?.description}
+                            placeholder={translations(locale)?.description}
+                            onChange={(e) => handleChange('description', e.target.value)}
+                        />
+                    </Col>
+                    <Col md={2} />
                 </Row>
             </Modal.Body>
             <Modal.Footer className="text-center">

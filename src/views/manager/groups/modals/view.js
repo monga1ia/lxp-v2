@@ -85,10 +85,10 @@ const ViewStudent = ({ onClose, selectedId }) => {
                     {t('action.view')}
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className='pt-0'>
                 <div className="myToday-group-student-modal-style">
                     <div>
-                        <span style={{ position: 'relative', top: 45, left: 2, color: '#62646e', fontSize: 14 }} >
+                        <span style={{ position: 'relative', top: 45, left: 2, color: '#575962', fontSize: 14 }} >
                             {t('total') + ': ' + viewStudentListCount}
                         </span>
                         <DTable
@@ -102,7 +102,7 @@ const ViewStudent = ({ onClose, selectedId }) => {
             </Modal.Body>
             <Modal.Footer className="col-12 text-center">
                 <button
-                    className="btn m-btn--pill btn-outline-metal m-btn m-btn--custom"
+                    className="btn m-btn--pill btn-outline-metal"
                     onClick={onClose}
                 >
                     {t('close').toUpperCase()}
