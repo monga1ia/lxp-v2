@@ -232,7 +232,7 @@ const AddSubjectModal = ({ onClose, onSubmit, curriculumId, curriculumName }) =>
                                         id='subjectIsAll'
                                         type="checkbox"
                                         style={{ borderRadius: '4px', fontSize: '18px' }}
-                                        value={isAll}
+                                        checked={isAll}
                                         onChange={() => setIsAll(!isAll)}
                                     />
                                     <label className="form-check-label font-mulish" htmlFor="subjectIsAll" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>
@@ -251,7 +251,7 @@ const AddSubjectModal = ({ onClose, onSubmit, curriculumId, curriculumName }) =>
                                         id='subjectIsResult'
                                         type="checkbox"
                                         style={{ borderRadius: '4px', fontSize: '18px' }}
-                                        value={isResult}
+                                        checked={isResult}
                                         onChange={() => setIsResult(!isResult)}
                                     />
                                     <label className="form-check-label font-mulish" htmlFor="subjectIsResult" style={{ color: '#575962', fontSize: '14px', marginLeft: '16px' }}>

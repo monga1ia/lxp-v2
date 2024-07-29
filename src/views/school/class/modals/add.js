@@ -227,14 +227,13 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
     }, [])
 
     const handleCheckbox = () => {
-        setAddAgain(true)
+        setAddAgain(!addAgain)
     }
 
     const handleSubmit = () => {
         const [formsValid, formValues] = formRef.current.validate();
 
         if (formsValid) {
-            setLoading(true)
             let params = {
                 addAgain: addAgain,
                 submit: 1,
@@ -243,7 +242,6 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
             formValues?.map(obj => {
                 params[obj?.key] = obj?.value;
             })
-
             setLoading(true)
             fetchRequest(schoolClassCreate, 'POST', params)
                 .then((res) => {
@@ -304,7 +302,7 @@ const AddClassModal = ({ onClose, onSubmit, data }) => {
                             id='reAdd'
                             type="checkbox"
                             style={{ borderRadius: '4px', fontSize: '18px' }}
-                            value={addAgain}
+                            checked={addAgain}
                             onChange={handleCheckbox}
                         />&nbsp;&nbsp;{t('action.recreate')}
                     </label>
