@@ -26,6 +26,7 @@ export const schoolClassIndex = 'school/class/index'
 export const schoolClassCreate = 'school/class/create'
 export const schoolClassEdit = 'school/class/edit'
 export const schoolClassDelete = 'school/class/delete'
+export const schoolClassStudents = 'school/class/students'
 
 export const studentBook = 'class/student-book/index'
 
@@ -34,6 +35,7 @@ export const schoolSubjectIndex = 'school/subject/index'
 export const schoolSubjectCreate = 'school/subject/create'
 export const schoolSubjectEdit = 'school/subject/edit'
 export const schoolSubjectDelete = 'school/subject/delete'
+export const schoolSubjectTeacher = 'school/subject/teacher'
 
 // movement
 export const movementInIndex = 'movement/in/index'
@@ -42,6 +44,7 @@ export const movementInAvatar = 'movement/in/avatar'
 
 // manager
 export const managerGroupIndex = 'manager/group/index'
+
 
 // staff
 // export const schoolStaffIndex = 'api/employee/init'
