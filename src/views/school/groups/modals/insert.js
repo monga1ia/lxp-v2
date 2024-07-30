@@ -117,7 +117,6 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
     }
 
     const handleCheckBoxChange = (value, index) => {
-        console.log(value, index)
         const cloneDetails = [...details]
         if(value){
             let cloneClassOptions = [...classOptions];

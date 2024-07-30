@@ -4448,18 +4448,14 @@ const index = () => {
                 }
             </div>
             {
-                showLoader
-                    ?
-                    <div>
-                        <div className="blockUI blockOverlay">
-                        </div>
-                        <div className="blockUI blockMsg blockPage">
-                            <div className="m-loader m-loader--brand m-loader--lg">
-                            </div>
-                        </div>
+                showLoader &&
+                <>
+                    <div className='loader-container'>
+                        <svg className="splash-spinner" viewBox="0 0 50 50">
+                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                        </svg>
                     </div>
-                    :
-                    null
+                </>
             }
             <Modal
                 size={'xxl'}
@@ -5034,18 +5030,14 @@ const index = () => {
                                 : null
                 }
                 {
-                    showLoaderModal
-                        ?
-                        <div>
-                            <div className="blockUI blockOverlay">
-                            </div>
-                            <div className="blockUI blockMsg blockPage">
-                                <div className="m-loader m-loader--brand m-loader--lg">
-                                </div>
-                            </div>
+                    showLoaderModal &&
+                    <>
+                        <div className='loader-container'>
+                            <svg className="splash-spinner" viewBox="0 0 50 50">
+                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                            </svg>
                         </div>
-                        :
-                        null
+                    </>
                 }
             </Modal>
             <Modal
@@ -5123,18 +5115,14 @@ const index = () => {
                     </button>
                 </Modal.Footer>
                 {
-                    showLoaderModal
-                        ?
-                        <div>
-                            <div className="blockUI blockOverlay">
-                            </div>
-                            <div className="blockUI blockMsg blockPage">
-                                <div className="m-loader m-loader--brand m-loader--lg">
-                                </div>
-                            </div>
+                    showLoaderModal &&
+                    <>
+                        <div className='loader-container'>
+                            <svg className="splash-spinner" viewBox="0 0 50 50">
+                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                            </svg>
                         </div>
-                        :
-                        null
+                    </>
                 }
             </Modal>
 
@@ -5178,18 +5166,14 @@ const index = () => {
                     </div>
                 </div>
                 {
-                    showLoaderDeleteModal
-                        ?
-                        <div>
-                            <div className="blockUI blockOverlay">
-                            </div>
-                            <div className="blockUI blockMsg blockPage">
-                                <div className="m-loader m-loader--brand m-loader--lg">
-                                </div>
-                            </div>
+                    showLoaderModal &&
+                    <>
+                        <div className='loader-container'>
+                            <svg className="splash-spinner" viewBox="0 0 50 50">
+                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                            </svg>
                         </div>
-                        :
-                        null
+                    </>
                 }
             </Modal> */}
             {
@@ -5368,18 +5352,14 @@ const index = () => {
                     </button>
                 </Modal.Footer>
                 {
-                    showLoaderModal
-                        ?
-                        <div>
-                            <div className="blockUI blockOverlay">
-                            </div>
-                            <div className="blockUI blockMsg blockPage">
-                                <div className="m-loader m-loader--brand m-loader--lg">
-                                </div>
-                            </div>
+                    showLoaderModal &&
+                    <>
+                        <div className='loader-container'>
+                            <svg className="splash-spinner" viewBox="0 0 50 50">
+                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                            </svg>
                         </div>
-                        :
-                        null
+                    </>
                 }
             </Modal>
             <Modal
@@ -5445,18 +5425,14 @@ const index = () => {
                     </button>
                 </Modal.Footer>
                 {
-                    showLoaderModal
-                        ?
-                        <div>
-                            <div className="blockUI blockOverlay">
-                            </div>
-                            <div className="blockUI blockMsg blockPage">
-                                <div className="m-loader m-loader--brand m-loader--lg">
-                                </div>
-                            </div>
+                    showLoaderModal &&
+                    <>
+                        <div className='loader-container'>
+                            <svg className="splash-spinner" viewBox="0 0 50 50">
+                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                            </svg>
                         </div>
-                        :
-                        null
+                    </>
                 }
             </Modal>
             {

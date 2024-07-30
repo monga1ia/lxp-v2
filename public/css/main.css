@@ -290,6 +290,15 @@ div.vertical-tab>a {
     width: 350px;
 }
 
+.myTimetable-add-timetable table tbody tr td:first-child,
+.myTimetable-add-timetable table tbody tr td:nth-child(2) {
+    width: 100px;
+}
+
+.myTimetable-add-timetable table tbody tr td:last-child {
+    width: 50px;
+}
+
 .font-mulish {
     font-family: Mulish !important
 }
@@ -3925,7 +3934,7 @@ select.form-control:focus::-ms-value {
 
 .form-check-input.modal-position {
     border: 1px solid #FF5B1D;
-    margin-top: 2px !important;
+    margin-top: 0.5rem !important;
     margin-bottom: 0 !important;
 
 }
