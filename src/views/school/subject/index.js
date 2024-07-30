@@ -112,12 +112,12 @@ const MainGroup = () => {
         {
             dataField: 'grades',
             text: t('subject.grade') || '',
-            sort: true
+            sort: false
         },
         {
             dataField: "teachers",
             text: t('subject.teacher') || "",
-            sort: true
+            sort: false
         },
     ]
 

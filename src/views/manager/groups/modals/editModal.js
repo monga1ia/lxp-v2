@@ -179,21 +179,29 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                     editGroupIsClass
                         ?
                         <>
-                            <div className="form-group m-form__group row">
-                                <label className="col-4 text-right label-pinnacle-bold">
-                                    {translations(locale).type}
-                                </label>
-                                <label className="col-5" style={{ color: '#575962' }}>
-                                    {translations(locale).timetable.class_student}
-                                </label>
+                            <div className="form-group m-form__group row vertical-align-middle d-flex">
+                                <div className='col-4 text-right'>
+                                    <label className="label-pinnacle-bold">
+                                        {translations(locale).type}
+                                    </label>
+                                </div>
+                                <div className='col-5'>
+                                    <label style={{ color: '#575962', fontSize: '14px' }}>
+                                        {translations(locale).timetable.class_student}
+                                    </label>
+                                </div>
                             </div>
-                            <div className="form-group m-form__group row">
-                                <label className="col-4 text-right label-pinnacle-bold">
-                                    {translations(locale).grade}
-                                </label>
-                                <label className="col-5" style={{ color: '#575962' }}>
-                                    {editSubjectGroup?.gradeName}
-                                </label>
+                            <div className="form-group m-form__group row vertical-align-middle d-flex">
+                                <div className='col-4 text-right'>
+                                    <label className="label-pinnacle-bold">
+                                        {translations(locale).grade}
+                                    </label>
+                                </div>
+                                <div className='col-5'>
+                                    <label style={{ color: '#575962', fontSize: '14px' }}>
+                                        {editSubjectGroup?.gradeName}
+                                    </label>
+                                </div>
                             </div>
                             <div className="form-group m-form__group row align-items-baseline">
                                 <label className="col-4 text-right label-pinnacle-bold">
@@ -255,21 +263,29 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                         </>
                         :
                         <>
-                            <div className="form-group m-form__group row">
-                                <label className="col-4 text-right label-pinnacle-bold">
-                                    {translations(locale).type}
-                                </label>
-                                <label className="col-5" style={{ color: '#575962' }}>
-                                    {translations(locale).timetable.group_student}
-                                </label>
+                            <div className="form-group m-form__group row vertical-align-middle d-flex">
+                                <div className='col-4 text-right'>
+                                    <label className="label-pinnacle-bold">
+                                        {translations(locale).type}
+                                    </label>
+                                </div>
+                                <div className='col-5'>
+                                    <label style={{ color: '#575962', fontSize: '14px'  }}>
+                                        {translations(locale).timetable.group_student}
+                                    </label>
+                                </div>
                             </div>
-                            <div className="form-group m-form__group row">
-                                <label className="col-4 text-right label-pinnacle-bold">
+                            <div className="form-group m-form__group row vertical-align-middle d-flex">
+                                <div className='col-4 text-right'>
+                                    <label className="  label-pinnacle-bold">
                                     {translations(locale).grade}
                                 </label>
-                                <label className="col-5" style={{ color: '#575962' }}>
-                                    {editSubjectGroup?.gradeName}
-                                </label>
+                                </div>
+                                <div className='col-5'>
+                                    <label style={{ color: '#575962', fontSize: '14px'  }}>
+                                        {editSubjectGroup?.gradeName}
+                                    </label>
+                                </div>
                             </div>
                             <div className="form-group m-form__group row">
                                 <label className="col-form-label col-md-4 col-sm-12 text-right label-pinnacle-bold">
@@ -344,7 +360,7 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                                                 newSubjectGroupRow.map(function (obj, i) {
                                                     return (
                                                         <tr key={'tr_group_' + i}>
-                                                            <td width={120} className="text-right label-pinnacle-bold">
+                                                            <td width={120} className="text-right label-pinnacle-bold vertical-align-middle">
                                                                 {translations(locale).group.title || null}
                                                             </td>
                                                             <td width={300} className="p-2">

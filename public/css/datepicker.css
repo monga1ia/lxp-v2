@@ -27,7 +27,7 @@
 }
 
 .DayPicker-Month {
-    display: table;
+    display: inline-grid;
     margin: 0 1em;
     margin-top: 1em;
     border-spacing: 0;
@@ -97,7 +97,8 @@
 }
 
 .DayPicker-WeekdaysRow {
-    display: table-row;
+    display: inline-table;
+    width: 100%;
 }
 
 .DayPicker-Weekday {

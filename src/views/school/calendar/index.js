@@ -15,7 +15,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-
+import esLocale from '@fullcalendar/core/locales/es'
 
 const index = () => {
 
@@ -23,19 +23,7 @@ const index = () => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
-    const [events, setEvents] = useState([{
-        allDay: false,
-        backgroundColor: '#ff5b1d',
-        classNames: 'schoolCalendarEvent',
-        color: '#ff5b1d',
-        description: "ыбыбсыбс",
-        end: "2024-07-02T19:58:00+08:00",
-        id: "6856",
-        start: "2024-07-02T18:58:00+08:00",
-        title: 'Test',
-        typeName: "Сургуулийн арга хэмжээ",
-    }
-    ])
+    const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
 
     const title = t('calendar.title');
@@ -67,6 +55,232 @@ const index = () => {
     //             setLoading(false)
     //         })
     // }, [])
+
+    useEffect(() => {
+
+        const res = {
+            data: {
+                selfModify: true,
+                events: [
+                    {
+                        id: "1545",
+                        color: "#1f26ff",
+                        description: "Сургуулийн бүх түвшний сурагчид хамрагдана. ",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-08-09T00:00:00+08:00",
+                        end: "2023-08-12T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "Түвшин тогтоох шалгалт",
+                        allDay: true,
+                        backgroundColor: "#1f26ff"
+                    },
+                    {
+                        id: "1546",
+                        color: "#ad3e00",
+                        description: "For testing purpose only",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-08-01T00:00:00+08:00",
+                        end: "2023-09-01T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "Testing eStudent",
+                        allDay: true,
+                        backgroundColor: "#ad3e00"
+                    },
+                    {
+                        id: "1555",
+                        color: "#ff5b1d",
+                        description: "test",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-08-23T00:00:00+08:00",
+                        end: "2023-08-24T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "test",
+                        allDay: true,
+                        backgroundColor: "#ff5b1d"
+                    },
+                    {
+                        id: "1556",
+                        color: "#441fff",
+                        description: "",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-08-23T00:00:00+08:00",
+                        end: "2023-08-24T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "test",
+                        allDay: true,
+                        backgroundColor: "#441fff"
+                    },
+                    {
+                        id: "1589",
+                        color: "#1fffd2",
+                        description: "",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-08-31T00:00:00+08:00",
+                        end: "2023-09-01T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "Jet school ",
+                        allDay: true,
+                        backgroundColor: "#1fffd2"
+                    },
+                    {
+                        id: "1590",
+                        color: "#3547d0",
+                        description: "",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-08-30T10:00:00+08:00",
+                        end: "2023-08-31T13:00:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "TEST",
+                        allDay: false,
+                        backgroundColor: "#3547d0"
+                    },
+                    {
+                        id: "1615",
+                        color: "#1202f2",
+                        description: "Хичээлийн шинэ жил эхэлж байгаатай холбоотой үйл ажиллагаа",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-09-04T00:00:00+08:00",
+                        end: "2023-09-06T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "9/4-9/5 үйл ажиллагаа",
+                        allDay: true,
+                        backgroundColor: "#1202f2"
+                    },
+                    {
+                        id: "1676",
+                        color: "#1fff9e",
+                        description: "",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-09-12T06:00:00+08:00",
+                        end: "2023-09-12T08:00:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "ТЕСТ",
+                        allDay: false,
+                        backgroundColor: "#1fff9e"
+                    },
+                    {
+                        id: "1754",
+                        color: "#ff5b1d",
+                        description: "аааррхсрх",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-09-22T15:01:00+08:00",
+                        end: "2023-09-22T16:00:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "сургалт",
+                        allDay: false,
+                        backgroundColor: "#ff5b1d"
+                    },
+                    {
+                        id: "1757",
+                        color: "#ff5b1d",
+                        description: "",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-09-23T00:00:00+08:00",
+                        end: "2023-09-24T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "test",
+                        allDay: true,
+                        backgroundColor: "#ff5b1d"
+                    },
+                    {
+                        id: "2391",
+                        color: "#36ce87",
+                        description: "test",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2023-10-31T10:00:00+08:00",
+                        end: "2023-10-31T13:00:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "eSchool",
+                        allDay: false,
+                        backgroundColor: "#36ce87"
+                    },
+                    {
+                        id: "6867",
+                        color: "#090706",
+                        description: "123",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2024-07-10T23:00:00+08:00",
+                        end: "2024-07-11T05:00:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "123132",
+                        allDay: false,
+                        backgroundColor: "#090706"
+                    },
+                    {
+                        id: "6868",
+                        color: "#ff5b1d",
+                        description: "",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: null,
+                        action: false,
+                        start: "2024-07-17T00:00:00+08:00",
+                        end: "2024-07-20T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "6546",
+                        allDay: true,
+                        backgroundColor: "#ff5b1d"
+                    },
+                    {
+                        id: "6869",
+                        color: "#eab3de",
+                        description: "Enhdelger-s busad hereglechid zasch, ustgah bolomjgui ",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: "3274",
+                        action: false,
+                        start: "2024-07-19T00:00:00+08:00",
+                        end: "2024-07-22T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "Ke zuwhun zasch, ustgaj chadna",
+                        allDay: true,
+                        backgroundColor: "#eab3de"
+                    },
+                    {
+                        id: "6870",
+                        color: "#b98abc",
+                        description: "Only ke can edit or delete. uur hereglegcheer orj edit hiiw",
+                        typeName: "Сургуулийн арга хэмжээ",
+                        createdUserId: "3274",
+                        action: false,
+                        start: "2024-06-01T00:00:00+08:00",
+                        end: "2024-06-03T23:59:00+08:00",
+                        classNames: "schoolCalendarEvent",
+                        title: "Only me",
+                        allDay: true,
+                        backgroundColor: "#b98abc"
+                    }
+                ],
+                message: "Амжилттай"
+            },
+            success: true
+        }
+
+        const { events } = res.data
+        setEvents(events || [])
+    }, [])
 
     const handleAdd = event => {
         console.log('handleAdd')

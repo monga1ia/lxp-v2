@@ -162,6 +162,7 @@ const ImageModal = ({ onClose, onSubmit }) => {
         <Modal
             size='md-img'
             dimmer='blurring'
+            backdrop='static'
             show={true}
             id='imageModal'
             onHide={onClose}

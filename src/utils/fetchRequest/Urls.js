@@ -27,11 +27,18 @@ export const schoolClassCreate = 'school/class/create'
 export const schoolClassEdit = 'school/class/edit'
 export const schoolClassDelete = 'school/class/delete'
 
+export const studentBook = 'class/student-book/index'
+
 // subject
 export const schoolSubjectIndex = 'school/subject/index'
 export const schoolSubjectCreate = 'school/subject/create'
 export const schoolSubjectEdit = 'school/subject/edit'
 export const schoolSubjectDelete = 'school/subject/delete'
+
+// movement
+export const movementInIndex = 'movement/in/index'
+export const movementInCreate = 'movement/in/create'
+export const movementInAvatar = 'movement/in/avatar'
 
 // staff
 // export const schoolStaffIndex = 'api/employee/init'

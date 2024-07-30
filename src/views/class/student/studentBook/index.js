@@ -8,65 +8,70 @@ import Others from './others'
 import Sale from './sale'
 import message from 'modules/message'
 import SubHeader from 'modules/SubHeader'
-import {cloneDeep} from 'lodash'
+import { cloneDeep } from 'lodash'
 import { Tab } from 'semantic-ui-react'
+import { useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import secureLocalStorage from 'react-secure-storage'
 import { Col, Container, Row } from 'react-bootstrap'
 import { fetchRequest } from 'utils/fetchRequest'
 import { useTranslation } from "react-i18next";
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router';
-import { NDropdown as Dropdown } from 'widgets/Dropdown'
-import { studentBookIndex, classStudentStudentBookEdit } from 'utils/fetchRequest/Urls'
+import { useLocation, useHistory } from 'react-router-dom';
+import { NDropdown as SimpleDropdown } from 'widgets/Dropdown'
+import { Dropdown } from 'semantic-ui-react'
+import { studentBook } from 'utils/fetchRequest/Urls'
 
 const index = () => {
-    const locale="mn"
+
+    const locale = "mn"
     const { t } = useTranslation();
     const location = useLocation();
-    const navigate = useNavigate();
-    
+    const history = useHistory();
+
+    const { selectedSchool, selectedClass } = useSelector(state => state.schoolData);
 
     const [loading, setLoading] = useState(false)
     const [studentId, setStudentId] = useState(location?.state?.id)
+    const [classId] = useState(location?.state?.classId || selectedClass?.id)
+    const [className] = useState(location?.state?.className || selectedClass?.name)
     const [student, setStudent] = useState(null)
     const [studentTypeOptions, setStudentTypeOptions] = useState([])
+
+    const [classStudents, setClassStudents] = useState([])
 
     const [updateView, setUpdateView] = useState(false)
     const [urlData] = useState(location?.state?.urlData || null)
 
-    useEffect(() => {
-        if (!studentId) {
-            message(t('timetable.select_students'))
-            navigate(urlData ? urlData.backUrl : '/class/student', { replace: true })
-            console.log('hiii')
-        }
-        // loadData()
-        console.log('hiii')
-    }, [studentId])
-
     const loadData = () => {
         setLoading(true)
-        // fetchRequest(studentBookIndex, 'POST', { id: studentId })
-        //     .then(res => {
-        //         if (res.success) {
-        //             const { status, type } = res.data
-        //             setStudent(status || {})
-        //             setStudentTypeOptions(type || [])
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+        fetchRequest(studentBook, 'POST', {
+            school: selectedSchool?.id,
+            student: studentId
+        })
+            .then(res => {
+                if (res.success) {
+                    setClassStudents(res?.classStudents || [])
+                    setStudent(res?.student || {})
+                    setStudentTypeOptions(res?.types || [])
+                } else {
+                    message(res.data.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     useEffect(() => {
-        // loadData()
-    }, [])
+        if (!studentId) {
+            message(t('timetable.select_students'))
+            history.replace({
+                to: urlData ? urlData.backUrl : '/class/student'
+            })
+        }
+        loadData()
+    }, [studentId])
 
     const handleChange = value => {
         setLoading(true)
@@ -99,13 +104,84 @@ const index = () => {
             />
             <div className='m-portlet mt-3 mb-4'>
                 <div className='m-portlet__body'>
+                    <Row>
+                        <Col md='auto' className='text-right ml-4'>
+                            <label
+                                style={{
+                                    marginRight: 10,
+                                    marginBottom: 0,
+                                    width: 'auto',
+                                    lineHeight: '2.6em',
+                                    fontFamily: 'PinnacleRegular',
+                                    fontWeight: 700,
+                                    fontSize: 12
+                                }}
+                            >
+                                {t('menu.group')}
+                            </label>
+                        </Col>
+                        <Col md='auto'>
+                            <Dropdown
+                                fluid
+                                selection
+                                closeOnChange
+                                disabled
+                                value={classId}
+                                options={[{
+                                    value: classId,
+                                    text: className
+                                }]}
+                                placeholder={'-' + t('select') + '-'}
+                                onChange={(e, data) => { }}
+                                style={{
+                                    minWidth: 250
+                                }}
+                            />
+                        </Col>
+                        <Col md='auto' className='text-right ml-4'>
+                            <label
+                                style={{
+                                    marginRight: 10,
+                                    marginBottom: 0,
+                                    width: 'auto',
+                                    lineHeight: '2.6em',
+                                    fontFamily: 'PinnacleRegular',
+                                    fontWeight: 700,
+                                    fontSize: 12
+                                }}
+                            >
+                                {t('menu.studentName')}
+                            </label>
+                        </Col>
+                        <Col md='auto'>
+                            <Dropdown
+                                fluid
+                                selection
+                                closeOnChange
+                                value={studentId}
+                                options={classStudents}
+                                placeholder={'-' + t('select') + '-'}
+                                onChange={(e, data) => {
+                                    setStudentId(data?.value)
+                                }}
+                                style={{
+                                    minWidth: 250
+                                }}
+                            />
+                        </Col>
+                        <Col />
+                    </Row>
+                </div>
+            </div>
+
+            <div className='m-portlet mt-3 mb-4'>
+                <div className='m-portlet__body'>
                     <Container fluid>
                         <Row className='bolder'>
                             <Col lg={3} className='d-flex justify-content-center align-items-center'>
                                 <img width={129} height={129}
                                     className='img-responsive img-circle'
                                     src={student?.avatar || '/images/avatar.png'}
-                                    alt={`Photo of ${student?.firstName}`}
                                     onError={(e) => {
                                         e.target.onError = null
                                         e.target.src = '/images/avatar.png'
@@ -164,8 +240,7 @@ const index = () => {
                                         <tr>
                                             <td className='py-1 pr-5 bolder'>{t('status')}</td>
                                             <td style={{ color: '#ff5b1d' }}>
-                                                <Dropdown
-                                                    simple
+                                                <SimpleDropdown
                                                     fluid
                                                     className='d-flex no-wrap'
                                                     value={student?.studentTypeId}
@@ -192,30 +267,30 @@ const index = () => {
                                 menuItem: t('studentBookNavs.personal_info'),
                                 render: () => <PersonalInformation student={student} refresh={() => setUpdateView(prev => !prev)} />,
                             },
-                            {
-                                menuItem: t('studentBookNavs.grade'),
-                                render: () => <Grade student={student} />,
-                            },
-                            {
-                                menuItem: t('studentBook.activity'),
-                                render: () => <Activity student={student} />
-                            },
-                            {
-                                menuItem: t('club.title'),
-                                render: () => <ClubCount student={student} />,
-                            },
-                            {
-                                menuItem: t('finance.invoice'),
-                                render: () => <Payment student={student} />,
-                            },
-                            {
-                                menuItem: t('studentBookNavs.food'),
-                                render: () => <Sale student={student} saleTypeCode={'FOOD'}/>,
-                            },
-                            {
-                                menuItem: t('studentBookNavs.bus'),
-                                render: () => <Sale student={student} saleTypeCode={'BUS'} />,
-                            },
+                            // {
+                            //     menuItem: t('studentBookNavs.grade'),
+                            //     render: () => <Grade student={student} />,
+                            // },
+                            // {
+                            //     menuItem: t('studentBook.activity'),
+                            //     render: () => <Activity student={student} />
+                            // },
+                            // {
+                            //     menuItem: t('club.title'),
+                            //     render: () => <ClubCount student={student} />,
+                            // },
+                            // {
+                            //     menuItem: t('finance.invoice'),
+                            //     render: () => <Payment student={student} />,
+                            // },
+                            // {
+                            //     menuItem: t('studentBookNavs.food'),
+                            //     render: () => <Sale student={student} saleTypeCode={'FOOD'} />,
+                            // },
+                            // {
+                            //     menuItem: t('studentBookNavs.bus'),
+                            //     render: () => <Sale student={student} saleTypeCode={'BUS'} />,
+                            // },
                             // {
                             //     menuItem: translations(locale)?.studentBookNavs?.others,
                             //     render: () => <Others id={student?.id} />,
@@ -227,9 +302,10 @@ const index = () => {
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }
