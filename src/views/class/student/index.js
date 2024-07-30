@@ -1,27 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Row, Col, Card, Button } from 'react-bootstrap';
-import secureLocalStorage from 'react-secure-storage';
-import { NavLink, useLocation } from "react-router-dom";
-import { useNavigate } from 'react-router';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Row, Col, Card, Button } from 'react-bootstrap'
+import secureLocalStorage from 'react-secure-storage'
+import { NavLink, useLocation } from "react-router-dom"
+import { useNavigate } from 'react-router'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import message from '../../../modules/message'
-import TreeView from 'modules/TreeView';
-import HtmlHead from 'components/html-head/HtmlHead';
-import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import DTable from 'modules/DataTable/DTable';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import TreeView from 'modules/TreeView'
+import HtmlHead from 'components/html-head/HtmlHead'
+import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList'
+import DTable from 'modules/DataTable/DTable'
+import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import RegistrationSheetModal from './modals/registrationSheet'
 import AddStudentModal from './modals/addStudent'
 import ImageModal from '../../../utils/imageModal'
 import PrintData from './components/printData'
 import { useReactToPrint } from 'react-to-print'
-import {Tab} from "semantic-ui-react";
-import { useTranslation } from "react-i18next";
+import {Tab} from "semantic-ui-react"
+import { useTranslation } from "react-i18next"
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined'
 import FolderSharedIcon from '@mui/icons-material/FolderShared'
-import DayPickerInput from "react-day-picker/DayPickerInput";
+import DayPickerInput from "react-day-picker/DayPickerInput"
 
 const index = () => {
     const locale="mn"

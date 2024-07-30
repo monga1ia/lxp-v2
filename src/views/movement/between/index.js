@@ -44,6 +44,7 @@ const index = () => {
     const config = {
         excelExport: true,
         printButton: true,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.between')}`,
         defaultSort: [{
             dataField: sort,
             order: order

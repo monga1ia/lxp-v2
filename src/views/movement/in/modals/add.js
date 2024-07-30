@@ -121,13 +121,13 @@ const AddStudentMovementIn = ({ onClose, onSubmit, grade = null, isGenerateCode 
                         <tr>
                             {
                                 !isGenerateCode &&
-                                <th className='bolder' width={'15%'}>{t('student.student_code')}*</th>
+                                <th className='bolder' width={'10%'}>{t('student.student_code')}*</th>
                             }
-                            <th className='bolder' width={'10%'}>{t('student.entry_date')}*</th>
-                            <th className='bolder' width={'15%'}>{t('student.last_name')}*</th>
-                            <th className='bolder' width={'15%'}>{t('student.first_name')}*</th>
-                            <th className='bolder' width={'10%'}>{t('student.birth_date')}</th>
-                            <th className='bolder' width={'8%'}>{t('gender')}*</th>
+                            <th className='bolder' width={'8%'}>{t('student.entry_date')}*</th>
+                            <th className='bolder' width={'12%'}>{t('student.last_name')}*</th>
+                            <th className='bolder' width={'12%'}>{t('student.first_name')}*</th>
+                            <th className='bolder' width={'8%'}>{t('student.birth_date')}</th>
+                            <th className='bolder' width={'10%'}>{t('gender')}*</th>
                             <th className='bolder' width={'10%'}>{t('register_number')}</th>
                             <th className='bolder' width={'10%'}>{t('movement.from_school_name')}</th>
                             <th className='bolder' width={'1%'}></th>
@@ -195,6 +195,11 @@ const AddStudentMovementIn = ({ onClose, onSubmit, grade = null, isGenerateCode 
                                             options={genderOptions}
                                             placeholder={'-' + t('select') + '-'}
                                             onChange={(e, data) => handleChange(key, 'gender', data?.value)}
+                                            style={{
+                                                minHeight: '2.3em',
+                                                height: '2.3em',
+                                                paddingTop: '0.6em'
+                                            }}
                                         />
                                     </td>
                                     <td className='p-1'>
@@ -258,9 +263,10 @@ const AddStudentMovementIn = ({ onClose, onSubmit, grade = null, isGenerateCode 
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }

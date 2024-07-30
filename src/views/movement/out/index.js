@@ -54,6 +54,7 @@ const index = () => {
     const config = {
         excelExport: true,
         printButton: true,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.out')}`,
         defaultSort: [{
             dataField: sort,
             order: order
@@ -233,7 +234,7 @@ const index = () => {
 
             <div className='m-content'>
                 <Row className=''>
-                    <Col xl="12" xxl="12">
+                    <Col className='col'>
                         <div className='d-flex gap-2'>
                             <button
                                 onClick={() => setShowAddModal(true)}
@@ -251,6 +252,7 @@ const index = () => {
                                     config={config}
                                     data={tableData}
                                     columns={columns}
+                                    clickContextMenu
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={handleContextMenuClick}
                                     onInteraction={onUserInteraction}

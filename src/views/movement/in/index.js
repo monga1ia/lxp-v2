@@ -24,7 +24,7 @@ import ExcelModal from './modals/excel'
 import { fetchRequest } from 'utils/fetchRequest'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import { movementInIndex, movementInCreate, movementInSubmitAvatar } from 'utils/fetchRequest/Urls'
+import { movementInIndex, movementInCreate, movementInAvatar } from 'utils/fetchRequest/Urls'
 
 const localStorageSelectedTree = 'movement_in_selected_tree_index'
 const tableIndex = 'movement_in_table_index'
@@ -247,22 +247,34 @@ const index = () => {
     }
 
     const handleAvatarUpload = params => {
+        let updateParams = Object.assign(params, {
+            school: selectedSchool?.id,
+            grade: selectedTreeData,
+            student: selectedTableData?.studentId
+        })
         setLoading(true)
-        // fetchRequest(movementInSubmitAvatar, 'POST', { photo: params?.image, student: selectedTableData?.studentId })
-        //     .then((res) => {
-        //         if (res.success) {
-        //             init()
-        //             closeModal()
-        //             message(res.data.message, res.success)
-        //         } else {
-        //             message(res.data.message)
-        //         }
-        //         setLoading(false)
-        //     })
-        //     .catch(() => {
-        //         message(t('err.error_occurred'))
-        //         setLoading(false)
-        //     })
+        fetchRequest(movementInAvatar, 'POST', updateParams)
+            .then((res) => {
+                if (res.success) {
+                    const clone = [...tableData]
+                    for (let c = 0; c < clone.length; c++) {
+                        if (clone[c].studentId === res?.student) {
+                            clone[c].avatar = res?.path;
+                            break;
+                        }
+                    }
+                    setTableData(clone)
+                    closeModal()
+                    message(res.message, res.success)
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     const getCheckedStudents = () => {
@@ -300,12 +312,12 @@ const index = () => {
             } else if (key === 'sheet') {
                 setShowRegistrationSheetModal(true)
             } else if (key === 'studentBook') {
-                history.push('/student/book', {
-                    state: {
-                        id: student?.studentId,
-                        urlData: {
-                            backUrl: '/movement/in',
-                        }
+                history.push('/class/student-book', {
+                    id: student?.studentId,
+                    classId: student?.classId,
+                    className: student?.className,
+                    urlData: {
+                        backUrl: '/movement/in',
                     }
                 })
             }
@@ -460,7 +472,7 @@ const index = () => {
                                 <span className='ml-2'>{t('action.register')}</span>
                             </Link>
                             }*/}
-                            {
+                            {/* {
                                 // secureLocalStorage?.getItem('personInfo')?.roles?.includes('ROLE_EXCEL_UPLOADER') && secureLocalStorage?.getItem('selectedSchool')?.value &&
                                 <button
                                     onClick={() => setShowExcelModal(true)}
@@ -469,7 +481,7 @@ const index = () => {
                                     <UploadFileRoundedIcon />
                                     <span className='ml-2'>{t('excel_import')}</span>
                                 </button>
-                            }
+                            } */}
                             {
                                 getCheckedStudents() && getCheckedStudents()?.length > 0 &&
                                 <button

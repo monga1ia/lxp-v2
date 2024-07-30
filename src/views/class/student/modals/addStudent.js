@@ -179,7 +179,7 @@ const AddStudentModal = ({ onClose, onSubmit, data }) => {
     
 
     const handleAvatarUpload = params => {
-        setStudent({ ...student, photo: params.image, fileType: params.imageType, })
+        setStudent({ ...student, photo: params.image, fileType: params.imageType})
     }
 
     const handleAvatarRemove = () => {

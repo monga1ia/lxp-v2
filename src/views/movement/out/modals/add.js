@@ -173,7 +173,7 @@ const AddStudentMovementOut = ({onClose}) => {
                                         placeholder={'-' + t('err.select_class') + '-'}
                                     />
                                 </div>
-                                <div className='col-3' />
+                                {/* <div className='col-3 border'/> */}
                             </div>
                             <div className={'form-group m-form__group row'}>
                                 <label className="col-form-label col-md-4 col-sm-12 text-right label-pinnacle-bold">
@@ -192,7 +192,7 @@ const AddStudentMovementOut = ({onClose}) => {
                                         placeholder={'-' + t('err.select_student') + '-'}
                                     />
                                 </div>
-                                <div className='col-3' />
+                                {/* <div className='col-3 border' /> */}
                             </div>
                             {
                                 movementData?.student?.value &&
@@ -231,9 +231,6 @@ const AddStudentMovementOut = ({onClose}) => {
                                     {t('description')}
                                 </label>
                                 <div className="col-md-4 col-sm-12">
-                                    {
-                                        console.log('>>>', movementData)
-                                    }
                                     <textarea
                                         rows={5}
                                         className='form-control'

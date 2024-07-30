@@ -71,8 +71,9 @@ const newsFeed = {
 // import NewsFeedConfigNew from './src/Components/newsfeed/config'
 }
 
-const group = {
+const schoolClass = {
     attendance: lazy(() => import("views/class/attendance/index")),
+    studentBook: lazy(() => import("views/class/student/studentBook/index")),
     student: lazy(() => import("views/class/student/index")),
     parents: lazy(() => import("views/class/parents/index")),
     timetable: lazy(() => import("views/class/timetable/index")),
@@ -353,53 +354,50 @@ const routesAndMenuItems = {
                 {
                     path: '/attendance',
                     label: "menu.class.attendance",
-                    component: group.attendance,
+                    component: schoolClass.attendance,
                 },
                 {
                     path: "/student",
                     label: "menu.class.student",
-                    component: group.student,
+                    component: schoolClass.student,
                 },
                 {
                     path: "/parents",
                     label: "menu.class.parents",
-                    component: group.parents,
+                    component: schoolClass.parents,
                 },
                 {
                     path: "/timetable",
                     label: "menu.class.timetable",
-                    component: group.timetable,
+                    component: schoolClass.timetable,
                 },
                 {
                     path: "/calendar",
                     label: "menu.class.class_calendar",
-                    component: group.calendar,
+                    component: schoolClass.calendar,
                 },
                 {
                     path: "/exams",
                     label: "menu.class.progress_exams",
-                    component: group.exams,
+                    component: schoolClass.exams,
                 },
                 {
                     path: "/results",
                     label: "menu.class.results",
-                    component: group.results,
+                    component: schoolClass.results,
                 },
                 {
                     path: "/reports",
                     label: "menu.class.reports",
-                    component: group.reports,
+                    component: schoolClass.reports,
                 },
-                // {
-                //     path: `/student/book`,
-                //     // path: `${appRoot}/student/book`,
-                //     component: classes.studentBook,
-                //     hideSideBar: true,
-                //     menuHidden: true,
-                //     // exact: true,
-                //     // redirect: true,
-                //     // to: `${appRoot}/student/book`
-                // },
+                {
+                    path: `/student-book`,
+                    component: schoolClass.studentBook,
+                    hideSideBar: true,
+                    menuHidden: true,
+                    exact: true
+                },
             ],
         },
         {

@@ -130,6 +130,7 @@ tr.dt-drag-hover-bottom td {
 #pageDropDown {
     border-color: #ebedf2 !important;
     height: 33px !important;
+    padding-top: 8px;
 }
 
 .table thead th {
