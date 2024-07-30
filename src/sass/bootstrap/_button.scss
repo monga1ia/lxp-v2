@@ -28,7 +28,7 @@ button {
   border-radius: var(--border-radius-md);
   // color: var(--light-text) !important;
   // btn class olon gazar ashiglaj bga tull important arilgav
-  color: var(--light-text);
+  // color: var(--light-text);
   white-space: nowrap;
   &.shadow {
     @include shadow-and-border();

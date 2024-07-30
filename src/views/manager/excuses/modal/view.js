@@ -330,7 +330,7 @@ const view = ({onClose, id, type}) => {
                 !showAttachment && <Modal.Footer className="text-center">
                     <div className='text-center w-100'>
                         <button
-                            className="btn m-btn--pill btn-outline-metal m-btn m-btn--custom"
+                            className="btn m-btn--pill btn-outline-metal"
                             onClick={onClose}
                         >
                             {translations(locale)?.close}
