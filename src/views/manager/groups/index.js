@@ -5,6 +5,7 @@ import { translations } from "utils/translations";
 import { Checkbox, Dropdown, Modal, Tab } from 'semantic-ui-react'
 import DTable from "modules/DataTable/DTable";
 import TreeView from "modules/TreeView";
+import { useSelector } from 'react-redux'
 import { sessionService } from 'redux-react-session';
 import { Row, Col, Button } from "react-bootstrap";
 import HtmlHead from 'components/html-head/HtmlHead';
@@ -13,9 +14,14 @@ import message from "modules/message";
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import LinkIcon from '@mui/icons-material/Link';
+import LinkOffIcon from '@mui/icons-material/LinkOff';
 import CloseIcon from '@mui/icons-material/Close';
 import secureLocalStorage from "react-secure-storage";
 import { useTranslation } from "react-i18next";
+
+import { fetchRequest } from 'utils/fetchRequest'
+import { managerGroupIndex } from 'utils/fetchRequest/Urls'
 
 import ViewStudent from "./modals/view";
 import AddGroup from "./modals/addGroup";
@@ -27,176 +33,41 @@ const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
 const index = () => {
 
-
-
-
-
     // index нь class, props байсан, back-аас data орж ирж байгаа нь шал өөр юм бн. эхлээд editModal ороод үзээрэй
-
     // LXP v1 location: lxp\assets\src\Components\manager\group
 
-
-
-
-    
-    const treeIndex = 'manager_group_tree_index';
     const { t } = useTranslation()
+    const { selectedSchool } = useSelector(state => state.schoolData);
+    const treeIndex = 'manager_group_tree_index_' + selectedSchool?.id;
 
     const title = t('omr_exam_template.subject_group');
-    const description = "E-learning";
+    const description = t('omr_exam_template.subject_group');
     const breadcrumbs = [
         { to: "", text: "Home" },
-        { to: "school/teacher", text: title }
+        { to: "manager/groups", text: title }
     ];
+
+    const [loading, setLoading] = useState(false)
+    const [initLoaded, setInitLoaded] = useState(false)
+
+    const [hasGoogleClassRoom, setHasGoogleClassRoom] = useState(false)
 
     const [editSubjectGroup, setEditSubjectGroup] = useState([''])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
-    const [showLoader, setShowLoader] = useState(false)
 
     const [showModalError, setShowModalError] = useState(false)
     const [showStudentModal, setShowStudentModal] = useState(false)
-    const [treeData, setTreeData] = useState([{
-        id: "2116",
-        gradeId: 2,
-        name: "Бага анги",
-        ordering: 1,
-        children: [
-            {
-                id: "2117",
-                gradeId: 5,
-                name: "1-р анги",
-                ordering: 1,
-                children: [],
-                key: "2117",
-                title: "1-р анги"
-            },
-            {
-                id: "2118",
-                gradeId: 6,
-                name: "2-р анги",
-                ordering: 2,
-                children: [],
-                key: "2118",
-                title: "2-р анги"
-            },
-        ],
-        key: "2116",
-        title: "Бага анги"
-    }])
+    const [treeData, setTreeData] = useState([])
     const [sessionObj, setSessionObj] = useState({})
     const [existingTrees, setExistingTrees] = useState([])
-    const [selectedTreeId, setSelectedTreeId] = useState(secureLocalStorage?.getItem(treeIndex) || [])
+    const [selectedTreeId, setSelectedTreeId] = useState(secureLocalStorage?.getItem(treeIndex) || null)
     const [treeSelectedGradeId, setTreeSelectedGradeId] = useState(null)
     const [subjects, setSubjects] = useState([])
-    // useState([
-    //     {
-    //         text: "АХЛ0801 - Англи хэл",
-    //         value: 66923,
-    //         gradeIds: [
-    //             "2775"
-    //         ],
-    //         isAll: false
-    //     },
-    //     {
-    //         text: "АХЛ0901 - Англи хэл",
-    //         value: 66941,
-    //         gradeIds: [
-    //             "2784"
-    //         ],
-    //         isAll: true
-    //     },
-    //     {
-    //         text: "БИО1001 - Биологи",
-    //         value: 66960,
-    //         gradeIds: [],
-    //         isAll: false
-    //     }
-    // ])
-    const [classes, setClasses] = useState([
-        {
-            id: "6978",
-            class: "2A",
-            teacherId: "318",
-            teacherFirstName: "Baatar",
-            teacherLastName: "Bayarbat",
-            mdGradeId: 6,
-            parentGradeCode: "PRIMARY",
-            scoreType: "I-VIII",
-            shiftId: 68,
-            shift: "1-р ээлж",
-            room: "200",
-            roomNumber: "200",
-            gradeId: "2776",
-            gradeCode: "2",
-            gradeName: "2-р анги",
-            value: "6978",
-            text: "2A",
-            esisGroupId: null,
-            esisAcademicLevel: null,
-            esisAcademicLevelName: null,
-            esisProgramOfStudyId: null,
-            esisProgramStageId: null,
-            esisStudentGroupName: null,
-            esisTeacherId: null,
-            esisTeacherName: null,
-            scoreTypeId: 77,
-            scoreTypeName: "I-VIII",
-            studentCount: 20
-        },
-    ])
+    const [classes, setClasses] = useState([])
 
     const [groupSubjectTeachers, setgroupSubjectTeachers] = useState([])
     const [selectedGroupTeacherId, setSelectedGroupTeacherId] = useState(null)
-    const [list, setList] = useState([
-        {
-            id: "129579",
-            grade: "1-р анги",
-            subjectCode: "PHY0101",
-            subjectName: "Physics",
-            subject: "<b>PHY0101 - Physics</b><br/>Physics | 1А<br/> <span class=\"underline\">1А</span>",
-            groupName: "Physics | 1А",
-            classes: "1А",
-            names: "Physics | 1А<br/> <span class=\"underline\">1А</span>",
-            teacher: "0000 - Erdenejargal",
-            students: 3
-        },
-        {
-            id: "71574",
-            grade: "5-р анги",
-            subjectCode: "АХ05001",
-            subjectName: "Англи хэл",
-            subject: "<b>АХ05001 - Англи хэл</b><br/>Англи хэл | 5А<br/> <span class=\"underline\">5А</span>",
-            groupName: "Англи хэл | 5А",
-            classes: "5А",
-            names: "Англи хэл | 5А<br/> <span class=\"underline\">5А</span>",
-            teacher: "Т1111 - Elbegzaya",
-            students: 36
-        },
-        {
-            id: "90652",
-            grade: "5-р анги",
-            subjectCode: "АХЛ0501",
-            subjectName: "Англи хэл",
-            subject: "<b>АХЛ0501 - Англи хэл</b><br/>Англи хэл | Buyanbadrakh<br/> <span class=\"underline\">5А</span>",
-            groupName: "Англи хэл | Buyanbadrakh",
-            classes: "5А",
-            names: "Англи хэл | Buyanbadrakh<br/> <span class=\"underline\">5А</span>",
-            teacher: "00001 - Buyanbadrakh",
-            students: 1
-        },
-        {
-            id: "76328",
-            grade: "2-р анги",
-            subjectCode: "АХ0201",
-            subjectName: "Англи хэл",
-            subject: "<b>АХ0201 - Англи хэл</b><br/>Англи хэл 2<br/> <span class=\"underline\">2A</span>",
-            groupName: "Англи хэл 2",
-            classes: "2A",
-            names: "Англи хэл 2<br/> <span class=\"underline\">2A</span>",
-            teacher: "N0010 - Altanshagai",
-            students: 2
-        },
-    ])
+    const [list, setList] = useState([])
     const [showAddGroupModal, setShowAddGroupModal] = useState(false)
     const [modalTitle, setModalTitle] = useState(null)
     const [newSubjectGroupRow, setNewSubjectGroupRow] = useState([{
@@ -236,70 +107,108 @@ const index = () => {
         excelExport: true,
         printButton: true,
         defaultSort: [{
-            dataField: 'subjectName',
-            order: 'asc'
+            dataField: tableState?.sort || 'subjectName',
+            order: tableState?.order || 'asc'
         }],
         defaultPageOptions: {
-            page: 1,
-            sizePerPage: 10,
-            search: '',
+            page: tableState?.page || 1,
+            sizePerPage: tableState?.pageSize || 10,
+            search: tableState?.search || '',
         }
     })
     const [editGroupTeacherId, setEditGroupTeacherId] = useState(null)
     const [isSaved, setIsSaved] = useState(false)
     const [totalCount, setTotalCount] = useState(0)
 
-    const treeViewKey = 'my_subject_index';
-    
-    // const newSubjectRemoveRow = this.newSubjectRemoveRow.bind(this);
-    // this.newSubjectGroupNameChange = this.newSubjectGroupNameChange.bind(this);
-    // this._contextMenuItemClick = this._contextMenuItemClick.bind(this);
-    // this._onCustomSort = this._onCustomSort.bind(this);
-    // this.handleTreeChange = this.handleTreeChange.bind(this);
-    // this.setColumns(locale);
-
-
-    const tableColumns = [
-        {
-            dataField: "grade",
-            text: translations(locale).grade || "",
-            sort: true
-        },
-        {
-            dataField: "subjectName",
-            text: translations(locale).timetable.subject || "",
-            sort: true,
-            formatter: (cell, row) => {
-                return row.subjectCode + ' - ' + row.subjectName
+    const getColumns = (showClassRoom = false) => {
+        const columns = [
+            {
+                dataField: "grade",
+                text: translations(locale).grade || "",
+                sort: true
             },
-        },
-        {
-            dataField: "groupName",
-            text: translations(locale).omr_exam_template.subject_group || "",
-            sort: true,
-        },
-        {
-            dataField: "classes",
-            text: translations(locale).group.title || "",
-            sort: true,
-            formatter: (cell, row) => {
-                return <div className="pointer underline" onClick={() => showStudents(row.id)}>{cell}</div>
+            {
+                dataField: "subjectName",
+                text: translations(locale).timetable.subject || "",
+                sort: true,
+                formatter: (cell, row) => {
+                    return row.subjectCode + ' - ' + row.subjectName
+                },
             },
-        },
-        {
-            dataField: "teacher",
-            text: translations(locale).timetable.teacher || "",
-            sort: true
-        },
-        {
-            dataField: "students",
-            text: translations(locale).students || "",
-            sort: false,
-            formatter: (cell, row) => {
-                return <span onClick={() => showStudents(row.id)} className="underline">{cell}</span>
+            {
+                dataField: "groupName",
+                text: translations(locale).omr_exam_template.subject_group || "",
+                sort: true,
             },
+            {
+                dataField: "classes",
+                text: translations(locale).group.title || "",
+                sort: true,
+                formatter: (cell, row) => {
+                    return <div className="pointer underline" onClick={() => showStudents(row.id)}>{cell}</div>
+                },
+            },
+            {
+                dataField: "teacher",
+                text: translations(locale).timetable.teacher || "",
+                sort: true
+            },
+            {
+                dataField: "students",
+                text: translations(locale).students || "",
+                sort: false,
+                formatter: (cell, row) => {
+                    return <span onClick={() => showStudents(row.id)} className="underline">{cell}</span>
+                },
+            }
+        ];
+        if (showClassRoom) {
+            columns.unshift({
+                dataField: "classRoomLink",
+                text: "",
+                formatter: (cell, row) => {
+                    if (cell) {
+                        return <LinkIcon className='classroom-link' title='Google classroom' onClick={() => {
+                            window.open(cell, '_blank')
+                        }} />
+                    } else {
+                        return <LinkOffIcon className='classroom-linkoff' title='Google classroom'/>
+                    }
+                }
+            })
         }
-    ];
+        return columns;
+    }
+
+
+    const loadData = (params = {}) => {
+        setLoading(true)
+        fetchRequest(managerGroupIndex, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    setHasGoogleClassRoom(res?.googleClassRoom || false)
+                    setTreeData(res?.grades || [])
+                    setTotalCount(res?.totalCount || 0)
+                    setList(res?.groups || [])
+                } else {
+                    message(res.message)
+                }
+                setInitLoaded(true)
+                setLoading(false)
+            })
+            .catch((e) => {
+                console.log('E', e)
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        loadData({
+            school: selectedSchool?.id,
+            grade: selectedTreeId
+        })
+    }, [])
 
     // useEffect(() => {
     //     setNewSubjectGroupRow(subjects)
@@ -356,7 +265,7 @@ const index = () => {
     const closeDeleteModal = () => {
         setShowDeleteModal(false)
     };
-    
+
     const initActionHandler = () => {
         // let that = this;
         // sessionService.loadSession().then(session => {
@@ -389,7 +298,7 @@ const index = () => {
         //             showLoader: true,
         //         });
 
-        
+
 
         //         props.fetchMySchoolTimetableInit(params);
         //     } else {
@@ -403,7 +312,7 @@ const index = () => {
         //         props.fetchMySchoolTimetableInit();
         //     }
 
-        if(selectedTreeId){
+        if (selectedTreeId) {
             let params = {
                 grade: selectedTreeId
             };
@@ -453,7 +362,7 @@ const index = () => {
                     details: JSON.stringify(details),
                     type: 'all',
                     submit: 1,
-                    grade: selectedTreeId[0],
+                    grade: selectedTreeId,
                     page: tableState.page,
                     pageSize: tableState.pageSize,
                     search: tableState.search,
@@ -504,7 +413,7 @@ const index = () => {
                     name: selectedGroupName,
                     type: 'group',
                     details: JSON.stringify(details),
-                    grade: selectedTreeId[0]
+                    grade: selectedTreeId
                 }
                 setShowModalError(false)
                 setIsSaved(true)
@@ -536,7 +445,7 @@ const index = () => {
                 bodyParams = {
                     'name': selectedGroupName,
                     'group': editSubjectGroup ? editSubjectGroup.id : null,
-                    'grade': selectedTreeId[0],
+                    'grade': selectedTreeId,
                     'subject': selectedGroupSubjectId,
                     'teacher': editGroupTeacherId,
                     'type': 'all',
@@ -578,7 +487,7 @@ const index = () => {
                         'details': JSON.stringify(details),
                         'group': editSubjectGroup ? editSubjectGroup.id : null,
                         'name': selectedGroupName,
-                        'grade': selectedTreeId[0],
+                        'grade': selectedTreeId,
                         'subject': selectedGroupSubjectId,
                         'teacher': editGroupTeacherId,
                         'submit': 1,
@@ -607,7 +516,7 @@ const index = () => {
     const _onSubmitDelete = () => {
         let params = {
             group: deleteGroupId,
-            grade: selectedTreeId[0],
+            grade: selectedTreeId,
             page: tableState.page,
             pageSize: tableState.pageSize,
             search: tableState.search,
@@ -634,28 +543,17 @@ const index = () => {
 
     const handleTreeChange = (idArray) => {
         if (idArray && idArray.length > 0) {
-            let clone = {
-                page: 1,
-                pageSize: tableState.pageSize,
-                search: tableState.search,
-                order: tableState.order,
-                sort: tableState.sort,
-            }
-
-            let params = {
+            setSelectedTreeId(idArray[0])
+            secureLocalStorage?.setItem(treeIndex, idArray[0]);
+            loadData({
+                school: selectedSchool?.id,
                 grade: idArray[0],
                 page: 1,
-                pageSize: tableState.pageSize,
-                search: tableState.search,
-                order: tableState.order,
-                sort: tableState.sort,
-            };
-                        
-            setTableState(clone)
-            setSelectedTreeId(idArray)
-
-            secureLocalStorage?.setItem(treeIndex, idArray);
-            // this.props.fetchMySchoolTimetableInit(params)
+                pageSize: tableState?.pageSize,
+                search: tableState?.search,
+                sort: tableState?.sort,
+                order: tableState?.order
+            })
         }
     };
 
@@ -680,42 +578,32 @@ const index = () => {
     //     }
     // }
 
-    const handleInteraction = state => {
-        if(state.page){
-            if(state.search){
-                let tableStateClone = {
-                    page: 1,
-                    pageSize: state.pageSize,
-                    search: state.search,
-                    sort: state.sort,
-                    order: state.order
-                }
-                setTableState(tableStateClone)
-        
-                let params = {
-                    grade: selectedTreeId,
-                    page: 1,
-                    pageSize: state.pageSize,
-                    search: state.search,
-                    sort: state.sort,
-                    order: state.order,
-                };
-        
-                // this.props.fetchMySchoolTimetableInit(params);
-            } else {
-                setTableState(state)
+    const onUserInteraction = state => {
 
-                let params = {
-                    grade: selectedTreeId,
-                    page: state.page,
-                    pageSize: state.pageSize,
-                    search: state.search,
-                    sort: state.sort,
-                    order: state.order,
-                };
-        
-                // this.props.fetchMySchoolTimetableInit(params);
+        if (initLoaded) {
+            let page = state?.page
+            if (tableState?.search !== state?.search) {
+                page = 1;
             }
+
+            let params = {
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            }
+
+            setTableState(params)
+            loadData({
+                school: selectedSchool?.id,
+                grade: selectedTreeId,
+                page: page,
+                pageSize: state?.pageSize,
+                search: state?.search,
+                sort: state?.sort,
+                order: state?.order
+            })
         }
     }
 
@@ -737,7 +625,7 @@ const index = () => {
                                 {
                                     <TreeView
                                         treeData={treeData}
-                                        selectedNodes={selectedTreeId}
+                                        selectedNodes={[selectedTreeId]}
                                         onSelect={handleTreeChange}
                                         defaultExpandAll
                                     />
@@ -753,7 +641,7 @@ const index = () => {
                                 onClick={() => setShowAddGroupModal(true)}
                                 className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
                             >
-                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
+                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize' />
                                 <span className='ml-2'>{translations(locale).add || null}</span>
                             </button>
                         }
@@ -763,12 +651,12 @@ const index = () => {
                                     remote
                                     config={tableConfig}
                                     data={list}
-                                    columns={tableColumns}
+                                    columns={getColumns(hasGoogleClassRoom)}
                                     locale={locale}
                                     clickContextMenu
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={_contextMenuItemClick}
-                                    onInteraction={handleInteraction}
+                                    onInteraction={onUserInteraction}
                                     totalDataSize={totalCount}
                                 />
                             </div>
@@ -777,23 +665,20 @@ const index = () => {
                 </div>
             </div>
             {
-                showLoader &&
-                <div>
-                    <div className="blockUI blockOverlay">
-                    </div>
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg">
-                        </div>
-                    </div>
+                loading &&
+                <div className='loader-container'>
+                    <svg className="splash-spinner" viewBox="0 0 50 50">
+                        <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
+                    </svg>
                 </div>
             }
-            { 
-                showAddGroupModal &&        
+            {
+                showAddGroupModal &&
                 <AddGroup
                     onClose={closeModal}
                     onSubmit={_onSubmit}
                     modalTabI={(data) => setModalTabIndex(data)}
-                    data={{ newSubjectGroupRow, showModalError, selectedTreeId, classes}}
+                    data={{ newSubjectGroupRow, showModalError, selectedTreeId, classes }}
                 />
             }
             {
@@ -802,7 +687,7 @@ const index = () => {
                     onClose={closeEditModal}
                     onSubmit={_onEditSubmit}
                     selectedTableId={selectedTableDataId}
-                    data={{newSubjectGroupRow, editGroupIsClass}}
+                    data={{ newSubjectGroupRow, editGroupIsClass }}
                 />
             }
             {
@@ -814,7 +699,7 @@ const index = () => {
                 />
             }
             {
-                showDeleteModal && 
+                showDeleteModal &&
                 <DeleteModal
                     show={showDeleteModal}
                     onClose={closeDeleteModal}
@@ -822,7 +707,7 @@ const index = () => {
                     locale={locale}
                     title={t('delete')}
                 >
-                <div className="row">
+                    <div className="row">
                         <div className="col-md-12">
                             <div>
                                 <p>{translations(locale).delete_confirmation || null}</p>
