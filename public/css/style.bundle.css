@@ -21505,7 +21505,7 @@ code {
     box-shadow: none !important;
     cursor: pointer;
     border-radius: 0;
-    border-radius: .25rem
+    border-radius: .25rem;
 }
 
 .btn > i {

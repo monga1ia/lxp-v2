@@ -7,6 +7,19 @@ import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import { useTranslation } from "react-i18next"
 
+const styles = {
+    label_style: {
+        fontSize : 14,
+        color: '#575962',
+        fontWeight: 400
+    },
+    field_style: {
+        fontSize : 14,
+        color: '#575962',
+        fontWeight: 700
+    }    
+}
+
 const restore = ({ onClose, id, onSubmit }) => {
     const { t } = useTranslation();
     const locale = 'mn'
@@ -64,32 +77,32 @@ const restore = ({ onClose, id, onSubmit }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td className='text-right pr-3' style={{ color: '#868aa8' }}>{t('className')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.className || '-'}</td>
+                                        <td className='text-right pr-3' style={styles.label_style}>{t('className')}:</td>
+                                        <td style={styles.field_style}>{movement?.className || '-'}</td>
                                     </tr>
                                     <tr>
-                                        <td className='text-right pr-3' style={{ color: '#868aa8' }}>{t('studentCode')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.studentCode || '-'}</td>
+                                        <td className='text-right pr-3' style={styles.label_style}>{t('studentCode')}:</td>
+                                        <td style={styles.field_style}>{movement?.studentCode || '-'}</td>
                                     </tr>
                                     <tr>
-                                        <td className='text-right pr-3' style={{ color: '#868aa8' }}>{t('studentLastName')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.lastName || '-'}</td>
+                                        <td className='text-right pr-3' style={styles.label_style}>{t('studentLastName')}:</td>
+                                        <td style={styles.field_style}>{movement?.lastName || '-'}</td>
                                     </tr>
                                     <tr>
-                                        <td className='text-right pr-3' style={{ color: '#868aa8' }}>{t('studentFirstName')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.firstName || '-'}</td>
+                                        <td className='text-right pr-3' style={styles.label_style}>{t('studentFirstName')}:</td>
+                                        <td style={styles.field_style}>{movement?.firstName || '-'}</td>
                                     </tr>
                                     <tr>
-                                        <td className='text-right pr-3' style={{ color: '#868aa8' }}>{t('created_date')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.createdDate || '-'}</td>
+                                        <td className='text-right pr-3' style={styles.label_style}>{t('created_date')}:</td>
+                                        <td style={styles.field_style}>{movement?.createdDate || '-'}</td>
                                     </tr>
                                     <tr>
-                                        <td className='text-right pr-3' style={{ color: '#868aa8' }}>{t('created_user')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.createdUserName || '-'}</td>
+                                        <td className='text-right pr-3' style={styles.label_style}>{t('created_user')}:</td>
+                                        <td style={styles.field_style}>{movement?.createdUserName || '-'}</td>
                                     </tr>
                                     <tr>
-                                        <td className='text-right pr-3 vertical' style={{ color: '#868aa8' }}>{t('description')}:</td>
-                                        <td style={{ color: '#575962' }}>{movement?.description || '-'}</td>
+                                        <td className='text-right pr-3 vertical' style={styles.label_style}>{t('description')}:</td>
+                                        <td style={styles.field_style}>{movement?.description || '-'}</td>
                                     </tr>
                                 </tbody>
                             </table>
