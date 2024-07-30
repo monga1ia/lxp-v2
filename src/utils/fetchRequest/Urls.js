@@ -40,6 +40,9 @@ export const movementInIndex = 'movement/in/index'
 export const movementInCreate = 'movement/in/create'
 export const movementInAvatar = 'movement/in/avatar'
 
+// manager
+export const managerGroupIndex = 'manager/group/index'
+
 // staff
 // export const schoolStaffIndex = 'api/employee/init'
 // export const schoolStaffSubmit = 'api/employee/submit'
