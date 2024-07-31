@@ -1,28 +1,23 @@
-import message from 'modules/message'
 import { Modal } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
+import message from "modules/message";
+import { useSelector } from 'react-redux'
 import DTable from 'modules/DataTable/DTable'
 import { useTranslation } from "react-i18next";
 
+import { fetchRequest } from 'utils/fetchRequest'
+import { managerGroupView } from 'utils/fetchRequest/Urls'
+
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const ViewStudent = ({ onClose, selectedId }) => {
-
-    console.log('SelectedDataID>>>>>>>>>>>>>>>>>    ' + selectedId)
+const ViewStudent = ({ onClose, groupId, title = null }) => {
 
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
     const [loading, setLoading] = useState(false)
-    const [viewStudentLists, setViewStudentLists] = useState([{
-        "id": "4",
-        "avatar": null,
-        "className": "2A",
-        "studentCode": "152201001",
-        "lastName": "Баяр",
-        "firstName": "Жаргал"
-    }])
-    const [viewStudentListCount, setViewStudentListCount] = useState(0)
+    const [studentList, setStudentLists] = useState([])
 
     const studentModalConfig = {
         showPagination: false,
@@ -67,9 +62,31 @@ const ViewStudent = ({ onClose, selectedId }) => {
         },
     ];
 
-    // useEffect(() => {
-    //     setViewStudentListCount([])
-    // })
+    const loadData = (groupId = null) => {
+        const params = {
+            school: selectedSchool?.id,
+            group: groupId
+        }
+        setLoading(true)
+        fetchRequest(managerGroupView, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    setStudentLists(res?.students)
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch((e) => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    };
+
+
+    useEffect(() => {
+        loadData(groupId)
+    }, [groupId])
 
     return (
         <Modal
@@ -80,20 +97,20 @@ const ViewStudent = ({ onClose, selectedId }) => {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('action.view')}
+                    {title || t('action.view')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className='pt-0'>
                 <div className="myToday-group-student-modal-style">
                     <div>
                         <span style={{ position: 'relative', top: 45, left: 2, color: '#575962', fontSize: 14 }} >
-                            {t('total') + ': ' + viewStudentListCount}
+                            {t('total') + ': ' + studentList?.length}
                         </span>
                         <DTable
                             config={studentModalConfig}
-                            data={viewStudentLists}
+                            data={studentList}
                             columns={studentModalColumn}
                             locale={locale}
                         />
@@ -111,9 +128,10 @@ const ViewStudent = ({ onClose, selectedId }) => {
             {
                 loading &&
                 <>
-                    <div className="blockUI blockOverlay" />
-                    <div className="blockUI blockMsg blockPage">
-                        <div className="m-loader m-loader--brand m-loader--lg" />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import { useTranslation } from "react-i18next";
 import { Tab, Checkbox } from 'semantic-ui-react';
@@ -7,156 +7,203 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown';
 import CloseIcon from '@mui/icons-material/Close';
 import { translations } from 'utils/translations';
 import secureLocalStorage from "react-secure-storage";
+import message from "modules/message";
+import { useSelector } from 'react-redux'
+import { fetchRequest } from 'utils/fetchRequest'
+import { managerGroupEdit, schoolClassStudents } from 'utils/fetchRequest/Urls'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId }) => {
-    
-    console.log('selected data to edit>>>>>>>>> ' + selectedTableId)
+const EditModal = ({ onClose, groupId }) => {
 
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
 
-    const [modalTabIndex, setModalTabIndex] = useState(0)
-    const [isClassSubjects, setIsClassSubjects] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const [isAll, setIsAll] = useState(false)
+    const [groupObj, setGroupObj] = useState(null)
     const [showModalError, setShowModalError] = useState(false)
-    const [addAgain, setAddAgain] = useState(false)
-    const [selectedGroupSubjectId, setSelectedGroupSubjectId] = useState(null)
-    const [isNonClassSubjects, setIsNonClassSubjects] = useState([])
-    const [selectedGroupTeacherId, setSelectedGroupTeacherId] = useState(null)
+    const [teachers, setTeachers] = useState([])
+    const [selectedTeacherId, setSelectedTeacherId] = useState(null)
     const [selectedGroupName, setSelectedGroupName] = useState('')
-    const [groupTotalStudents, setGroupTotalStudents] = useState(0)
 
-    const [editSubjectGroup, setEditSubjectGroup] = useState(true) 
+    const [groupClassRows, setGroupClassRows] = useState([])
+    const [allClasses, setAllClasses] = useState([])
 
+    const [groupTotalStudentCount, setGroupTotalStudentCount] = useState(0)
+    const [updateView, setUpdateView] = useState(false)
 
+    const loadData = (params) => {
+        setLoading(true)
+        fetchRequest(managerGroupEdit, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    setGroupObj(res?.group || {})
+                    setSelectedGroupName(res?.group?.name || '')
+                    setIsAll(res?.group?.isClass)
+                    setTeachers(res?.teachers || [])
+                    setSelectedTeacherId(res?.group?.teacherId)
+                    setGroupClassRows(res?.classes || [])
+                    calculateStudentCount(res?.classes || [])
+                    setAllClasses(res?.allClasses || [])
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
 
-    
-    //  /\
-    // /  \
-    //  ||
-    //  ||
-    //  ||
-    //  хуучин код нь data request хийхдээ fetchrequest 
-    // ашиглаагүй болохоор .then .catch гэх condition - уудын оронд - 
-    // check out line 94, 106
-    // (анхнаасаа fetchrequest import хийгээгүй байсн)
+    useEffect(() => {
+        loadData({
+            school: selectedSchool?.id,
+            group: groupId
+        })
+    }, [groupId])
 
-
-
-
-
-    
-
-    const [editGroupTeacherId, setEditGroupTeacherId] = useState(null)
-    const [editGroupTeachers, setEditGroupTeachers] = useState([])
-
-    const [editGroupIsClass, setEditGroupIsClass] = useState(data?.editGroupIsClass)
-
-
-    const [newSubjectGroupRow, setNewSubjectGroupRow] = useState(data?.newSubjectGroupRow || [{
-        class: null,
-        allStudents: [],
-        group_student: []
-    }])
-        
-    const newSubjectGroupAddRow = () => {
-        setNewSubjectGroupRow([...newSubjectGroupRow, {
+    const classRowAdd = () => {
+        setGroupClassRows([...groupClassRows, {
             class: null,
             allStudents: [],
-            group_student: []
+            students: []
         }])
     };
-    
-    const newSubjectGroupRemoveRow = (index) => {
+
+    const classRowRemove = (index) => {
         if (index != 0) {
-            const rows = [...newSubjectGroupRow]
+            const rows = [...groupClassRows]
             rows.splice(index, 1)
-            let totalStudents = 0;
-
-            for (let i = 0; i < newSubjectGroupRow.length; i++) {
-                totalStudents = totalStudents + newSubjectGroupRow[i].group_student.length;
-            }
-            setGroupTotalStudents(totalStudents)
-
-            setNewSubjectGroupRow(rows)
+            calculateStudentCount(rows)
+            setGroupClassRows(rows)
         }
     }
 
-    const newSubjectGroupNameChange = (e) => {
+    const onNameChange = (e) => {
         setSelectedGroupName(e.target.value)
-        setShowModalError(false)
     }
-    
-    const _getGroupRowClasses = () => {
-        let classes = [];
-        const subjects = [...isNonClassSubjects];
-        const selectedSubject = subjects.find(subject => subject.value == selectedGroupSubjectId);
 
-        if (selectedSubject && selectedSubject.gradeIds) {
-            const allClasses = [...classes];
-            allClasses.forEach(el => {
-                selectedSubject.gradeIds.indexOf(el.gradeId) > -1 && classes.push(el)
+    const getGroupClasses = (rowClassId = null) => {
+        const selectedClassIds = groupClassRows?.filter(obj => obj?.class)?.map(obj => obj?.class?.id)
+        return allClasses?.filter(obj => {
+            if (selectedClassIds?.length > 0) {
+                return groupObj?.gradeIds.indexOf(obj?.gradeId) > -1 && (rowClassId === obj?.id || selectedClassIds?.indexOf(obj?.id) < 0)
+            } else {
+                return groupObj?.gradeIds.indexOf(obj?.gradeId) > -1
+            }
+        })
+    }
+
+    const onTeacherChange = (e, data) => {
+        setSelectedTeacherId(data.value)
+    }
+
+    const calculateStudentCount = (rows = []) => {
+        let totalStudentCount = 0;
+        for (let i = 0; i < rows.length; i++) {
+            totalStudentCount = totalStudentCount + rows[i].students?.length;
+        }
+        setGroupTotalStudentCount(totalStudentCount)
+    }
+
+    const loadClassStudents = (index, classId = null) => {
+        const params = {
+            school: selectedSchool?.id,
+            class: classId
+        }
+        const clone = [...groupClassRows]
+        clone[index].class = {
+            id: classId,
+            name: getGroupClasses()?.find(obj => obj?.value === classId)?.text,
+            gradeId: getGroupClasses()?.find(obj => obj?.value === classId)?.gradeId,
+            gradeName: getGroupClasses()?.find(obj => obj?.value === classId)?.gradeName,
+        }
+        clone[index].allStudents = []
+        clone[index].students = []
+
+        setLoading(true)
+        fetchRequest(schoolClassStudents, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    clone[index].allStudents = res?.students;
+                    setGroupClassRows(clone)
+
+                    setUpdateView(!updateView)
+                } else {
+                    setGroupClassRows(clone)
+                    message(res.message)
+                }
+                setLoading(false)
             })
-        }
-        return classes;
-    }
+            .catch((e) => {
+                setGroupClassRows(clone)
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    };
 
-    const _getGradeIsClassSubjects = () => {
-        if (editSubjectGroup) {
-            const isClassSubjectsClone = [...isClassSubjects];
-            const { gradeId = null } = editSubjectGroup;
-            if (gradeId) {
-                return isClassSubjectsClone.filter(subject => subject.gradeIds.indexOf(gradeId) > -1);
+    const onClickSubmit = () => {
+        let hasError = false;
+        let params = {
+            school: selectedSchool?.id,
+            submit: 1,
+            type: isAll ? 'class' : 'group',
+            group: groupId
+        }
+        if (!selectedTeacherId) {
+            hasError = true;
+        }
+        if (!selectedGroupName || selectedGroupName?.length === 0) {
+            hasError = true;
+        }
+        params['teacher'] = selectedTeacherId;
+        params['groupName'] = selectedGroupName;
+
+        if (!isAll) {
+            // group 
+            const rows = [...groupClassRows]
+            const groupParams = []
+            for (let r = 0; r < rows?.length; r++) {
+                const rowObj = rows[r]
+                if (!rowObj.class) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj?.students || rowObj?.students?.length === 0) {
+                    hasError = true;
+                    break;
+                }
+                groupParams.push({
+                    class: rowObj?.class,
+                    students: rowObj?.students
+                })
             }
-            return [];
+
+            params['classes'] = groupParams;
         }
-        return [];
-    }
-
-    const _getGradeIsNonClassSubjects = () => {
-        if (editSubjectGroup) {
-            const isNonClassSubjectsClone = [...isNonClassSubjects];
-            const { gradeId = null } = editSubjectGroup;
-            if (gradeId) {
-                return isNonClassSubjectsClone.filter(subject => subject.gradeIds.indexOf(gradeId) > -1)
-            }
-            return [];
+        if (hasError) {
+            setShowModalError(true)
+            message(t('err.fill_all_fields'))
+        } else {
+            setLoading(true)
+            fetchRequest(managerGroupEdit, 'POST', params)
+                .then((res) => {
+                    if (res.success) {
+                        message(res.message, true)
+                        onClose(true)
+                    } else {
+                        message(res.message)
+                    }
+                    setLoading(false)
+                })
+                .catch((e) => {
+                    message(t('err.error_occurred'))
+                    setLoading(false)
+                });
         }
-        return [];
-    }
-
-    // const _editGroupSubjectChange = (e, data) => {
-    //     this.setState({
-    //         selectedGroupSubjectId: data.value,
-    //         editGroupTeacherId: null,
-    //         newSubjectGroupRow: [{
-    //             class: null,
-    //             allStudents: [],
-    //             group_student: []
-    //         }],
-    //     })
-    // }
-
-    const _editGroupTeacherChange = (e, data) => {
-        setEditGroupTeacherId(data.value)
-    }
-
-    const _getGroupTeachers = () => {
-        if (selectedGroupSubjectId) {
-            const teachers = [...editGroupTeachers];
-            return teachers.filter(teacher => teacher.subject === selectedGroupSubjectId?.toString());
-        }
-        return [];
-    }
-
-    const _getTotalStudentsNumber = () => {
-        let count = 0;
-        for (const row of newSubjectGroupRow) {
-            if (row && row.group_student && row.group_student.length) {
-                count += row.group_student.length;
-            }
-        }
-        return count;
     }
 
     return (
@@ -164,206 +211,127 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
             size='xl'
             dimmer='blurring'
             show={true}
-            onHide={onClose}
+            onHide={() => onClose()}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                     {t('edit')}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <div className="my-4">
                 {
-                    editGroupIsClass
-                        ?
-                        <>
-                            <div className="form-group m-form__group row vertical-align-middle d-flex">
-                                <div className='col-4 text-right'>
-                                    <label className="label-pinnacle-bold">
-                                        {translations(locale).type}
-                                    </label>
-                                </div>
-                                <div className='col-5'>
-                                    <label style={{ color: '#575962', fontSize: '14px' }}>
-                                        {translations(locale).timetable.class_student}
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="form-group m-form__group row vertical-align-middle d-flex">
-                                <div className='col-4 text-right'>
-                                    <label className="label-pinnacle-bold">
-                                        {translations(locale).grade}
-                                    </label>
-                                </div>
-                                <div className='col-5'>
-                                    <label style={{ color: '#575962', fontSize: '14px' }}>
-                                        {editSubjectGroup?.gradeName}
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="form-group m-form__group row align-items-baseline">
-                                <label className="col-4 text-right label-pinnacle-bold">
-                                    {translations(locale).name || null}
+                    groupObj && <div className="my-4">
+                        <div className="form-group m-form__group row vertical-align-middle d-flex">
+                            <div className='col-4 text-right'>
+                                <label className="label-pinnacle-bold">
+                                    {translations(locale).type}
                                 </label>
-                                <div className="col-md-5 col-sm-12">
-                                    <input type="text"
-                                        className={showModalError && selectedGroupName?.length === 0 ? "form-control m-input has-error" : "form-control m-input"}
-                                        placeholder={translations(locale).insert_first_name || null}
-                                        value={selectedGroupName ? selectedGroupName : ''}
-                                        onChange={newSubjectGroupNameChange} />
-                                </div>
                             </div>
-                            <div className="form-group m-form__group row align-items-baseline">
-                                <label className="col-4 text-right label-pinnacle-bold">
-                                    {translations(locale).subject.title || null}
+                            <div className='col-5'>
+                                <label style={{ color: '#575962', fontSize: '14px' }}>
+                                    {isAll ? translations(locale).timetable.class_student : translations(locale).timetable.group_student}
                                 </label>
-                                <div className="col-5">
-                                    <Dropdown
-                                        selectOnNavigation={false}
-                                        placeholder={'-' + translations(locale).survey.choose + '-' || null}
-                                        fluid
-                                        selection
-                                        className={showModalError && !selectedGroupTeacherId ? "has-error" : ""}
-                                        search
-                                        disabled
-                                        additionPosition='bottom'
-                                        upward={false}
-                                        closeOnChange
-                                        selectOnBlur={false}
-                                        value={parseInt(selectedGroupSubjectId)}
-                                        options={_getGradeIsClassSubjects()}
-                                    // onChange={_editGroupSubjectChange}
-                                    />
-                                </div>
                             </div>
-                            <div className="form-group m-form__group row align-items-baseline">
-                                <label className="col-4 text-right label-pinnacle-bold">
-                                    {translations(locale).teacher_title || null}
-                                </label>
-                                <div className="col-5">
-                                    <Dropdown
-                                        selectOnNavigation={false}
-                                        placeholder={'-' + translations(locale).survey.choose + '-' || null}
-                                        fluid
-                                        selection
-                                        className={showModalError && !selectedGroupTeacherId ? "has-error" : ""}
-                                        search
-                                        additionPosition='bottom'
-                                        upward={false}
-                                        closeOnChange
-                                        selectOnBlur={false}
-                                        value={editGroupTeacherId}
-                                        options={_getGroupTeachers()}
-                                        onChange={_editGroupTeacherChange}
-                                    />
-                                </div>
-                            </div>
-                        </>
-                        :
-                        <>
-                            <div className="form-group m-form__group row vertical-align-middle d-flex">
-                                <div className='col-4 text-right'>
-                                    <label className="label-pinnacle-bold">
-                                        {translations(locale).type}
-                                    </label>
-                                </div>
-                                <div className='col-5'>
-                                    <label style={{ color: '#575962', fontSize: '14px'  }}>
-                                        {translations(locale).timetable.group_student}
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="form-group m-form__group row vertical-align-middle d-flex">
-                                <div className='col-4 text-right'>
-                                    <label className="  label-pinnacle-bold">
+                        </div>
+                        <div className="form-group m-form__group row vertical-align-middle d-flex">
+                            <div className='col-4 text-right'>
+                                <label className="label-pinnacle-bold">
                                     {translations(locale).grade}
                                 </label>
-                                </div>
-                                <div className='col-5'>
-                                    <label style={{ color: '#575962', fontSize: '14px'  }}>
-                                        {editSubjectGroup?.gradeName}
-                                    </label>
-                                </div>
                             </div>
-                            <div className="form-group m-form__group row">
-                                <label className="col-form-label col-md-4 col-sm-12 text-right label-pinnacle-bold">
-                                    {translations(locale).first_name || null}
+                            <div className='col-5'>
+                                <label style={{ color: '#575962', fontSize: '14px' }}>
+                                    {groupObj?.gradeNames?.toString()}
                                 </label>
-                                <div className="col-md-5 col-sm-12">
-                                    <input type="text"
-                                        className={showModalError && selectedGroupName?.length === 0 ? "form-control m-input has-error" : "form-control m-input"}
-                                        placeholder={translations(locale).insert_first_name || null}
-                                        value={selectedGroupName ? selectedGroupName : ''}
-                                        onChange={newSubjectGroupNameChange} />
-                                </div>
                             </div>
+                        </div>
+                        <div className="form-group m-form__group row align-items-baseline">
+                            <label className="col-4 text-right label-pinnacle-bold">
+                                {translations(locale).name || null}*
+                            </label>
+                            <div className="col-md-5 col-sm-12">
+                                <input type="text"
+                                    className={showModalError && selectedGroupName?.length === 0 ? "form-control m-input has-error" : "form-control m-input"}
+                                    placeholder={translations(locale).insert_first_name || null}
+                                    value={selectedGroupName ? selectedGroupName : ''}
+                                    onChange={onNameChange} />
+                            </div>
+                        </div>
+                        <div className="form-group m-form__group row align-items-baseline">
+                            <label className="col-4 text-right label-pinnacle-bold">
+                                {translations(locale).subject.title || null}
+                            </label>
+                            <div className="col-5">
+                                <Dropdown
+                                    selectOnNavigation={false}
+                                    placeholder={'-' + translations(locale).survey.choose + '-' || null}
+                                    fluid
+                                    selection
+                                    search
+                                    additionPosition='bottom'
+                                    upward={false}
+                                    closeOnChange
+                                    selectOnBlur={false}
+                                    disabled={true}
+                                    value={groupObj?.subjectId || null}
+                                    options={[
+                                        {
+                                            value: groupObj?.subjectId,
+                                            text: groupObj?.subjectName
+                                        }
+                                    ]}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group m-form__group row align-items-baseline">
+                            <label className="col-4 text-right label-pinnacle-bold">
+                                {translations(locale).teacher_title || null}*
+                            </label>
+                            <div className="col-5">
+                                <Dropdown
+                                    selectOnNavigation={false}
+                                    placeholder={'-' + translations(locale).survey.choose + '-' || null}
+                                    fluid
+                                    selection
+                                    className={showModalError && !selectedTeacherId ? "has-error" : ""}
+                                    search
+                                    additionPosition='bottom'
+                                    upward={false}
+                                    closeOnChange
+                                    selectOnBlur={false}
+                                    value={selectedTeacherId}
+                                    options={teachers?.map(obj => {
+                                        return {
+                                            value: obj?.teacherId,
+                                            text: obj?.firstName + ' (' + obj?.lastName + ')-' + obj?.teacherCode
+                                        }
+                                    })}
+                                    onChange={onTeacherChange}
+                                />
+                            </div>
+                        </div>
 
-                            <div className="form-group m-form__group row">
-                                <label className="col-form-label col-md-4 col-sm-12 text-right label-pinnacle-bold">
-                                    {translations(locale).subject.title || null}
-                                </label>
-                                <div className="col-5">
-                                    <Dropdown
-                                        selectOnNavigation={false}
-                                        placeholder={'-' + translations(locale).survey.choose + '-' || null}
-                                        fluid
-                                        selection
-                                        className={showModalError && !selectedGroupSubjectId ? "has-error" : ""}
-                                        search
-                                        disabled
-                                        additionPosition='bottom'
-                                        upward={false}
-                                        closeOnChange
-                                        selectOnBlur={false}
-                                        value={parseInt(selectedGroupSubjectId)}
-                                        options={_getGradeIsNonClassSubjects()}
-                                    // onChange={_editGroupSubjectChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-group m-form__group row">
-                                <label className="col-form-label col-md-4 col-sm-12 text-right label-pinnacle-bold">
-                                    {translations(locale).teacher_title || null}
-                                </label>
-                                <div className="col-5">
-                                    <Dropdown
-                                        selectOnNavigation={false}
-                                        placeholder={'-' + translations(locale).survey.choose + '-' || null}
-                                        fluid
-                                        selection
-                                        className={showModalError && !editGroupTeacherId ? "has-error" : ""}
-                                        search
-                                        additionPosition='bottom'
-                                        upward={false}
-                                        closeOnChange
-                                        selectOnBlur={false}
-                                        value={editGroupTeacherId}
-                                        options={_getGroupTeachers()}
-                                        onChange={_editGroupTeacherChange}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="form-group m-form__group row">
+                        {
+                            !isAll && <div className="form-group m-form__group row">
                                 <div className="col-md-1" />
                                 <div className="col-md-10">
                                     <table className="table table-borderless">
                                         <thead>
                                             <tr>
-                                                <th className="text-right bolder pb-4" style={{ fontSize: '14px', color: '#575962' }}>{translations(locale).total + ':' || null}&nbsp;{_getTotalStudentsNumber()}</th>
+                                                <th className="text-right bolder pb-4" style={{ fontSize: '14px', color: '#575962' }}>{translations(locale).total + ':' || null}&nbsp;{groupTotalStudentCount}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
-                                                newSubjectGroupRow.map(function (obj, i) {
+                                                groupClassRows.map(function (obj, i) {
                                                     return (
                                                         <tr key={'tr_group_' + i}>
                                                             <td width={120} className="text-right label-pinnacle-bold vertical-align-middle">
                                                                 {translations(locale).group.title || null}
                                                             </td>
-                                                            <td width={300} className="p-2">
+                                                            <td width={300} className="p-2 vertical-align-middle">
                                                                 <Dropdown
                                                                     selectOnNavigation={false}
                                                                     placeholder={'-' + translations(locale).survey.choose + '-' || null}
@@ -374,58 +342,58 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                                                                     upward={false}
                                                                     closeOnChange
                                                                     selectOnBlur={false}
-                                                                    className={showModalError && !newSubjectGroupRow[i]['class'] ? "has-error" : ""}
-                                                                    value={newSubjectGroupRow[i]['class']}
-                                                                    options={_getGroupRowClasses()}
+                                                                    className={showModalError && !obj['class']?.id ? "has-error" : ""}
+                                                                    value={obj['class']?.id}
+                                                                    options={getGroupClasses(obj.class?.id)?.map(obj => {
+                                                                        return {
+                                                                            value: obj?.value,
+                                                                            text: obj?.text
+                                                                        }
+                                                                    })}
                                                                     onChange={(e, data) => {
-                                                                        newSubjectGroupRow[i]['class'] = data.value;
-                                                                        newSubjectGroupRow[i]['group_student'] = [];
+                                                                        if (data?.value) {
+                                                                            loadClassStudents(i, data?.value)
+                                                                        } else {
+                                                                            const clone = [...groupSubjectRows]
+                                                                            clone[i].students = []
+                                                                            clone[i].class = null
+                                                                            clone[i].selectedStudents = []
 
-                                                                        setState({
-                                                                            fetchClassId: data.value,
-                                                                            showLoader: true,
-                                                                            fetchClassStudent: true,
-                                                                            showModalError: false
-                                                                        });
-
-                                                                        let params = {
-                                                                            class: data.value
-                                                                        };
-                                                                        props.fetchClassStudents(params);
+                                                                            setGroupSubjectRows(clone)
+                                                                        }
                                                                     }}
                                                                 />
                                                             </td>
-                                                            <td className="p-2">
+                                                            <td className="p-2 vertical-align-middle">
                                                                 <Dropdown
                                                                     selectOnNavigation={false}
                                                                     placeholder={'-' + translations(locale).survey.choose + '-' || null}
                                                                     fluid
-                                                                    className={showModalError && !newSubjectGroupRow[i]['group_student'].length ? "has-error" : ""}
+                                                                    className={showModalError && !obj['students'].length ? "has-error" : ""}
                                                                     selection
                                                                     search
                                                                     additionPosition='bottom'
                                                                     upward={false}
                                                                     selectOnBlur={false}
                                                                     multiple={true}
-                                                                    value={newSubjectGroupRow[i]['group_student']}
-                                                                    options={newSubjectGroupRow[i]['allStudents']}
+                                                                    value={obj['students']}
+                                                                    options={obj['allStudents']?.map(obj => {
+                                                                        return {
+                                                                            value: obj?.value,
+                                                                            text: obj?.text
+                                                                        }
+                                                                    })}
                                                                     onChange={(e, data) => {
-
-                                                                        let count = 0;
-                                                                        let clone = newSubjectGroupRow;
+                                                                        let clone = [...groupClassRows];
                                                                         for (let k = 0; k < clone.length; k++) {
                                                                             let rowObj = clone[k];
-
                                                                             if (k === i) {
-                                                                                rowObj['group_student'] = data.value;
-                                                                                count = count + data.value.length;
-                                                                            } else {
-                                                                                count = count + rowObj['group_student'].length;
+                                                                                rowObj['students'] = data.value;
                                                                             }
                                                                         }
-                                                                        setNewSubjectGroupRow(clone)
+                                                                        setGroupClassRows(clone)
+                                                                        calculateStudentCount(clone)
                                                                         setShowModalError(false)
-                                                                        setGroupTotalStudents(count)
                                                                     }}
                                                                 />
                                                             </td>
@@ -434,7 +402,7 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                                                                     i > 0
                                                                         ?
                                                                         <button
-                                                                            onClick={() => newSubjectGroupRemoveRow(i)}
+                                                                            onClick={() => classRowRemove(i)}
                                                                             className="btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center">
                                                                             <CloseIcon />
                                                                         </button>
@@ -450,7 +418,7 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                                                 <td />
                                                 <td />
                                                 <td width={100} className="p-2">
-                                                    <button onClick={newSubjectGroupAddRow}
+                                                    <button onClick={classRowAdd}
                                                         className="btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center"
                                                     >
                                                         <AddIcon />
@@ -462,34 +430,35 @@ const EditModal = ({ onClose, onSubmit, modalEditGroup, data, selectedTableId })
                                 </div>
                                 <div className="col-md-1" />
                             </div>
-                        </>
-                    }
-                </div>
-            </Modal.Body>
-            <Modal.Footer className='text-center'>
-                {
-                    modalTabIndex == 1 &&
-                    <div className="position-absolute" style={{ bottom: '16px', left: '16px' }}>
-                        <Checkbox
-                            checked={addAgain}
-                            label={t('group.addAgain')}
-                            onClick={(e, data) => setAddAgain(data.checked)}
-                        />
+                        }
                     </div>
                 }
+            </Modal.Body>
+            <Modal.Footer className='text-center'>
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom margin-right-5"
-                    onClick={onClose}
+                    onClick={() => onClose()}
                 >
                     {t('back') || null}
                 </button>
                 <button
-                    onClick={onSubmit}
+                    onClick={onClickSubmit}
                     className="btn m-btn--pill btn-success m-btn--wide m-btn--uppercase"
                 >
                     {t('save') || null}
                 </button>
             </Modal.Footer>
+
+            {
+                loading &&
+                <>
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
+                    </div>
+                </>
+            }
         </Modal >
     )
 }

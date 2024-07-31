@@ -5917,3 +5917,8 @@ select.form-control:focus::-ms-value {
     color: #575962;
     font-size: 2.5em;
 }
+
+.has-error {
+    color: #f4516c !important;
+    border: 1px solid #f4516c !important;
+}
