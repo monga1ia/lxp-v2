@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
 import { NavLink, useLocation } from "react-router-dom"
-import { useNavigate } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import message from '../../../modules/message'
@@ -28,7 +27,6 @@ const index = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
-    // const navigate = useNavigate();
     const location = useLocation();
     const printRef = useRef();
 

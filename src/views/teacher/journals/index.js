@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next'
 import NoteModal from './pages/note/noteTemp'
 import AttendanceModal from './pages/attendance'
 import HomeworkModal from './pages/homework'
+import AddExam from './pages/exam/add'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -214,11 +215,14 @@ const index = () => {
         setShowGroupModal(false)
         setShowAttendanceModal(false)
         setShowSeasonResultModal(false)
+        setShowHomeworkModal(false)
     }
 
     const [showNoteModal, setShowNoteModal] = useState(false)
     const [showAttendanceModal, setShowAttendanceModal] = useState(false)
     const [showHomeworkModal, setShowHomeworkModal] = useState(false)
+    const [showCreateSkillModal, setShowCreateSkillModal] = useState(false)
+    const [showCreateExamModal, setShowCreateExamModal] = useState(false)
 
     const [noteModalState, setNoteModalState] = useState({
         group: null,
@@ -231,6 +235,16 @@ const index = () => {
     })
 
     const [homeworkModalState, setHomeworkModalState] = useState({
+        group: null,
+        season: null,
+    })
+
+    const [createSkillState, setCreateSkillState] = useState({
+        group: null,
+        season: null,
+    })
+
+    const [createExamState, setCreateExamState] = useState({
         group: null,
         season: null,
     })
@@ -257,6 +271,22 @@ const index = () => {
             season: selectedSeason
         })
         setShowHomeworkModal(true)
+    }
+
+    const createSkillHandler = (state) => {
+        setCreateSkillState({
+            group: state?.group,
+            season: selectedSeason
+        })
+        setShowCreateSkillModal(true)
+    }
+
+    const createExamHandler = (state) => {
+        setCreateExamState({
+            group: state?.group,
+            season: selectedSeason
+        })
+        setShowCreateExamModal(true)
     }
 
     return (
@@ -343,6 +373,7 @@ const index = () => {
                                                         ? <button
                                                             className='btn btn-info m-btn--icon m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center my-4'
                                                             // onClick={() => navigate('/teacher/journals/skill/create', { state: { group: el?.id, season: selectedSeason } })}
+                                                            onClick={() => {createSkillHandler({group: el?.id, season: selectedSeason})}}
                                                         >
                                                             <AddRoundedIcon />
                                                         </button>
@@ -365,6 +396,7 @@ const index = () => {
                                                             exam?.publish == 0 && exam?.total == 0
                                                                 ? <button
                                                                     className='btn btn-info m-btn--icon m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center my-4'
+                                                                    onClick={() => {createExamHandler({group: el?.id, season: selectedSeason})}}
                                                                     // onClick={() => navigate('/teacher/journals/exams/create', { state: { id: el?.id, season: selectedSeason, type: type?.id } })}
                                                                 >
                                                                     <AddRoundedIcon />
@@ -466,6 +498,22 @@ const index = () => {
                     season={selectedSeason}
                     group={selectedGroup?.id}
                     rerender={() => setRerender(prev => !prev)}
+                />
+            }
+            {
+                createSkillState?.group && createSkillState?.season &&
+                <AddSkill
+                    onClose={() => setShowCreateSkillModal(false)}
+                    show={showCreateSkillModal}
+                    data={createSkillState}
+                />
+            }
+            {
+                createExamState?.group && createExamState?.season &&
+                <AddExam
+                    onClose={() => setShowCreateExamModal(false)}
+                    show={showCreateExamModal}
+                    data={createExamState}
                 />
             }
         </div>

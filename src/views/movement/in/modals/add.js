@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { fetchRequest } from 'utils/fetchRequest'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import { Link, useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router'
 
 // const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -18,7 +17,6 @@ const nameRegex = /^[A-Za-zА-Яа-яӨҮөүЁё-]+$/
 
 const AddStudentMovementIn = ({ onClose, onSubmit, grade = null, isGenerateCode = false }) => {
     const { t } = useTranslation();
-    // const navigate = useNavigate()
     const location = useLocation()
 
     const [loading, setLoading] = useState(false)

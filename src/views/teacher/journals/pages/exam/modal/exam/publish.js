@@ -9,41 +9,38 @@ const publish = ({ onClose, onSubmit }) => {
 
     return (
         <Modal
-            centered
-            open={true}
-            size='tiny'
-            onClose={onClose}
+            size='sm'
             dimmer='blurring'
-            className='react-modal overflow-modal'
+            show={true}
+            onHide={onClose}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
         >
-            <div className='header'>
-                {translations(locale)?.action?.publish}
-                <button type='button' className='close' aria-label='Close' onClick={onClose}>
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className='content'>
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.action?.publish}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{color: '#212529'}}>
                 <span style={{ color: '#848691' }} className='fs-11'>
                     <p>{translations(locale)?.exam?.publish_title_season}</p>
                     <p>{translations(locale)?.exam?.publish_title_description}</p>
                 </span>
-            </div>
-            <div className='actions modal-footer'>
-                <div className='col-12 text-center'>
-                    <button
-                        className='btn btn-link mr-2'
-                        onClick={onClose}
-                    >
-                        {translations(locale)?.back}
-                    </button>
-                    <button
-                        className="btn m-btn--pill btn-publish text-uppercase"
-                        onClick={onSubmit}
-                    >
-                        {translations(locale)?.action?.publish}
-                    </button>
-                </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer className='text-center'>
+                <button
+                    className='btn btn-link mr-2'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.back}
+                </button>
+                <button
+                    className="btn m-btn--pill btn-publish text-uppercase"
+                    onClick={onSubmit}
+                >
+                    {translations(locale)?.action?.publish}
+                </button>
+            </Modal.Footer>
         </Modal>
     )
 }

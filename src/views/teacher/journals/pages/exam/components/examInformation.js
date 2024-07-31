@@ -1,14 +1,12 @@
 import message from 'modules/message'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
 import { Col, Row } from 'react-bootstrap'
 import { Checkbox } from 'semantic-ui-react'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 
-const examInformation = ({ exam, title, onSubmit }) => {
-    const navigate = useNavigate()
+const examInformation = ({ exam, title, onSubmit, onClose }) => {
     const decimalRegex = /^\d+(\.\d{1,2})?$/
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -55,7 +53,7 @@ const examInformation = ({ exam, title, onSubmit }) => {
 
     return (
         <>
-            <div className='m-portlet__body'>
+            <div className='m-portlet__body mx-4 mb-2'>
                 <Row className='mt-4'>
                     <Col md={2} />
                     <Col>
@@ -175,10 +173,10 @@ const examInformation = ({ exam, title, onSubmit }) => {
                     <Col md={4} />
                 </Row>
             </div>
-            <div className="m-portlet__foot d-flex justify-content-center gap-05">
+            <div className="modal-footer">
                 <button
-                    className='btn btn-link'
-                    onClick={() => navigate(-1, { replace: true })}
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom'
+                    onClick={onClose}
                 >
                     {translations(locale)?.back}
                 </button>
