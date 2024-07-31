@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { StepsStyleConfig } from 'chakra-ui-steps'
 import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
-// import { schoolStudentExcelUpload } from 'utils/url'
+// import { schoolStudentExcelUpload } from 'utils/fetchRequest/Urls'
 import { ReactSpreadsheetImport } from 'react-spreadsheet-import'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'

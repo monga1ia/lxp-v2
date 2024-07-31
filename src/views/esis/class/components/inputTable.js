@@ -5,7 +5,7 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import { useTranslation } from 'react-i18next'
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 import {fetchRequest} from "utils/fetchRequest";
-// import {ESISClassOptions} from "utils/url";
+// import {ESISClassOptions} from "utils/fetchRequest/Urls";
 import message from 'modules/message'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'

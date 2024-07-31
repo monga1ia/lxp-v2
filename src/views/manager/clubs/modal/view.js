@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
-// import { fetchRequest } from 'Utilities/fetchRequest'
+// import { fetchRequest } from 'utils/fetchRequest'
 import * as XLSX from "xlsx";
 
 const view = ({ onClose, group }) => {

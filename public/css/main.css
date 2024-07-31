@@ -290,6 +290,15 @@ div.vertical-tab>a {
     width: 350px;
 }
 
+.myTimetable-add-timetable table tbody tr td:first-child,
+.myTimetable-add-timetable table tbody tr td:nth-child(2) {
+    width: 100px;
+}
+
+.myTimetable-add-timetable table tbody tr td:last-child {
+    width: 50px;
+}
+
 .font-mulish {
     font-family: Mulish !important
 }
@@ -1073,15 +1082,13 @@ table.viewTeacherTable>tr>th {
 .custom-cm-item:hover {
     background-color: rgba(255, 73, 0, 0.2);
 }
-.no-wrap{
-    width: auto;
-    max-width: max-content;
-    min-width: 200px;
+.no-wrap {
+    white-space: nowrap;
 }
 .width-350{
     min-width: 350px !important;
 }
-.no-wrap > div:first-of-type{
+/* .no-wrap > div:first-of-type{
     border: none;
     background: none;
     justify-content: unset !important;
@@ -1100,7 +1107,7 @@ table.viewTeacherTable>tr>th {
 }
 .no-wrap span:nth-child(1){
     display: none;
-}
+} */
 .align-items-center {
     -webkit-box-align: center !important;
     -ms-flex-align: center !important;
@@ -3891,10 +3898,15 @@ select.form-control:focus::-ms-value {
     display: block;
     padding-left: 1.25rem
 }
+
 .login-copyright {
     font-size: 14px;
     font-family: MulishRegular;
     color: #7c7c7c;
+}
+
+.color-brand {
+    color: #ff5b1d
 }
 
 .navBarPadding {
@@ -3938,7 +3950,7 @@ select.form-control:focus::-ms-value {
 
 .form-check-input.modal-position {
     border: 1px solid #FF5B1D;
-    margin-top: 2px !important;
+    margin-top: 0.5rem !important;
     margin-bottom: 0 !important;
 
 }
@@ -5929,4 +5941,9 @@ select.form-control:focus::-ms-value {
     transform: rotate(-45deg);   
     color: #575962;
     font-size: 2.5em;
+}
+
+.has-error {
+    color: #f4516c !important;
+    border: 1px solid #f4516c !important;
 }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import message from 'modules/message'
 import React, { useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
-// import { schoolGroupEdit } from 'utils/url'
+// import { schoolGroupEdit } from 'utils/fetchRequest/Urls'
 import secureLocalStorage from 'react-secure-storage'
 // import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
@@ -117,7 +117,6 @@ const InsertGroupModal = ({onClose, onSubmit, data}) => {
     }
 
     const handleCheckBoxChange = (value, index) => {
-        console.log(value, index)
         const cloneDetails = [...details]
         if(value){
             let cloneClassOptions = [...classOptions];

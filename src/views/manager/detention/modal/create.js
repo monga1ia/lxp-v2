@@ -7,7 +7,7 @@ import secureLocalStorage from 'react-secure-storage'
 import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
 import {NDropdown as Dropdown} from 'widgets/Dropdown'
-// import {managerDetentionStudentSearch, managerDetentionStudentSubmit} from 'utils/url'
+// import {managerDetentionStudentSearch, managerDetentionStudentSubmit} from 'utils/fetchRequest/Urls'
 import {IconButton} from "@mui/material";
 import { useTranslation } from 'react-i18next'
 

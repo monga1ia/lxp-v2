@@ -2,191 +2,240 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { useTranslation } from "react-i18next";
 import { Tab, Checkbox } from 'semantic-ui-react';
+import { useSelector } from 'react-redux'
+import message from "modules/message";
 import AddIcon from '@mui/icons-material/Add';
 import { NDropdown as Dropdown } from 'widgets/Dropdown';
 import CloseIcon from '@mui/icons-material/Close';
+
+import { fetchRequest } from 'utils/fetchRequest'
+import { schoolSubjectTeacher, schoolClassStudents, managerGroupCreate } from 'utils/fetchRequest/Urls'
+
 import secureLocalStorage from 'react-secure-storage';
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
-    
+const AddGroup = ({ onClose, subjectList = [], classList = [] }) => {
+
     const { t } = useTranslation();
+    const { selectedSchool } = useSelector(state => state.schoolData);
+
+    const [loading, setLoading] = useState(false)
 
     const [modalTabIndex, setModalTabIndex] = useState(0)
-    const [newSubjectRow, setNewSubjectRow] = useState([{
-        subject: null,
-        classes: [],
-        teachers: [],
-        teacher: null
-    }])
-    const [isClassSubjects, setIsClassSubjects] = useState(true)
-    const [showModalError, setShowModalError] = useState(false)
-    const [addAgain, setAddAgain] = useState(false)
-    const [modalAction, setModalAction] = useState(data?.modalAction)
-    const [selectedTreeId, setSelectedTreeId] = useState(data?.selectedTreeId || 0)
-    const [selectedGroupSubjectId, setSelectedGroupSubjectId] = useState(null)
-    const [isNonClassSubjects, setIsNonClassSubjects] = useState([])
-    const [selectedGroupTeacherId, setSelectedGroupTeacherId] = useState(null)
-    const [groupSubjectTeachers, setgroupSubjectTeachers] = useState([])
-    const [selectedGroupName, setSelectedGroupName] = useState('')
-    const [groupTotalStudents, setGroupTotalStudents] = useState(0)
 
-    const [classes, setClasses] = useState(data?.classes)
+    const [classSubjectRows, setClassSubjectRows] = useState([
+        {
+            subject: null,
+            classes: [],
+            selectedClasses: [],
+            teachers: [],
+            teacher: null
+        }
+    ])
 
-    console.log(classes)
+    const [groupSubjectId, setGroupSubjectId] = useState(null)
+    const [groupTeacherId, setGroupTeacherId] = useState(null)
+    const [groupTeachers, setGroupTeachers] = useState([])
+    const [groupName, setGroupName] = useState('')
 
-    const [newSubjectGroupRow, setNewSubjectGroupRow] = useState(data?.newSubjectGroupRow || [{
+    const [groupSubjectRows, setGroupSubjectRows] = useState([{
         class: null,
-        allStudents: [],
-        group_student: []
+        students: [],
+        selectedStudents: []
     }])
 
+    const [showModalError, setShowModalError] = useState(false)
 
-    
-    // const _loadTeacher = (subjectId, rowIndex) => {
-    //     let newSubjectRow = newSubjectRow;
-    //     newSubjectRow[rowIndex]['subject'] = subjectId;
-    //     newSubjectRow[rowIndex]['classes'] = [];
-    //     newSubjectRow[rowIndex]['teacher'] = [];
+    const [addAgain, setAddAgain] = useState(false)
+    const [closeWithReload, setCloseWithReload] = useState(false)
 
-    //     this.setState({
-    //         fetchTeacher: true,
-    //         showLoader: true,
-    //         showModalError: false,
-    //         newSubjectRow
-    //     });
-    //     let params = {
-    //         subject: subjectId
-    //     };
-    //     this.props.fetchTeachersBySubject(params)
-    // };
-    
+    const [groupTotalStudentCount, setGroupTotalStudentCount] = useState(0)
+    const [updateView, setUpdateView] = useState(false)
+
+    const onClassSubjectChange = (subjectId, rowIndex) => {
+        let subjectRows = [...classSubjectRows];
+
+        const selectedSubject = subjectList.find(obj => obj?.value === subjectId)
+
+        subjectRows[rowIndex]['subject'] = subjectId;
+        subjectRows[rowIndex]['classes'] = classList.filter(obj => {
+            return selectedSubject?.gradeIds.indexOf(obj?.gradeId) > -1
+        });
+        subjectRows[rowIndex]['teacher'] = null;
+        const params = {
+            school: selectedSchool?.id,
+            subject: subjectId
+        }
+        setLoading(true)
+        fetchRequest(schoolSubjectTeacher, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    subjectRows[rowIndex]['teachers'] = res?.teachers || [];
+                    setClassSubjectRows(subjectRows)
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    };
 
     const _onTabChange = (e, data) => {
         setModalTabIndex(data.activeIndex)
-        modalTabI(data.activeIndex)
         setShowModalError(false)
     };
-    
-    const _getRowClasses = (index) => {
-        const clone = [...newSubjectRow];
-        let classHolder = [];
-        const { subject: subjectId } = clone[index];
-        if (subjectId) {
-            const subjects = [...isClassSubjects];
-            const gradeIds = subjects.find(el => el.value == subjectId)?.gradeIds;
-            classes.forEach(el => {
-                gradeIds.indexOf(el.gradeId) > -1 && classHolder.push(el)
-            });
-        }
-        return classHolder;
-    }
 
-    const _filterGradeSubjects = (subjects = []) => {
-        if (selectedTreeId && selectedTreeId?.length > 0) {
-            const subjectList = [];
-            for (let s = 0; s < subjects?.length; s++) {
-                if (subjects[s]?.gradeIds.indexOf(selectedTreeId[0]) > -1) {
-                    subjectList.push(subjects[s])
-                }
-            }
-            return subjectList?.map(subjectObj => {
-                return {
-                    value: subjectObj?.value,
-                    text: subjectObj?.text
-                }
-            });
-        } else {
-            return subjects
-        }
-    }
-
-    const newSubjectAddRow = () => {
-        setNewSubjectRow([...newSubjectRow, {
+    const addClassSubjectRow = () => {
+        setShowModalError(false)
+        setClassSubjectRows([...classSubjectRows, {
             subject: null,
             classes: [],
+            selectedClasses: [],
             teachers: [],
             teacher: null
         }])
     };
 
-        
-    const newSubjectGroupAddRow = () => {
-        setNewSubjectGroupRow([...newSubjectGroupRow, {
+    const removeClassSubjectRow = (index) => {
+        if (index != 0) {
+            const rows = [...classSubjectRows]
+            rows.splice(index, 1)
+            setClassSubjectRows(rows)
+        }
+    }
+
+    const onGroupSubjectChange = (e, data) => {
+        const params = {
+            school: selectedSchool?.id,
+            subject: data?.value
+        }
+        setGroupSubjectId(data?.value)
+        setGroupTeacherId(null)
+        setGroupName('')
+        setLoading(true)
+        fetchRequest(schoolSubjectTeacher, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    setGroupTeachers(res?.teachers || [])
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch((e) => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    };
+
+    const loadClassStudents = (index, classId = null) => {
+        const params = {
+            school: selectedSchool?.id,
+            class: classId
+        }
+        const clone = [...groupSubjectRows]
+        clone[index].class = classId
+        clone[index].students = []
+        clone[index].selectedStudents = []
+
+        setLoading(true)
+        fetchRequest(schoolClassStudents, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    clone[index].students = res?.students;
+                    setGroupSubjectRows(clone)
+
+                    setUpdateView(!updateView)
+                } else {
+                    setGroupSubjectRows(clone)
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch((e) => {
+                setGroupSubjectRows(clone)
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    };
+
+
+    const onGroupTeacherChange = (e, data) => {
+        const subjectName = getSubjects(false)?.find(el => el?.value == groupSubjectId)?.text?.split(' - ')[1]
+        const teacherName = data?.options?.find(el => el?.value == data?.value)?.text?.split(' ( ')[0]
+        setGroupTeacherId(data.value)
+        setGroupName(subjectName + ' | ' + teacherName)
+    }
+
+    const addGroupSubjectRow = () => {
+        setGroupSubjectRows([...groupSubjectRows, {
             class: null,
             allStudents: [],
             group_student: []
         }])
-    };
+    }
 
-    const newSubjectRemoveRow = (index) => {
-        if (index != 0) {
-            const rows = [...newSubjectRow]
-            // const option = gradeSubjectOptions?.find(option => option?.value == rows[index].grade)
-            // delete option?.disabled
-            rows.splice(index, 1)
-            setNewSubjectRow(rows)
+    const calculateStudentCount = (rows = []) => {
+        if (modalTabIndex === 1) {
+            let totalStudentCount = 0;
+            for (let i = 0; i < rows.length; i++) {
+                totalStudentCount = totalStudentCount + rows[i].selectedStudents?.length;
+            }
+            setGroupTotalStudentCount(totalStudentCount)
         }
     }
-    
-    const newSubjectGroupRemoveRow = (index) => {
 
-        const rows = [...newSubjectGroupRow]
+    const removeGroupSubjectRow = (index) => {
+        const rows = [...groupSubjectRows]
         rows.splice(index, 1)
-
-        let totalStudents = 0;
-        for (let i = 0; i < rows.length; i++) {
-            totalStudents = totalStudents + rows[i].group_student.length;
-        }
-
-        setNewSubjectGroupRow(rows)
-        setGroupTotalStudents(totalStudents)
+        calculateStudentCount(rows)
+        setGroupSubjectRows(rows)
     }
 
-
-    const newSubjectGroupSubjectChange = (e, data) => {
-        const rows = [...newSubjectGroupRow]
-        rows.forEach(el => {
-            el.class = []
-            el.group_student = []
-        })
-        setNewSubjectRow(rows)
-        setSelectedGroupTeacherId([])
-        setShowModalError(false)
-        setSelectedGroupSubjectId(data.value)
-        setSelectedGroupName('')
-        let params = {
-            subject: data.value
-        };
-        // this.props.fetchTeachersBySubject(params)
-    };
-
-    const newSubjectGroupTeacherChange = (e, data) => {
-        const subjectName = isNonClassSubjects?.find(el => el?.value == selectedGroupSubjectId)?.text?.split(' - ')[1]
-        const teacherName = data?.options?.find(el => el?.value == data?.value)?.text?.split(' ( ')[0]
-        setSelectedGroupTeacherId(data.value)
-        setShowModalError(false)
-        setSelectedGroupName(subjectName + ' | ' + teacherName)
-    };
-
-    const newSubjectGroupNameChange = (e) => {
-        setSelectedGroupName(e.target.value)
-        setShowModalError(false)
-    }
-    
-    const _getGroupRowClasses = () => {
-        let classes = [];
-        const subjects = [...isNonClassSubjects];
-        const selectedSubject = subjects.find(subject => subject.value == selectedGroupSubjectId);
+    const getGroupClasses = (rowClassId = null) => {
+        const selectedSubject = subjectList.find(subject => subject.value == groupSubjectId);
 
         if (selectedSubject && selectedSubject.gradeIds) {
-            const allClasses = [...classes];
-            allClasses.forEach(el => {
-                selectedSubject.gradeIds.indexOf(el.gradeId) > -1 && classes.push(el)
+            const selectedClassIds = groupSubjectRows?.filter(obj => obj?.class)?.map(obj => obj?.class)
+
+            return classList.filter(obj => {
+                if (selectedClassIds?.length > 0) {
+                    return selectedSubject?.gradeIds.indexOf(obj?.gradeId) > -1 && (rowClassId === obj?.id || selectedClassIds?.indexOf(obj?.id) < 0)
+                } else {
+                    return selectedSubject?.gradeIds.indexOf(obj?.gradeId) > -1
+                }
+            })?.map(obj => {
+                return {
+                    value: obj?.value,
+                    text: obj?.text
+                }
             })
+        } else {
+            return []
         }
-        return classes;
+    }
+
+    const getSubjects = (isAll = false, rowSubjectId = null) => {
+        let selectedSubjects = []
+        if (isAll) {
+            selectedSubjects = classSubjectRows?.filter(obj => obj?.subject)?.map(obj => obj?.subject)
+        }
+        return subjectList.filter(obj => {
+            if (selectedSubjects?.length > 0) {
+                return obj?.isAll === isAll && (rowSubjectId === obj?.value || selectedSubjects?.indexOf(obj?.value) < 0)
+            } else {
+                return obj?.isAll === isAll
+            }
+        })?.map(obj => {
+            return {
+                value: obj?.value,
+                text: obj?.text
+            }
+        })
     }
 
     const _renderAll = () => {
@@ -208,53 +257,49 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                             </thead>
                             <tbody>
                                 {
-                                    newSubjectRow.map((obj, i) => {
+                                    classSubjectRows.map((obj, i) => {
                                         return (
                                             <tr key={'tr_' + i}>
                                                 <td className="p-1">
-                                                    {
-                                                        isClassSubjects
-                                                            ?
-                                                            <Dropdown
-                                                                selectOnNavigation={false}
-                                                                search
-                                                                additionPosition='bottom'
-                                                                className={showModalError && !newSubjectRow[i]['subject'] ? "has-error" : ""}
-                                                                upward={false}
-                                                                closeOnChange
-                                                                selectOnBlur={false}
-                                                                fluid
-                                                                selection
-                                                                multiple={false}
-                                                                disabled={modalAction === 'EDIT'}
-                                                                placeholder={t('survey.choose') || null}
-                                                                options={_filterGradeSubjects(isClassSubjects)}
-                                                                value={newSubjectRow[i]['subject']}
-                                                                onChange={(e, data) => _loadTeacher(data.value, i)}
-                                                            />
-                                                            : null
-                                                    }
+                                                    <Dropdown
+                                                        selectOnNavigation={false}
+                                                        search
+                                                        additionPosition='bottom'
+                                                        className={showModalError && !obj['subject'] ? "has-error" : ""}
+                                                        upward={false}
+                                                        closeOnChange
+                                                        selectOnBlur={false}
+                                                        fluid
+                                                        selection
+                                                        placeholder={t('survey.choose') || null}
+                                                        options={getSubjects(true, obj['subject'])}
+                                                        value={obj['subject']}
+                                                        onChange={(e, data) => onClassSubjectChange(data.value, i)}
+                                                    />
                                                 </td>
                                                 <td className="p-1">
                                                     <Dropdown
                                                         selectOnNavigation={false}
                                                         search
                                                         additionPosition='bottom'
-                                                        className={showModalError && newSubjectRow[i]['classes'].length === 0 ? "has-error" : ""}
+                                                        className={showModalError && obj['selectedClasses']?.length === 0 ? "has-error" : ""}
                                                         upward={false}
                                                         selectOnBlur={false}
                                                         fluid
                                                         selection
                                                         multiple={true}
-                                                        disabled={modalAction === 'EDIT'}
                                                         placeholder={t('survey.choose') || null}
-                                                        options={_getRowClasses(i)}
-                                                        value={newSubjectRow[i]['classes']}
+                                                        options={obj['classes']?.map(obj => {
+                                                            return {
+                                                                value: obj?.value,
+                                                                text: obj?.text
+                                                            }
+                                                        })}
+                                                        value={obj['selectedClasses'] || []}
                                                         onChange={(e, data) => {
-                                                            let clone = newSubjectRow;
-                                                            clone[i]['classes'] = data.value;
-                                                            setNewSubjectRow(clone)
-                                                            setShowModalError(false)
+                                                            let clone = [...classSubjectRows];
+                                                            clone[i]['selectedClasses'] = data.value;
+                                                            setClassSubjectRows(clone)
                                                         }}
                                                     />
                                                 </td>
@@ -266,18 +311,22 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                                         upward={false}
                                                         closeOnChange
                                                         selectOnBlur={false}
-                                                        className={showModalError && !newSubjectRow[i]['teacher'] ? "has-error" : ""}
+                                                        className={showModalError && !obj['teacher'] ? "has-error" : ""}
                                                         fluid
                                                         selection
                                                         multiple={false}
                                                         placeholder={t('survey.choose') || null}
-                                                        options={newSubjectRow[i]['teachers']}
-                                                        value={newSubjectRow[i]['teacher']}
+                                                        options={obj['teachers']?.map(obj => {
+                                                            return {
+                                                                value: obj?.teacherId,
+                                                                text: obj?.firstName + ' (' + obj?.lastName + ')-' + obj?.teacherCode
+                                                            }
+                                                        })}
+                                                        value={obj['teacher']}
                                                         onChange={(e, data) => {
-                                                            let clone = newSubjectRow;
+                                                            let clone = [...classSubjectRows];
                                                             clone[i]['teacher'] = data.value;
-                                                            setNewSubjectRow(clone)
-                                                            setShowModalError(false)
+                                                            setClassSubjectRows(clone)
                                                         }}
                                                     />
                                                 </td>
@@ -286,7 +335,7 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                                         i > 0
                                                             ?
                                                             <button
-                                                                onClick={() => newSubjectRemoveRow(i)}
+                                                                onClick={() => removeClassSubjectRow(i)}
                                                                 className="btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center">
                                                                 <CloseIcon />
                                                             </button>
@@ -302,7 +351,7 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                     <td className="border-white" />
                                     <td style={{ borderBottomColor: 'white' }} />
                                     <td className="text-center p-1 vertical-inherit">
-                                        <button onClick={newSubjectAddRow}
+                                        <button onClick={addClassSubjectRow}
                                             className="btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center"
                                         >
                                             <AddIcon />
@@ -332,15 +381,15 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                             placeholder={'-' + t('survey.choose') + '-' || null}
                             fluid
                             selection
-                            className={showModalError && !selectedGroupSubjectId ? "has-error" : ""}
+                            className={showModalError && !groupSubjectId ? "has-error" : ""}
                             search
                             additionPosition='bottom'
                             upward={false}
                             closeOnChange
                             selectOnBlur={false}
-                            value={selectedGroupSubjectId}
-                            options={_filterGradeSubjects(isNonClassSubjects)}
-                            onChange={newSubjectGroupSubjectChange}
+                            value={groupSubjectId}
+                            options={getSubjects(false)}
+                            onChange={onGroupSubjectChange}
                         />
                     </div>
                 </div>
@@ -354,15 +403,20 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                             placeholder={'-' + t('survey.choose') + '-' || null}
                             fluid
                             selection
-                            className={showModalError && !selectedGroupTeacherId ? "has-error" : ""}
+                            className={showModalError && !groupTeacherId ? "has-error" : ""}
                             search
                             additionPosition='bottom'
                             upward={false}
                             closeOnChange
                             selectOnBlur={false}
-                            value={selectedGroupTeacherId}
-                            options={groupSubjectTeachers}
-                            onChange={newSubjectGroupTeacherChange}
+                            value={groupTeacherId}
+                            options={groupTeachers?.map(obj => {
+                                return {
+                                    value: obj?.teacherId,
+                                    text: obj?.firstName + ' (' + obj?.lastName + ')-' + obj?.teacherCode
+                                }
+                            })}
+                            onChange={onGroupTeacherChange}
                         />
                     </div>
                 </div>
@@ -372,10 +426,10 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                     </label>
                     <div className="col-md-5 col-sm-12">
                         <input type="text"
-                            className={showModalError && selectedGroupName?.length === 0 ? "form-control m-input has-error" : "form-control m-input"}
+                            className={showModalError && groupName?.length === 0 ? "form-control m-input has-error" : "form-control m-input"}
                             placeholder={t('insert_first_name') || null}
-                            value={selectedGroupName ? selectedGroupName : ''}
-                            onChange={newSubjectGroupNameChange} />
+                            value={groupName || ''}
+                            onChange={e => setGroupName(e?.target?.value)} />
                     </div>
                 </div>
 
@@ -388,12 +442,12 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                 <tr>
                                     <th className="text-right pb-4" style={{ fontSize: '14px', color: '#575962' }}>{t('total') + ':' || null}
                                         &nbsp;
-                                        {groupTotalStudents}</th>
+                                        {groupTotalStudentCount}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    newSubjectGroupRow.map((obj, i) => {
+                                    groupSubjectRows.map((obj, i) => {
                                         return (
                                             <tr key={'tr_group_' + i}>
                                                 <td style={{ verticalAlign: 'top' }} className="label-pinnacle-bold vertical-align-middle">
@@ -410,23 +464,20 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                                         upward={false}
                                                         closeOnChange
                                                         selectOnBlur={false}
-                                                        className={showModalError && !newSubjectGroupRow[i]['class'] ? "has-error" : ""}
-                                                        value={newSubjectGroupRow[i]['class']}
-                                                        options={_getGroupRowClasses(i)}
+                                                        className={showModalError && !obj['class'] ? "has-error" : ""}
+                                                        value={obj['class']}
+                                                        options={getGroupClasses(obj.class)}
                                                         onChange={(e, data) => {
-                                                            setState({
-                                                                fetchClassId: data.value,
-                                                                showLoader: true,
-                                                                fetchClassStudent: true,
-                                                                showModalError: false
-                                                            });
+                                                            if (data?.value) {
+                                                                loadClassStudents(i, data?.value)
+                                                            } else {
+                                                                const clone = [...groupSubjectRows]
+                                                                clone[i].students = []
+                                                                clone[i].class = null
+                                                                clone[i].selectedStudents = []
 
-                                                            newSubjectGroupRow[i]['class'] = data.value;
-                                                            newSubjectGroupRow[i]['group_student'] = [];
-                                                            let params = {
-                                                                class: data.value
-                                                            };
-                                                            props.fetchClassStudents(params);
+                                                                setGroupSubjectRows(clone)
+                                                            }
                                                         }}
                                                     />
                                                 </td>
@@ -441,26 +492,19 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                                         upward={false}
                                                         selectOnBlur={false}
                                                         multiple={true}
-                                                        className={showModalError && !newSubjectGroupRow[i]['group_student']?.length ? "has-error" : ""}
-                                                        value={newSubjectGroupRow[i]['group_student']}
-                                                        options={newSubjectGroupRow[i]['allStudents']}
-                                                        onChange={(e, data) => {
-
-                                                            let count = 0;
-                                                            let clone = newSubjectGroupRow;
-                                                            for (let k = 0; k < clone.length; k++) {
-                                                                let rowObj = clone[k];
-
-                                                                if (k === i) {
-                                                                    rowObj['group_student'] = data.value;
-                                                                    count = count + data.value.length;
-                                                                } else {
-                                                                    count = count + rowObj['group_student'].length;
-                                                                }
+                                                        className={showModalError && !obj['selectedStudents']?.length ? "has-error" : ""}
+                                                        value={obj['selectedStudents']}
+                                                        options={obj['students']?.map(obj => {
+                                                            return {
+                                                                value: obj?.value,
+                                                                text: obj?.text
                                                             }
-                                                            setNewSubjectGroupRow(clone)
-                                                            setGroupTotalStudents(count)
-                                                            setShowModalError(false)
+                                                        })}
+                                                        onChange={(e, data) => {
+                                                            const clone = [...groupSubjectRows]
+                                                            clone[i].selectedStudents = data?.value
+                                                            calculateStudentCount(clone)
+                                                            setGroupSubjectRows(clone)
                                                         }}
                                                     />
                                                 </td>
@@ -469,7 +513,7 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                                         i > 0
                                                             ?
                                                             <button
-                                                                onClick={() => newSubjectGroupRemoveRow(i)}
+                                                                onClick={() => removeGroupSubjectRow(i)}
                                                                 className="btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex justify-content-center align-items-center">
                                                                 <CloseIcon />
                                                             </button>
@@ -485,7 +529,7 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                                     <td />
                                     <td />
                                     <td width={100}>
-                                        <button onClick={newSubjectGroupAddRow}
+                                        <button onClick={addGroupSubjectRow}
                                             className="btn btn-outline-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex justify-content-center align-items-center"
                                         >
                                             <AddIcon />
@@ -502,16 +546,119 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
         )
     }
 
+    const onClickSubmit = () => {
+        let hasError = false;
+        let params = {
+            school: selectedSchool?.id,
+            isAll: modalTabIndex === 0
+        }
+        if (modalTabIndex === 0) {
+            // class group
+            const rows = [...classSubjectRows]
+            const classParams = []
+            for (let r = 0; r < rows?.length; r++) {
+                const rowObj = rows[r]
+                if (!rowObj.subject) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj?.selectedClasses || rowObj?.selectedClasses?.length === 0) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj.teacher) {
+                    hasError = true;
+                    break;
+                }
+                classParams.push({
+                    subject: rowObj?.subject,
+                    classes: rowObj?.selectedClasses,
+                    teacher: rowObj?.teacher
+                })
+            }
+            params['classes'] = classParams;
+        } else {
+            // group 
+            if (!groupSubjectId) {
+                hasError = true;
+            }
+            if (!groupTeacherId) {
+                hasError = true;
+            }
+            if (!groupName || groupName?.length === 0) {
+                hasError = true;
+            }
+
+            const rows = [...groupSubjectRows]
+            const groupParams = []
+            for (let r = 0; r < rows?.length; r++) {
+                const rowObj = rows[r]
+                if (!rowObj.class) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj?.selectedStudents || rowObj?.selectedStudents?.length === 0) {
+                    hasError = true;
+                    break;
+                }
+                groupParams.push({
+                    class: rowObj?.class,
+                    students: rowObj?.selectedStudents
+                })
+            }
+
+            params['subject'] = groupSubjectId;
+            params['teacher'] = groupTeacherId;
+            params['groupName'] = groupName;
+            params['classes'] = groupParams;
+        }
+        if (hasError) {
+            setShowModalError(true)
+            message(t('err.fill_all_fields'))
+        } else {
+            setLoading(true)
+            fetchRequest(managerGroupCreate, 'POST', params)
+                .then((res) => {
+                    if (res.success) {
+                        message(res.message, true)
+                        if (modalTabIndex === 1 && addAgain) {
+                            setCloseWithReload(true)
+                            setGroupSubjectId(null)
+                            setGroupTeacherId(null)
+                            setGroupName('')
+                            setGroupSubjectRows([
+                                {
+                                    class: null,
+                                    students: [],
+                                    selectedStudents: []
+                                }
+                            ])
+                            setGroupTotalStudentCount(0)
+                        } else {
+                            onClose(true)
+                        }
+                    } else {
+                        message(res.message)
+                    }
+                    setLoading(false)
+                })
+                .catch((e) => {
+                    message(t('err.error_occurred'))
+                    setLoading(false)
+                });
+        }
+    }
+
     return (
         <Modal
             size='xl'
             dimmer='blurring'
             show={true}
-            onHide={onClose}
+            onHide={() => onClose(closeWithReload)}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton style={{padding: '1rem'}}>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
                     {t('add')}
                 </Modal.Title>
@@ -569,18 +716,29 @@ const AddGroup = ({ onClose, onSubmit, data, modalTabI }) => {
                 }
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom margin-right-5"
-                    onClick={onClose}
+                    onClick={() => onClose(closeWithReload)}
                 >
                     {t('back') || null}
                 </button>
                 <button
-                    onClick={onSubmit}
+                    onClick={onClickSubmit}
                     className="btn m-btn--pill btn-success m-btn--wide m-btn--uppercase"
                 >
                     {t('save') || null}
                 </button>
             </Modal.Footer>
-        </Modal >
+
+            {
+                loading &&
+                <>
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
+                    </div>
+                </>
+            }
+        </Modal>
     )
 }
 

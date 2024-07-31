@@ -21,7 +21,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useTranslation } from "react-i18next";
 
 import { fetchRequest } from 'utils/fetchRequest'
-import { managerGroupIndex } from 'utils/fetchRequest/Urls'
+import { managerGroupIndex, managerGroupDelete } from 'utils/fetchRequest/Urls'
 
 import ViewStudent from "./modals/view";
 import AddGroup from "./modals/addGroup";
@@ -52,31 +52,21 @@ const index = () => {
 
     const [hasGoogleClassRoom, setHasGoogleClassRoom] = useState(false)
 
-    const [editSubjectGroup, setEditSubjectGroup] = useState([''])
-    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
-
-    const [showModalError, setShowModalError] = useState(false)
-    const [showStudentModal, setShowStudentModal] = useState(false)
-    const [treeData, setTreeData] = useState([])
-    const [sessionObj, setSessionObj] = useState({})
-    const [existingTrees, setExistingTrees] = useState([])
     const [selectedTreeId, setSelectedTreeId] = useState(secureLocalStorage?.getItem(treeIndex) || null)
-    const [treeSelectedGradeId, setTreeSelectedGradeId] = useState(null)
+    const [treeData, setTreeData] = useState([])
+    const [totalCount, setTotalCount] = useState(0)
+    const [list, setList] = useState([])
+
     const [subjects, setSubjects] = useState([])
     const [classes, setClasses] = useState([])
 
-    const [groupSubjectTeachers, setgroupSubjectTeachers] = useState([])
-    const [selectedGroupTeacherId, setSelectedGroupTeacherId] = useState(null)
-    const [list, setList] = useState([])
+    const [selectedTableDataId, setSelectedTableDataId] = useState(null)
+
+    const [showStudentModal, setShowStudentModal] = useState(false)
+    const [modalViewTitle, setModalViewTitle] = useState(null)
+
     const [showAddGroupModal, setShowAddGroupModal] = useState(false)
-    const [modalTitle, setModalTitle] = useState(null)
-    const [newSubjectGroupRow, setNewSubjectGroupRow] = useState([{
-        class: null,
-        allStudents: [],
-        group_student: []
-    }])
-    const [selectedGroupSubjectId, setSelectedGroupSubjectId] = useState(null)
-    const [selectedGroupName, setSelectedGroupName] = useState('')
+    
     const contextMenus = [
         {
             key: 'EDIT',
@@ -90,12 +80,8 @@ const index = () => {
         },
     ]
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [deleteGroupId, setDeleteGroupId] = useState(null)
-    const [viewStudentLists, setViewStudentLists] = useState([])
-    const [modalViewTitle, setModalViewTitle] = useState(null)
     const [showEditModal, setShowEditModal] = useState(false)
-    const [editGroupIsClass, setEditGroupIsClass] = useState(false)
-    const [modalTabIndex, setModalTabIndex] = useState(0)
+
     const [tableState, setTableState] = useState({
         page: 1,
         pageSize: 10,
@@ -103,7 +89,8 @@ const index = () => {
         sort: 'subjectName',
         order: 'asc'
     })
-    const [tableConfig, setTableConfig] = useState({
+
+    const config = {
         excelExport: true,
         printButton: true,
         defaultSort: [{
@@ -115,10 +102,7 @@ const index = () => {
             sizePerPage: tableState?.pageSize || 10,
             search: tableState?.search || '',
         }
-    })
-    const [editGroupTeacherId, setEditGroupTeacherId] = useState(null)
-    const [isSaved, setIsSaved] = useState(false)
-    const [totalCount, setTotalCount] = useState(0)
+    }
 
     const getColumns = (showClassRoom = false) => {
         const columns = [
@@ -145,7 +129,10 @@ const index = () => {
                 text: translations(locale).group.title || "",
                 sort: true,
                 formatter: (cell, row) => {
-                    return <div className="pointer underline" onClick={() => showStudents(row.id)}>{cell}</div>
+                    return <div className="pointer underline" onClick={() => {
+                        setModalViewTitle(row?.groupName)
+                        showStudents(row.id)
+                    }}>{cell}</div>
                 },
             },
             {
@@ -158,7 +145,10 @@ const index = () => {
                 text: translations(locale).students || "",
                 sort: false,
                 formatter: (cell, row) => {
-                    return <span onClick={() => showStudents(row.id)} className="underline">{cell}</span>
+                    return <span onClick={() => {
+                        setModalViewTitle(row?.groupName)
+                        showStudents(row.id)
+                    }} className="underline">{cell}</span>
                 },
             }
         ];
@@ -172,14 +162,13 @@ const index = () => {
                             window.open(cell, '_blank')
                         }} />
                     } else {
-                        return <LinkOffIcon className='classroom-linkoff' title='Google classroom'/>
+                        return <LinkOffIcon className='classroom-linkoff' title='Google classroom' />
                     }
                 }
             })
         }
         return columns;
     }
-
 
     const loadData = (params = {}) => {
         setLoading(true)
@@ -190,14 +179,15 @@ const index = () => {
                     setTreeData(res?.grades || [])
                     setTotalCount(res?.totalCount || 0)
                     setList(res?.groups || [])
+                    setSubjects(res?.subjects || [])
+                    setClasses(res?.classes || [])
                 } else {
                     message(res.message)
                 }
                 setInitLoaded(true)
                 setLoading(false)
             })
-            .catch((e) => {
-                console.log('E', e)
+            .catch(() => {
                 message(t('err.error_occurred'))
                 setLoading(false)
             })
@@ -210,13 +200,9 @@ const index = () => {
         })
     }, [])
 
-    // useEffect(() => {
-    //     setNewSubjectGroupRow(subjects)
-    // },[])
-
     const closeViewModal = () => {
+        setSelectedTableDataId(null)
         setShowStudentModal(false)
-        setViewStudentLists([])
     };
 
     const showStudents = (id) => {
@@ -224,45 +210,40 @@ const index = () => {
         setShowStudentModal(true)
     };
 
-    const closeModal = () => {
+    const closeModal = (reloadData = false) => {
         setShowAddGroupModal(false)
-        setModalTitle(null)
-        setNewSubjectGroupRow([{
-            class: null,
-            allStudents: [],
-            group_student: []
-        }])
-        setSelectedGroupSubjectId(null)
-        setSelectedGroupTeacherId(null)
-        setSelectedGroupName(null)
-
-        if (isSaved) {
-            console.log('isSaved')
-            // this.initActionHandler();
+        if (reloadData) {
+            loadData({
+                school: selectedSchool?.id,
+                grade: selectedTreeId,
+                page: tableState?.page,
+                pageSize: tableState?.pageSize,
+                search: tableState?.search,
+                sort: tableState?.sort,
+                order: tableState?.order
+            })
         }
     };
 
-    const closeEditModal = () => {
+    const closeEditModal = (reloadData = false) => {
         setShowEditModal(false)
-        // this.setState({
-        //     editModal: false,
-        //     selectedGroupName: '',
-        //     showLoader: false,
-        //     selectedGroupSubjectId: null,
-        //     editGroupTeacherId: null,
-        //     editGroupTeachers: [],
-        //     newSubjectGroupRow: [{
-        //         class: null,
-        //         allStudents: [],
-        //         group_student: []
-        //     }],
-        //     // modalTabIndex: 0,
-        // })
+        setSelectedTableDataId(null)
 
-        // this.initActionHandler();
+        if (reloadData) {
+            loadData({
+                school: selectedSchool?.id,
+                grade: selectedTreeId,
+                page: tableState?.page,
+                pageSize: tableState?.pageSize,
+                search: tableState?.search,
+                sort: tableState?.sort,
+                order: tableState?.order
+            })
+        }
     };
 
     const closeDeleteModal = () => {
+        setSelectedTableDataId(null)
         setShowDeleteModal(false)
     };
 
@@ -331,191 +312,10 @@ const index = () => {
         }
     }
 
-    const _onSubmit = () => {
-        if (modalTabIndex === 0) {
-            let clone = newSubjectRow;
-            let hasError = false;
-            let subjectIds = [], teacherIds = [], classIds = [];
-            for (let i = 0; i < clone.length; i++) {
-                let rowObj = clone[i];
-                if (rowObj.subject && rowObj.teacher && rowObj.classes.length > 0) {
-                    subjectIds.push(rowObj.subject)
-                    teacherIds.push(rowObj.teacher)
-                    classIds.push(rowObj.classes.join())
-                } else {
-                    hasError = true;
-                    break;
-                }
-            }
-            if (hasError) {
-                message(translations(locale).err.fill_all_fields)
-                setShowModalError(true)
-            } else {
-
-                const details = clone.map(el => ({
-                    subject: el.subject,
-                    teacher: el.teacher,
-                    classes: el.classes,
-                }))
-
-                const params = {
-                    details: JSON.stringify(details),
-                    type: 'all',
-                    submit: 1,
-                    grade: selectedTreeId,
-                    page: tableState.page,
-                    pageSize: tableState.pageSize,
-                    search: tableState.search,
-                    order: tableState.order,
-                    sort: tableState.sort,
-                }
-                console.log(params)
-                // setShowModalError(false)
-                // setShowLoader(true)
-                // setIsSaved(true)
-                // this.props.fetchMySchoolTimetableSubmit(params)
-            }
-        } else {
-            let hasError = false;
-            if (!selectedGroupSubjectId) {
-                hasError = true;
-            }
-
-            if (!selectedGroupTeacherId) {
-                hasError = true;
-            }
-            if (selectedGroupName?.length === 0) {
-                hasError = true;
-            }
-
-            let clone = newSubjectGroupRow;
-            for (let i = 0; i < clone.length; i++) {
-                let groupObj = clone[i];
-                if (!groupObj['class'] || !groupObj['group_student']?.length) {
-                    hasError = true;
-                    break;
-                }
-            }
-
-            if (hasError) {
-                message(translations(locale).err.fill_all_fields)
-                setShowModalError(true)
-            } else {
-
-                const details = newSubjectGroupRow.map(el => ({
-                    class: el.class,
-                    students: el.group_student,
-                }))
-
-                let bodyParams = {
-                    subject: selectedGroupSubjectId,
-                    teacher: selectedGroupTeacherId,
-                    name: selectedGroupName,
-                    type: 'group',
-                    details: JSON.stringify(details),
-                    grade: selectedTreeId
-                }
-                setShowModalError(false)
-                setIsSaved(true)
-
-                // this.setState({
-                //     showModalError: false,
-                //     fetchGroupSubmit: true,
-                //     showLoader: true,
-                //     isSaved: true
-                // })
-
-                // this.props.fetchMySchoolTimetableSubmit(bodyParams)
-            }
-        }
-    }
-
-    const _onEditSubmit = () => {
-        let bodyParams;
-
-        if (!selectedGroupName) {
-            message(translations(locale).insert_name)
-        } else if (!selectedGroupSubjectId) {
-            message(translations(locale).select_subject)
-        } else if (!editGroupTeacherId) {
-            message(translations(locale).err.select_teacher)
-        } else {
-            if (editGroupIsClass) {
-
-                bodyParams = {
-                    'name': selectedGroupName,
-                    'group': editSubjectGroup ? editSubjectGroup.id : null,
-                    'grade': selectedTreeId,
-                    'subject': selectedGroupSubjectId,
-                    'teacher': editGroupTeacherId,
-                    'type': 'all',
-                    'submit': 1,
-                    'page': tableState.page,
-                    'pageSize': tableState.pageSize,
-                    'search': tableState.search,
-                    'sort': tableState.sort,
-                    'order': tableState.order
-                };
-
-                // this.setState({
-                //     fetchEditSubject: true,
-                //     fetchEditSubjectSubmit: true,
-                //     showLoader: true,
-                // });
-            } else {
-                let hasError = false
-                let newSubjectGroupRow = newSubjectGroupRow;
-                for (let i = 0; i < newSubjectGroupRow.length; i++) {
-                    let groupObj = newSubjectGroupRow[i];
-                    if (!groupObj['class'] || !groupObj['group_student']?.length) {
-                        hasError = true;
-                        break;
-                    }
-                }
-
-
-                if (hasError) {
-                    setShowModalError(true)
-                    return message(translations(locale).err.fill_all_fields)
-                } else {
-                    const details = newSubjectGroupRow.map(el => ({
-                        class: el.class,
-                        students: el.group_student,
-                    }))
-
-                    bodyParams = {
-                        'details': JSON.stringify(details),
-                        'group': editSubjectGroup ? editSubjectGroup.id : null,
-                        'name': selectedGroupName,
-                        'grade': selectedTreeId,
-                        'subject': selectedGroupSubjectId,
-                        'teacher': editGroupTeacherId,
-                        'submit': 1,
-                        'type': 'group',
-                        'page': tableState.page,
-                        'pageSize': tableState.pageSize,
-                        'search': tableState.search,
-                        'sort': tableState.sort,
-                        'order': tableState.order
-                    };
-                    setShowModalError(false)
-
-                    // this.setState({
-                    //     showModalError: false,
-                    //     fetchEditSubject: true,
-                    //     fetchEditSubjectSubmit: true,
-                    //     showLoader: true,
-                    // });
-                }
-            }
-
-            // this.props.fetchMyTimetableEditSubjectSubmit(bodyParams);
-        }
-    }
-
     const _onSubmitDelete = () => {
         let params = {
-            group: deleteGroupId,
+            school: selectedSchool?.id,
+            group: selectedTableDataId,
             grade: selectedTreeId,
             page: tableState.page,
             pageSize: tableState.pageSize,
@@ -523,10 +323,24 @@ const index = () => {
             order: tableState.order,
             sort: tableState.sort,
         };
-        // this.setState({
-        //     fetchDeleteGroup: true
-        // });
-        // this.props.fetchMyTimetableDeleteSubject(params);
+
+        setLoading(true)
+        fetchRequest(managerGroupDelete, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    setTotalCount(res?.totalCount || 0)
+                    setList(res?.groups || [])
+
+                    closeDeleteModal()
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     };
 
     const _contextMenuItemClick = (id, key) => {
@@ -607,6 +421,42 @@ const index = () => {
         }
     }
 
+    const getGradeSubjects = (subjectList = [], gradeId = null) => {
+        let filterGradeIds = []
+        if (gradeId) {
+            filterGradeIds.push(gradeId)
+        }
+        const selectedGrade = treeData?.find(obj => obj.key === gradeId)
+        if (selectedGrade && selectedGrade?.children?.length > 0) {
+            filterGradeIds = filterGradeIds.concat(selectedGrade?.children?.map(obj => obj?.id))
+        }
+        return subjectList.filter(obj => {
+            let exist = false
+            if (filterGradeIds?.length > 0) {
+                for (let g = 0; g < filterGradeIds?.length; g++) {
+                    if (obj?.gradeIds.indexOf(filterGradeIds[g]) > -1) {
+                        exist = true;
+                        break;
+                    }
+                }
+            }
+            return exist
+        })
+    }
+
+    const getGradeClasses = (classList = [], gradeId = null) => {
+        // check if gradeId is parent gradeId
+        let filterGradeIds = []
+        if (gradeId) {
+            filterGradeIds.push(gradeId)
+        }
+        const selectedGrade = treeData?.find(obj => obj.key === gradeId)
+        if (selectedGrade && selectedGrade?.children?.length > 0) {
+            filterGradeIds = filterGradeIds.concat(selectedGrade?.children?.map(obj => obj?.id))
+        }
+        return classList.filter(obj => filterGradeIds.indexOf(obj.gradeId) > -1)
+    }
+
     return (
         <div className="m-grid__item m-grid__item--fluid m-wrapper">
             <HtmlHead title={title} description={description} />
@@ -635,7 +485,7 @@ const index = () => {
                     </Col>
                     <Col xl="10" xxl="10">
                         {
-                            // selectedTreeId.length > 0 &&
+                            selectedTreeId.length > 0 &&
                             <button
                                 type="button"
                                 onClick={() => setShowAddGroupModal(true)}
@@ -649,12 +499,13 @@ const index = () => {
                             <div className="m-portlet__body">
                                 <DTable
                                     remote
-                                    config={tableConfig}
+                                    config={config}
                                     data={list}
                                     columns={getColumns(hasGoogleClassRoom)}
                                     locale={locale}
                                     clickContextMenu
                                     contextMenus={contextMenus}
+                                    currentPage={tableState?.page}
                                     onContextMenuItemClick={_contextMenuItemClick}
                                     onInteraction={onUserInteraction}
                                     totalDataSize={totalCount}
@@ -676,18 +527,15 @@ const index = () => {
                 showAddGroupModal &&
                 <AddGroup
                     onClose={closeModal}
-                    onSubmit={_onSubmit}
-                    modalTabI={(data) => setModalTabIndex(data)}
-                    data={{ newSubjectGroupRow, showModalError, selectedTreeId, classes }}
+                    subjectList={getGradeSubjects(subjects, selectedTreeId)}
+                    classList={getGradeClasses(classes, selectedTreeId)}
                 />
             }
             {
                 showEditModal &&
                 <EditModal
                     onClose={closeEditModal}
-                    onSubmit={_onEditSubmit}
-                    selectedTableId={selectedTableDataId}
-                    data={{ newSubjectGroupRow, editGroupIsClass }}
+                    groupId={selectedTableDataId}
                 />
             }
             {
@@ -695,7 +543,7 @@ const index = () => {
                 <ViewStudent
                     onClose={closeViewModal}
                     title={modalViewTitle}
-                    selectedId={selectedTableDataId}
+                    groupId={selectedTableDataId}
                 />
             }
             {

@@ -9,7 +9,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import secureLocalStorage from "react-secure-storage";
 // import {fetchRequest} from 'utils/fetchRequest'
-// import {transcriptIndex, transcriptStudentSearch, transcriptSubmit} from 'utils/url'
+// import {transcriptIndex, transcriptStudentSearch, transcriptSubmit} from 'utils/fetchRequest/Urls'
 import Create from './modal/create'
 import message from "modules/message";
 import { useTranslation } from "react-i18next";

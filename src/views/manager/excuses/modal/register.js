@@ -9,7 +9,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
-// import { teacherExcuseReasonSubmit } from 'utils/url'
+// import { teacherExcuseReasonSubmit } from 'utils/fetchRequest/Urls'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 
 const register = ({ onClose, onSubmit }) => {

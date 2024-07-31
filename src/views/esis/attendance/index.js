@@ -10,7 +10,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import DTable from 'modules/DataTable/DTable';
 import { useTranslation } from 'react-i18next';
 // import {fetchRequest} from 'utils/fetchRequest'
-// import {ESISAttendanceInit, ESISAttendanceLogs, ESISAttendanceSend} from 'utils/url'
+// import {ESISAttendanceInit, ESISAttendanceLogs, ESISAttendanceSend} from 'utils/fetchRequest/Urls'
 import {dateFormat} from 'utils/Util'
 import message from 'modules/message';
 

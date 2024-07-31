@@ -25,7 +25,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import AddTemplate from './modal/add';
 import EditTemplate from './modal/edit';
 
-// import { templateExamDelete, templateExamInit, templateExamSetPublic, templateExamSetUnPublish } from 'utils/url'
+// import { templateExamDelete, templateExamInit, templateExamSetPublic, templateExamSetUnPublish } from 'utils/fetchRequest/Urls'
 
 const index = () => {
 
