@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { translations } from "utils/translations";
 // import * as actions from "Actions/action";
 import { Checkbox, Dropdown, Modal, Tab } from 'semantic-ui-react'
 import DTable from "modules/DataTable/DTable";
@@ -16,14 +15,16 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import LinkIcon from '@mui/icons-material/Link';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
+import GroupsIcon from '@mui/icons-material/Groups';
 import CloseIcon from '@mui/icons-material/Close';
 import secureLocalStorage from "react-secure-storage";
 import { useTranslation } from "react-i18next";
 
 import { fetchRequest } from 'utils/fetchRequest'
-import { managerGroupIndex, managerGroupDelete } from 'utils/fetchRequest/Urls'
+import { managerGroupIndex, managerGroupDelete, managerGroupClassroomLink } from 'utils/fetchRequest/Urls'
 
 import ViewStudent from "./modals/view";
+import ClassRoomLink from "./modals/classRoomLink";
 import AddGroup from "./modals/addGroup";
 import EditModal from "./modals/editModal";
 import DeleteModal from 'utils/deleteModal';
@@ -62,25 +63,40 @@ const index = () => {
 
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
 
+    const [showClassroomLink, setShowClassroomLink] = useState(false)
+
     const [showStudentModal, setShowStudentModal] = useState(false)
     const [modalViewTitle, setModalViewTitle] = useState(null)
 
     const [showAddGroupModal, setShowAddGroupModal] = useState(false)
-    
-    const contextMenus = [
-        {
-            key: 'EDIT',
-            icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale).edit || ""
-        },
-        {
-            key: 'DELETE',
-            icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
-            title: translations(locale).delete || ""
-        },
-    ]
+
+    const getContextMenus = (showClassRoom = false) => {
+        const cm = [
+            {
+                key: 'EDIT',
+                icon: <BorderColorTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
+                title: t('common.edit')
+            },
+            {
+                key: 'DELETE',
+                icon: <DeleteTwoToneIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
+                title: t('common.delete')
+            }
+        ]
+        if (showClassRoom) {
+            cm.push({
+                key: 'CLASSROOM',
+                icon: <GroupsIcon sx={{ fontSize: '2rem !important', color: '#ff5b1d' }} />,
+                title: t('group.classRoomLink')
+            })
+        }
+        return cm;
+    }
+
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
+
+    const [updateView, setUpdateView] = useState(false)
 
     const [tableState, setTableState] = useState({
         page: 1,
@@ -108,12 +124,12 @@ const index = () => {
         const columns = [
             {
                 dataField: "grade",
-                text: translations(locale).grade || "",
+                text: t('group.grade'),
                 sort: true
             },
             {
                 dataField: "subjectName",
-                text: translations(locale).timetable.subject || "",
+                text: t('subject.title'),
                 sort: true,
                 formatter: (cell, row) => {
                     return row.subjectCode + ' - ' + row.subjectName
@@ -121,12 +137,12 @@ const index = () => {
             },
             {
                 dataField: "groupName",
-                text: translations(locale).omr_exam_template.subject_group || "",
+                text: t('manager.groups'),
                 sort: true,
             },
             {
                 dataField: "classes",
-                text: translations(locale).group.title || "",
+                text: t('group.title'),
                 sort: true,
                 formatter: (cell, row) => {
                     return <div className="pointer underline" onClick={() => {
@@ -137,12 +153,12 @@ const index = () => {
             },
             {
                 dataField: "teacher",
-                text: translations(locale).timetable.teacher || "",
+                text: t('teacher_title'),
                 sort: true
             },
             {
                 dataField: "students",
-                text: translations(locale).students || "",
+                text: t('menu.student'),
                 sort: false,
                 formatter: (cell, row) => {
                     return <span onClick={() => {
@@ -156,6 +172,7 @@ const index = () => {
             columns.unshift({
                 dataField: "classRoomLink",
                 text: "",
+                sort: true,
                 formatter: (cell, row) => {
                     if (cell) {
                         return <LinkIcon className='classroom-link' title='Google classroom' onClick={() => {
@@ -205,6 +222,11 @@ const index = () => {
         setShowStudentModal(false)
     };
 
+    const closeClassroomModal = () => {
+        setSelectedTableDataId(null)
+        setShowClassroomLink(false)
+    }
+
     const showStudents = (id) => {
         setSelectedTableDataId(id)
         setShowStudentModal(true)
@@ -247,69 +269,30 @@ const index = () => {
         setShowDeleteModal(false)
     };
 
-    const initActionHandler = () => {
-        // let that = this;
-        // sessionService.loadSession().then(session => {
-        //     let sessionObj = session;
-        //     let existingTrees = sessionObj.treeViews || [];
-
-        //     let tree = existingTrees.find(treeObj => treeObj.key === this.treeViewKey);
-
-        //     let selectedTreeId = [],
-        //         treeSelectedGradeId = null,
-        //         treeSelectedType = null;
-
-        //     if (tree) {
-        //         let selectedTreeValues = tree.value.split('_');
-        //         treeSelectedGradeId = selectedTreeValues.length > 0 ? selectedTreeValues[0] : null;
-        //         treeSelectedType = selectedTreeValues.length > 0 ? selectedTreeValues[1] : null;
-        //     }
-
-        //     if (treeSelectedGradeId) {
-        //         selectedTreeId[0] = parseInt(treeSelectedGradeId);
-        //     }
-
-        //     if (selectedTreeId.length > 0 && treeSelectedGradeId) {
-        //         setState({
-        //             sessionObj,
-        //             existingTrees,
-        //             selectedTreeId,
-        //             treeSelectedGradeId,
-        //             fetchInit: true,
-        //             showLoader: true,
-        //         });
-
-
-
-        //         props.fetchMySchoolTimetableInit(params);
-        //     } else {
-        //         setState({
-        //             sessionObj,
-        //             existingTrees,
-        //             fetchInit: true,
-        //             showLoader: true,
-        //         });
-
-        //         props.fetchMySchoolTimetableInit();
-        //     }
-
-        if (selectedTreeId) {
-            let params = {
-                grade: selectedTreeId
-            };
-
-            this.setState({
-                fetchInit: true,
-                showLoader: true
-            });
-            this.props.fetchMySchoolTimetableInit(params);
-        } else {
-            this.setState({
-                fetchInit: true,
-                showLoader: true
-            });
-            this.props.fetchMySchoolTimetableInit();
-        }
+    const submitClassroom = (params) => {
+        setLoading(true)
+        fetchRequest(managerGroupClassroomLink, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    const clone = [...list]
+                    for (let c = 0; c < clone.length; c++) {
+                        if (clone[c].id?.toString() === res?.id?.toString()) {
+                            clone[c].classRoomLink = res?.classRoomLink;
+                            break;
+                        }
+                    }
+                    setList(clone)
+                    setUpdateView(!updateView)
+                    closeClassroomModal()
+                } else {
+                    message(res.message)
+                }
+                setLoading(false)
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     const _onSubmitDelete = () => {
@@ -351,6 +334,9 @@ const index = () => {
             }
             if (key === 'DELETE') {
                 setShowDeleteModal(true)
+            }
+            if (key === 'CLASSROOM') {
+                setShowClassroomLink(true)
             }
         }
     }
@@ -485,14 +471,14 @@ const index = () => {
                     </Col>
                     <Col xl="10" xxl="10">
                         {
-                            selectedTreeId.length > 0 &&
+                            selectedTreeId &&
                             <button
                                 type="button"
                                 onClick={() => setShowAddGroupModal(true)}
                                 className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
                             >
                                 <AddCircleOutlineRoundedIcon className='MuiSvg-customSize' />
-                                <span className='ml-2'>{translations(locale).add || null}</span>
+                                <span className='ml-2'>{t('common.register')}</span>
                             </button>
                         }
                         <div className="m-portlet br-12">
@@ -504,7 +490,7 @@ const index = () => {
                                     columns={getColumns(hasGoogleClassRoom)}
                                     locale={locale}
                                     clickContextMenu
-                                    contextMenus={contextMenus}
+                                    contextMenus={getContextMenus(hasGoogleClassRoom)}
                                     currentPage={tableState?.page}
                                     onContextMenuItemClick={_contextMenuItemClick}
                                     onInteraction={onUserInteraction}
@@ -547,6 +533,13 @@ const index = () => {
                 />
             }
             {
+                showClassroomLink && <ClassRoomLink
+                    onClose={closeClassroomModal}
+                    onSubmit={submitClassroom}
+                    oldLink={list?.find(obj => obj?.id === selectedTableDataId)?.classRoomLink}
+                    groupId={selectedTableDataId} />
+            }
+            {
                 showDeleteModal &&
                 <DeleteModal
                     show={showDeleteModal}
@@ -558,8 +551,8 @@ const index = () => {
                     <div className="row">
                         <div className="col-md-12">
                             <div>
-                                <p>{translations(locale).delete_confirmation || null}</p>
-                                <p>{translations(locale).delete_confirmation_description || null}</p>
+                                <p>{t('warning.delete_confirmation')}</p>
+                                <p>{t('warning.delete_confirmation_description')}</p>
                             </div>
                         </div>
                     </div>
