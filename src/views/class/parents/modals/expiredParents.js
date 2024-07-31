@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { Modal } from 'react-bootstrap'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
@@ -6,6 +6,11 @@ import { translations } from 'utils/translations'
 
 const group = ({ onClose, data }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+
+    const [tableData, setTableData] = useState([
+        {id: 19, studentCode: 2323, firstName: "AAA", lastName: "SS", userName: 'tytruy', contact:2222}, 
+        {id: 20, studentCode: 1232, firstName: "Julia", lastName: "Julie", userName: 'dfsdg', contact:1}
+    ]);
 
     const config = {
         showAllData: true,
@@ -64,7 +69,7 @@ const group = ({ onClose, data }) => {
                     locale={locale}
                     config={config}
                     columns={columns}
-                    data={data}
+                    data={tableData}
                 />
             </Modal.Body>
             <Modal.Footer className="text-center">
@@ -76,38 +81,6 @@ const group = ({ onClose, data }) => {
                     </button>   
             </Modal.Footer>
         </Modal>
-        // <Modal
-        //     dimmer='blurring'
-        //     open={true}
-        //     onClose={onClose}
-        //     className="react-modal overflow-modal"
-        //     centered
-        // >
-        //     <div className="header">
-        //         {translations(locale)?.parents?.parent_user_expired}
-        //         <button type="button" className="close" aria-label="Close" onClick={onClose} >
-        //             <CloseIcon />
-        //         </button>
-        //     </div>
-        //     <div className="content">
-        //         <DTable
-        //             locale={locale}
-        //             config={config}
-        //             columns={columns}
-        //             data={data}
-        //         />
-        //     </div>
-        //     <div className="actions modal-footer ">
-        //         <div className="col-12 text-center">
-        //             <button
-        //                 onClick={onClose}
-        //                 className="btn btn-outline-metal m-btn--pill"
-        //             >
-        //                 {translations(locale)?.close}
-        //             </button>
-        //         </div>
-        //     </div>
-        // </Modal >
     )
 }
 

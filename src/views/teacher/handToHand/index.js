@@ -86,6 +86,12 @@ const index = () => {
     const [selectedDate, setSelectedDate] = useState(null)
     const [weekdayIndex, setWeekdayIndex] = useState(null)
     // const [students, setStudents] = useState([])
+    const [students, setStudents] = useState([
+        {id: 11, code: 555, firstName: "john", lastName: "snow", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss, delete'}, 
+        {id: 12, code: 333, firstName: "joy", lastName: "summer", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss, delete'}, 
+        {id: 13, code: 888, firstName: "julie", lastName: "spring", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss'}, 
+        {id: 14, code: 77, firstName: "julia", lastName: "winter", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss'} 
+    ]);
 
     const [selectedClass, setSelectedClass] = useState(null)
 
@@ -95,6 +101,12 @@ const index = () => {
     const [endDate, setEndDate] = useState(null)
 
     // const [studentReports, setStudentReports] = useState([])
+    const [studentReports, setStudentReports] = useState([
+        {id: 11, code: 555, relationType: "dfgdg", requestUser: "tyth"}, 
+        {id: 12, code: 333, relationType: "fgdfggfd", requestUser: "snokikw"}, 
+        {id: 13, code: 888, relationType: "jojghjhhn", requestUser: "tyty"}, 
+        {id: 14, code: 77, relationType: "yuyiku", requestUser: "dsasx"} 
+    ]);
     const [selectedStudent, setSelectedStudent] = useState(null)
 
     const [tmpDescription, setTmpDescription] = useState('')
@@ -102,19 +114,11 @@ const index = () => {
     const [showDismissModal, setShowDismissModal] = useState(false)
 
     const [updateView, setUpdateView] = useState(false)
+    
+    // const [date, setDate] = useState(dateFormat(new Date()))
+    const date = dateFormat(new Date())
+    const [dateTitle, setDateTitle] = useState(dateFormat(new Date()) + ' ' + WEEKDAYS_LONG[locale][(new Date()).getDay()])
 
-    const [students, setStudents] = useState([
-        {id: 11, code: 555, firstName: "john", lastName: "snow", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss, delete'}, 
-        {id: 12, code: 333, firstName: "joy", lastName: "summer", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss, delete'}, 
-        {id: 13, code: 888, firstName: "julie", lastName: "spring", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss'}, 
-        {id: 14, code: 77, firstName: "julia", lastName: "winter", canReply: true, requested: true, dismissed: false, checkable: false, contextMenuKeys:'dismiss'} 
-    ]);
-    const [studentReports, setStudentReports] = useState([
-        {id: 11, code: 555, relationType: "john", requestUser: "snow"}, 
-        {id: 12, code: 333, relationType: "john", requestUser: "snow"}, 
-        {id: 13, code: 888, relationType: "john", requestUser: "snow"}, 
-        {id: 14, code: 77, relationType: "john", requestUser: "snow"} 
-    ]);
     
     const getCheckedStudents = () => {
         const checkedStudents = [];
@@ -473,7 +477,6 @@ const index = () => {
     }
 
     const onContextMenuClick = (id, key) => {
-        console.log('id is', id, 'key is', key);
         if (id && key) {
             const selectedStudent = students?.find(obj => {
                 return obj?.id === id
@@ -579,10 +582,12 @@ const index = () => {
                                                         <div className="col-auto p-0 text-center pl-1">
                                                             <DayPickerInput
                                                                 onDayChange={onDayChange}
-                                                                value={`${selectedDate ? selectedDate : ''} ${selectedDate && weekdayIndex ? WEEKDAYS_LONG[locale][weekdayIndex] : ''}`}
+                                                                // value={`${selectedDate ? selectedDate : ''} ${selectedDate && weekdayIndex ? WEEKDAYS_LONG[locale][weekdayIndex] : ''}`}
+                                                                // placeholder={t('datePickerPlaceholder')}
+                                                                value={dateTitle}
+                                                                placeholder={dateTitle}
                                                                 hideOnDayClick={true}
                                                                 inputProps={{readOnly: true}}
-                                                                placeholder={t('datePickerPlaceholder')}
                                                                 dayPickerProps={{
                                                                     disabledDays: seasonStart && seasonEnd
                                                                         ? {
@@ -590,7 +595,10 @@ const index = () => {
                                                                             after: new Date(seasonEnd)
                                                                         }
                                                                         :
-                                                                        {}
+                                                                        {
+                                                                            before: new Date(seasonStart),
+                                                                            after: new Date(date)
+                                                                        }
                                                                 }}
                                                                 classNames={{
                                                                     container: 'myToday-DayPicker',
@@ -653,7 +661,10 @@ const index = () => {
                                                                     after: new Date(seasonEnd)
                                                                 }
                                                                 :
-                                                                {}
+                                                                {
+                                                                    before: new Date(seasonStart),
+                                                                    after: new Date(date)
+                                                                }
                                                         }}
                                                         classNames={{
                                                             overlay: 'DayPickerInputOverlay',
@@ -680,7 +691,10 @@ const index = () => {
                                                                     after: new Date(seasonEnd)
                                                                 }
                                                                 :
-                                                                {}
+                                                                {
+                                                                    before: new Date(startDate),
+                                                                    after: new Date(date)
+                                                                }
                                                         }}
                                                         classNames={{
                                                             overlay: 'DayPickerInputOverlay',
@@ -715,6 +729,7 @@ const index = () => {
                                                                     fluid
                                                                     clearable
                                                                     selection
+                                                                    search
                                                                     value={selectedStudent}
                                                                     closeOnChange
                                                                     options={(students || []).map(studentObj => {
@@ -744,7 +759,10 @@ const index = () => {
                                                                                     after: new Date(seasonEnd)
                                                                                 }
                                                                                 :
-                                                                                {}
+                                                                                {
+                                                                                    before: new Date(seasonStart),
+                                                                                    after: new Date(date)
+                                                                                }
                                                                         }}
                                                                         classNames={{
                                                                             overlay: 'DayPickerInputOverlay',
@@ -771,7 +789,10 @@ const index = () => {
                                                                                     after: new Date(seasonEnd)
                                                                                 }
                                                                                 :
-                                                                                {}
+                                                                                {
+                                                                                    before: new Date(startDate),
+                                                                                    after: new Date(date)
+                                                                                }
                                                                         }}
                                                                         classNames={{
                                                                             overlay: 'DayPickerInputOverlay',
@@ -799,128 +820,128 @@ const index = () => {
                     </Col>
                 </Row>
             </div>
-            {/* tmpDismiss && */}
             {
-                showDismissModal &&  
-                <Modal
-                    centered
-                    show={true}
-                    size='lg'
-                    onHide={closeDismissModal}
-                    dimmer='blurring'
-                    aria-labelledby="contained-modal-title-vcenter"
-                >
-                    <Modal.Header closeButton style={{padding: '1rem'}}>
-                        <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                            {t('handToHand.dismiss')}
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className='content'>
-                            <Row className={'mb-4'}>
-                                <Col md={3} className={"text-right"}>
-                                    <img src={tmpDismiss?.avatar || '/img/profile/avatar.png'}
-                                        className="m--img-rounded m--marginless m--img-centered"
-                                        width={80}
-                                        height={80}
-                                        alt="avatar" />
-                                </Col>
-                                <Col md={9}>
-                                    <Row className='form-group m-0'>
-                                        <Col className='text-right' md={4}>
-                                            <label className="text-right">
-                                                {t('className')}
-                                            </label>
-                                        </Col>
-                                        <Col>
-                                            <label className="label-pinnacle-bold">
-                                                {tmpDismiss?.className}
-                                            </label>
-                                        </Col>
-                                    </Row>
-                                    <Row className='form-group m-0'>
-                                        <Col className='text-right' md={4}>
-                                            <label className="text-right">
-                                                {t('studentCode')}
-                                            </label>
-                                        </Col>
-                                        <Col>
-                                            <label className="label-pinnacle-bold">
-                                                {tmpDismiss?.code}
-                                            </label>
-                                        </Col>
-                                    </Row>
-                                    <Row className='form-group m-0'>
-                                        <Col className='text-right' md={4}>
-                                            <label className="text-right">
-                                                {t('studentLastName')}
-                                            </label>
-                                        </Col>
-                                        <Col>
-                                            <label className="label-pinnacle-bold">
-                                                {tmpDismiss?.lastName}
-                                            </label>
-                                        </Col>
-                                    </Row>
-                                    <Row className='form-group m-0'>
-                                        <Col className='text-right' md={4}>
-                                            <label className="text-right">
-                                                {t('studentFirstName')}
-                                            </label>
-                                        </Col>
-                                        <Col>
-                                            <label className="label-pinnacle-bold">
-                                                {tmpDismiss?.firstName}
-                                            </label>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={2} />
-                                <Col md={2} className="text-right">
-                                    <label className="label-pinnacle-bold">
-                                        {t('description')}*
-                                    </label>
-                                </Col>
-                                <Col md={6}>
-                                    <textarea
-                                        className="form-control m-input"
-                                        placeholder={t('insert_description')}
-                                        value={tmpDescription}
-                                        style={{
-                                            minHeight: 100
-                                        }}
-                                        onChange={(e) => setTmpDescription(e.target.value)}
-                                    />
-                                </Col>
-                            </Row>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer className="text-center">
-                        <button 
-                            onClick={closeDismissModal}
-                            className="btn m-btn--pill btn-outline-metal text-uppercase"
-                        >
-                            {t('close')}        
-                        </button>
-                        <button
-                            onClick={submitDismiss}
-                            className="btn m-btn--pill btn-success text-uppercase ml-3"
-                        >
-                            {t('save')}
-                        </button>
-                    </Modal.Footer>
-                    {
-                        tmpLoading &&
-                        <>
-                            <div className="blockUI blockOverlay"/>
-                            <div className="blockUI blockMsg blockPage">
-                                <div className="m-loader m-loader--brand m-loader--lg"/>
+                showDismissModal && //tmpDismiss && // тестлэхийн тулд түр коммент болгосон
+                    <Modal
+                        centered
+                        show={true}
+                        size='lg'
+                        onHide={closeDismissModal}
+                        dimmer='blurring'
+                        aria-labelledby="contained-modal-title-vcenter"
+                    >
+                        <Modal.Header closeButton style={{padding: '1rem'}}>
+                            <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                                {t('handToHand.dismiss')}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className='content'>
+                                <Row className={'mb-4'}>
+                                    <Col md={3} className={"text-right"}>
+                                        <img src={tmpDismiss?.avatar || '/img/profile/avatar.png'}
+                                            className="m--img-rounded m--marginless m--img-centered"
+                                            width={80}
+                                            height={80}
+                                            alt="avatar" />
+                                    </Col>
+                                    <Col md={9}>
+                                        <Row className='form-group m-0'>
+                                            <Col className='text-right' md={4}>
+                                                <label className="label-mulish">
+                                                    {t('className')}
+                                                </label>
+                                            </Col>
+                                            <Col>
+                                                <label className="label-pinnacle">
+                                                    {tmpDismiss?.className}
+                                                </label>
+                                            </Col>
+                                        </Row>
+                                        <Row className='form-group m-0'>
+                                            <Col className='text-right' md={4}>
+                                                <label className="label-mulish">
+                                                    {t('studentCode')}
+                                                </label>
+                                            </Col>
+                                            <Col>
+                                                <label className="label-pinnacle">
+                                                    {tmpDismiss?.code}
+                                                </label>
+                                            </Col>
+                                        </Row>
+                                        <Row className='form-group m-0'>
+                                            <Col className='text-right' md={4}>
+                                                <label className="label-mulish">
+                                                    {t('studentLastName')}
+                                                </label>
+                                            </Col>
+                                            <Col>
+                                                <label className="label-pinnacle">
+                                                    {tmpDismiss?.lastName}
+                                                </label>
+                                            </Col>
+                                        </Row>
+                                        <Row className='form-group m-0'>
+                                            <Col className='text-right' md={4}>
+                                                <label className="label-mulish">
+                                                    {t('studentFirstName')}
+                                                </label>
+                                            </Col>
+                                            <Col>
+                                                <label className="label-pinnacle">
+                                                    {tmpDismiss?.firstName}
+                                                </label>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={2} />
+                                    <Col md={2} className="text-right">
+                                        <label className="label-pinnacle-bold">
+                                            {t('description')}*
+                                        </label>
+                                    </Col>
+                                    <Col md={6}>
+                                        <textarea
+                                            className="form-control m-input"
+                                            placeholder={t('insert_description')}
+                                            value={tmpDescription}
+                                            style={{
+                                                minHeight: 100
+                                            }}
+                                            onChange={(e) => setTmpDescription(e.target.value)}
+                                        />
+                                    </Col>
+                                </Row>
                             </div>
-                        </>
-                    }
-                </Modal>
+                        </Modal.Body>
+                        <Modal.Footer className="text-center">
+                            <button 
+                                onClick={closeDismissModal}
+                                className="btn m-btn--pill btn-outline-metal text-uppercase"
+                            >
+                                {t('close')}        
+                            </button>
+                            <button
+                                onClick={submitDismiss}
+                                className="btn m-btn--pill btn-success text-uppercase ml-3"
+                            >
+                                {t('save')}
+                            </button>
+                        </Modal.Footer>
+                        {
+                            loading &&
+                            <>
+                                <div className="blockUI blockOverlay"/>
+                                <div className="blockUI blockMsg blockPage">
+                                    <div className="m-loader m-loader--brand m-loader--lg"/>
+                                </div>
+                            </>
+                        }
+                    </Modal> 
+                
             }
             {
                 loading &&
