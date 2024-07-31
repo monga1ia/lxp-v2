@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-// import {ESISStudentInit, ESISStudentSubmit, ESISStudentDelete, ESISStudentSync, ESISStudentLink} from 'utils/url'
+// import {ESISStudentInit, ESISStudentSubmit, ESISStudentDelete, ESISStudentSync, ESISStudentLink} from 'utils/fetchRequest/Urls'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 

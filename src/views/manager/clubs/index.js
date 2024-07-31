@@ -10,7 +10,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import { useTranslation } from 'react-i18next'
 import { Row, Col } from 'react-bootstrap'
-// import { managerClubDelete, managerClubInit } from 'utils/url'
+// import { managerClubDelete, managerClubInit } from 'utils/fetchRequest/Urls'
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'

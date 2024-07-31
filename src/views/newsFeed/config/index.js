@@ -16,7 +16,7 @@ import EditHeader from './modals/editHeaderModal';
 import CreateRecipient from './modals/createRecipientModal';
 import DeleteHdr from './modals/deleteHeaderModal';
 import { Row, Col } from 'react-bootstrap';
-// import { NewsFeedConfigAddRecipients, NewsFeedConfigDeleteRecipient, NewsFeedConfigCreate, NewsFeedConfigDelete, NewsFeedConfigEdit, NewsFeedConfigInit, NewsFeedConfigRecipients, NewsFeedConfigView, NewsFeedConfigEditRecipient } from 'utils/url'
+// import { NewsFeedConfigAddRecipients, NewsFeedConfigDeleteRecipient, NewsFeedConfigCreate, NewsFeedConfigDelete, NewsFeedConfigEdit, NewsFeedConfigInit, NewsFeedConfigRecipients, NewsFeedConfigView, NewsFeedConfigEditRecipient } from 'utils/fetchRequest/Urls'
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'

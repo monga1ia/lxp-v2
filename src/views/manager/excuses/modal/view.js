@@ -7,7 +7,7 @@ import {Col, Container, Row} from 'react-bootstrap'
 // import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
 import { useTranslation } from 'react-i18next'
-// import {teacherExcuseReasonView, teacherExcuseRequestView} from 'utils/url'
+// import {teacherExcuseReasonView, teacherExcuseRequestView} from 'utils/fetchRequest/Urls'
 
 const view = ({onClose, id, type}) => {
 

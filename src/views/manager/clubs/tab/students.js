@@ -9,7 +9,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 // import { fetchRequest } from 'utils/fetchRequest'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-// import { managerClubStudentAdd, managerClubStudentRemove, managerClubStudents } from 'utils/url'
+// import { managerClubStudentAdd, managerClubStudentRemove, managerClubStudents } from 'utils/fetchRequest/Urls'
 
 export const students = ({ group }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'

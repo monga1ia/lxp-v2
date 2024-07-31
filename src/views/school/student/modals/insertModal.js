@@ -10,7 +10,7 @@ import {fetchRequest} from 'utils/fetchRequest'
 
 // import {
 //     schoolStudentCreate,
-// } from 'utils/url'
+// } from 'utils/fetchRequest/Urls'
 import {isValidEmail} from 'utils/Util'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'

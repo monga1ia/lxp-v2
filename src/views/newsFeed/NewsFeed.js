@@ -9,7 +9,7 @@ import { Modal } from "semantic-ui-react";
 import { Row, Col } from 'react-bootstrap';
 import Compress from 'compress.js'
 import secureLocalStorage from 'react-secure-storage'
-// import { newsFeedAction, newsFeedComment, newsFeedCommentCreate, newsFeedCommentEdit, newsFeedCommentDelete, newsFeedDelete, newsFeedEdit, newsFeedInit, newsFeedList, newsFeedSubmit, newsFeedView } from 'utils/url';
+// import { newsFeedAction, newsFeedComment, newsFeedCommentCreate, newsFeedCommentEdit, newsFeedCommentDelete, newsFeedDelete, newsFeedEdit, newsFeedInit, newsFeedList, newsFeedSubmit, newsFeedView } from 'utils/fetchRequest/Urls';
 // import { fetchRequest } from 'utils/fetchRequest';
 import { useTranslation } from 'react-i18next';
 import ActionModal from './modals/actionModal';
