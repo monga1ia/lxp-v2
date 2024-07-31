@@ -12,7 +12,12 @@ import { classParentApprove } from 'utils/fetchRequest/Urls'
 const approveParents = ({ onClose, onSubmit, parents = [] }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
-    const [tableData, setTableData] = useState(parents)
+    // const [tableData, setTableData] = useState(parents)
+
+    const [tableData, setTableData] = useState([
+        {id: 19, studentCode: 2323, firstName: "AAA", lastName: "SS", contact: "2222", name: "father", relationLastName:'Гончиг', relationFirstName:'Баяр'}, 
+        {id: 20, studentCode: 2323, firstName: "vvv", lastName: "ll", contact: "33", name: "mother", relationLastName:'Чулуун', relationFirstName:'Туяа'}
+    ]);
 
     const config = {
         showAllData: true,
@@ -121,7 +126,7 @@ const approveParents = ({ onClose, onSubmit, parents = [] }) => {
         >
             <Modal.Header closeButton style={{ padding: '1rem' }}>
                 <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
-                    {t('parents.pendingConfirmation')}
+                {translations(locale)?.parents?.pendingConfirmation}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -160,55 +165,6 @@ const approveParents = ({ onClose, onSubmit, parents = [] }) => {
                 </>
             }
         </Modal>
-        // <Modal
-        //     dimmer='blurring'
-        //     open={true}
-        //     onClose={onClose}
-        //     className="react-modal overflow-modal"
-        //     centered
-        // >
-        //     <div className="header">
-        //         {translations(locale)?.parents?.pendingConfirmation}
-        //         <button type="button" className="close" aria-label="Close" onClick={onClose} >
-        //             <CloseIcon />
-        //         </button>
-        //     </div>
-        //     <div className="content">
-        //         <DTable
-        //             checkable={true}
-        //             onCheckable={onCheckedChange}
-        //             locale={locale}
-        //             config={config}
-        //             columns={columns}
-        //             data={tableData}
-        //         />
-        //     </div>
-        //     <div className="actions modal-footer ">
-        //         <div className="col-12 text-center">
-        //             <button
-        //                 onClick={onClose}
-        //                 className="btn btn-outline-metal m-btn--pill"
-        //             >
-        //                 {translations(locale)?.close}
-        //             </button>
-        //             <button
-        //                 className='btn m-btn--pill btn-success text-uppercase ml-3'
-        //                 onClick={submit}
-        //             >
-        //                 {translations(locale)?.approve}
-        //             </button>
-        //         </div>
-        //     </div>
-        //     {
-        //         loading &&
-        //         <>
-        //             <div className="blockUI blockOverlay" />
-        //             <div className="blockUI blockMsg blockPage">
-        //                 <div className="m-loader m-loader--brand m-loader--lg" />
-        //             </div>
-        //         </>
-        //     }
-        // </Modal>
     )
 }
 

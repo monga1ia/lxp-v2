@@ -168,7 +168,7 @@ const index = () => {
         setShowNonApprovedParentsModal(false)
     }
 
-    const handleClick = (rowObj) => {
+    const handleClick = (rowObj) => {  
         setSelectedParentObj(rowObj)
         setShowParentsModal(false)
         setShowStudentsParentsModal(true)
@@ -185,10 +185,11 @@ const index = () => {
                 </Col>
             </div>  
             <div className="row gap-10">
-                {
-                    (hasApprovalConfig || nonApprovedParents?.length > 0 ) && 
+                { 
+                    // (hasApprovalConfig || nonApprovedParents?.length > 0 ) &&  тестлэхийн тулд түр коммент болгосон
                     <div
-                        onClick={() => nonApprovedParents?.length > 0 ? setShowNonApprovedParentsModal(true) : null}
+                        onClick={() => setShowNonApprovedParentsModal(true)} 
+                        // onClick={() => nonApprovedParents?.length > 0 ? setShowNonApprovedParentsModal(true) : null } тестлэхийн тулд түр коммент болгосон
                         className='br-06 col px-4 pt-4 pb-3' style={{ backgroundColor: '#ffa988' }}>
                         <div className="text-white d-flex flex-column justify-content-between h-100">
                             <p className='m-0 fs-14' style={{ fontFamily: 'MulishMedium', color: 'rgb(122, 122, 134)' }}>{t('parents.pendingConfirmation')}</p>
@@ -248,7 +249,7 @@ const index = () => {
                 />
             }
             {
-                showParentsModal && selectedStudentId &&
+                showParentsModal && //selectedStudentId && // тестлэхийн тулд түр коммент болгосон
                 <ParentsModal
                     onClose={closeModal}
                     id={selectedStudentId}
@@ -257,7 +258,7 @@ const index = () => {
                 />
             }
             {
-                showStudentsParentsModal && selectedStudentId && selectedParentObj &&
+                showStudentsParentsModal && //selectedStudentId && selectedParentObj &&  // тестлэхийн тулд түр коммент болгосон
                 <StudentsParentsModal
                     onClose={closeModal}
                     parentId={selectedParentObj?.personId}

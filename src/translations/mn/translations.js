@@ -1578,6 +1578,7 @@ export const TRANSLATIONS_MN = {
         addClass: 'Бүлэг нэмэх',
         addStudent: 'Сурагч нэмэх',
         approveStudents: 'Сурагчдыг баталгаажуулах',
+        classRoomLink: 'Google classroom линк',
         curriculum: 'Хөтөлбөр',
         title: 'Бүлэг',
         type: 'Төрөл',
@@ -2133,6 +2134,7 @@ export const TRANSLATIONS_MN = {
         file_empty: 'Файл хоосон байна',
         choose_date: 'Огноо сонгоно уу',
         invalid_email: 'Буруу И-мэйл хаяг',
+        invalid_url: 'Буруу холбоос байна',
     },
     my: {
         homework_report: 'Гэрийн даалгаварын тайлан',
@@ -2732,6 +2734,7 @@ export const TRANSLATIONS_MN = {
         notFound: "Хуудас олдсонгүй",
         notification: "Мэдэгдэл",
         notConnected: "Холбоогүй",
+        newLink: 'Шинэ линк',
         newPassword: "Шинэ нууц үг",
         newRePassword: "Шинэ нууц үг давтах",
         next: "Дараах",

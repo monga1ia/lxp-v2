@@ -44,6 +44,11 @@ export const movementInAvatar = 'movement/in/avatar'
 
 // manager
 export const managerGroupIndex = 'manager/group/index'
+export const managerGroupCreate = 'manager/group/create'
+export const managerGroupEdit = 'manager/group/edit'
+export const managerGroupView = 'manager/group/view'
+export const managerGroupDelete = 'manager/group/delete'
+export const managerGroupClassroomLink = 'manager/group/classroom-link'
 
 
 // staff

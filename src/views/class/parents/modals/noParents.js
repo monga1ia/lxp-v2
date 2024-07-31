@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { Modal } from 'react-bootstrap'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
@@ -6,6 +6,11 @@ import { translations } from 'utils/translations'
 
 const group = ({ onClose, data }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
+
+    const [tableData, setTableData] = useState([
+        {id: 19, code: 2323, firstName: "AAA", lastName: "SS", relationCount:2}, 
+        {id: 20, code: 1232, firstName: "Julia", lastName: "Julie", relationCount:1}
+    ]);
 
     const config = {
         showAllData: true,
@@ -54,7 +59,7 @@ const group = ({ onClose, data }) => {
                     locale={locale}
                     config={config}
                     columns={columns}
-                    data={data}
+                    data={tableData}
                 />
             </Modal.Body>
             <Modal.Footer className="text-center">
@@ -63,8 +68,7 @@ const group = ({ onClose, data }) => {
                         className="btn btn-outline-metal m-btn--pill"
                     >
                         {translations(locale)?.close}
-                    </button>
-   
+                    </button>   
             </Modal.Footer>
         </Modal>
     )

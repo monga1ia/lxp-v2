@@ -9,13 +9,13 @@ import { NDropdown as Dropdown } from 'widgets/Dropdown';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { fetchRequest } from 'utils/fetchRequest'
-import { schoolSubjectTeacher, schoolClassStudents } from 'utils/fetchRequest/Urls'
+import { schoolSubjectTeacher, schoolClassStudents, managerGroupCreate } from 'utils/fetchRequest/Urls'
 
 import secureLocalStorage from 'react-secure-storage';
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] }) => {
+const AddGroup = ({ onClose, subjectList = [], classList = [] }) => {
 
     const { t } = useTranslation();
     const { selectedSchool } = useSelector(state => state.schoolData);
@@ -28,7 +28,7 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
         {
             subject: null,
             classes: [],
-            class: null,
+            selectedClasses: [],
             teachers: [],
             teacher: null
         }
@@ -41,17 +41,17 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
 
     const [groupSubjectRows, setGroupSubjectRows] = useState([{
         class: null,
-        allStudents: [],
-        group_student: []
+        students: [],
+        selectedStudents: []
     }])
 
     const [showModalError, setShowModalError] = useState(false)
-    const [addAgain, setAddAgain] = useState(false)
-    const [modalAction, setModalAction] = useState(data?.modalAction)
 
-    const [selectedGroupTeacherId, setSelectedGroupTeacherId] = useState(null)
-    const [groupSubjectTeachers, setgroupSubjectTeachers] = useState([])
-    const [groupTotalStudents, setGroupTotalStudents] = useState(0)
+    const [addAgain, setAddAgain] = useState(false)
+    const [closeWithReload, setCloseWithReload] = useState(false)
+
+    const [groupTotalStudentCount, setGroupTotalStudentCount] = useState(0)
+    const [updateView, setUpdateView] = useState(false)
 
     const onClassSubjectChange = (subjectId, rowIndex) => {
         let subjectRows = [...classSubjectRows];
@@ -78,8 +78,7 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                 }
                 setLoading(false)
             })
-            .catch((e) => {
-                console.log('E', e)
+            .catch(() => {
                 message(t('err.error_occurred'))
                 setLoading(false)
             })
@@ -91,10 +90,11 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
     };
 
     const addClassSubjectRow = () => {
+        setShowModalError(false)
         setClassSubjectRows([...classSubjectRows, {
             subject: null,
             classes: [],
-            class: null,
+            selectedClasses: [],
             teachers: [],
             teacher: null
         }])
@@ -139,13 +139,17 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
         }
         const clone = [...groupSubjectRows]
         clone[index].class = classId
-        
+        clone[index].students = []
+        clone[index].selectedStudents = []
+
         setLoading(true)
         fetchRequest(schoolClassStudents, 'POST', params)
             .then((res) => {
                 if (res.success) {
                     clone[index].students = res?.students;
                     setGroupSubjectRows(clone)
+
+                    setUpdateView(!updateView)
                 } else {
                     setGroupSubjectRows(clone)
                     message(res.message)
@@ -175,24 +179,35 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
         }])
     }
 
+    const calculateStudentCount = (rows = []) => {
+        if (modalTabIndex === 1) {
+            let totalStudentCount = 0;
+            for (let i = 0; i < rows.length; i++) {
+                totalStudentCount = totalStudentCount + rows[i].selectedStudents?.length;
+            }
+            setGroupTotalStudentCount(totalStudentCount)
+        }
+    }
+
     const removeGroupSubjectRow = (index) => {
         const rows = [...groupSubjectRows]
         rows.splice(index, 1)
-
-        let totalStudents = 0;
-        for (let i = 0; i < rows.length; i++) {
-            totalStudents = totalStudents + rows[i].group_student.length;
-        }
+        calculateStudentCount(rows)
         setGroupSubjectRows(rows)
-        setGroupTotalStudents(totalStudents)
     }
 
-    const getGroupClasses = () => {
+    const getGroupClasses = (rowClassId = null) => {
         const selectedSubject = subjectList.find(subject => subject.value == groupSubjectId);
-        
+
         if (selectedSubject && selectedSubject.gradeIds) {
+            const selectedClassIds = groupSubjectRows?.filter(obj => obj?.class)?.map(obj => obj?.class)
+
             return classList.filter(obj => {
-                return selectedSubject?.gradeIds.indexOf(obj?.gradeId) > -1
+                if (selectedClassIds?.length > 0) {
+                    return selectedSubject?.gradeIds.indexOf(obj?.gradeId) > -1 && (rowClassId === obj?.id || selectedClassIds?.indexOf(obj?.id) < 0)
+                } else {
+                    return selectedSubject?.gradeIds.indexOf(obj?.gradeId) > -1
+                }
             })?.map(obj => {
                 return {
                     value: obj?.value,
@@ -204,9 +219,17 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
         }
     }
 
-    const getSubjects = (isAll = false) => {
+    const getSubjects = (isAll = false, rowSubjectId = null) => {
+        let selectedSubjects = []
+        if (isAll) {
+            selectedSubjects = classSubjectRows?.filter(obj => obj?.subject)?.map(obj => obj?.subject)
+        }
         return subjectList.filter(obj => {
-            return obj?.isAll === isAll
+            if (selectedSubjects?.length > 0) {
+                return obj?.isAll === isAll && (rowSubjectId === obj?.value || selectedSubjects?.indexOf(obj?.value) < 0)
+            } else {
+                return obj?.isAll === isAll
+            }
         })?.map(obj => {
             return {
                 value: obj?.value,
@@ -248,9 +271,8 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                                         selectOnBlur={false}
                                                         fluid
                                                         selection
-                                                        disabled={modalAction === 'EDIT'}
                                                         placeholder={t('survey.choose') || null}
-                                                        options={getSubjects(true)}
+                                                        options={getSubjects(true, obj['subject'])}
                                                         value={obj['subject']}
                                                         onChange={(e, data) => onClassSubjectChange(data.value, i)}
                                                     />
@@ -260,12 +282,12 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                                         selectOnNavigation={false}
                                                         search
                                                         additionPosition='bottom'
-                                                        className={showModalError && obj['classes'].length === 0 ? "has-error" : ""}
+                                                        className={showModalError && obj['selectedClasses']?.length === 0 ? "has-error" : ""}
                                                         upward={false}
                                                         selectOnBlur={false}
                                                         fluid
                                                         selection
-                                                        disabled={modalAction === 'EDIT'}
+                                                        multiple={true}
                                                         placeholder={t('survey.choose') || null}
                                                         options={obj['classes']?.map(obj => {
                                                             return {
@@ -273,10 +295,10 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                                                 text: obj?.text
                                                             }
                                                         })}
-                                                        value={obj['class'] || null}
+                                                        value={obj['selectedClasses'] || []}
                                                         onChange={(e, data) => {
                                                             let clone = [...classSubjectRows];
-                                                            clone[i]['class'] = data.value;
+                                                            clone[i]['selectedClasses'] = data.value;
                                                             setClassSubjectRows(clone)
                                                         }}
                                                     />
@@ -420,7 +442,7 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                 <tr>
                                     <th className="text-right pb-4" style={{ fontSize: '14px', color: '#575962' }}>{t('total') + ':' || null}
                                         &nbsp;
-                                        {groupTotalStudents}</th>
+                                        {groupTotalStudentCount}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -444,7 +466,7 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                                         selectOnBlur={false}
                                                         className={showModalError && !obj['class'] ? "has-error" : ""}
                                                         value={obj['class']}
-                                                        options={getGroupClasses()}
+                                                        options={getGroupClasses(obj.class)}
                                                         onChange={(e, data) => {
                                                             if (data?.value) {
                                                                 loadClassStudents(i, data?.value)
@@ -452,22 +474,10 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                                                 const clone = [...groupSubjectRows]
                                                                 clone[i].students = []
                                                                 clone[i].class = null
+                                                                clone[i].selectedStudents = []
 
                                                                 setGroupSubjectRows(clone)
                                                             }
-                                                            // setState({
-                                                            //     fetchClassId: data.value,
-                                                            //     showLoader: true,
-                                                            //     fetchClassStudent: true,
-                                                            //     showModalError: false
-                                                            // });
-
-                                                            // newSubjectGroupRow[i]['class'] = data.value;
-                                                            // newSubjectGroupRow[i]['group_student'] = [];
-                                                            // let params = {
-                                                            //     class: data.value
-                                                            // };
-                                                            // props.fetchClassStudents(params);
                                                         }}
                                                     />
                                                 </td>
@@ -482,26 +492,19 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                                                         upward={false}
                                                         selectOnBlur={false}
                                                         multiple={true}
-                                                        className={showModalError && !obj['group_student']?.length ? "has-error" : ""}
-                                                        value={obj['group_student']}
-                                                        options={obj['allStudents']}
+                                                        className={showModalError && !obj['selectedStudents']?.length ? "has-error" : ""}
+                                                        value={obj['selectedStudents']}
+                                                        options={obj['students']?.map(obj => {
+                                                            return {
+                                                                value: obj?.value,
+                                                                text: obj?.text
+                                                            }
+                                                        })}
                                                         onChange={(e, data) => {
-
-                                                            // let count = 0;
-                                                            // let clone = newSubjectGroupRow;
-                                                            // for (let k = 0; k < clone.length; k++) {
-                                                            //     let rowObj = clone[k];
-
-                                                            //     if (k === i) {
-                                                            //         rowObj['group_student'] = data.value;
-                                                            //         count = count + data.value.length;
-                                                            //     } else {
-                                                            //         count = count + rowObj['group_student'].length;
-                                                            //     }
-                                                            // }
-                                                            // setNewSubjectGroupRow(clone)
-                                                            // setGroupTotalStudents(count)
-                                                            // setShowModalError(false)
+                                                            const clone = [...groupSubjectRows]
+                                                            clone[i].selectedStudents = data?.value
+                                                            calculateStudentCount(clone)
+                                                            setGroupSubjectRows(clone)
                                                         }}
                                                     />
                                                 </td>
@@ -543,12 +546,115 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
         )
     }
 
+    const onClickSubmit = () => {
+        let hasError = false;
+        let params = {
+            school: selectedSchool?.id,
+            isAll: modalTabIndex === 0
+        }
+        if (modalTabIndex === 0) {
+            // class group
+            const rows = [...classSubjectRows]
+            const classParams = []
+            for (let r = 0; r < rows?.length; r++) {
+                const rowObj = rows[r]
+                if (!rowObj.subject) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj?.selectedClasses || rowObj?.selectedClasses?.length === 0) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj.teacher) {
+                    hasError = true;
+                    break;
+                }
+                classParams.push({
+                    subject: rowObj?.subject,
+                    classes: rowObj?.selectedClasses,
+                    teacher: rowObj?.teacher
+                })
+            }
+            params['classes'] = classParams;
+        } else {
+            // group 
+            if (!groupSubjectId) {
+                hasError = true;
+            }
+            if (!groupTeacherId) {
+                hasError = true;
+            }
+            if (!groupName || groupName?.length === 0) {
+                hasError = true;
+            }
+
+            const rows = [...groupSubjectRows]
+            const groupParams = []
+            for (let r = 0; r < rows?.length; r++) {
+                const rowObj = rows[r]
+                if (!rowObj.class) {
+                    hasError = true;
+                    break;
+                }
+                if (!rowObj?.selectedStudents || rowObj?.selectedStudents?.length === 0) {
+                    hasError = true;
+                    break;
+                }
+                groupParams.push({
+                    class: rowObj?.class,
+                    students: rowObj?.selectedStudents
+                })
+            }
+
+            params['subject'] = groupSubjectId;
+            params['teacher'] = groupTeacherId;
+            params['groupName'] = groupName;
+            params['classes'] = groupParams;
+        }
+        if (hasError) {
+            setShowModalError(true)
+            message(t('err.fill_all_fields'))
+        } else {
+            setLoading(true)
+            fetchRequest(managerGroupCreate, 'POST', params)
+                .then((res) => {
+                    if (res.success) {
+                        message(res.message, true)
+                        if (modalTabIndex === 1 && addAgain) {
+                            setCloseWithReload(true)
+                            setGroupSubjectId(null)
+                            setGroupTeacherId(null)
+                            setGroupName('')
+                            setGroupSubjectRows([
+                                {
+                                    class: null,
+                                    students: [],
+                                    selectedStudents: []
+                                }
+                            ])
+                            setGroupTotalStudentCount(0)
+                        } else {
+                            onClose(true)
+                        }
+                    } else {
+                        message(res.message)
+                    }
+                    setLoading(false)
+                })
+                .catch((e) => {
+                    message(t('err.error_occurred'))
+                    setLoading(false)
+                });
+        }
+    }
+
     return (
         <Modal
             size='xl'
             dimmer='blurring'
             show={true}
-            onHide={onClose}
+            onHide={() => onClose(closeWithReload)}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -610,12 +716,12 @@ const AddGroup = ({ onClose, onSubmit, data, subjectList = [], classList = [] })
                 }
                 <button
                     className="btn m-btn--pill btn-link m-btn m-btn--custom margin-right-5"
-                    onClick={onClose}
+                    onClick={() => onClose(closeWithReload)}
                 >
                     {t('back') || null}
                 </button>
                 <button
-                    onClick={onSubmit}
+                    onClick={onClickSubmit}
                     className="btn m-btn--pill btn-success m-btn--wide m-btn--uppercase"
                 >
                     {t('save') || null}

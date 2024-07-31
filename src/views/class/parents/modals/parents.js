@@ -13,8 +13,8 @@ const group = ({ onClose, id, onClick, rerender }) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
-    const [student, setStudent] = useState({id: 19, studentCode: 2323, firstName: "Anhaa", lastName: "Suld", relationCount:2})
-    const [tableData, setTableData] = useState([{id: 19, code: 2323, firstName: "Sunder", lastName: "Ochir", relationCount:2}])
+    const [student, setStudent] = useState({id: 19, studentCode: 2323, firstName: "Anhaa", lastName: "Suld", contact: '99000330', relationCount:2})
+    const [tableData, setTableData] = useState([{id: 19, code: 2323, firstName: "Sunder", lastName: "Ochir", contact: '99000337', relationCount:2}])
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedParentId, setSelectedParentId] = useState(null)
@@ -95,7 +95,7 @@ const group = ({ onClose, id, onClick, rerender }) => {
             formatter: (cell, row) => {
                 return (
                     <button className='btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
-                        onClick={() => showModal(row?.userId)}
+                        onClick={() => showModal(1)} // showModal(row?.userId)
                     >
                         <i className="la la-close" />
                     </button>
@@ -209,61 +209,6 @@ const group = ({ onClose, id, onClick, rerender }) => {
                 </DeleteModal>
             }
         </Modal>
-        // <Modal
-        //     dimmer='blurring'
-        //     open={true}
-        //     onClose={onClose}
-        //     className="react-modal overflow-modal"
-        //     centered
-        // >
-        //     <div className="header">
-        //         {student?.studentCode} {student?.firstName}
-        //         <button type="button" className="close" aria-label="Close" onClick={onClose} >
-        //             <CloseIcon />
-        //         </button>
-        //     </div>
-        //     <div className="content">
-        //         <DTable
-        //             locale={locale}
-        //             config={config}
-        //             columns={columns}
-        //             data={tableData}
-        //         />
-        //     </div>
-        //     <div className="actions modal-footer ">
-        //         <div className="col-12 text-center">
-        //             <button
-        //                 onClick={onClose}
-        //                 className="btn btn-outline-metal m-btn--pill"
-        //             >
-        //                 {translations(locale)?.close}
-        //             </button>
-        //         </div>
-        //     </div>
-        //     {
-        //         loading &&
-        //         <>
-        //             <div className="blockUI blockOverlay" />
-        //             <div className="blockUI blockMsg blockPage">
-        //                 <div className="m-loader m-loader--brand m-loader--lg" />
-        //             </div>
-        //         </>
-        //     }
-        //     {
-        //         showDeleteModal && selectedParentId &&
-        //         <DeleteModal
-        //             onClose={closeModal}
-        //             onDelete={handleRemove}
-        //             locale={locale}
-        //             title={translations(locale)?.delete}
-        //         >
-        //             {translations(locale)?.delete_confirmation}
-        //             <br />
-        //             <br />
-        //             {translations(locale)?.delete_confirmation_description}
-        //         </DeleteModal>
-        //     }
-        // </Modal>
     )
 }
 
