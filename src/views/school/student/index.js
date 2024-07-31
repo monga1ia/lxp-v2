@@ -27,7 +27,7 @@ import CloseIcon from '@mui/icons-material/Close'
 //     schoolStudentChangeUserName,
 //     schoolStudentChangePassword,
 //     schoolStudentExcelUpload
-// } from 'utils/url'
+// } from 'utils/fetchRequest/Urls'
 import {Col, Row, Button} from "react-bootstrap";
 import {Modal} from "semantic-ui-react";
 

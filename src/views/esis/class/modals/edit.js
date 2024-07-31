@@ -1,6 +1,6 @@
 import message from 'modules/message'
 import { Col, Row, Modal } from 'react-bootstrap'
-// import { ESISClassLink } from 'utils/url'
+// import { ESISClassLink } from 'utils/fetchRequest/Urls'
 import Checkbox from '@mui/material/Checkbox'
 import { useTranslation } from 'react-i18next'
 import React, { useEffect, useState } from 'react'

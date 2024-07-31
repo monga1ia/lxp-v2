@@ -13,7 +13,7 @@ import SyncRoundedIcon from '@mui/icons-material/SyncRounded'
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-// import { ESISEmployeeDelete, ESISEmployeeInit, ESISEmployeeLink, ESISEmployeeSubmit, ESISEmployeeSync } from 'utils/url'
+// import { ESISEmployeeDelete, ESISEmployeeInit, ESISEmployeeLink, ESISEmployeeSubmit, ESISEmployeeSync } from 'utils/fetchRequest/Urls'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 

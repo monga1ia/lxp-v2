@@ -1,0 +1,37 @@
+export const dummyTableDataStudent = [
+    {
+        id: 1,
+        class: '2C',
+        studentCode: '29922',
+        studentLastName: 'test',
+        studentFirstName: 'test',
+        total: 'dummy',
+        checkedHomework: 22,
+        Monday: 'complete',
+        Tuesday: 'incomplete'
+    },
+    {
+        id: 2,
+        class: '2C',
+        studentCode: '29922',
+        studentLastName: 'test',
+        studentFirstName: 'test',
+        total: 'dummy',
+        checkedHomework: 22,
+        complete: 0,
+        incomplete: 2,
+        missing: 20,
+    },
+    {
+        id: 3,
+        class: '2C',
+        studentCode: '29922',
+        studentLastName: 'test',
+        studentFirstName: 'test',
+        total: 'dummy',
+        checkedHomework: 22,
+        complete: 0,
+        incomplete: 2,
+        missing: 20,
+    },
+]

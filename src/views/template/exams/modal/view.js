@@ -1,6 +1,6 @@
 import message from 'modules/message'
 import { Col, Row, Modal } from 'react-bootstrap'
-// import { templateExamView } from 'utils/url'
+// import { templateExamView } from 'utils/fetchRequest/Urls'
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import secureLocalStorage from 'react-secure-storage'

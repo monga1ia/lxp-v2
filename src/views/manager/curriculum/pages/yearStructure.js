@@ -4,7 +4,7 @@ import {Row, Col} from 'react-bootstrap'
 // import SubHeader from "Src/SubHeader";
 import secureLocalStorage from "react-secure-storage";
 // import {fetchRequest} from "utils/fetchRequest";
-// import {managerCurriculumIndex, managerCurriculumEdit, managerCurriculumDelete} from "utils/url";
+// import {managerCurriculumIndex, managerCurriculumEdit, managerCurriculumDelete} from "utils/fetchRequest/Urls";
 import message from "modules/message";
 import DTable from "modules/DataTable/DTable";
 

@@ -12,7 +12,7 @@ import secureLocalStorage from "react-secure-storage";
 //     managerDetentionDelete,
 //     managerDetentionEdit,
 //     managerDetentionStudentSubmit
-// } from 'utils/url'
+// } from 'utils/fetchRequest/Urls'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
 import message from "modules/message";

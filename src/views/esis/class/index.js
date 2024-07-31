@@ -13,7 +13,7 @@ import CreateClassModal from './modals/createModal'
 import React, {useEffect, useRef, useState} from 'react'
 import SyncRoundedIcon from '@mui/icons-material/SyncRounded'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-// import {ESISClassDelete, ESISClassInit, ESISClassLink, ESISClassSubmit, ESISClassSync} from 'utils/url'
+// import {ESISClassDelete, ESISClassInit, ESISClassLink, ESISClassSubmit, ESISClassSync} from 'utils/fetchRequest/Urls'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
