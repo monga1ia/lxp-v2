@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Modal} from 'semantic-ui-react'
+import {Modal} from 'react-bootstrap'
 import CloseIcon from '@mui/icons-material/Close'
 import DTable from 'modules/DataTable/DTable'
 import { useTranslation } from "react-i18next";
@@ -62,7 +62,7 @@ const examModal = ({onClose, studentId = null, detailId = null}) => {
     ]
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         // fetchRequest(studentBookExamDetail, 'POST', {detail: detailId, student: studentId})
         //     .then(res => {
         //         if (res.success) {

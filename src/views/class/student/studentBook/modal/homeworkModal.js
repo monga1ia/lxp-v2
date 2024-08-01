@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal } from 'semantic-ui-react'
+import { Modal } from 'react-bootstrap'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
@@ -94,67 +94,71 @@ const attendance = ({ onClose, season, type, studentId }) => {
 
     return (
         <Modal
-            id='printablediv'
             dimmer='blurring'
-            open={true}
-            onClose={onClose}
-            className="react-modal overflow-modal"
+            show={true}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={() => onClose()}
             centered
         >
-            <div className="header">
-                {title}
-            </div>
-            <div className="br-08 position-relative px-5 mt-3" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0 }}>
-                <div style={{ marginTop: 15, color: '#ff5b1d', fontWeight: 'bold' }}>
-                    {typeName} {t('lessons')}
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div className="br-08 position-relative px-5 mt-3" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0 }}>
+                    <div style={{ marginTop: 15, color: '#ff5b1d', fontWeight: 'bold' }}>
+                        {typeName} {t('lessons')}
+                    </div>
+                    <div style={{ width: 400 }}>
+                        <DTable
+                            locale={locale}
+                            config={config}
+                            columns={columns1}
+                            data={lessons}
+                        />
+                    </div>
                 </div>
-                <div style={{ width: 400 }}>
+                <div className="br-08 position-relative px-5" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0 }}>
+                    <div style={{ marginTop: 15, color: '#ff5b1d', fontWeight: 'bold' }}>
+                        {typeName} {t('day')}
+                    </div>
                     <DTable
                         locale={locale}
                         config={config}
-                        columns={columns1}
-                        data={lessons}
+                        columns={columns2}
+                        data={homeWorks}
                     />
                 </div>
-            </div>
-            <div className="br-08 position-relative px-5" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0 }}>
-                <div style={{ marginTop: 15, color: '#ff5b1d', fontWeight: 'bold' }}>
-                    {typeName} {t('day')}
-                </div>
-                <DTable
-                    locale={locale}
-                    config={config}
-                    columns={columns2}
-                    data={homeWorks}
-                />
-            </div>
-            <div className="actions modal-footer ">
-                <div className="col-12 text-center">
-                    <button
-                        onClick={onClose}
-                        className="btn btn-outline-metal m-btn--pill"
-                        style={{ width: 90 }}
-                    >
-                        {t('close')}
-                    </button>
-                    <button
-                        type="button" onClick={Print}
-                        className="btn btn-outline-metal m-btn--pill"
-                        style={{ backgroundColor: '#5867DD', color: '#fff', marginLeft: 10, width: 90 }}
-                    >
-                        {t('print')}
-                    </button>
-                </div>
-            </div>
-            {loading &&
+            </Modal.Body>
+            <Modal.Footer className="text-center">
+                <button
+                    onClick={onClose}
+                    className="btn btn-outline-metal m-btn--pill"
+                    style={{ width: 90 }}
+                >
+                    {t('close')}
+                </button>
+                <button
+                    type="button" onClick={Print}
+                    className="btn btn-outline-metal m-btn--pill"
+                    style={{ backgroundColor: '#5867DD', color: '#fff', marginLeft: 10, width: 90 }}
+                >
+                    {t('print')}
+                </button>
+            </Modal.Footer>
+            {
+                loading &&
                 <>
-                    <div className='blockUI blockOverlay' />
-                    <div className='blockUI blockMsg blockPage'>
-                        <div className='m-loader m-loader--brand m-loader--lg' />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }
-        </Modal >
+        </Modal>
     )
 }
 

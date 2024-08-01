@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Modal} from 'semantic-ui-react'
+import {Modal} from 'react-bootstrap'
 import CloseIcon from '@mui/icons-material/Close'
 import DTable from 'modules/DataTable/DTable'
 import { useTranslation } from "react-i18next";
@@ -62,7 +62,7 @@ const seasonResult = ({onClose, id, studentId}) => {
     ]
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         // fetchRequest(studentBookExamResultDetail, 'POST', {id, student: studentId})
         //     .then(res => {
         //         if (res.success) {
@@ -83,101 +83,103 @@ const seasonResult = ({onClose, id, studentId}) => {
     return (
         <Modal
             dimmer='blurring'
-            open={true}
-            onClose={onClose}
-            className="react-modal overflow-modal"
+            show={true}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={() => onClose()}
             centered
         >
-            <div className="header">
-                {exam?.subjectName || translations('subject.name')}
-                <button type="button" className="close" aria-label="Close" onClick={onClose}>
-                    <CloseIcon/>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {exam?.subjectName || t('subject.name')}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div className="br-08 position-relative margin-bottom-0"
+                    style={{border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginBottom: 10}}>
+                    <Container fluid className='py-3'>
+                        <Row className='bolder'>
+                            <Col lg={6} className='d-flex align-items-center justify-content-center'>
+                                <table style={{color: '#4a4a4a'}}>
+                                    <tbody>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('date')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.takenDate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('exam.subject')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.subjectName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('exam.name')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('season_score.performance')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.studentScore}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('exam.ranking')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.studentPlace}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </Col>
+                            <Col lg={6} className='d-flex align-items-center justify-content-center'>
+                                <table style={{color: '#4a4a4a'}}>
+                                    <tbody>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('teacher_title')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.teacherName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('exam.max_score')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.maxScore}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('studentBook.average')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.avgScore}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className='text-right py-1 pr-3 bolder'>{t('exam.min_score')}</td>
+                                        <td style={{color: '#ff5b1d'}}>{exam?.minScore}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+                {
+                    tableData && tableData.length > 0 &&
+                    <div className="br-08 position-relative px-5"
+                        style={{border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0}}>
+                        <DTable
+                            locale={locale}
+                            config={config}
+                            columns={columns}
+                            data={tableData}
+                        />
+                    </div>
+                }
+            </Modal.Body>
+            <Modal.Footer className="text-center">
+                <button
+                    onClick={onClose}
+                    className="btn btn-outline-metal m-btn--pill"
+                >
+                    {t('close')}
                 </button>
-            </div>
-            <div className="br-08 position-relative margin-bottom-0"
-                 style={{border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginBottom: 10}}>
-                <Container fluid className='py-3'>
-                    <Row className='bolder'>
-                        <Col lg={6} className='d-flex align-items-center justify-content-center'>
-                            <table style={{color: '#4a4a4a'}}>
-                                <tbody>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('date')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.takenDate}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('exam.subject')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.subjectName}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('exam.name')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.name}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('season_score.performance')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.studentScore}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('exam.ranking')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.studentPlace}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </Col>
-                        <Col lg={6} className='d-flex align-items-center justify-content-center'>
-                            <table style={{color: '#4a4a4a'}}>
-                                <tbody>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('teacher_title')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.teacherName}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('exam.max_score')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.maxScore}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('studentBook.average')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.avgScore}</td>
-                                </tr>
-                                <tr>
-                                    <td className='text-right py-1 pr-3 bolder'>{t('exam.min_score')}</td>
-                                    <td style={{color: '#ff5b1d'}}>{exam?.minScore}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            </Modal.Footer>
             {
-                tableData && tableData.length > 0 &&
-                <div className="br-08 position-relative px-5"
-                     style={{border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0}}>
-                    <DTable
-                        locale={locale}
-                        config={config}
-                        columns={columns}
-                        data={tableData}
-                    />
-                </div>
-            }
-            <div className="actions modal-footer ">
-                <div className="col-12 text-center">
-                    <button
-                        onClick={onClose}
-                        className="btn btn-outline-metal m-btn--pill"
-                    >
-                        {t('close')}
-                    </button>
-                </div>
-            </div>
-            {loading &&
-            <>
-                <div className='blockUI blockOverlay'/>
-                <div className='blockUI blockMsg blockPage'>
-                    <div className='m-loader m-loader--brand m-loader--lg'/>
-                </div>
-            </>
+                loading &&
+                <>
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
+                    </div>
+                </>
             }
         </Modal>
     )

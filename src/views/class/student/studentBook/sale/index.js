@@ -343,33 +343,33 @@ const sale = ({student, saleTypeCode}) => {
                                 }}
                             />
 
-                            <button
-                                className='btn btn-sm m-btn--pill m-btn--uppercase d-flex actions'
-                                style={{
-                                    borderRadius: '10px',
-                                    backgroundColor: styles.colors.teal,
-                                    color: 'white',
-                                    marginLeft: 20
-                                }}
-                                onClick={() => {
-                                    if (startDate && endDate) {
-                                        loadData(selectedTreeData, startDate, endDate)
-                                    } else {
-                                        message(t('err.select_date'))
-                                    }
-                                }}
-                            >
-                                <div className='d-flex'>
-                                    <TimelineIcon className='d-flex' style={{
-                                        marginLeft: '0.5rem',
-                                        marginRight: '0.5rem',
-                                        padding: '0px'
-                                    }}/>
-                                    <span style={{marginLeft: '0.5rem', marginRight: '0.5rem'}}>
-                                    {t('view')}
-                                </span>
-                                </div>
-                            </button>
+                                <button
+                                    className='btn btn-sm m-btn--pill m-btn--uppercase d-inline-flex br-8'
+                                    style={{
+                                        borderRadius: '10px',
+                                        backgroundColor: '#41c5dc',
+                                        color: 'white',
+                                        borderColor: '#41c5dc',
+                                        marginLeft: 20
+                                    }}
+                                    onClick={() => {
+                                        if (startDate && endDate) {
+                                            loadData(selectedTreeData, startDate, endDate)
+                                        } else {
+                                            message(t('err.select_date'))
+                                        }
+                                    }}
+                                >
+                                        <TimelineIcon className='d-flex' style={{
+                                            marginLeft: '0.5rem',
+                                            marginRight: '0.5rem',
+                                            padding: '0px'
+                                        }}/>
+                                        <span style={{
+                                            marginLeft: '0.5rem',
+                                            marginRight: '0.5rem'
+                                        }}>{t('view')}</span>
+                                </button>
                         </div>
                     </div>
                     <div className='border-orange px-4 br-08 mt-2'>

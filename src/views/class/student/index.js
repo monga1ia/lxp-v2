@@ -27,6 +27,7 @@ const index = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
+
     const location = useLocation();
     const printRef = useRef();
 
@@ -103,7 +104,7 @@ const index = () => {
             align: 'center',
             formatter: (cell) =>
                 <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
+                     src={cell || '/img/profile/avatar.png'}
                      width={40} height={40} alt='profile picture'
                      onError={(e) => {
                          e.target.onError = null
@@ -125,13 +126,6 @@ const index = () => {
             dataField: 'firstName',
             text: t('studentFirstName'),
             sort: true,
-            // formatter: (cell, row) =>
-            //     <span
-            //         className='underline'       
-            //         onClick={() => handleContextMenuClick(row?.id, 'view')}
-            //     >
-            //         {cell}
-            //     </span>,
             formatter: (cell, row) => { return <span className='underline' onClick={() => onClickName(row)}>{cell}</span> }
         },
         {
@@ -224,18 +218,22 @@ const index = () => {
     // }
     
     const onClickName = (row) => {
-        // history.push("/student-book", { state: {
+        console.log('onClickName', row)
+        history.push('/class/student-book', {
+            id: row?.id,
+            classId: row?.classId,
+            className: row?.className,
+            urlData: {
+                backUrl: '/class/student',
+            }
+        });
+
+        // navigate("/student/book", { state: {
         //     id: row?.id,
         //     urlData: {
         //         backUrl: "/class/student",
         //     }
-        // }}); 
-        navigate("/student/book", { state: {
-            id: row?.id,
-            urlData: {
-                backUrl: "/class/student",
-            }
-        }});
+        // }});
     }
 
     const handleContextMenuClick = (row, key) => {
