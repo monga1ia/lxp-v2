@@ -921,7 +921,7 @@ table.viewTeacherTable>tr>th {
 }
 
 .pinnacle-bold {
-    font-family: PinnacleBold;
+    font-family: PinnacleBold !important;
 }
 
 .pinnacle-medium {
@@ -1124,7 +1124,7 @@ table.viewTeacherTable>tr>th {
     font-weight: 400;
     text-align: center;
     align-items: center;
-    font-family: Pinnacle, PinnacleRegular !important;
+    font-family: Pinnacle, PinnacleRegular;
     white-space: nowrap;
     vertical-align: middle;
     -webkit-user-select: none;
@@ -2997,6 +2997,10 @@ input[type="color"]::-webkit-color-swatch {
     font-size: 1.2rem !important;
 }
 
+.fs-12p {
+    font-size: 12px !important;
+}
+
 .fs-13 {
     font-size: 1.3rem !important;
 }
@@ -3908,6 +3912,26 @@ select.form-control:focus::-ms-value {
 
 .color-brand {
     color: #ff5b1d
+}
+
+.opacity-20 {
+    opacity: 20%;
+}
+
+.opacity-30 {
+    opacity: 30%;
+}
+
+.opacity-40 {
+    opacity: 40%;
+}
+
+.opacity-50 {
+    opacity: 50%;
+}
+
+.opacity-60 {
+    opacity: 60%;
 }
 
 .navBarPadding {
@@ -5947,4 +5971,79 @@ select.form-control:focus::-ms-value {
 .has-error {
     color: #f4516c !important;
     border: 1px solid #f4516c !important;
+}
+
+.font-weight-100 {
+    font-weight: 100;
+}
+
+.font-weight-200 {
+    font-weight: 200;
+}
+
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.font-weight-800 {
+    font-weight: 800;
+}
+
+.font-weight-900 {
+    font-weight: 900;
+}
+
+.btn-info-2 {
+    color: rgba(255, 91, 29, 1);
+    background: rgba(255, 91, 29, 0.2);
+}
+
+.btn-info-2:hover {
+    color: rgba(255, 91, 29, 1);
+}
+
+.title-pinnacle-bold {
+    font-family: PinnacleBold;   
+    font-size: 14px;
+    color: #FF5B1D;
+}
+
+.padding-01rem {
+    padding: 1rem !important; 
+}
+
+.m-portlet-with-left-border .m-portlet__head {
+    border-bottom: none;
+    padding: 0;
+    justify-content: start;
+    height: unset;
+}
+
+.m-portlet-with-left-border .m-portlet__head-title {
+    width: 100%;
+}
+
+.m-portlet-with-left-border .border-divider {
+    border-left: 3px solid red;
+    border-radius: 20px;
+    height: 32px;
+    position: relative;
+    top: 5px;
+    right: 1px;
 }

@@ -149,6 +149,12 @@ const adminQuestion = {
     // analysis: lazy(() => import("views/onlineExam/analysis/Analysis")),
 };
 
+const calendar = {
+    activity: lazy(() => import("views/calendar/activity/index")),
+    exam: lazy(() => import("views/calendar/exam/index")),
+    event: lazy(() => import("views/calendar/event/index")),
+}
+
 const onlineLesson = {
     lesson: lazy(() => import("views/onlineLesson/lesson/index")),
     report: lazy(() => import("views/onlineLesson/lesson/report/index")),
@@ -275,16 +281,19 @@ const routesAndMenuItems = {
                     path: "/calendar",
                     label: "menu.teacher.school_calendar",
                     component: school.calendar,
+                    hideInMenu: true,
                 },
                 {
                     path: "/students",
                     label: "menu.teacher.students",
                     component: school.student,
+                    hideInMenu: true,
                 },
                 {
                     path: "/groups",
                     label: "menu.teacher.groups",
                     component: school.group,
+                    hideInMenu: true,
                 }
             ],
         },
@@ -294,6 +303,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            hideInMenu: true,
             to: `${appRoot}/esis/employee`,
             subs: [
                 {
@@ -329,6 +339,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            hideInMenu: true,
             to: `${appRoot}/newsfeed`,
             subs: [
                 {
@@ -349,6 +360,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            hideInMenu: true,
             to: `${appRoot}/class`,
             subs: [
                 {
@@ -406,6 +418,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            hideInMenu: true,
             to: `${appRoot}/template`,
             subs: [
                 {
@@ -467,36 +480,43 @@ const routesAndMenuItems = {
                     path: "/excuses",
                     label: "menu.manager.excuses",
                     component: manager.excuses,
+                    hideInMenu: true,
                 },
                 {
                     path: "/clubs",
                     label: "menu.manager.clubs",
                     component: manager.clubs,
+                    hideInMenu: true,
                 },
                 {
                     path: "/timetable",
                     label: "menu.manager.timetable",
                     component: manager.timetable,
+                    hideInMenu: true,
                 },
                 {
                     path: "/transcript",
                     label: "menu.manager.transcript",
                     component: manager.transcript,
+                    hideInMenu: true,
                 },
                 {
                     path: "/class-groups",
                     label: "menu.manager.class_groups",
                     component: manager.classGroups,
+                    hideInMenu: true,
                 },
                 {
                     path: "/detention",
                     label: "menu.manager.detention",
                     component: manager.detention,
+                    hideInMenu: true,
                 },
                 {
                     path: "/curriculum",
                     label: "menu.manager.curriculum",
                     component: manager.curriculum,
+                    hideInMenu: true,
                 },
             ],
         },
@@ -506,6 +526,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            hideInMenu: true,
             to: `${appRoot}/teacher`,
             subs: [
                 {
@@ -557,6 +578,7 @@ const routesAndMenuItems = {
             exact: true,
             redirect: true,
             to: `${appRoot}/assessments`,
+            hideInMenu: true,
             subs: [
                 {
                     path: '/exams',
@@ -581,6 +603,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            hideInMenu: true,
             to: `${appRoot}/analysis`,
             subs: [
                 {
@@ -602,6 +625,31 @@ const routesAndMenuItems = {
                     path: "/scoreboard",
                     label: "menu.analysis.scoreboard",
                     component: analysis.scoreboard,
+                },
+            ],
+        },
+        {
+            path: `${appRoot}/calendar`,
+            label: "calendar.label.title",
+            icon: "diamond",
+            exact: true,
+            redirect: true,
+            to: `${appRoot}/activity`,
+            subs: [
+                {
+                    path: '/activity',
+                    label: "calendar.activities",
+                    component: calendar.activity,
+                },
+                {
+                    path: "/exam",
+                    label: "calendar.exam",
+                    component: calendar.activity,
+                },
+                {
+                    path: "/event",
+                    label: "calendar.event",
+                    component: calendar.activity,
                 },
             ],
         },

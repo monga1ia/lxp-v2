@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function CalendarIcon({ stroke = "#FF5B1D" }) {
+export default function CalendarIcon({ stroke = "#FF5B1D", width = 22, height = 22 }) {
   return (
     <svg
-      width="22"
-      height="22"
+      width={width}
+      height={height}
       viewBox="0 0 22 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,3 +19,8 @@ export default function CalendarIcon({ stroke = "#FF5B1D" }) {
     </svg>
   );
 }
+
+<svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.1364 7.818C14.0005 8.46361 14.7728 10.0891 14.7728 11.0907C14.7728 11.4027 14.5451 11.6557 14.2643 11.6557H13.9546M10.6819 5.17171C11.2409 4.84836 11.6169 4.24398 11.6169 3.55177C11.6169 2.85956 11.2409 2.25518 10.6819 1.93183M2.19036 11.6557H11.1474C11.4283 11.6557 11.6559 11.4027 11.6559 11.0907C11.6559 9.12937 10.0173 7.5394 6.6689 7.5394C3.32047 7.5394 1.68188 9.12937 1.68188 11.0907C1.68188 11.4027 1.90954 11.6557 2.19036 11.6557ZM8.53903 3.55177C8.53903 4.58461 7.70174 5.4219 6.6689 5.4219C5.63605 5.4219 4.79877 4.58461 4.79877 3.55177C4.79877 2.51893 5.63605 1.68164 6.6689 1.68164C7.70174 1.68164 8.53903 2.51893 8.53903 3.55177Z" stroke="#3EBFA3" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+
