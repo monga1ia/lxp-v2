@@ -5,7 +5,6 @@ import React, { useEffect } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 // import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-import { useLocation, useNavigate } from 'react-router'
 // import { teacherJournalNoteIndex, teacherJournalNoteSubmit, teacherJournalNoteDelete } from 'utils/url'
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -472,7 +471,7 @@ const NoteModal = ({onClose, data}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className='m-portlet__body'>
+                <div className='m-portlet__body mx-4'>
                     <div className="row">
                         <div className='col-md-12'>
                             <div className='d-flex gap-05 justify-content-between align-items-center mb-2'>
@@ -572,12 +571,6 @@ const NoteModal = ({onClose, data}) => {
                 <button className='btn m-btn--pill btn-outline-metal text-uppercase' onClick={onClose}>
                     {translations(locale)?.back}
                 </button>
-                {/* <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-13 pinnacle-bold' style={{ color: '#ff5b1d' }}>{title}</span>
-                    <button className='btn m-btn--pill btn-link m-btn m-btn--custom' onClick={() => navigate(-1)}>
-                        {translations(locale)?.back}
-                    </button>
-                </div> */}
             </Modal.Footer>
             {
                 loading &&

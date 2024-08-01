@@ -237,7 +237,7 @@ const index = () => {
                         <span className='ml-2'>SYNC</span>
                     </button>
                 </div>
-                <div className='m-portlet br-12'>
+                <div className='m-portlet'>
                     <div className='m-portlet__body'>
                         {
                             insertMode

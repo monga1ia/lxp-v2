@@ -285,7 +285,7 @@ const index = () => {
                 </Col>
             </div>  
             <div className="m-content">
-                <div className="m-portlet br-12">
+                <div className="m-portlet">
                     <div className="m-portlet__body">
                         <Row>
                             <Col>
@@ -373,7 +373,7 @@ const index = () => {
                     </div>
                 </div>
 
-                <div className="m-portlet br-12">
+                <div className="m-portlet">
                     <div className="m-portlet__body">
                         <DTable
                             locale={locale}

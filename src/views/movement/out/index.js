@@ -54,7 +54,7 @@ const index = () => {
     const config = {
         excelExport: true,
         printButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.out')}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.out_title')}`,
         defaultSort: [{
             dataField: sort,
             order: order
@@ -244,7 +244,7 @@ const index = () => {
                                 {t('action.register')}
                             </button>                        
                         </div>
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <DTable
                                     remote

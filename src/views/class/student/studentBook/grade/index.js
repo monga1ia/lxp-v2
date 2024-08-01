@@ -18,6 +18,8 @@ const index = ({student}) => {
 
     const [loading, setLoading] = useState(false)
 
+    console.log('STUDENT', student);
+
     useEffect(() => {
     }, [])
 

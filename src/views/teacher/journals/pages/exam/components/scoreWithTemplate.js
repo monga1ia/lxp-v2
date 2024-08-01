@@ -1,6 +1,5 @@
 import message from 'modules/message'
 import AddModal from '../modal/score/add'
-import { useNavigate } from 'react-router'
 import EditModal from '../modal/score/edit'
 import DeleteModal from 'utils/deleteModal'
 import React, { useEffect, useState } from 'react'
@@ -13,8 +12,7 @@ import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 // import { teacherJournalExamScoreSubmit, teacherJournalExamScoreCalculate, teacherJournalExamScoreDelete } from 'Utilities/url'
 
-const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
-    const navigate = useNavigate()
+const scoreWithTemplate = ({ students, questions, exam, isTemplate, onClose }) => {
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
@@ -224,6 +222,7 @@ const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
                     className={'table-striped'}
                     individualContextMenus
                     rowStyle={handleRowStyle}
+                    clickContextMenu
                     contextMenus={contextMenus}
                     onContextMenuItemClick={handleContextMenuClick}
                 />
@@ -231,7 +230,7 @@ const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
             <div className="modal-footer">
                 <button
                     className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                    onClick={() => navigate(-1, { replace: true })}
+                    onClick={onClose}
                 >
                     {translations(locale)?.back}
                 </button>

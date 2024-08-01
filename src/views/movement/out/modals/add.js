@@ -12,10 +12,8 @@ import { getStudentsByClass, movementOutSubmit } from 'utils/fetchRequest/Urls'
 
 import { useTranslation } from 'react-i18next'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
-import { useNavigate } from 'react-router'
 
 const AddStudentMovementOut = ({onClose}) => {
-    // const navigate = useNavigate()
 
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)

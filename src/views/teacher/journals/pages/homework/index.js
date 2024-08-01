@@ -5,7 +5,6 @@ import secureLocalStorage from 'react-secure-storage'
 import { Modal as NModal } from 'react-bootstrap'
 import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-// import { useLocation, useNavigate } from 'react-router'
 import { dummyTableDataStudent } from './components/StudentTable/byStudentData'
 import { Modal, Tab } from 'semantic-ui-react'
 import InfoModal from './components/infoModal'
@@ -66,8 +65,6 @@ const WEEKDAYS_LONG = {
 };
 
 const HomeworkModal = ({onClose, data}) => {
-    // const location = useLocation()
-    // const navigate = useNavigate()
 
     const fileUploader = useRef();
 

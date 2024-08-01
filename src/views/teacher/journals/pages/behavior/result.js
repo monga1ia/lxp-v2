@@ -4,7 +4,6 @@ import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import { fetchRequest } from 'utils/fetchRequest'
-import { useLocation, useNavigate } from 'react-router'
 import { teacherJournalBehaviorInit } from 'Utilities/url'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -57,8 +56,6 @@ const columns = [
 ]
 
 const result = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -72,28 +69,28 @@ const result = () => {
         }
     ])
 
-    useEffect(() => {
-        if (!location?.state?.group) {
-            message(translations(locale)?.group?.group_not_found)
-            navigate(-1, { replace: true })
-        }
-        setLoading(true)
-        fetchRequest(teacherJournalBehaviorInit, 'POST', { group: location?.state?.group, season: location?.state?.season })
-            .then((res) => {
-                if (res.success) {
-                    const { students, title } = res.data
-                    setTableData(students || [])
-                    setTitle(title || '')
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [location])
+    // useEffect(() => {
+    //     if (!location?.state?.group) {
+    //         message(translations(locale)?.group?.group_not_found)
+    //         navigate(-1, { replace: true })
+    //     }
+    //     setLoading(true)
+    //     fetchRequest(teacherJournalBehaviorInit, 'POST', { group: location?.state?.group, season: location?.state?.season })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { students, title } = res.data
+    //                 setTableData(students || [])
+    //                 setTitle(title || '')
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [location])
 
     return (
         <div className='m-grid__item m-grid__item--fluid m-wrapper'>
@@ -102,7 +99,7 @@ const result = () => {
                     <span className='fs-11 pinnacle-bold color-brand'>{title}</span>
                     <button
                         className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                        onClick={() => navigate('/teacher/journals', { replace: true })}
+                        // onClick={() => navigate('/teacher/journals', { replace: true })}
                     >
                         {translations(locale)?.back}
                     </button>
@@ -118,7 +115,7 @@ const result = () => {
                 <div className="m-portlet__foot d-flex justify-content-center gap-05">
                     <button
                         className='btn btn-link'
-                        onClick={() => navigate(-1, { replace: true })}
+                        // onClick={() => navigate(-1, { replace: true })}
                     >
                         {translations(locale)?.back}
                     </button>

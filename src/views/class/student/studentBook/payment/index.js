@@ -125,7 +125,7 @@ const payment = ({student}) => {
     }
 
     useEffect(() => {
-        loadData()
+        // loadData()
     }, [])
 
     const handleCellClick = (row) => {

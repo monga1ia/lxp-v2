@@ -349,7 +349,7 @@ const index = () => {
             <div className='m-content'>
                 <Row className=''>
                     <Col xl="2" xxl="2">
-                        <div className="m-portlet br-12">
+                        <div className="m-portlet">
                             <div className="m-portlet__body">
                                 <TreeView
                                     defaultExpandAll
@@ -395,7 +395,7 @@ const index = () => {
                             //     :
                             //     <p className={'ml-2'}>{t('student.userRoleNotFound')}</p>
                         }
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 {
                                     console.log('>>>', tableData)

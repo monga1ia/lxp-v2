@@ -840,7 +840,7 @@ const index = () => {
             <div className="m-content">
                 <div className="row">
                     <Col xl="2" xxl="2">
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className="m-portlet__body">
                                 <TreeView
                                     defaultExpandAll
@@ -864,7 +864,7 @@ const index = () => {
                                 <span className='ml-2'>{translations(locale)?.absent?.register}</span>
                             </button>
                         }
-                        <div className="m-portlet br-12 tab">
+                        <div className="m-portlet tab">
                             <Tab
                                 activeIndex={activeIndex}
                                 renderActiveOnly

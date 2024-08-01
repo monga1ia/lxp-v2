@@ -456,7 +456,7 @@ const index = () => {
             <div className="m-content">
                 <div className={"row myTimetable-IndexStyle"}>
                     <Col xl="2" xxl="2">
-                        <div className="m-portlet br-12">
+                        <div className="m-portlet">
                             <div className="m-portlet__body">
                                 {
                                     <TreeView
@@ -481,7 +481,7 @@ const index = () => {
                                 <span className='ml-2'>{t('common.register')}</span>
                             </button>
                         }
-                        <div className="m-portlet br-12">
+                        <div className="m-portlet">
                             <div className="m-portlet__body">
                                 <DTable
                                     remote

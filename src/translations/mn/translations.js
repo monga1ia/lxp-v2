@@ -1568,7 +1568,7 @@ export const TRANSLATIONS_MN = {
             userCode: 'Хэрэглэгчийн код',
             canEdit: 'Засах эрхтэй эсэх',
             addUser: 'Хэрэглэгч нэмэх',
-            notFound: 'Цахим хичээл одлсонгүй',
+            notFound: 'Цахим хичээл олдсонгүй',
             purpose: 'Зорилго',
             conclusion: 'Дүгнэлт',
             learningObjectives: 'Суралцахуйн зорилт',
@@ -2903,6 +2903,7 @@ export const TRANSLATIONS_MN = {
         behavior: 'Хүмүүжил',
         notification: 'Сонордуулга',
         noNotification: 'Одоогоор Таньд мэдэгдэл ирээгүй байна.',
+        downloadJournal: 'Журнал татах',
         regular: 'Ээлжит',
         hw_assigned: 'ГД өгсөн',
         hw_reviewed: 'ГД шалгасан',
@@ -3065,4 +3066,10 @@ export const TRANSLATIONS_MN = {
             "Зөвхөн баталгаажуулсан дүнгүүд Сурагчид харагдана.",
         connectOfficer: "Сургалтын албаны ажилтантай холбогдоно уу.",
     },
+    successCoach: {
+        contactDate: 'Success coach хандалт',
+        title: 'Success coach',
+        group: 'Success coach бүлэг',
+        removeStudent: 'Success coach-н бүлгээс хасах'
+    }
 }

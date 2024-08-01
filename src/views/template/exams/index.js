@@ -443,7 +443,7 @@ const index = () => {
             <div className='m-content'>
                 <div className='row'>
                     <Col xl="2" xxl="2">
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <TreeView
                                     defaultExpandAll
@@ -462,7 +462,7 @@ const index = () => {
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('add')}
                         </button>
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <DTable
                                     locale={locale}

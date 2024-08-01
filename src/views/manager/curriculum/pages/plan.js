@@ -8,7 +8,7 @@ import message from "modules/message";
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded'
-// import {fetchRequest} from "Utilities/fetchRequest";
+// import {fetchRequest} from "utils/fetchRequest";
 // import {managerCurriculumPlan} from "Utilities/url";
 
 const plan = () => {
@@ -337,7 +337,7 @@ const plan = () => {
                 title={translations(locale).manager?.curriculum}
                 locale={locale}
             /> */}
-            <div className="m-portlet br-12 mt-2">
+            <div className="m-portlet mt-2">
                 <div className="m-portlet__body">
                     <div className={'ml-5 d-flex py-4'} style={{
                         textAlign: 'center',
@@ -421,7 +421,7 @@ const plan = () => {
                             </button>
                     }
 
-                    <div className="m-portlet br-12 mt-2">
+                    <div className="m-portlet mt-2">
                         <div className="m-portlet__body">
                             {
                                 subjects && subjects?.length > 0 && <>

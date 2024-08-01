@@ -871,7 +871,7 @@ const index = () => {
         switch (tabIndex) {
             case 0:
                 return <>
-                    <div className='m-portlet br-12' style={{marginTop: 20}}>
+                    <div className='m-portlet' style={{marginTop: 20}}>
                         <div className='m-portlet__body'>
                             <DTable
                                 config={config}
@@ -887,7 +887,7 @@ const index = () => {
                 return <>
                     <div className='row' style={{marginTop: 20}}>
                         <div className='col-3 pr-0'>
-                            <div className='m-portlet br-12'>
+                            <div className='m-portlet'>
                                 <div className='m-portlet__body'>
                                     <TreeView
                                         defaultExpandAll
@@ -901,7 +901,7 @@ const index = () => {
                             </div>
                         </div>
                         <div className='col-9'>
-                            <div className='m-portlet br-12'>
+                            <div className='m-portlet'>
                                 <div className='m-portlet__body'>
                                     <DTable
                                         config={config}
@@ -919,7 +919,7 @@ const index = () => {
                 return <>
                     <div className='row' style={{marginTop: 20}}>
                         <div className='col-3 pr-0'>
-                            <div className='m-portlet br-12'>
+                            <div className='m-portlet'>
                                 <div className='m-portlet__body'>
                                     <TreeView
                                         defaultExpandAll
@@ -931,7 +931,7 @@ const index = () => {
                             </div>
                         </div>
                         <div className='col-9'>
-                            <div className='m-portlet br-12'>
+                            <div className='m-portlet'>
                                 <div className='m-portlet__body'>
                                     <DTable
                                         config={config}
@@ -949,7 +949,7 @@ const index = () => {
                 return <>
                     <div className='row' style={{marginTop: 20}}>
                         <div className='col-3 pr-0'>
-                            <div className='m-portlet br-12'>
+                            <div className='m-portlet'>
                                 <div className='m-portlet__body'>
                                     <TreeView
                                         defaultExpandAll
@@ -961,7 +961,7 @@ const index = () => {
                             </div>
                         </div>
                         <div className='col-9'>
-                            <div className='m-portlet br-12'>
+                            <div className='m-portlet'>
                                 <div className='m-portlet__body'>
                                     <DTable
                                         config={config}

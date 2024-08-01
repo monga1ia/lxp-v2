@@ -1,6 +1,5 @@
 import message from 'modules/message'
 import React, { useEffect, useState } from 'react'
-// import { Link, useNavigate } from 'react-router-dom'
 import secureLocalStorage from 'react-secure-storage'
 // import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
