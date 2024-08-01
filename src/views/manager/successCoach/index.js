@@ -21,8 +21,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import secureLocalStorage from "react-secure-storage";
 import { useTranslation } from "react-i18next";
 
+import AddStudent from './modals/addStudent'
+import DeleteModal from 'utils/deleteModal';
+
 import { fetchRequest } from 'utils/fetchRequest'
-import { managerSuccessCoachIndex } from 'utils/fetchRequest/Urls'
+import { managerSuccessCoachIndex, managerSuccessCoachAddStudent, managerSuccessCoachRemoveStudent } from 'utils/fetchRequest/Urls'
 
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -44,11 +47,14 @@ const index = () => {
     const [coachSearchQuery, setCoachSearchQuery] = useState('')
     const [selectedCoachUser, setSelectedCoachUser] = useState(null)
     const [coachUsers, setCoachUsers] = useState([])
+    const [tmpCoachUsers, setTmpCoachUsers] = useState([])
 
     const [totalCount, setTotalCount] = useState(0)
     const [tableData, setTableData] = useState([])
 
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
+    const [showAddStudent, setShowAddStudent] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     const contextMenus = [
         {
@@ -86,18 +92,23 @@ const index = () => {
         {
             dataField: 'avatar',
             text: t('teacher.photo'),
-            sort: true,
+            sort: false,
             width: 40,
             align: 'center',
             formatter: (cell) =>
                 <img className='img-responsive img-circle'
-                     src={cell || '/img/profile/placeholder.jpg'}
-                     width={40} height={40} alt='profile picture'
-                     onError={(e) => {
-                         e.target.onError = null
-                         e.target.src = '/img/profile/avatar.png'
-                     }}
+                    src={cell || '/img/profile/placeholder.jpg'}
+                    width={40} height={40} alt='profile picture'
+                    onError={(e) => {
+                        e.target.onError = null
+                        e.target.src = '/img/profile/avatar.png'
+                    }}
                 />
+        },
+        {
+            dataField: 'className',
+            text: t('group.title'),
+            sort: true
         },
         {
             dataField: 'code',
@@ -138,6 +149,7 @@ const index = () => {
             .then((res) => {
                 if (res.success) {
                     setCoachUsers(res?.users || [])
+                    setTmpCoachUsers(res?.users || [])
                     setTotalCount(res?.totalCount || 0)
                     setTableData(res?.students || [])
                 } else {
@@ -160,7 +172,7 @@ const index = () => {
 
     const _contextMenuItemClick = (id, key) => {
         if (id && key) {
-            setSelectedTableDataId(id)
+            setSelectedTableDataId(tableData?.find(obj => obj.id === id)?.studentId)
             if (key === 'DELETE') {
                 setShowDeleteModal(true)
             }
@@ -185,7 +197,7 @@ const index = () => {
             setTableState(params)
             loadData({
                 school: selectedSchool?.id,
-                grade: selectedTreeId,
+                coach: selectedCoachUser,
                 page: page,
                 pageSize: state?.pageSize,
                 search: state?.search,
@@ -195,8 +207,86 @@ const index = () => {
         }
     }
 
-    const onCoachSearch = () => {
-        console.log('Coach search')
+    const closeDeleteModal = () => {
+        setSelectedTableDataId(null)
+        setShowDeleteModal(false)
+    };
+
+    const onCoachSearch = (value = '') => {
+        console.log('Coach search', value)
+        let clone = [...coachUsers]
+        console.log('Clone', clone)
+        if (value && value?.length > 0) {
+            clone = clone.filter(obj => {
+                return obj?.firstName?.toLowerCase()?.includes(value?.toLowerCase()) 
+                    || obj?.lastName?.toLowerCase()?.includes(value?.toLowerCase())
+                    || obj?.teacherCode?.toLowerCase()?.includes(value?.toLowerCase())
+            })
+        } 
+        setTmpCoachUsers(clone)
+    }
+
+    const submitStudent = (params = {}) => {
+        const updateParams = Object.assign(params, {
+            school: selectedSchool?.id,
+            coach: selectedCoachUser
+        })
+
+        setLoading(true)
+        fetchRequest(managerSuccessCoachAddStudent, 'POST', updateParams)
+            .then((res) => {
+                if (res.success) {
+                    setShowAddStudent(false)
+                    loadData({
+                        school: selectedSchool?.id,
+                        coach: selectedCoachUser,
+                        page: tableState?.page,
+                        pageSize: tableState?.pageSize,
+                        search: tableState?.search,
+                        sort: tableState?.sort,
+                        order: tableState?.order
+                    })
+                } else {
+                    setLoading(false)
+                    message(res.message)
+                }
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
+    }
+
+    const _onSubmitDelete = () => {
+        let params = {
+            school: selectedSchool?.id,
+            coach: selectedCoachUser,
+            student: selectedTableDataId
+        };
+
+        setLoading(true)
+        fetchRequest(managerSuccessCoachRemoveStudent, 'POST', params)
+            .then((res) => {
+                if (res.success) {
+                    closeDeleteModal()
+                    loadData({
+                        school: selectedSchool?.id,
+                        coach: selectedCoachUser,
+                        page: tableState?.page,
+                        pageSize: tableState?.pageSize,
+                        search: tableState?.search,
+                        sort: tableState?.sort,
+                        order: tableState?.order
+                    })
+                } else {
+                    setLoading(false)
+                    message(res.message)
+                }
+            })
+            .catch(() => {
+                message(t('err.error_occurred'))
+                setLoading(false)
+            })
     }
 
     return (
@@ -215,9 +305,10 @@ const index = () => {
 
                         <Search
                             value={coachSearchQuery}
-                            onSearch={onCoachSearch}
+                            onSearch={() => onCoachSearch(coachSearchQuery)}
                             setter={value => {
                                 setCoachSearchQuery(value || '')
+                                onCoachSearch(value || '')
                             }}
                             rootStyle={{
                                 width: '100%',
@@ -241,13 +332,13 @@ const index = () => {
 
                         <Row className="m-0 mt-2">
                             <Col md={12} className="text-right p-0">
-                                <span>{t('total')}: {coachUsers?.length}</span>
+                                <span>{t('total')}: {tmpCoachUsers?.length}</span>
                             </Col>
                         </Row>
 
                         <div className="mt-2 unattached-tab">
                             {
-                                coachUsers?.map(obj => {
+                                tmpCoachUsers?.map(obj => {
                                     return <div className={selectedCoachUser && obj?.id === selectedCoachUser ? "m-portlet br-12 item active" : "m-portlet br-12 item"} key={obj?.id} style={{
                                         cursor: 'pointer'
                                     }}
@@ -259,7 +350,7 @@ const index = () => {
                                                     school: selectedSchool?.id,
                                                     coach: obj?.id
                                                 })
-                                            }                                            
+                                            }
                                         }}>
                                         <div className="m-portlet__body font-pinnacle bolder" style={{
                                             color: selectedCoachUser && obj?.id === selectedCoachUser ? 'white' : '#ff5b1d'
@@ -273,17 +364,15 @@ const index = () => {
                         </div>
                     </Col>
                     <Col xl="10" xxl="10">
-                        {
-                            selectedCoachUser &&
-                            <button
-                                type="button"
-                                onClick={() => setShowAddGroupModal(true)}
-                                className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
-                            >
-                                <AddCircleOutlineRoundedIcon className='MuiSvg-customSize' />
-                                <span className='ml-2'>{t('common.register')}</span>
-                            </button>
-                        }
+                        <button
+                            type="button"
+                            disabled={selectedCoachUser === null}
+                            onClick={() => setShowAddStudent(true)}
+                            className="btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex mb-3"
+                        >
+                            <AddCircleOutlineRoundedIcon className='MuiSvg-customSize' />
+                            <span className='ml-2'>{t('common.register')}</span>
+                        </button>
                         <div className="m-portlet br-12">
                             <div className="m-portlet__body">
                                 <DTable
@@ -304,6 +393,38 @@ const index = () => {
                     </Col>
                 </div>
             </div>
+
+            {
+                showAddStudent &&
+                <AddStudent
+                    onClose={() => {
+                        setShowAddStudent(false)
+                    }}
+                    onSubmit={submitStudent}
+                    users={coachUsers}
+                    teacherUserId={selectedCoachUser}
+                />
+            }
+
+            {
+                showDeleteModal &&
+                <DeleteModal
+                    show={showDeleteModal}
+                    onClose={closeDeleteModal}
+                    onDelete={_onSubmitDelete}
+                    locale={locale}
+                    title={t('delete')}
+                >
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div>
+                                <p>{t('warning.delete_confirmation')}</p>
+                                <p>{t('warning.delete_confirmation_description')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </DeleteModal>
+            }
             {
                 loading &&
                 <div className='loader-container'>

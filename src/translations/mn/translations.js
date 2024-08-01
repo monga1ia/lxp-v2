@@ -1568,7 +1568,7 @@ export const TRANSLATIONS_MN = {
             userCode: 'Хэрэглэгчийн код',
             canEdit: 'Засах эрхтэй эсэх',
             addUser: 'Хэрэглэгч нэмэх',
-            notFound: 'Цахим хичээл одлсонгүй',
+            notFound: 'Цахим хичээл олдсонгүй',
             purpose: 'Зорилго',
             conclusion: 'Дүгнэлт',
             learningObjectives: 'Суралцахуйн зорилт',
