@@ -159,7 +159,12 @@ const index = () => {
                                 selection
                                 closeOnChange
                                 value={studentId}
-                                options={classStudents}
+                                options={classStudents?.map(obj => {
+                                    return {
+                                        value: obj?.value,
+                                        text: obj?.text
+                                    }
+                                })}
                                 placeholder={'-' + t('select') + '-'}
                                 onChange={(e, data) => {
                                     setStudentId(data?.value)
@@ -179,12 +184,12 @@ const index = () => {
                     <Container fluid>
                         <Row className='bolder'>
                             <Col lg={3} className='d-flex justify-content-center align-items-center'>
-                                <img width={129} height={129}
+                                <img width={120} height={120}
                                     className='img-responsive img-circle'
-                                    src={student?.avatar || '/images/avatar.png'}
+                                    src={student?.avatar || '/img/profile/avatar.png'}
                                     onError={(e) => {
                                         e.target.onError = null
-                                        e.target.src = '/images/avatar.png'
+                                        e.target.src = '/img/profile/avatar.png'
                                     }}
                                 />
                             </Col>
