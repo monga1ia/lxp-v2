@@ -547,7 +547,7 @@ const routesAndMenuItems = {
                 {
                     path: "/calendar",
                     label: "menu.teacher.school_calendar",
-                    component: teacher.calendar,
+                    component: school.calendar,
                 },
             ],
         },
