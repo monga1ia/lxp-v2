@@ -1,5 +1,4 @@
 import message from 'modules/message'
-import { useNavigate } from 'react-router'
 import { Checkbox } from 'semantic-ui-react'
 import PublishModal from '../modal/exam/publish'
 import DTable from 'modules/DataTable/DTable'
@@ -7,10 +6,9 @@ import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
 import React, { useEffect, useRef, useState } from 'react'
-import { teacherJournalExamEdit, teacherJournalExamPublish } from 'Utilities/url'
+// import { teacherJournalExamEdit, teacherJournalExamPublish } from 'Utilities/url'
 
-const scoreWithoutTemplate = ({ students, examMaxScore, exam, isTemplate }) => {
-    const navigate = useNavigate()
+const scoreWithoutTemplate = ({ students, examMaxScore, exam, isTemplate, onClose }) => {
     const decimalRegex = /^\d+(\.\d{1,2})?$/
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
@@ -98,44 +96,46 @@ const scoreWithoutTemplate = ({ students, examMaxScore, exam, isTemplate }) => {
     }, [tableData])
 
     const handleSubmit = publish => {
-        if (publish && !validateFields()) return
-        setLoading(true)
-        fetchRequest(teacherJournalExamEdit, 'POST', {
-            exam,
-            submit: 1,
-            students: JSON.stringify(tableData?.filter(el => el?.checked == true)),
-        })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.message, res.success)
-                    if (publish) setShowPublishModal(true)
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleSubmit')
+        // if (publish && !validateFields()) return
+        // setLoading(true)
+        // fetchRequest(teacherJournalExamEdit, 'POST', {
+        //     exam,
+        //     submit: 1,
+        //     students: JSON.stringify(tableData?.filter(el => el?.checked == true)),
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             if (publish) setShowPublishModal(true)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handlePublish = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalExamPublish, 'POST', { exam })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.message, res.success)
-                    navigate('/teacher/journals/exams/result', { state: { id: exam, isTemplate }, replace: true })
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handlePublish')
+        // setLoading(true)
+        // fetchRequest(teacherJournalExamPublish, 'POST', { exam })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             navigate('/teacher/journals/exams/result', { state: { id: exam, isTemplate }, replace: true })
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const validateFields = () => {
@@ -189,7 +189,7 @@ const scoreWithoutTemplate = ({ students, examMaxScore, exam, isTemplate }) => {
 
     return (
         <>
-            <div className='m-portlet__body'>
+            <div className='m-portlet__body mx-4'>
                 <DTable
                     locale={locale}
                     config={config}
@@ -198,10 +198,11 @@ const scoreWithoutTemplate = ({ students, examMaxScore, exam, isTemplate }) => {
                     columns={columns}
                 />
             </div>
-            <div className="m-portlet__foot d-flex justify-content-center gap-05">
+            <div className="modal-footer">
                 <button
-                    className='btn btn-link'
-                    onClick={() => navigate(-1, { replace: true })}
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom'
+                    onClick={onClose}
+                    // onClick={() => navigate(-1, { replace: true })}
                 >
                     {translations(locale)?.back}
                 </button>

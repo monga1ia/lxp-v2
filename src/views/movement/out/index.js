@@ -244,7 +244,7 @@ const index = () => {
                                 {t('action.register')}
                             </button>                        
                         </div>
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <DTable
                                     remote

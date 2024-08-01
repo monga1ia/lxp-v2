@@ -696,7 +696,7 @@ const MainGroup = () => {
             <div className='m-content'>
                 <Row className=''>
                     <Col xl="2" xxl="2">
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <TreeView
                                     treeData={treeData}
@@ -716,7 +716,7 @@ const MainGroup = () => {
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('action.register')}
                         </button>
-                        <div className='m-portlet tab br-12'>
+                        <div className='m-portlet tab'>
                             <div className=''>
                                 <Tab
                                     menu={{ secondary: true, pointing: true, className: 'primaryColor m-0 h-4' }}

@@ -5,7 +5,6 @@ import secureLocalStorage from 'react-secure-storage'
 import { Modal } from 'react-bootstrap'
 // import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
-import {useLocation, useNavigate} from 'react-router'
 // import {teacherJournalAttendance, teacherJournalAttendanceDelete} from 'utils/url'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import {Col} from 'react-bootstrap'
@@ -14,15 +13,13 @@ import DeleteModal from './modal/delete'
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
 const AttendanceModal = ({onClose, data}) => {
-    // const location = useLocation()
-    // const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
     const [title, setTitle] = useState('')
     const [dateRange, setDateRange] = useState([])
     const [reportLists, setReportLists] = useState([])
-    const [filteredStudentsData, setFilteredStudentsData] = useState([])
+    const [filteredStudentsData, setFilteredStudentsData] = useState([{}])
     const [canDelete, setCanDelete] = useState(false)
 
     const [deleteParams, setDeleteParams] = useState(null)
@@ -334,135 +331,133 @@ const AttendanceModal = ({onClose, data}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className='m-portlet'>
-                    <div className='m-portlet__body'>
-                        <div className="row myReport-reportShowArea">
-                            <div className='col-md-12'>
-                                <div className='d-flex gap-05 justify-content-between align-items-center mb-2'>
-                                    <div>
-                                        <Col className='d-flex'>
-                                            <div className='d-flex' style={{top: 17}}>
-                                                <label className='modal-label mr-2' style={{
-                                                    fontWeight: 800,
-                                                    fontFamily: 'PinnacleBold',
-                                                    position: 'relative',
-                                                    top: 5
-                                                }}>
-                                                    {translations(locale)?.date}
-                                                </label>
-                                                <div className='pr-0'>
-                                                    <DayPickerInput
-                                                        value={dates?.startDate}
-                                                        inputProps={{className: 'form-control'}}
-                                                        placeholder={translations(locale)?.datePickerPlaceholder}
-                                                        dayPickerProps={{disabledDays: {after: new Date(dates?.endDate)}}}
-                                                        classNames={{
-                                                            overlay: 'DayPickerInputOverlay',
-                                                            container: 'position-relative'
-                                                        }}
-                                                        onDayChange={(day) => _handlerStartDate(day)}
-                                                    />
-                                                </div>
-                                                <div className='pickerSeparator justify-content-center'
-                                                     style={{height: 33}}>
-                                                    <i className='la la-ellipsis-h'/>
-                                                </div>
-                                                <div className='pl-0'>
-                                                    <DayPickerInput
-                                                        value={dates?.endDate}
-                                                        inputProps={{className: 'form-control'}}
-                                                        placeholder={translations(locale)?.datePickerPlaceholder}
-                                                        dayPickerProps={{disabledDays: {before: new Date(dates?.startDate)}}}
-                                                        classNames={{
-                                                            overlay: 'DayPickerInputOverlay',
-                                                            container: 'position-relative'
-                                                        }}
-                                                        onDayChange={(day) => _handlerEndDate(day)}
-                                                    />
-                                                </div>
+                <div className='m-portlet__body mx-4'>
+                    <div className="row myReport-reportShowArea">
+                        <div className='col-md-12'>
+                            <div className='d-flex gap-05 justify-content-between align-items-center mb-2'>
+                                <div>
+                                    <Col className='d-flex'>
+                                        <div className='d-flex' style={{top: 17}}>
+                                            <label className='modal-label mr-2' style={{
+                                                fontWeight: 800,
+                                                fontFamily: 'PinnacleBold',
+                                                position: 'relative',
+                                                top: 5
+                                            }}>
+                                                {translations(locale)?.date}
+                                            </label>
+                                            <div className='pr-0'>
+                                                <DayPickerInput
+                                                    value={dates?.startDate}
+                                                    inputProps={{className: 'form-control'}}
+                                                    placeholder={translations(locale)?.datePickerPlaceholder}
+                                                    dayPickerProps={{disabledDays: {after: new Date(dates?.endDate)}}}
+                                                    classNames={{
+                                                        overlay: 'DayPickerInputOverlay',
+                                                        container: 'position-relative'
+                                                    }}
+                                                    onDayChange={(day) => _handlerStartDate(day)}
+                                                />
                                             </div>
-                                        </Col>
-                                    </div>
-                                    <div className='d-flex'>
-                                        <button
-                                            style={{height: 33, width: 33}}
-                                            className='btn m-btn--icon m-btn--icon-only btn-info br-03 mx-1'
-                                            onClick={() => excelDownload()}
-                                        >
-                                            <i className='la la-file-excel-o' style={{fontSize: 22, color: 'white'}}/>
-                                        </button>
-                                        <input
-                                            type='text'
-                                            style={{width: '15rem'}}
-                                            className='form-control br-08'
-                                            placeholder={translations(locale)?.search}
-                                            onChange={(e) => handleSearch(e?.target?.value?.toLowerCase())}
-                                        />
-                                    </div>
+                                            <div className='pickerSeparator justify-content-center'
+                                                    style={{height: 33}}>
+                                                <i className='la la-ellipsis-h'/>
+                                            </div>
+                                            <div className='pl-0'>
+                                                <DayPickerInput
+                                                    value={dates?.endDate}
+                                                    inputProps={{className: 'form-control'}}
+                                                    placeholder={translations(locale)?.datePickerPlaceholder}
+                                                    dayPickerProps={{disabledDays: {before: new Date(dates?.startDate)}}}
+                                                    classNames={{
+                                                        overlay: 'DayPickerInputOverlay',
+                                                        container: 'position-relative'
+                                                    }}
+                                                    onDayChange={(day) => _handlerEndDate(day)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </Col>
                                 </div>
-                                <div className="table-responsive">
-                                    <table className="table table-bordered attendance">
-                                        <thead>
-                                        <tr>
-                                            <th rowSpan={canDelete ? 2 : 1}>№</th>
-                                            <th rowSpan={canDelete ? 2 : 1}>{translations(locale).student.student_code || null}</th>
-                                            <th rowSpan={canDelete ? 2 : 1}>{translations(locale).studentLastName || null}</th>
-                                            <th rowSpan={canDelete ? 2 : 1}>{translations(locale).studentFirstName || null}</th>
-                                            <th rowSpan={canDelete ? 2 : 1}>{translations(locale).foodDashboard.cameStudent || null}</th>
-                                            <th rowSpan={canDelete ? 2 : 1}>{translations(locale).percent || null}</th>
+                                <div className='d-flex'>
+                                    <button
+                                        style={{height: 33, width: 33}}
+                                        className='btn m-btn--icon m-btn--icon-only btn-info br-03 mx-1'
+                                        onClick={() => excelDownload()}
+                                    >
+                                        <i className='la la-file-excel-o' style={{fontSize: 22, color: 'white'}}/>
+                                    </button>
+                                    <input
+                                        type='text'
+                                        style={{width: '15rem'}}
+                                        className='form-control br-08'
+                                        placeholder={translations(locale)?.search}
+                                        onChange={(e) => handleSearch(e?.target?.value?.toLowerCase())}
+                                    />
+                                </div>
+                            </div>
+                            <div className="table-responsive">
+                                <table className="table table-bordered attendance">
+                                    <thead>
+                                    <tr>
+                                        <th rowSpan={canDelete ? 2 : 1}>№</th>
+                                        <th rowSpan={canDelete ? 2 : 1}>{translations(locale).student.student_code || null}</th>
+                                        <th rowSpan={canDelete ? 2 : 1}>{translations(locale).studentLastName || null}</th>
+                                        <th rowSpan={canDelete ? 2 : 1}>{translations(locale).studentFirstName || null}</th>
+                                        <th rowSpan={canDelete ? 2 : 1}>{translations(locale).foodDashboard.cameStudent || null}</th>
+                                        <th rowSpan={canDelete ? 2 : 1}>{translations(locale).percent || null}</th>
+                                        {
+                                            dateRange && dateRange.length > 0
+                                                ?
+                                                dateRange.map(function (date, index) {
+                                                    return (
+                                                        <th key={'thead_' + index} className="rotate"
+                                                            colSpan={date.colCount}>
+                                                            <div><span>{date.name}</span></div>
+                                                        </th>
+                                                    )
+                                                })
+                                                : null
+                                        }
+                                    </tr>
+                                    {
+                                        canDelete && <tr>
                                             {
                                                 dateRange && dateRange.length > 0
                                                     ?
                                                     dateRange.map(function (date, index) {
-                                                        return (
-                                                            <th key={'thead_' + index} className="rotate"
-                                                                colSpan={date.colCount}>
-                                                                <div><span>{date.name}</span></div>
-                                                            </th>
-                                                        )
+                                                        const thList = []
+                                                        for (let i = 0; i < date?.colCount; i++) {
+                                                            thList.push(<th key={'thead_' + index + '_' + i}>
+                                                                <div>
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            const params = {
+                                                                                attendances: getAttendanceIds(date?.date, i),
+                                                                                date: date?.date,
+                                                                                // group: location?.state?.group,
+                                                                                // season: location?.state?.season
+                                                                            }
+                                                                            setDeleteParams(params)
+                                                                            setShowDeleteModal(true)
+                                                                        }}
+                                                                        className="btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center">
+                                                                        <i className={'la la-trash la-2x'}/>
+                                                                    </button>
+                                                                </div>
+                                                            </th>)
+                                                        }
+                                                        return thList
                                                     })
                                                     : null
                                             }
                                         </tr>
-                                        {
-                                            canDelete && <tr>
-                                                {
-                                                    dateRange && dateRange.length > 0
-                                                        ?
-                                                        dateRange.map(function (date, index) {
-                                                            const thList = []
-                                                            for (let i = 0; i < date?.colCount; i++) {
-                                                                thList.push(<th key={'thead_' + index + '_' + i}>
-                                                                    <div>
-                                                                        <button
-                                                                            onClick={() => {
-                                                                                const params = {
-                                                                                    attendances: getAttendanceIds(date?.date, i),
-                                                                                    date: date?.date,
-                                                                                    // group: location?.state?.group,
-                                                                                    // season: location?.state?.season
-                                                                                }
-                                                                                setDeleteParams(params)
-                                                                                setShowDeleteModal(true)
-                                                                            }}
-                                                                            className="btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center">
-                                                                            <i className={'la la-trash la-2x'}/>
-                                                                        </button>
-                                                                    </div>
-                                                                </th>)
-                                                            }
-                                                            return thList
-                                                        })
-                                                        : null
-                                                }
-                                            </tr>
-                                        }
-                                        </thead>
-                                        <tbody>
-                                        {attendanceTableBodyRender()}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    }
+                                    </thead>
+                                    <tbody>
+                                    {attendanceTableBodyRender()}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

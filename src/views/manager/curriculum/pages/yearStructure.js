@@ -295,7 +295,7 @@ const yearStructure = () => {
                 }]}
                 locale={locale}
             /> */}
-            <div className="m-portlet br-12 mt-2">
+            <div className="m-portlet mt-2">
                 <div className="m-portlet__body">
                     <DTable
                         ref={tableRef}

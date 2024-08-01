@@ -5,8 +5,8 @@ import * as actions from "Actions/action";
 import { Checkbox, Container, Dropdown, Modal, Tab } from 'semantic-ui-react';
 // import SubHeader from "Src/SubHeader";
 import { toast } from "react-toastify";
-import TreeView from 'Widgets/TreeView2'
-import DataTable from 'Widgets/DataTable2/DTable'
+import TreeView from 'widgets/TreeView2'
+import DataTable from 'modules/DataTable/DTable'
 
 class NewsfeedConfig extends React.Component {
     constructor(props) {

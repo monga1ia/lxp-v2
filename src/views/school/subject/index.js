@@ -379,7 +379,7 @@ const MainGroup = () => {
             <div className='m-content'>
                 <Row className=''>
                     <Col xl="2" xxl="2">
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 {
                                     treeData?.length > 0 && <TreeView

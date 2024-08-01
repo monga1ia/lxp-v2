@@ -440,6 +440,7 @@ const index = () => {
                 config={config}
                 data={subjectLists}
                 columns={column}
+                clickContextMenu
                 contextMenus={contextMenus}
                 onContextMenuItemClick={_contextMenuItemClick}
                 locale={locale}
@@ -907,7 +908,7 @@ const index = () => {
                 </Row>
             </div>
             <div className="m-content">
-                <div className="m-portlet br-12 tab">
+                <div className="m-portlet tab">
                     <div className="m-portlet__head">
                         {
                             <Tab

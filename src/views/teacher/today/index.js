@@ -3150,7 +3150,7 @@ const index = () => {
                                                 googleDriverFiles && googleDriverFiles.length > 0 && googleDriverFiles.map(function (file, index) {
                                                     return (
                                                         <div className="col-md-12" key={'file_' + index}>
-                                                            <div className="m-portlet br-12">
+                                                            <div className="m-portlet">
                                                                 <div className="m-portlet__head">
                                                                     <div className="m-portlet__head-caption">
                                                                     </div>
@@ -3313,7 +3313,7 @@ const index = () => {
                                                 videos && videos.length > 0 && videos.map(function (file, index) {
                                                     return (
                                                         <div className="col-md-12" key={'file_' + index}>
-                                                            <div className="m-portlet br-12">
+                                                            <div className="m-portlet">
                                                                 <div className="m-portlet__head">
                                                                     <div className="m-portlet__head-caption">
                                                                     </div>
@@ -3727,7 +3727,7 @@ const index = () => {
                             onCheckable={homeworkCheckboxChange}
                         />
                         :
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body text-center'>
                                 {translations(locale).homework.homework_due_date_error}
                             </div>
@@ -4068,14 +4068,14 @@ const index = () => {
             </div>
             <div className="m-content">
                 {/* <h5 className='bolder pl-3' style={{ color: '#ff5b1d', marginBottom: '0.7rem' }}>{translations(locale).teacherToday?.notification}</h5>
-                <div className='m-portlet br-12'>
+                <div className='m-portlet'>
                     <div className='m-portlet__body text-center'>
                         <span>{translations(locale).teacherToday?.noNotification}</span>
                     </div>
                 </div>
 
                 <h5 className='bolder pl-3' style={{ color: '#ff5b1d', marginBottom: '0.7rem', marginTop: '1.5rem' }}>{translations(locale).teacherToday?.notification}</h5>
-                <div className='m-portlet br-12'>
+                <div className='m-portlet'>
                     <div className='m-portlet__body' style={{ padding: '1rem 2rem' }}>
                         <div className='col'>
                             <div className='row align-items-center'>
@@ -4104,7 +4104,7 @@ const index = () => {
                                     list.times.map((time, key) => {
                                         return time.length > 1
                                             ?
-                                            <div key={key} className='m-portlet br-12' style={{marginBottom: '0.5rem'}}>
+                                            <div key={key} className='m-portlet' style={{marginBottom: '0.5rem'}}>
                                                 <div className='m-portlet__body' style={{
                                                     position: 'relative'
                                                 }}>
@@ -4267,7 +4267,7 @@ const index = () => {
                                                 </div>
                                             </div>
                                             :
-                                            <div key={key} className='m-portlet br-12' style={{marginBottom: '0.5rem'}}>
+                                            <div key={key} className='m-portlet' style={{marginBottom: '0.5rem'}}>
                                                 <div className='m-portlet__body' style={{
                                                     position: 'relative'
                                                 }}>
@@ -4440,7 +4440,7 @@ const index = () => {
                                 }
                             </div>
                         ) :
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body text-center'>
                                 <span>{translations(locale).timetable?.empty_timetable}</span>
                             </div>
@@ -4514,7 +4514,7 @@ const index = () => {
                         modalAction === 'onlineLesson'
                             ?
                             <div className="myToday-attendance-student-modal-style">
-                                <div className="m-portlet br-12">
+                                <div className="m-portlet">
                                     <div className="m-portlet__body">
                                         <div className="col-12">
                                             <div className="col-5">
@@ -4534,7 +4534,7 @@ const index = () => {
                                     onlineLessonAction === 1
                                         ?
                                         // online lesson view and edit
-                                        <div className="m-portlet br-12">
+                                        <div className="m-portlet">
                                             <div className="m-portlet__body">
                                                 <div className="form-group m-form__group row">
                                                     <div className="col-12 displayFlex">
@@ -4689,7 +4689,7 @@ const index = () => {
                                         </div>
                                         :
                                         // online lesson create
-                                        <div className="m-portlet br-12">
+                                        <div className="m-portlet">
                                             <div className="m-portlet__body myToday-online-lesson-modal-style">
                                                 <Tab
                                                     id={noneOrBlock === 'none' ? 'online-display-none' : 'online-display-block'}
@@ -4836,7 +4836,7 @@ const index = () => {
                             <>
                                 {homeworkTabHeaderRender()}
                                 <div
-                                    className={` ${homeworkTabActiveIndex === 0 && inputViewOrEdit && inputViewOrEdit === 'view' && 'm-portlet br-12'}`}>
+                                    className={` ${homeworkTabActiveIndex === 0 && inputViewOrEdit && inputViewOrEdit === 'view' && 'm-portlet'}`}>
                                     <div className='m-portlet__body myTimetable-addNewSubjectStyle'>
                                         {
                                             !editing &&

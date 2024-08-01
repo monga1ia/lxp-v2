@@ -2290,6 +2290,7 @@ export const translations = (lang) => {
                         notification: 'Notification',
                         noNotification: 'There is no notification',
                         regular: 'Topic',
+                        downloadJournal: 'Журнал татах',
                         hw_assigned: 'Homework assigned',
                         hw_reviewed: 'Homework to check',
                         hw_assign: 'assign homework',
@@ -4765,6 +4766,7 @@ export const translations = (lang) => {
                     teacherToday: {
                         behavior: 'Хүмүүжил',
                         notification: 'Сонордуулга',
+                        downloadJournal: 'Журнал татах',
                         noNotification: 'Одоогоор Таньд мэдэгдэл ирээгүй байна.',
                         regular: 'Ээлжит',
                         hw_assigned: 'ГД өгсөн',

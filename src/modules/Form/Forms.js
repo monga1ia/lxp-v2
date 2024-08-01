@@ -18,6 +18,7 @@ import RadioButton from 'components/buttons/RadioButton';
 import ContentEditable from 'react-contenteditable';
 import { ResizeProvider, ResizeConsumer } from "react-resize-context";
 import { NDropdown as Dropdown } from 'widgets/Dropdown';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 
 const Forms = (({
     fields: paramFields = [],
@@ -1704,6 +1705,69 @@ const Forms = (({
                                     </div>
                             )
                         }
+                        if (field.type === 'dayPicker') {
+                            return (
+                                field.hidden
+                                    ?
+                                    <div key={index} />
+                                    :
+                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                        <label
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.labelWidth ? undefined : field?.labelFlex || 1,
+                                                justifyContent: 'flex-end',
+                                                alignItems: field.alignItems ? field.alignItems : 'center',
+                                                marginRight: 10,
+                                                marginBottom: 0,
+                                                width: field?.labelWidth || 'auto',
+                                                ...field.labelStyle
+                                            }}
+                                            className={labelClassName}
+                                        >
+                                            {field.label}
+                                        </label>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flex: field.inputWidth ? undefined : field?.inputFlex || 1,
+                                                flexDirection: 'column',
+                                                marginLeft: 10,
+                                                width: field?.inputWidth || 'auto',
+                                            }}
+                                            className={fieldContainerClassName}
+                                        >
+                                            <DayPickerInput
+                                                value={field.value}
+                                                inputProps={field.inputProps}
+                                                placeholder={field.placeholder}
+                                                onDayChange={date => handleDateChange(date, index)}
+                                                classNames={field.classNames}
+                                            />
+                                            <div className={feedbackClassName} style={{ display: message ? 'block' : undefined }}>
+                                                {message}
+                                            </div>
+                                        </div>
+                                        {
+                                            field.inputWidth
+                                                ?
+                                                null
+                                                :
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        flex: field.inputWidth ? undefined : field?.inputFlex || 0.8,
+                                                        flexDirection: 'column',
+                                                        marginLeft: 10,
+                                                        width: field?.inputWidth || 'auto',
+                                                    }}
+                                                    className={whiteSpaceClassName}
+                                                />
+                                        }
+                                    </div>
+                            )
+                        }
+                        
                         if (field.type === 'datetime') {
                             return (
                                 field.hidden

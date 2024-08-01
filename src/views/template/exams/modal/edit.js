@@ -8,14 +8,11 @@ import { translations } from 'utils/translations'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useNavigate } from 'react-router-dom'
 // import { getSubjectsByGrade, templateExamEdit } from 'utils/fetchRequest/Urls'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded'
 
 const EditTemplate = ({onClose}) => {
-    // const navigate = useNavigate()
-    // const location = useLocation()
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const { t } = useTranslation()

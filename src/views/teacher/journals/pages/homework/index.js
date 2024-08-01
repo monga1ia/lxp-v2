@@ -2,9 +2,9 @@ import message from 'modules/message'
 import React, { useEffect, useRef, useState } from 'react'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
+import { Modal as NModal } from 'react-bootstrap'
 import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-// import { useLocation, useNavigate } from 'react-router'
 import { dummyTableDataStudent } from './components/StudentTable/byStudentData'
 import { Modal, Tab } from 'semantic-ui-react'
 import InfoModal from './components/infoModal'
@@ -65,8 +65,6 @@ const WEEKDAYS_LONG = {
 };
 
 const HomeworkModal = ({onClose, data}) => {
-    // const location = useLocation()
-    // const navigate = useNavigate()
 
     const fileUploader = useRef();
 
@@ -1813,17 +1811,22 @@ const HomeworkModal = ({onClose, data}) => {
     }
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-content'>
+        <NModal
+            size='xl'
+            dimmer='blurring'
+            show={true}
+            onHide={onClose}
+            // className={className || ''}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <NModal.Header closeButton style={{padding: '1rem'}}>
+                <NModal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.homework?.title}
+                </NModal.Title>
+            </NModal.Header>
+            <NModal.Body style={{color: '#212529'}}>
                 <div className='m-portlet'>
-                    <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                        <span className='fs-13 pinnacle-bold' style={{ color: '#ff5b1d' }}>{translations(locale)?.homework?.title}</span>
-                        <button className='btn m-btn--pill btn-link m-btn m-btn--custom' 
-                        // onClick={() => navigate(-1)}
-                        >
-                            {translations(locale)?.back}
-                        </button>
-                    </div>
                     <div className='m-portlet__body'>
                     <Description
                         groupInfo={groupInfo}
@@ -1864,7 +1867,15 @@ const HomeworkModal = ({onClose, data}) => {
                         ]}
                     />
                 </div>
-            </div>
+            </NModal.Body>
+            <NModal.Footer>
+                <button 
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.back}
+                </button>
+            </NModal.Footer>
             {
                 loading &&
                 <>
@@ -2380,7 +2391,7 @@ const HomeworkModal = ({onClose, data}) => {
                     </div>
                 </div>
             </Modal>
-        </div >
+        </NModal >
     )
 }
 

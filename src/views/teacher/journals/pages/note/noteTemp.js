@@ -5,7 +5,6 @@ import React, { useEffect } from 'react'
 import secureLocalStorage from 'react-secure-storage'
 // import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-import { useLocation, useNavigate } from 'react-router'
 // import { teacherJournalNoteIndex, teacherJournalNoteSubmit, teacherJournalNoteDelete } from 'utils/url'
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -39,7 +38,9 @@ const NoteModal = ({onClose, data}) => {
 
     const [title, setTitle] = useState('')
     const [initialList, setInitialList] = useState([])
-    const [list, setList] = useState([])
+    const [list, setList] = useState([
+        {}
+    ])
     const [query, setQuery] = useState('')
     const [file, setFile] = useState(null)
     const [allChecked, setAllChecked] = useState(false)
@@ -470,99 +471,97 @@ const NoteModal = ({onClose, data}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className='m-portlet'>
-                    <div className='m-portlet__body'>
-                        <div className="row">
-                            <div className='col-md-12'>
-                                <div className='d-flex gap-05 justify-content-between align-items-center mb-2'>
-                                    {
-                                        file
-                                            ?
-                                            <>
-                                                <div className='d-flex'>
-                                                    <button type='button' onClick={() => onSaveHandler()}
-                                                        className='btn m-btn--pill  btn-success d-flex align-items-center justify-content-center btn-sm text-uppercase'>
-                                                        {translations(locale)?.save}
-                                                    </button>
-                                                    <button type='button' onClick={() => onCancelHandler()}
-                                                        className='btn m-btn--pill  btn-link d-flex align-items-center justify-content-center btn-sm text-uppercase'>
-                                                        {translations(locale)?.cancel}
-                                                    </button>
-                                                </div>
-                                            </>
-                                            :
+                <div className='m-portlet__body mx-4'>
+                    <div className="row">
+                        <div className='col-md-12'>
+                            <div className='d-flex gap-05 justify-content-between align-items-center mb-2'>
+                                {
+                                    file
+                                        ?
+                                        <>
                                             <div className='d-flex'>
-                                                <label
-                                                    htmlFor='fileInput'
-                                                    style={{ marginBottom: 0 }}
-                                                    className='btn m-btn--pill  btn-primary d-flex align-items-center justify-content-center btn-sm text-uppercase'
-                                                >
-                                                    {translations(locale)?.excel_import}
-                                                </label>
-                                                <input
-                                                    style={{ display: 'none' }}
-                                                    accept=".xls, .xlsx, application/excel, application/vnd.msexcel, text/anytext, application/vnd. ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                                    id="fileInput"
-                                                    onChange={uploadFile}
-                                                    type="file"
-                                                    multiple
-                                                />
-
-                                                <button type='button'
-                                                    style={{ marginLeft: 10 }}
-                                                    onClick={excelDownload}
-                                                    className='btn m-btn--pill  btn-info d-flex align-items-center justify-content-center btn-sm text-uppercase'>
-                                                    {translations(locale)?.teacher?.journalExcelTemplate}
+                                                <button type='button' onClick={() => onSaveHandler()}
+                                                    className='btn m-btn--pill  btn-success d-flex align-items-center justify-content-center btn-sm text-uppercase'>
+                                                    {translations(locale)?.save}
+                                                </button>
+                                                <button type='button' onClick={() => onCancelHandler()}
+                                                    className='btn m-btn--pill  btn-link d-flex align-items-center justify-content-center btn-sm text-uppercase'>
+                                                    {translations(locale)?.cancel}
                                                 </button>
                                             </div>
-                                    }
-                                    <div className='d-flex'>
-                                        <button
-                                            style={{ height: 33 }}
-                                            className='btn btn-info br-03 mx-1'
-                                            onClick={excelDownload}
-                                        >
-                                            <i className='la la-file-excel-o' style={{
-                                                fontSize: 22,
-                                                color: 'white'
-                                            }} />
-                                        </button>
-                                        <input
-                                            type='text'
-                                            style={{ width: '15rem' }}
-                                            className='form-control br-08'
-                                            value={query}
-                                            placeholder={translations(locale)?.search}
-                                            onChange={(e) => handleSearch(e?.target?.value?.toLowerCase())}
-                                        />
-                                    </div>
+                                        </>
+                                        :
+                                        <div className='d-flex'>
+                                            <label
+                                                htmlFor='fileInput'
+                                                style={{ marginBottom: 0 }}
+                                                className='btn m-btn--pill  btn-primary d-flex align-items-center justify-content-center btn-sm text-uppercase'
+                                            >
+                                                {translations(locale)?.excel_import}
+                                            </label>
+                                            <input
+                                                style={{ display: 'none' }}
+                                                accept=".xls, .xlsx, application/excel, application/vnd.msexcel, text/anytext, application/vnd. ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                id="fileInput"
+                                                onChange={uploadFile}
+                                                type="file"
+                                                multiple
+                                            />
+
+                                            <button type='button'
+                                                style={{ marginLeft: 10 }}
+                                                onClick={excelDownload}
+                                                className='btn m-btn--pill  btn-info d-flex align-items-center justify-content-center btn-sm text-uppercase'>
+                                                {translations(locale)?.teacher?.journalExcelTemplate}
+                                            </button>
+                                        </div>
+                                }
+                                <div className='d-flex'>
+                                    <button
+                                        style={{ height: 33 }}
+                                        className='btn btn-info br-03 mx-1'
+                                        onClick={excelDownload}
+                                    >
+                                        <i className='la la-file-excel-o' style={{
+                                            fontSize: 22,
+                                            color: 'white'
+                                        }} />
+                                    </button>
+                                    <input
+                                        type='text'
+                                        style={{ width: '15rem' }}
+                                        className='form-control br-08'
+                                        value={query}
+                                        placeholder={translations(locale)?.search}
+                                        onChange={(e) => handleSearch(e?.target?.value?.toLowerCase())}
+                                    />
                                 </div>
-                                <div className="table-responsive">
-                                    <table className="table table-bordered attendance">
-                                        <thead>
-                                            <tr>
-                                                <th width={'5%'}>№</th>
-                                                {
-                                                    file && <th width={'5%'}>
-                                                        <Checkbox
-                                                            checked={allChecked}
-                                                            onChange={(e, data) => onCheckboxHandler(data.checked, 'all')}
-                                                        />
-                                                    </th>
-                                                }
-                                                <th width={'15%'}>{translations(locale).class_date || null}</th>
-                                                <th width={'10%'}>{translations(locale).dashboardAttendence?.hour || null}</th>
-                                                <th width={'20%'}>{translations(locale).ecourse?.topic_name || null}</th>
-                                                <th width={'20%'}>{translations(locale).subject?.courseActivities || null}</th>
-                                                <th width={'20%'}>{translations(locale).teacher?.onlineLesson?.conclusion || null}</th>
-                                                <th width={'5%'}></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {noteTableBodyRender()}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            </div>
+                            <div className="table-responsive">
+                                <table className="table table-bordered attendance">
+                                    <thead>
+                                        <tr>
+                                            <th width={'5%'}>№</th>
+                                            {
+                                                file && <th width={'5%'}>
+                                                    <Checkbox
+                                                        checked={allChecked}
+                                                        onChange={(e, data) => onCheckboxHandler(data.checked, 'all')}
+                                                    />
+                                                </th>
+                                            }
+                                            <th width={'15%'}>{translations(locale).class_date || null}</th>
+                                            <th width={'10%'}>{translations(locale).dashboardAttendence?.hour || null}</th>
+                                            <th width={'20%'}>{translations(locale).ecourse?.topic_name || null}</th>
+                                            <th width={'20%'}>{translations(locale).subject?.courseActivities || null}</th>
+                                            <th width={'20%'}>{translations(locale).teacher?.onlineLesson?.conclusion || null}</th>
+                                            <th width={'5%'}></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {noteTableBodyRender()}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -572,12 +571,6 @@ const NoteModal = ({onClose, data}) => {
                 <button className='btn m-btn--pill btn-outline-metal text-uppercase' onClick={onClose}>
                     {translations(locale)?.back}
                 </button>
-                {/* <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-13 pinnacle-bold' style={{ color: '#ff5b1d' }}>{title}</span>
-                    <button className='btn m-btn--pill btn-link m-btn m-btn--custom' onClick={() => navigate(-1)}>
-                        {translations(locale)?.back}
-                    </button>
-                </div> */}
             </Modal.Footer>
             {
                 loading &&

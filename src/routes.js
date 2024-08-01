@@ -92,6 +92,7 @@ const movement = {
 
 const manager = {
     groups: lazy(() => import("views/manager/groups/index")),
+    successCoach: lazy(() => import("views/manager/successCoach/index")),
     excuses: lazy(() => import("views/manager/excuses/index")),
     clubs: lazy(() => import("views/manager/clubs/index")),
     timetable: lazy(() => import("views/manager/timetable/index")),
@@ -459,6 +460,11 @@ const routesAndMenuItems = {
                     component: manager.groups,
                 },
                 {
+                    path: '/success-coach',
+                    label: "successCoach.title",
+                    component: manager.successCoach,
+                },
+                {
                     path: "/excuses",
                     label: "menu.manager.excuses",
                     component: manager.excuses,
@@ -523,11 +529,11 @@ const routesAndMenuItems = {
                     label: "menu.teacher.excuses",
                     component: teacher.excuses,
                 },
-                {
-                    path: '/online-lessons',
-                    label: "menu.teacher.online_lessons",
-                    component: teacher.onlineLessons,
-                },
+                // {
+                //     path: '/online-lessons',
+                //     label: "menu.teacher.online_lessons",
+                //     component: teacher.onlineLessons,
+                // },
                 {
                     path: "/year",
                     label: "menu.teacher.years_end",

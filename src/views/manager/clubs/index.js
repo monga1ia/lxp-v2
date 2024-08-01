@@ -365,7 +365,7 @@ const index = () => {
             <div className='m-content'>
                 <div className='row'>
                     <Col xl="2" xxl="2">
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <TreeView
                                     defaultExpandAll
@@ -384,7 +384,7 @@ const index = () => {
                             <ControlPointIcon style={{ color: "white", marginRight: "4px" }} className='MuiSvg-customSize'/>
                             {t('add')}
                         </button>
-                        <div className='m-portlet br-12 tab'>
+                        <div className='m-portlet tab'>
                             <div className='m-portlet__body'>
                                 <DTable
                                     remote
@@ -392,6 +392,7 @@ const index = () => {
                                     locale={locale}
                                     data={tableData}
                                     columns={columns}
+                                    clickContextMenu
                                     contextMenus={contextMenus}
                                     onContextMenuItemClick={handleContextMenuClick}
                                     onInteraction={onUserInteraction}

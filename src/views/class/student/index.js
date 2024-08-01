@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
-import { NavLink, useLocation, Link } from "react-router-dom"
-import { Navigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import message from '../../../modules/message'
@@ -28,7 +27,7 @@ const index = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
-    // const navigate = useNavigation();6
+
     const location = useLocation();
     const printRef = useRef();
 
@@ -300,7 +299,7 @@ const index = () => {
             <div className='m-content'>
                 <Row className=''>
                     <Col xl="2" xxl="2">
-                        <div className='m-portlet br-12'>
+                        <div className='m-portlet'>
                             <div className='m-portlet__body'>
                                 <TreeView
                                     treeData={treeData}

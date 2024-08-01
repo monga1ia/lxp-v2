@@ -1412,7 +1412,7 @@ const index = () => {
             <div className="m-content">
                 <Row>
                     <Col xl="2" xxl="2">
-                        <div className="m-portlet br-12">
+                        <div className="m-portlet">
                             <div className="m-portlet__body">
                                 <TreeView
                                     defaultExpandAll
@@ -1437,7 +1437,7 @@ const index = () => {
                             </button>
                         </div>
 
-                        <div className="m-portlet br-12">
+                        <div className="m-portlet">
                             <div className="m-portlet__body">
                                 <DTable
                                     remote

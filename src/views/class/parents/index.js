@@ -216,7 +216,7 @@ const index = () => {
                         <p className='text-right m-0 fs-23' style={{ fontFamily: 'MulishBlack' }} >{expiredParents?.length} | {unExpiredParents}</p>
                     </div>
                 </div>
-                <div className='m-portlet br-12'>
+                <div className='m-portlet'>
                     <div className='m-portlet__body'>
                         <DTable
                             config={config}

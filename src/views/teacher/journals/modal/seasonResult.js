@@ -1,5 +1,4 @@
 import message from 'modules/message'
-import { useNavigate } from 'react-router'
 import { Modal } from 'react-bootstrap'
 import DeleteModal from 'utils/deleteModal'
 import React, { useEffect, useState } from 'react'
@@ -7,13 +6,14 @@ import CloseIcon from '@mui/icons-material/Close'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
+import EditSeasonResult from '../pages/seasonResult/edit'
+import ResultSeasonResult from '../pages/seasonResult/result'
 // import { fetchRequest } from 'utils/fetchRequest'
 // import { teacherJournalSeasonResultDelete, teacherJournalExamInit } from 'utils/fetchRequest/Urls'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
 const seasonResult = ({ onClose, group, season, rerender }) => {
-    // const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -22,6 +22,38 @@ const seasonResult = ({ onClose, group, season, rerender }) => {
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showEditSeasonResultModal, setShowEditSeasonResultModal]= useState(false)
+    const [showResultSeasonResultModal, setShowResultSeasonResultModal]= useState(false)
+    
+    const [editSeasonResultState, setEditSeasonResultState] = useState({
+        exam: null,
+        group: null,
+        title: null,
+    })
+
+    const [resultSeasonResultState, setResultSeasonResultState] = useState({
+        exam: null,
+        title: null,
+        urlData: state?.group,
+    })
+    
+    const seasonResultEditHandler = (state) => {
+        setEditSeasonResultState({
+            exam: state?.exam,
+            group: state?.group,
+            title: state?.title,
+        })
+        setShowEditSeasonResultModal(true)
+    }
+
+    const seasonResultResultHandler = (state) => {
+        setResultSeasonResultState({
+            exam: state?.exam,
+            title: state?.title,
+            urlData: state?.group,
+        })
+        setShowResultSeasonResultModal(true)
+    }
 
     const config = {
         showFilter: false,
@@ -36,7 +68,11 @@ const seasonResult = ({ onClose, group, season, rerender }) => {
             text: translations(locale)?.status,
             align: 'center',
             style: { verticalAlign: 'middle' },
-            formatter: cell => <i className='fas fa-circle' style={{ color: cell ? '#6dd400' : '#d8d8d8' }} />
+            formatter: cell => 
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={`table-circle ${cell === true && "active"}`} />
+                </div>
+            // <i className='fas fa-circle' style={{ color: cell ? '#6dd400' : '#d8d8d8' }} />
         },
         {
             dataField: 'createdDate',
@@ -57,13 +93,14 @@ const seasonResult = ({ onClose, group, season, rerender }) => {
                     <div>
                         <button
                             className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill mr-2'
+                            onClick={() => seasonResultEditHandler({exam: row?.id, group: group, title: title,})}
                             // onClick={() => navigate('/teacher/journals/season-result/edit', { state: { exam: row?.id, group, title } })}
                         >
                             <i className='fa flaticon-edit-1' />
                         </button>
                         <button
                             className='btn btn-danger m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
-                            // onClick={() => handleDeleteButtonClick(row?.id)}
+                            onClick={() => handleDeleteButtonClick(row?.id)}
                         >
                             <i className='fa flaticon-delete-1' />
                         </button>
@@ -72,6 +109,7 @@ const seasonResult = ({ onClose, group, season, rerender }) => {
                 else return (
                     <button
                         className='btn btn-secondary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                        onClick={() => seasonResultResultHandler({exam: row?.id, title: title, urlData: {backUrl: 'teacher/journals'}})}
                         // onClick={() => navigate('/teacher/journals/season-result/result', { state: { exam: row?.id, title: title, urlData: {backUrl: '/teacher/journals'} } })}
                     >
                         <i className='fa flaticon-eye text-white' />
@@ -180,6 +218,23 @@ const seasonResult = ({ onClose, group, season, rerender }) => {
                     <br />
                     {translations(locale)?.delete_confirmation_description}
                 </DeleteModal>
+            }
+            {
+                editSeasonResultState?.exam && editSeasonResultState?.group &&
+                <EditSeasonResult
+                    onClose={() => setShowEditSeasonResultModal(false)}
+                    show={showEditSeasonResultModal}
+                    data={editSeasonResultState}
+                />
+            }
+            {
+                resultSeasonResultState?.exam && 
+                // resultSeasonResultState?.urlData
+                <ResultSeasonResult
+                    onClose={() => setShowResultSeasonResultModal(false)}
+                    show={showResultSeasonResultModal}
+                    data={resultSeasonResultState}
+                />
             }
         </Modal>
     )

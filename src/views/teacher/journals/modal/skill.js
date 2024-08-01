@@ -10,18 +10,46 @@ import { translations } from 'utils/translations'
 // import { fetchRequest } from 'utils/fetchRequest'
 // import { teacherJournalSkillDelete, teacherJournalSkillList } from 'utils/fetchRequest/Urls'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
+import { useTranslation } from 'react-i18next'
+import AddSkill from '../pages/skill/add'
+import EditSkillModal from '../pages/skill/edit'
+import ResultSkillModal from '../pages/skill/result'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
 const skill = ({ onClose, group, season, rerender }) => {
 
+    const { t } = useTranslation()
+
     const [loading, setLoading] = useState(false)
 
     const [title, setTitle] = useState('')
-    const [tableData, setTableData] = useState([])
+    const [tableData, setTableData] = useState([
+        {
+            id: 'tem1',
+            isPublish: true,
+            templateName: '123',
+            publishedDate: '2024/2/42',
+        },
+        {
+            id: 'tem2',
+            isPublish: true,
+            templateName: 'test 2',
+            publishedDate: '2022/4/2',
+        },
+        {
+            id: 'tem112',
+            isPublish: false,
+            templateName: '123434',
+            publishedDate: '2021 on',
+        },
+    ])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showCreateSkillModal, setShowCreateSkillModal] = useState(false)
+    const [showEditSkillModal, setShowEditSkillModal] = useState(false)
+    const [showResultSkillModal, setShowResultSkillModal] = useState(false)
 
     const config = {
         showFilter: false,
@@ -37,10 +65,9 @@ const skill = ({ onClose, group, season, rerender }) => {
             align: 'center',
             style: { verticalAlign: 'middle' },
             formatter: cell =>
-                <i
-                    className='fas fa-circle'
-                    style={{ color: cell ? '#6dd400' : '#d8d8d8' }}
-                />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={`table-circle ${cell === true && "active"}`} />
+                </div>
         },
         {
             dataField: 'templateName',
@@ -61,14 +88,16 @@ const skill = ({ onClose, group, season, rerender }) => {
             style: { verticalAlign: 'middle' },
             headerStyle: { width: 100 },
             formatter: (cell, row) => {
+                {console.log(row?.id)}
                 if (!row?.isPublish)
                     return (
                         <div>
                             <button
                                 className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill mr-2'
+                                onClick={() => editSkillHandler(row?.id, group, title)}
                                 // onClick={() => navigate('/teacher/journals/skill/edit', { state: { skill: row?.id, group, title } })}
                             >
-                                <i className='fa flaticon-edit-1' />
+                                <i className='fa flaticon-edit' />
                             </button>
                             <button
                                 className='btn btn-danger m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
@@ -82,6 +111,7 @@ const skill = ({ onClose, group, season, rerender }) => {
                     return (
                         <button
                             className='btn btn-secondary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                            onClick={() => resultSkillHandler(row?.id, title)}
                             // onClick={() => navigate('/teacher/journals/skill/result', { state: { skill: row?.id, title } })}
                         >
                             <i className='fa flaticon-eye text-white' />
@@ -143,6 +173,34 @@ const skill = ({ onClose, group, season, rerender }) => {
         setShowDeleteModal(false)
     }
 
+    const [editSkillState, setEditSkillState] = useState({
+        skill: null, 
+        group: null,
+        title: null,
+    })
+
+    const [resultSkillState, setResultSkillState] = useState({
+        skill: null,
+        title: null,
+    })
+
+    const editSkillHandler = ({skill, group, title}) => {
+        setEditSkillState({
+            skill: skill, 
+            group: group,
+            title: title,
+        })
+        setShowEditSkillModal(true)
+    }
+    
+    const resultSkillHandler = ({skill, title}) => {
+        setResultSkillState({
+            skill: skill,
+            title: title,
+        })
+        setShowResultSkillModal(true)
+    }
+
     return (
         <Modal
             size='xl'
@@ -158,14 +216,15 @@ const skill = ({ onClose, group, season, rerender }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body style={{color: '#212529'}}>
-                <Link
-                    state={{ group, season }}
-                    to='/teacher/journals/skill/create'
+                <button
                     className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
+                    onClick={() => {
+                        setShowCreateSkillModal(true)
+                    }}
                 >
-                    <AddCircleOutlineRoundedIcon />
-                    <span className='ml-2'>{translations(locale)?.skill?.createNewAssessment}</span>
-                </Link>
+                    <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
+                    <span className='ml-2'>{t('esis.createStudent')}</span>
+                </button>
                 <DTable
                     locale={locale}
                     config={config}
@@ -193,6 +252,7 @@ const skill = ({ onClose, group, season, rerender }) => {
                     onClose={closeModal}
                     onDelete={handleDelete}
                     locale={locale}
+                    className={'doubleModal'}
                     title={translations(locale)?.delete}
                 >
                     {translations(locale)?.delete_confirmation}
@@ -200,6 +260,30 @@ const skill = ({ onClose, group, season, rerender }) => {
                     <br />
                     {translations(locale)?.delete_confirmation_description}
                 </DeleteModal>
+            }
+            {
+                group && season &&
+                <AddSkill
+                    onClose={() => setShowCreateSkillModal(false)}
+                    show={showCreateSkillModal}
+                    data={{ group, season }}
+                />
+            }
+            {
+                // editSkillState.skill &&
+                <EditSkillModal
+                    onClose={() => setShowEditSkillModal(false)}
+                    show={showEditSkillModal}
+                    data={editSkillState}
+                />
+            }
+            {
+                // resultSkillState.skill &&
+                <ResultSkillModal
+                    onClose={() => setShowResultSkillModal(false)}
+                    show={showResultSkillModal}
+                    data={resultSkillState}
+                />
             }
         </Modal>
     )
