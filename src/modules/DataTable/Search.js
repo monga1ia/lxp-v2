@@ -32,7 +32,9 @@ const useStyles = makeStyles({
 const Search = ({
     onSearch,
     value,
-    setter
+    setter,
+    rootStyle = null,
+    showSearchButton = true
 }) => {
     const { t } = useTranslation();
     const handleSearchClick = () => {
@@ -40,14 +42,14 @@ const Search = ({
     };
 
     const onHandlerKeyDown = (event) => {
-        if(event.key == 'Enter'){
+        if (event.key == 'Enter') {
             onSearch(value);
         }
     }
 
     const classes = useStyles();
     return (
-        <Paper className={classes.root}>
+        <Paper className={classes.root} style={rootStyle || null}>
             <InputBase
                 onKeyDown={onHandlerKeyDown}
                 value={value}
@@ -58,13 +60,15 @@ const Search = ({
                 }}
                 onChange={e => setter(e.target.value)}
             />
-            <IconButton
-                className={classes.iconButton}
-                aria-label="Search"
-                onClick={handleSearchClick}
-            >
-                <SearchIcon />
-            </IconButton>
+            {
+                showSearchButton && <IconButton
+                    className={classes.iconButton}
+                    aria-label="Search"
+                    onClick={handleSearchClick}
+                >
+                    <SearchIcon />
+                </IconButton>
+            }
         </Paper>
     )
 };
