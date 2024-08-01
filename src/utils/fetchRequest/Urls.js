@@ -51,6 +51,9 @@ export const managerGroupDelete = 'manager/group/delete'
 export const managerGroupClassroomLink = 'manager/group/classroom-link'
 
 export const managerSuccessCoachIndex = 'manager/success-coach/index'
+export const managerSuccessCoachInit = 'manager/success-coach/init'
+export const managerSuccessCoachAddStudent = 'manager/success-coach/add-student'
+export const managerSuccessCoachRemoveStudent = 'manager/success-coach/remove-student'
 
 
 // staff
