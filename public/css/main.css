@@ -158,6 +158,26 @@ body,
     color: white !important;
 }
 
+.grade-tab {
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 0.95rem !important;
+    font-family: 'MulishBold' !important;
+    margin-left: 25%!important;
+}
+
+.grade-tab .item {
+    margin: 4px;
+    border-radius: 8px !important;
+    color: #36A3F7 !important;
+    background-color: #D7EDFD !important;
+}
+
+.grade-tab .active {
+    background-color: #36A3F7 !important;
+    color: #FFF !important;
+}
+
 .vertical-tab {
     padding: 20px 15px !important;
     border: 0 !important;

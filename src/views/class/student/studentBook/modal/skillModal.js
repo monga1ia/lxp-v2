@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal } from 'semantic-ui-react'
-import CloseIcon from '@mui/icons-material/Close'
+import { Modal } from 'react-bootstrap'
 import DTable from 'modules/DataTable/DTable'
 import { useTranslation } from "react-i18next";
 import { Col, Row, Container } from 'react-bootstrap'
@@ -37,7 +36,7 @@ const skill = ({ onClose, skill, studentId }) => {
     ]
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         // fetchRequest(studentBookSkillDetail, 'POST', { skill, student: studentId })
         //     .then(res => {
         //         if (res.success) {
@@ -57,68 +56,70 @@ const skill = ({ onClose, skill, studentId }) => {
     return (
         <Modal
             dimmer='blurring'
-            open={true}
-            onClose={onClose}
-            className="react-modal overflow-modal"
+            show={true}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={() => onClose()}
             centered
         >
-            <div className="header">
-                {skillInfo?.template || t('skill.assessmentTemplate')}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="br-08 position-relative margin-bottom-0" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginBottom: 10 }}>
-                <Container fluid className='py-3'>
-                    <Row className='bolder'>
-                        <Col lg={12} className='d-flex align-items-center justify-content-center'>
-                            <table style={{ color: '#4a4a4a' }}>
-                                <tbody>
-                                    <tr>
-                                        <td className='text-right py-1 pr-3 bolder'>{t('date')}</td>
-                                        <td style={{ color: '#ff5b1d' }}>{skillInfo?.createdDate}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className='text-right py-1 pr-3 bolder'>{t('exam.subject')}</td>
-                                        <td style={{ color: '#ff5b1d' }}>{skillInfo?.subjectName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className='text-right py-1 pr-3 bolder'>{t('teacher_title')}</td>
-                                        <td style={{ color: '#ff5b1d' }}>{skillInfo?.teacherName}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-            <div className="br-08 position-relative px-5" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0 }}>
-                <DTable
-                    locale={locale}
-                    config={config}
-                    columns={columns}
-                    data={tableData}
-                />
-            </div>
-            <div className="actions modal-footer ">
-                <div className="col-12 text-center">
-                    <button
-                        onClick={onClose}
-                        className="btn btn-outline-metal m-btn--pill"
-                    >
-                        {t('close')}
-                    </button>
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {skillInfo?.template || t('skill.assessmentTemplate')}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div className="br-08 position-relative margin-bottom-0" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginBottom: 10 }}>
+                    <Container fluid className='py-3'>
+                        <Row className='bolder'>
+                            <Col lg={12} className='d-flex align-items-center justify-content-center'>
+                                <table style={{ color: '#4a4a4a' }}>
+                                    <tbody>
+                                        <tr>
+                                            <td className='text-right py-1 pr-3 bolder'>{t('date')}</td>
+                                            <td style={{ color: '#ff5b1d' }}>{skillInfo?.createdDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='text-right py-1 pr-3 bolder'>{t('exam.subject')}</td>
+                                            <td style={{ color: '#ff5b1d' }}>{skillInfo?.subjectName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='text-right py-1 pr-3 bolder'>{t('teacher_title')}</td>
+                                            <td style={{ color: '#ff5b1d' }}>{skillInfo?.teacherName}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
-            </div>
-            {loading &&
+                <div className="br-08 position-relative px-5" style={{ border: '1px solid rgba(255, 91, 29, 0.1)', margin: 20, marginTop: 0 }}>
+                    <DTable
+                        locale={locale}
+                        config={config}
+                        columns={columns}
+                        data={tableData}
+                    />
+                </div>
+            </Modal.Body>
+            <Modal.Footer className="text-center">
+                <button
+                    onClick={onClose}
+                    className="btn btn-outline-metal m-btn--pill"
+                >
+                    {t('close')}
+                </button>
+            </Modal.Footer>
+            {
+                loading &&
                 <>
-                    <div className='blockUI blockOverlay' />
-                    <div className='blockUI blockMsg blockPage'>
-                        <div className='m-loader m-loader--brand m-loader--lg' />
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
                     </div>
                 </>
             }
-        </Modal >
+        </Modal>
     )
 }
 

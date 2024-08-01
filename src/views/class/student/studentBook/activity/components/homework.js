@@ -58,7 +58,7 @@ const homework = ({id}) => {
     }
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         // fetchRequest(studentBookHomework, 'POST', {id})
         //     .then(res => {
         //         if (res.success) {

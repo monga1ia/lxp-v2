@@ -28,7 +28,7 @@ const exam = ({id, studentCode}) => {
     const locale="mn"
     const { t } = useTranslation();
     ChartJS.register(LinearScale, ArcElement, CategoryScale, BarElement, PointElement, LineElement, Tooltip, Title, LineController, BarController)
-    ChartJS.defaults.font.family = 'MulishRegular'
+    ChartJS.defaults.font.family = 'MulishRegu66lar'
 
     const [loading, setLoading] = useState(false)
 
@@ -36,7 +36,32 @@ const exam = ({id, studentCode}) => {
     const [showExamModal, setShowExamModal] = useState(false)
     const [tableData, setTableData] = useState([])
 
-    const [treeData, setTreeData] = useState([])
+    // const [treeData, setTreeData] = useState([])
+    const [treeData, setTreeData] = useState([{
+        title: 'first level',
+        value: '0-0',
+        key: 1,
+        selectable: true,
+        children: [{
+                title: 'second level',
+                value: '0-0',
+                key: 2,
+                selectable: true,
+                children: [
+                    {
+                        title: 'third level',
+                        value: '0-0-0-0',
+                        key: 3,
+                        selectable: true,
+                    },{
+                        title: 'third level',
+                        value: '0-0-0-0',
+                        key: 4,
+                        selectable: true,
+                    },
+                ]
+            },]
+        }])
     const [selectedTreeData, setSelectedTreeData] = useState(null)
 
     const [selectedSubject, setSelectedSubject] = useState(null)

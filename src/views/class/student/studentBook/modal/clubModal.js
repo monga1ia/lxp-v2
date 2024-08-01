@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal } from 'semantic-ui-react'
-import CloseIcon from '@mui/icons-material/Close'
+import { Modal } from 'react-bootstrap'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { useTranslation } from "react-i18next";
@@ -46,7 +45,7 @@ const club = ({ onClose, group, type, season, studentId, studentCode }) => {
     ]
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         // fetchRequest(studentBookClubDetail, 'POST', { id: studentId, group, type, season })
         //     .then(res => {
         //         if (res.success) {
@@ -67,36 +66,44 @@ const club = ({ onClose, group, type, season, studentId, studentCode }) => {
     return (
         <Modal
             dimmer='blurring'
-            open={true}
-            onClose={onClose}
-            className="react-modal overflow-modal"
+            show={true}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={() => onClose()}
             centered
         >
-            <div className="header">
-                {title}
-                <button type="button" className="close" aria-label="Close" onClick={onClose} >
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className="br-08 position-relative px-5 mt-3">
+            <Modal.Header closeButton style={{ padding: '1rem' }}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <DTable
                     locale={locale}
                     config={config}
                     columns={columns}
                     data={tableData}
                 />
-            </div>
-            <div className="actions modal-footer ">
-                <div className="col-12 text-center">
-                    <button
-                        onClick={onClose}
-                        className="btn btn-outline-metal m-btn--pill"
-                    >
-                        {t('close')}
-                    </button>
-                </div>
-            </div>
-        </Modal >
+            </Modal.Body>
+            <Modal.Footer className="text-center">
+                <button
+                    onClick={onClose}
+                    className="btn btn-outline-metal m-btn--pill"
+                >
+                    {t('close')}
+                </button>
+            </Modal.Footer>
+            {
+                loading &&
+                <>
+                    <div className="blockUI blockOverlay">
+                        <div className="blockUI blockMsg blockPage">
+                            <div className="m-loader m-loader--brand m-loader--lg" />
+                        </div>
+                    </div>
+                </>
+            }
+        </Modal>
     )
 }
 

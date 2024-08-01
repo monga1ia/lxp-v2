@@ -9,11 +9,11 @@ import { fetchRequest } from 'utils/fetchRequest'
 import { classParentRemove, classParentView } from 'utils/fetchRequest/Urls'
 import {priceFormat, secondFormat} from "utils/Util";
 
-const group = ({ onClose, id, onClick, rerender }) => {
+const group = ({ onClose, id, onClick, rerender}) => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
-    const [student, setStudent] = useState({id: 19, studentCode: 2323, firstName: "Anhaa", lastName: "Suld", contact: '99000330', relationCount:2})
+    const [student, setStudent] = useState({id: 19, code: 2323, firstName: "Sunder", lastName: "Ochir", contact: '99000337', relationCount:2})
     const [tableData, setTableData] = useState([{id: 19, code: 2323, firstName: "Sunder", lastName: "Ochir", contact: '99000337', relationCount:2}])
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -201,6 +201,7 @@ const group = ({ onClose, id, onClick, rerender }) => {
                     onDelete={handleRemove}
                     locale={locale}
                     title={translations(locale)?.delete}
+                    className={'imageDoubleModal'}
                 >
                     {translations(locale)?.delete_confirmation}
                     <br />

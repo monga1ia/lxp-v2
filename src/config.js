@@ -29,7 +29,6 @@ export const DEFAULT_PATHS = {
   NOTFOUND: "/page-not-found",
   UNAUTHORIZED: "/unauthorized",
   INVALID_ACCESS: "/invalid-access",
-  STUDENT_BOOK: "/student/book",
 };
 
 export const DEFAULT_SETTINGS = {
