@@ -5,7 +5,6 @@ import { Col, Row } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-import { useLocation, useNavigate } from 'react-router'
 // import { teacherJournalSeasonResultView, testRequest } from 'Utilities/url'
 import { Modal } from 'semantic-ui-react'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
@@ -15,8 +14,6 @@ import PublishModal from '../modal/publish'
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
 const seasonScore = ({studentList = [], examObj = null, seasonDetails = [], scoreTypes = [], onSubmit}) => {
-    const location = useLocation()
-    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
     const [viewModal, setViewModal] = useState(false)
@@ -206,13 +203,13 @@ const seasonScore = ({studentList = [], examObj = null, seasonDetails = [], scor
     const onScoreTypeClick = (type, colType, scoreTypeId, studentId, examId) => {
 
         console.log('onScoreTypeClick')
-        let params = {
-            id: location?.state?.id,
-            type: type, 
-            colType: colType,
-            scoreTypeId: scoreTypeId,
-            student: studentId,
-        }
+        // let params = {
+        //     id: location?.state?.id,
+        //     type: type, 
+        //     colType: colType,
+        //     scoreTypeId: scoreTypeId,
+        //     student: studentId,
+        // }
 
         // setLoading(true)
         // fetchRequest(testRequest, 'POST', params)
