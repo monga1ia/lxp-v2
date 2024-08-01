@@ -1,15 +1,13 @@
 import message from 'modules/message'
-import { useNavigate } from 'react-router'
 import { Col, Row } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import { fetchRequest } from 'utils/fetchRequest'
-import { teacherJournalExamTemplateResult } from 'Utilities/url'
+// import { teacherJournalExamTemplateResult } from 'Utilities/url'
 
 const resultWithTemplate = ({ studentsData, scoreTypesData, questionsData, exam, urlData }) => {
-    const navigate = useNavigate()
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
@@ -111,21 +109,22 @@ const resultWithTemplate = ({ studentsData, scoreTypesData, questionsData, exam,
     }, [studentsData])
 
     const handlePublish = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalExamTemplateResult, 'POST', { exam: exam?.id, submit: 1 })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.publish_message, true)
-                    setIsPublished(res.data?.exam?.published || false)
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handlePublish')
+        // setLoading(true)
+        // fetchRequest(teacherJournalExamTemplateResult, 'POST', { exam: exam?.id, submit: 1 })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.publish_message, true)
+        //             setIsPublished(res.data?.exam?.published || false)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleSearch = value => {
@@ -321,7 +320,7 @@ const resultWithTemplate = ({ studentsData, scoreTypesData, questionsData, exam,
                     </div>
                 </div>
             </div>
-            <div className='m-portlet mx-5'>
+            <div className='m-portlet mx-5 mb-4 mx-4'>
                 <div className='m-portlet__body'>
                     <DTable
                         locale={locale}
@@ -332,14 +331,12 @@ const resultWithTemplate = ({ studentsData, scoreTypesData, questionsData, exam,
                     />
                 </div>
             </div>
-            <div className='m-portlet__foot d-flex justify-content-center gap-05'>
-                {/* <button
-                    className='btn m-btn--pill btn-outline-metal text-uppercase'
-                    onClick={() => navigate('/teacher/journals', { replace: true })}
+            <div className='modal-footer'>
+                <button 
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom' 
+                    onClick={onClose}
+                    // onClick={() => navigate(urlData ? urlData.backUrl :'/teacher/journals', { replace: true,  state: {parameters: urlData?.parameters, group: urlData?.group} })}
                 >
-                    {translations(locale)?.close}
-                </button> */}
-                <button className='btn m-btn--pill btn-link m-btn m-btn--custom' onClick={() => navigate(urlData ? urlData.backUrl :'/teacher/journals', { replace: true,  state: {parameters: urlData?.parameters, group: urlData?.group} })}>
                     {translations(locale)?.back_to_list}
                 </button>
                 {

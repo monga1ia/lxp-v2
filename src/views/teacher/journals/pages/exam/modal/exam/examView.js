@@ -9,31 +9,33 @@ const examView = ({ onClose }) => {
 
     return (
         <Modal
-            centered
-            open={true}
-            size='tiny'
-            onClose={onClose}
+            size='sm'
             dimmer='blurring'
-            className='react-modal overflow-modal'
+            show={true}
+            onHide={onClose}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
         >
-            <div className='header'>
-                {translations(locale)?.action?.view}
-                <button type='button' className='close' aria-label='Close' onClick={onClose}>
-                    <CloseIcon />
-                </button>
-            </div>
-            <div className='content'>
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {translations(locale)?.action?.view}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{color: '#212529'}}>
                 <span style={{ color: '#848691' }} className='fs-11'>
                     ene deer iu baihiin ve
+
+                    ene text baisn shuu - Tsenguun
                 </span>
-            </div>
-            <div className='actions modal-footer'>
-                <div className='col text-center'>
-                    <button className='btn m-btn--pill btn-outline-metal text-uppercase' onClick={onClose}>
-                        {translations(locale)?.close}
-                    </button>
-                </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer className='text-center'>
+                <button 
+                    className='btn m-btn--pill btn-outline-metal text-uppercase'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.close}
+                </button>
+            </Modal.Footer>
         </Modal>
     )
 }

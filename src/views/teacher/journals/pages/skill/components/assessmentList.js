@@ -1,5 +1,4 @@
 import message from 'modules/message'
-import { useNavigate } from 'react-router'
 import Checkbox from '@mui/material/Checkbox'
 import DeleteModal from 'utils/deleteModal'
 import React, { useEffect, useState } from 'react'
@@ -9,7 +8,7 @@ import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
 import AddAssessmentModal from '../modal/addAssessment'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import { teacherJournalSetStatus, teacherJournalSkillSubmit, teacherJournalSkillView, teacherJournalSkillRemove } from 'Utilities/url'
+// import { teacherJournalSetStatus, teacherJournalSkillSubmit, teacherJournalSkillView, teacherJournalSkillRemove } from 'Utilities/url'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -21,7 +20,6 @@ const config = {
 }
 
 const assessmentList = ({ students, templateDetails, skill }) => {
-    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -108,79 +106,83 @@ const assessmentList = ({ students, templateDetails, skill }) => {
     }, [templateDetails])
 
     const init = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalSkillView, 'POST', { skill: skill?.id })
-            .then((res) => {
-                if (res.success) {
-                    setTableData(res?.data?.students)
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('init')
+        // setLoading(true)
+        // fetchRequest(teacherJournalSkillView, 'POST', { skill: skill?.id })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             setTableData(res?.data?.students)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleSubmit = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalSetStatus, 'POST', { skill: skill?.id, publish: 1 })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.message, res.success)
-                    navigate('/teacher/journals', { replace: true })
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleSubmit')
+        // setLoading(true)
+        // fetchRequest(teacherJournalSetStatus, 'POST', { skill: skill?.id, publish: 1 })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             navigate('/teacher/journals', { replace: true })
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleAdd = bodyParams => {
-        setLoading(true)
-        fetchRequest(teacherJournalSkillSubmit, 'POST', { skill: skill?.id, ...bodyParams })
-            .then((res) => {
-                if (res.success) {
-                    closeModal(false)
-                    message(res.data.message, res.success)
-                    setTableData(res?.data?.students)
+        console.log('handleAdd')
+        // setLoading(true)
+        // fetchRequest(teacherJournalSkillSubmit, 'POST', { skill: skill?.id, ...bodyParams })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             closeModal(false)
+        //             message(res.data.message, res.success)
+        //             setTableData(res?.data?.students)
 
-                    if (filterNonResultData(res?.data?.students).length > 0) {
-                        setTimeout(() => setShowAddAssessmentModal(true), 100)
-                    }
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        //             if (filterNonResultData(res?.data?.students).length > 0) {
+        //                 setTimeout(() => setShowAddAssessmentModal(true), 100)
+        //             }
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleRemove = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalSkillRemove, 'POST', { skill: skill?.id, student: selectedTableDataId })
-            .then((res) => {
-                if (res.success) {
-                    closeModal()
-                    message(res.data.message, res.success)
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleRemove')
+        // setLoading(true)
+        // fetchRequest(teacherJournalSkillRemove, 'POST', { skill: skill?.id, student: selectedTableDataId })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             closeModal()
+        //             message(res.data.message, res.success)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const refreshDetails = () => {

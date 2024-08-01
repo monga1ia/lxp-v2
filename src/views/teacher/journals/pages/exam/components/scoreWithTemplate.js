@@ -11,7 +11,7 @@ import { translations } from 'utils/translations'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import BorderColorTwoToneIcon from '@mui/icons-material/BorderColorTwoTone'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
-import { teacherJournalExamScoreSubmit, teacherJournalExamScoreCalculate, teacherJournalExamScoreDelete } from 'Utilities/url'
+// import { teacherJournalExamScoreSubmit, teacherJournalExamScoreCalculate, teacherJournalExamScoreDelete } from 'Utilities/url'
 
 const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
     const navigate = useNavigate()
@@ -113,71 +113,74 @@ const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
     }, [tableData])
 
     const handleSubmit = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalExamScoreCalculate, 'POST', { exam })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.message, res.success)
-                    navigate('/teacher/journals/exams/result', { state: { id: exam, isTemplate }, replace: true })
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleSubmit')
+        // setLoading(true)
+        // fetchRequest(teacherJournalExamScoreCalculate, 'POST', { exam })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             navigate('/teacher/journals/exams/result', { state: { id: exam, isTemplate }, replace: true })
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleAdd = student => {
-        setLoading(true)
-        fetchRequest(teacherJournalExamScoreSubmit, 'POST', { ...student, exam })
-            .then((res) => {
-                if (res.success) {
-                    closeModal()
-                    message(res.data.message, res.success)
-                    const clone = [...tableData]
-                    let reOpenModal = false
-                    clone?.splice(clone?.findIndex(el => el?.id == student?.id), 1, { ...student, scores: JSON.parse(student?.scores) })
-                    clone?.forEach(el => { if (!el?.hasScores) reOpenModal = true })
-                    setTableData(clone || [])
-                    if (reOpenModal) setTimeout(() => setShowAddModal(true), 100)
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleAdd')
+        // setLoading(true)
+        // fetchRequest(teacherJournalExamScoreSubmit, 'POST', { ...student, exam })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             closeModal()
+        //             message(res.data.message, res.success)
+        //             const clone = [...tableData]
+        //             let reOpenModal = false
+        //             clone?.splice(clone?.findIndex(el => el?.id == student?.id), 1, { ...student, scores: JSON.parse(student?.scores) })
+        //             clone?.forEach(el => { if (!el?.hasScores) reOpenModal = true })
+        //             setTableData(clone || [])
+        //             if (reOpenModal) setTimeout(() => setShowAddModal(true), 100)
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleDelete = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalExamScoreDelete, 'POST', { exam, student: selectedTableDataId })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.message, res.success)
-                    const clone = [...tableData]
-                    const index = clone?.findIndex(el => el?.id == selectedTableDataId)
-                    clone[index].takenScore = 0
-                    clone[index].hasScores = false
-                    clone[index].description = ''
-                    clone[index]?.scores?.forEach(el => el.takenScore = '')
-                    clone?.forEach(el => el.contextMenuKeys = el.hasScores ? 'edit,delete' : '')
-                    setTableData(clone || [])
-                    closeModal()
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleDelete')
+        // setLoading(true)
+        // fetchRequest(teacherJournalExamScoreDelete, 'POST', { exam, student: selectedTableDataId })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             const clone = [...tableData]
+        //             const index = clone?.findIndex(el => el?.id == selectedTableDataId)
+        //             clone[index].takenScore = 0
+        //             clone[index].hasScores = false
+        //             clone[index].description = ''
+        //             clone[index]?.scores?.forEach(el => el.takenScore = '')
+        //             clone?.forEach(el => el.contextMenuKeys = el.hasScores ? 'edit,delete' : '')
+        //             setTableData(clone || [])
+        //             closeModal()
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const handleContextMenuClick = (id, key) => {
@@ -205,7 +208,7 @@ const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
 
     return (
         <>
-            <div className='m-portlet__body'>
+            <div className='m-portlet__body mx-4'>
                 <button
                     className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
                     onClick={() => setShowAddModal(true)}
@@ -225,9 +228,9 @@ const scoreWithTemplate = ({ students, questions, exam, isTemplate }) => {
                     onContextMenuItemClick={handleContextMenuClick}
                 />
             </div>
-            <div className="m-portlet__foot d-flex justify-content-center gap-05">
+            <div className="modal-footer">
                 <button
-                    className='btn btn-link'
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom'
                     onClick={() => navigate(-1, { replace: true })}
                 >
                     {translations(locale)?.back}

@@ -3,17 +3,15 @@ import message from 'modules/message'
 import React, { useEffect } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import secureLocalStorage from 'react-secure-storage'
-import { fetchRequest } from 'utils/fetchRequest'
+// import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-import { useLocation, useNavigate } from 'react-router'
 import { NDropdown as Dropdown } from 'widgets/Dropdown'
-import { teacherJournalSkillCreate } from 'Utilities/url'
+// import { teacherJournalSkillCreate } from 'Utilities/url'
+import { Modal } from 'react-bootstrap'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const add = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
+const AddSkill = ({onClose, data, show}) => {
 
     const [loading, setLoading] = useState(false)
 
@@ -22,56 +20,57 @@ const add = () => {
     const [skill, setSkill] = useState({})
     const [templateOptions, setTemplateOptions] = useState([])
 
-    useEffect(() => {
-        if (!location?.state?.group || !location?.state?.season) {
-            message(translations(locale)?.exam?.notFound)
-            navigate(-1, { replace: true })
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!location?.state?.group || !location?.state?.season) {
+    //         message(translations(locale)?.exam?.notFound)
+    //         navigate(-1, { replace: true })
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(teacherJournalSkillCreate, 'POST', { group: location?.state?.group, season: location?.state?.season })
-            .then((res) => {
-                if (res.success) {
-                    const { templates, group } = res.data
-                    setGroup(group || {})
-                    setTemplateOptions(templates?.map(el => ({ value: el?.id, text: el?.name })) || [])
-                    setTitle(`${group?.subjectName}, ${group?.name}, ${group?.className}` || '')
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(teacherJournalSkillCreate, 'POST', { group: location?.state?.group, season: location?.state?.season })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { templates, group } = res.data
+    //                 setGroup(group || {})
+    //                 setTemplateOptions(templates?.map(el => ({ value: el?.id, text: el?.name })) || [])
+                    // setTitle(`${group?.subjectName}, ${group?.name}, ${group?.className}` || '')
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleSubmit = () => {
-        if (!validateFields())
-            return
-        setLoading(true)
-        fetchRequest(teacherJournalSkillCreate, 'POST', {
-            ...skill,
-            submit: 1,
-            group: location?.state?.group,
-            season: location?.state?.season,
-        })
-            .then((res) => {
-                if (res.success) {
-                    message(res.data.message, res.success)
-                    navigate('/teacher/journals/skill/edit', { state: { skill: res.data?.id, group: location?.state?.group, title } })
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('handleSubmit')
+        // if (!validateFields())
+        //     return
+        // setLoading(true)
+        // fetchRequest(teacherJournalSkillCreate, 'POST', {
+        //     ...skill,
+        //     submit: 1,
+        //     group: location?.state?.group,
+        //     season: location?.state?.season,
+        // })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             message(res.data.message, res.success)
+        //             navigate('/teacher/journals/skill/edit', { state: { skill: res.data?.id, group: location?.state?.group, title } })
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     const validateFields = () => {
@@ -84,19 +83,21 @@ const add = () => {
         setSkill({ ...skill, [name]: value })
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-portlet'>
-                <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-11 pinnacle-bold' style={{ color: '#ff5b1d' }}>
-                        {title}
-                    </span>
-                    <button
-                        className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                        onClick={() => navigate('/teacher/journals', { replace: true })}
-                    >
-                        {translations(locale)?.back}
-                    </button>
-                </div>
+        <Modal
+            size='xl'
+            dimmer='blurring'
+            show={show}
+            onHide={onClose}
+            className='doubleModal'
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{color: '#212529'}}>
                 <div className='m-portlet__body'>
                     <Row className='mt-4'>
                         <Col md={2} />
@@ -132,15 +133,21 @@ const add = () => {
                         <Col md={4} />
                     </Row>
                 </div>
-                <div className="m-portlet__foot d-flex justify-content-center">
-                    <button className='btn btn-link' onClick={() => navigate(-1)}>
+                <Modal.Footer className='text-center'>
+                    <button
+                        onClick={onClose}
+                        className="btn m-btn--pill btn-link m-btn m-btn--custom"
+                    >
                         {translations(locale)?.back}
                     </button>
-                    <button onClick={handleSubmit} className="btn m-btn--pill btn-publish text-uppercase">
+                    <button 
+                        onClick={handleSubmit} 
+                        className="btn m-btn--pill btn-publish text-uppercase"
+                    >
                         {translations(locale)?.skill?.addAssessment}
                     </button>
-                </div>
-            </div>
+                </Modal.Footer>
+            </Modal.Body>
             {
                 loading &&
                 <>
@@ -150,8 +157,8 @@ const add = () => {
                     </div>
                 </>
             }
-        </div>
+        </Modal>
     )
 }
 
-export default add
+export default AddSkill

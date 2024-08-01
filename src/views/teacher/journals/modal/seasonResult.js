@@ -1,5 +1,4 @@
 import message from 'modules/message'
-import { useNavigate } from 'react-router'
 import { Modal } from 'react-bootstrap'
 import DeleteModal from 'utils/deleteModal'
 import React, { useEffect, useState } from 'react'
@@ -13,7 +12,6 @@ import { translations } from 'utils/translations'
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
 const seasonResult = ({ onClose, group, season, rerender }) => {
-    // const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -36,7 +34,11 @@ const seasonResult = ({ onClose, group, season, rerender }) => {
             text: translations(locale)?.status,
             align: 'center',
             style: { verticalAlign: 'middle' },
-            formatter: cell => <i className='fas fa-circle' style={{ color: cell ? '#6dd400' : '#d8d8d8' }} />
+            formatter: cell => 
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={`table-circle ${cell === true && "active"}`} />
+                </div>
+            // <i className='fas fa-circle' style={{ color: cell ? '#6dd400' : '#d8d8d8' }} />
         },
         {
             dataField: 'createdDate',

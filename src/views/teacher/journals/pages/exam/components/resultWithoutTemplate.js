@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
 import { Col, Row } from 'react-bootstrap'
 import ViewModal from '../modal/exam/examView'
 import DTable from 'modules/DataTable/DTable'
@@ -7,8 +6,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import {Checkbox} from "semantic-ui-react";
 
-const resultWithoutTemplate = ({ studentsData, classData, exam, urlData = null}) => {
-    const navigate = useNavigate()
+const resultWithoutTemplate = ({ studentsData, classData, exam, urlData = null, onClose}) => {
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -193,7 +191,7 @@ const resultWithoutTemplate = ({ studentsData, classData, exam, urlData = null})
         <>
             <div className='m-portlet__body'>
                 {
-                    exam && <div className='border-orange br-08 p-4 mb-2'>
+                    exam && <div className='border-orange br-08 p-4 mb-2 mx-4'>
                         <Row>
                             <Col md={2} />
                             <Col>
@@ -264,7 +262,7 @@ const resultWithoutTemplate = ({ studentsData, classData, exam, urlData = null})
                         </Row>
                     </div>
                 }
-                <div className='border-orange br-08 p-4 mb-2'>
+                <div className='border-orange br-08 p-4 mb-2 mx-4'>
                     <Row>
                         <Col md={2} />
                         <Col>
@@ -304,7 +302,7 @@ const resultWithoutTemplate = ({ studentsData, classData, exam, urlData = null})
                         <Col md={2} />
                     </Row>
                 </div>
-                <div className='border-orange br-08 px-4'>
+                <div className='border-orange br-08 px-4 mb-4 mx-4'>
                     <DTable
                         locale={locale}
                         config={config}
@@ -314,14 +312,18 @@ const resultWithoutTemplate = ({ studentsData, classData, exam, urlData = null})
                     />
                 </div>
             </div>
-            <div className='m-portlet__foot text-center'>
-                {/* <button
+            <div className='modal-footer'>
+                <button
                     className='btn m-btn--pill btn-outline-metal text-uppercase'
-                    onClick={() => navigate('/teacher/journals', { replace: true })}
+                    onClick={onClose}
                 >
                     {translations(locale)?.close}
-                </button> */}
-                <button className='btn m-btn--pill btn-link m-btn m-btn--custom' onClick={() => navigate(urlData ? urlData.backUrl :'/teacher/journals', { replace: true,  state: {parameters: urlData?.parameters, group: urlData?.group} })}>
+                </button>
+                <button 
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom' 
+                    onClick={onClose}
+                    // onClick={() => navigate(urlData ? urlData.backUrl :'/teacher/journals', { replace: true,  state: {parameters: urlData?.parameters, group: urlData?.group} })}
+                >
                     {translations(locale)?.back_to_list}
                 </button>
             </div>

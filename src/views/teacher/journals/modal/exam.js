@@ -11,15 +11,43 @@ import { translations } from 'utils/translations'
 // import { fetchRequest } from 'utils/fetchRequest'
 // import { teacherJournalExamDelete, teacherJournalExamInit } from 'utils/fetchRequest/Urls'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
+import AddExam from '../pages/exam/add'
+import { useTranslation } from 'react-i18next'
+import EditExam from '../pages/exam/edit'
+import ResultExam from '../pages/exam/result'
 
 const exam = ({ onClose, group, rerender }) => {
     // const navigate = useNavigate()
+
+    const { t } = useTranslation()
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
 
     const [title, setTitle] = useState('')
-    const [tableData, setTableData] = useState([])
+    const [tableData, setTableData] = useState([
+        {
+            id: '123',
+            isPublish: true,
+            takenDate: '292',
+            name: 'thisNmae',
+            template_name: 'ourTemplate',
+        },
+        {
+            id: '12',
+            isPublish: true,
+            takenDate: '291232',
+            name: 'wrbs',
+            template_name: 'pEmplate',
+        },
+        {
+            id: '1243',
+            isPublish: false,
+            takenDate: '21292',
+            name: 'tsss',
+            template_name: 'thisTemplate',
+        },
+    ])
     const [selectedTableDataId, setSelectedTableDataId] = useState(null)
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -37,7 +65,10 @@ const exam = ({ onClose, group, rerender }) => {
             text: translations(locale)?.status,
             align: 'center',
             style: { verticalAlign: 'middle' },
-            formatter: cell => <i className='fas fa-circle' style={{ color: cell ? '#6dd400' : '#d8d8d8' }} />
+            formatter: cell =>                 
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={`table-circle ${cell === true && "active"}`} />
+                </div>
         },
         {
             dataField: 'takenDate',
@@ -72,9 +103,10 @@ const exam = ({ onClose, group, rerender }) => {
                     <div>
                         <button
                             className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill mr-2'
+                            onClick={() => editExamHandler({id: row?.id})}
                             // onClick={() => navigate('/teacher/journals/exams/edit', { state: { id: row?.id } })}
                         >
-                            <i className='fa flaticon-edit-1' />
+                            <i className='fa flaticon-edit' />
                         </button>
                         <button
                             className='btn btn-danger m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
@@ -87,6 +119,7 @@ const exam = ({ onClose, group, rerender }) => {
                 else return (
                     <button
                         className='btn btn-secondary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                        onClick={() => resultExamHandler({id: row?.id, isTemplate: row?.isTemplate})}
                         // onClick={() => navigate('/teacher/journals/exams/result', { state: { id: row?.id, isTemplate: row?.isTemplate } })}
                     >
                         <i className='fa flaticon-eye text-white' />
@@ -146,6 +179,43 @@ const exam = ({ onClose, group, rerender }) => {
         setShowDeleteModal(false)
     }
 
+    const [showCreateExamModal, setShowCreateExamModal] = useState(false)
+    const [showEditExamModal, setShowEditExamModal] = useState(false)
+    const [showResultExamModal, setShowResultExamModal] = useState(false)
+
+    const [createExamState, setCreateExamState] = useState({
+        group: group,
+        season: null,
+    })
+
+    const [editExamState, setEditExamState] = useState({
+        id: null,
+    })
+
+    const [resultExamState, setResultExamState] = useState({
+        id: null,
+        isTemplate: false,
+        urlData: null,
+    })
+
+    const editExamHandler = (state) => {
+        setEditExamState({
+            id: state?.id || null
+        })
+
+        setShowEditExamModal(true)
+    }
+
+    const resultExamHandler = (state) => {
+        setResultExamState({
+            id: state?.id || null,
+            isTemplate: state?.isTemplate || false,
+            urlData: state?.urlData || false,
+        })
+
+        setShowResultExamModal(true)
+    }
+
     return (
         <Modal
             size='xl'
@@ -161,14 +231,15 @@ const exam = ({ onClose, group, rerender }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Link
-                    state={group}
-                    to='/teacher/journals/exams/create'
+                <button
                     className='btn btn-sm m-btn--pill btn-info m-btn--uppercase d-inline-flex'
+                    onClick={() => {
+                        setShowCreateExamModal(true)
+                    }}
                 >
-                    <AddCircleOutlineRoundedIcon />
-                    <span className='ml-2'>{translations(locale)?.exam?.create}</span>
-                </Link>
+                    <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
+                    <span className='ml-2'>{t('esis.createStudent')}</span>
+                </button>
                 <DTable
                     locale={locale}
                     config={config}
@@ -196,6 +267,7 @@ const exam = ({ onClose, group, rerender }) => {
                     onClose={closeModal}
                     onDelete={handleDelete}
                     locale={locale}
+                    className='doubleModal'
                     title={translations(locale)?.delete}
                 >
                     {translations(locale)?.delete_confirmation}
@@ -203,6 +275,27 @@ const exam = ({ onClose, group, rerender }) => {
                     <br />
                     {translations(locale)?.delete_confirmation_description}
                 </DeleteModal>
+            }
+            {
+                <AddExam
+                    onClose={() => setShowCreateExamModal(false)}
+                    show={showCreateExamModal}
+                    data={createExamState}
+                />
+            }
+            {
+                <EditExam
+                    onClose={() => setShowEditExamModal(false)}
+                    show={showEditExamModal}
+                    data={editExamState}
+                />
+            }
+            {
+                <ResultExam
+                    onClose={() => setShowResultExamModal(false)}
+                    show={showResultExamModal}
+                    data={resultExamState}
+                />
             }
         </Modal>
     )

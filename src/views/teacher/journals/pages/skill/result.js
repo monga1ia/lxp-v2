@@ -7,15 +7,14 @@ import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { fetchRequest } from 'utils/fetchRequest'
 import { translations } from 'utils/translations'
-import { teacherJournalSkillView } from 'Utilities/url'
-import { useLocation, useNavigate } from 'react-router'
+// import { teacherJournalSkillView } from 'Utilities/url'
+import { Modal } from 'react-bootstrap'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const result = () => {
+const ResultSkillModal = ({onClose, data, show}) => {
+
     const viewLoaded = useRef(false)
-    const location = useLocation()
-    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -80,23 +79,24 @@ const result = () => {
     }, [items])
 
     const loadView = () => {
-        setLoading(true)
-        fetchRequest(teacherJournalSkillView, 'POST', { skill: location?.state?.skill, edit: 0 })
-            .then((res) => {
-                if (res.success) {
-                    const { templateDetails, students, skill } = res.data
-                    setTitle(`${skill?.subjectName}, ${skill?.groupName}, ${skill?.className}, ${translations(locale)?.skill?.title}`)
-                    setItems(templateDetails || [])
-                    setStudentsData(students || [])
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
+        console.log('loadView')
+        // setLoading(true)
+        // fetchRequest(teacherJournalSkillView, 'POST', { skill: location?.state?.skill, edit: 0 })
+        //     .then((res) => {
+        //         if (res.success) {
+        //             const { templateDetails, students, skill } = res.data
+        //             setTitle(`${skill?.subjectName}, ${skill?.groupName}, ${skill?.className}, ${translations(locale)?.skill?.title}`)
+        //             setItems(templateDetails || [])
+        //             setStudentsData(students || [])
+        //         } else {
+        //             message(res.data.message)
+        //         }
+        //         setLoading(false)
+        //     })
+        //     .catch(() => {
+        //         message(translations(locale)?.err?.error_occurred)
+        //         setLoading(false)
+        //     })
     }
 
     useEffect(() => {
@@ -221,19 +221,20 @@ const result = () => {
     }
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-portlet'>
-                <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-11 pinnacle-bold' style={{ color: '#ff5b1d' }}>
-                        {title}
-                    </span>
-                    <button
-                        className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                        onClick={() => navigate(-1)}
-                    >
-                        {translations(locale)?.back}
-                    </button>
-                </div>
+        <Modal
+            size='xl'
+            dimmer='blurring'
+            show={show}
+            onHide={onClose}
+            className='doubleModal'
+            centered
+        >
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{color: '#212529'}}>
                 <div className='m-portlet__body'>
                     <div className='border-orange br-08 p-4 mb-2'>
                         <DTable
@@ -272,15 +273,15 @@ const result = () => {
                         }
                     </div>
                 </div>
-                <div className='m-portlet__foot d-flex justify-content-center gap-05'>
-                    <button
-                        className='btn m-btn--pill btn-outline-metal text-uppercase'
-                        onClick={() => navigate(-1)}
-                    >
-                        {translations(locale)?.close}
-                    </button>
-                </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <button
+                    className='btn m-btn--pill btn-outline-metal text-uppercase'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.close}
+                </button>
+            </Modal.Footer>
             {
                 loading &&
                 <>
@@ -297,8 +298,8 @@ const result = () => {
                     onClose={() => setShowStudentViewModal(false)}
                 />
             }
-        </div>
+        </Modal>
     )
 }
 
-export default result
+export default ResultSkillModal
