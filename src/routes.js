@@ -97,6 +97,7 @@ const movement = {
 
 const manager = {
     groups: lazy(() => import("views/manager/groups/index")),
+    successCoach: lazy(() => import("views/manager/successCoach/index")),
     excuses: lazy(() => import("views/manager/excuses/index")),
     clubs: lazy(() => import("views/manager/clubs/index")),
     timetable: lazy(() => import("views/manager/timetable/index")),
@@ -462,6 +463,11 @@ const routesAndMenuItems = {
                     path: '/groups',
                     label: "menu.manager.groups",
                     component: manager.groups,
+                },
+                {
+                    path: '/success-coach',
+                    label: "successCoach.title",
+                    component: manager.successCoach,
                 },
                 {
                     path: "/excuses",

@@ -50,6 +50,8 @@ export const managerGroupView = 'manager/group/view'
 export const managerGroupDelete = 'manager/group/delete'
 export const managerGroupClassroomLink = 'manager/group/classroom-link'
 
+export const managerSuccessCoachIndex = 'manager/success-coach/index'
+
 
 // staff
 // export const schoolStaffIndex = 'api/employee/init'

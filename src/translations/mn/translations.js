@@ -3059,4 +3059,10 @@ export const TRANSLATIONS_MN = {
             "Зөвхөн баталгаажуулсан дүнгүүд Сурагчид харагдана.",
         connectOfficer: "Сургалтын албаны ажилтантай холбогдоно уу.",
     },
+    successCoach: {
+        contactDate: 'Success coach хандалт',
+        title: 'Success coach',
+        group: 'Success coach бүлэг',
+        removeStudent: 'Success coach-н бүлгээс хасах'
+    }
 }
