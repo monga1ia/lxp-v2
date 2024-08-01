@@ -6,16 +6,14 @@ import {Checkbox} from 'semantic-ui-react'
 import secureLocalStorage from 'react-secure-storage'
 import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
-import {useLocation, useNavigate} from 'react-router'
 import {NDropdown as Dropdown} from 'widgets/Dropdown'
+import { Modal } from 'react-bootstrap'
 // import {teacherJournalSeasonResultSubmit, teacherYearResultInit, teacherYearResultStTemplateDetail} from 'Utilities/url'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const add = () => {
+const YearAdd = ({onClose, data, show}) => {
     const fileInputRef = useRef(null)
-    const location = useLocation()
-    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -44,9 +42,9 @@ const add = () => {
         console.log('init')
         // setLoading(true)
         // fetchRequest(teacherYearResultInit, 'POST', {
-        //     group: location?.state?.id,
-        //     season: location?.state?.season,
-        //     yearType: location?.state?.yearType
+        //     group: data?.id,
+        //     season: data?.season,
+        //     yearType: data?.yearType
         // })
         //     .then((res) => {
         //         if (res.success) {
@@ -87,10 +85,10 @@ const add = () => {
         //     setLoading(true)
         //     fetchRequest(teacherJournalSeasonResultSubmit, 'POST', {
         //         submit: 1,
-        //         yearType: location?.state?.yearType || null,
+        //         yearType: data?.yearType || null,
         //         scoreType: result?.scoreType,
-        //         group: location?.state?.id,
-        //         season: location?.state?.season, // hicheeliin jil id
+        //         group: data?.id,
+        //         season: data?.season, // hicheeliin jil id
         //         selectedSeason: JSON.stringify(result?.seasonIds), // tatah uliral id
         //         rank: result?.isCalculateRank ? 1 : 0,
         //         calc: result?.method,
@@ -106,17 +104,17 @@ const add = () => {
         //                         if (res?.data?.calcType === 'SEASON_MIX') {
         //                             navigate('/teacher/year/edit', {
         //                                 state: {
-        //                                     season: location?.state?.season,
-        //                                     group: location?.state?.id,
+        //                                     season: data?.season,
+        //                                     group: data?.id,
         //                                     exam: res.data.exam,
-        //                                     id: location?.state?.id,
+        //                                     id: data?.id,
         //                                     title
         //                                 }
         //                             })
         //                         } else {
         //                             navigate('/teacher/year/result', {
         //                                 state: {
-        //                                     season: location?.state?.season,
+        //                                     season: data?.season,
         //                                     id: res.data.exam,
         //                                     urlData: {backUrl: '/teacher/year'}
         //                                 }
@@ -125,10 +123,10 @@ const add = () => {
         //                     } else {
         //                         navigate('/teacher/year/edit', {
         //                             state: {
-        //                                 season: location?.state?.season,
-        //                                 group: location?.state?.id,
+        //                                 season: data?.season,
+        //                                 group: data?.id,
         //                                 exam: res.data.exam,
-        //                                 id: location?.state?.id,
+        //                                 id: data?.id,
         //                                 title
         //                             }
         //                         })
@@ -136,10 +134,10 @@ const add = () => {
         //                 } else {
         //                     navigate('/teacher/year/edit', {
         //                         state: {
-        //                             season: location?.state?.season,
-        //                             group: location?.state?.id,
+        //                             season: data?.season,
+        //                             group: data?.id,
         //                             exam: res.data.exam,
-        //                             id: location?.state?.id,
+        //                             id: data?.id,
         //                             title
         //                         }
         //                     })
@@ -163,9 +161,9 @@ const add = () => {
         //     const formData = new FormData();
         //     formData.append('submit', 1);
         //     formData.append('scoreType', result?.scoreType);
-        //     formData.append('group', location?.state?.id);
-        //     formData.append('yearType', location?.state?.yearType);
-        //     formData.append('season', location?.state?.season);
+        //     formData.append('group', data?.id);
+        //     formData.append('yearType', data?.yearType);
+        //     formData.append('season', data?.season);
         //     formData.append('rank', result?.isCalculateRank ? 1 : 0);
         //     formData.append('calc', result?.method);
         //     formData.append('file', file);
@@ -177,7 +175,7 @@ const add = () => {
         //                     if (res?.data?.calcType !== 'EXCEL') {
         //                         navigate('/teacher/year/result', {
         //                             state: {
-        //                                 season: location?.state?.season,
+        //                                 season: data?.season,
         //                                 id: res.data.exam,
         //                                 urlData: {backUrl: '/teacher/year'}
         //                             }
@@ -185,10 +183,10 @@ const add = () => {
         //                     } else {
         //                         navigate('/teacher/year/edit', {
         //                             state: {
-        //                                 season: location?.state?.season,
-        //                                 group: location?.state?.id,
+        //                                 season: data?.season,
+        //                                 group: data?.id,
         //                                 exam: res.data.exam,
-        //                                 id: location?.state?.id,
+        //                                 id: data?.id,
         //                                 title
         //                             }
         //                         })
@@ -196,10 +194,10 @@ const add = () => {
         //                 } else {
         //                     navigate('/teacher/year/edit', {
         //                         state: {
-        //                             season: location?.state?.season,
-        //                             group: location?.state?.id,
+        //                             season: data?.season,
+        //                             group: data?.id,
         //                             exam: res.data.exam,
-        //                             id: location?.state?.id,
+        //                             id: data?.id,
         //                             title
         //                         }
         //                     })
@@ -449,19 +447,21 @@ const add = () => {
     }
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-portlet'>
-                <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-11 pinnacle-bold' style={{color: '#ff5b1d'}}>
-                        {title}
-                    </span>
-                    <button
-                        className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                        onClick={() => navigate('/teacher/year', {replace: true})}
-                    >
-                        {translations(locale)?.back}
-                    </button>
-                </div>
+        <Modal
+            size='xl'
+            dimmer='blurring'
+            show={show}
+            onHide={onClose}
+            // className='doubleModal'
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className='m-portlet__body'>
                     <Row className='mt-4'>
                         <Col md={2}/>
@@ -729,7 +729,7 @@ const add = () => {
                                                             <button
                                                                 className={'btn btn-sm m-btn--pill btn-outline-secondary'}
                                                                 onClick={() => {
-                                                                    window.open('/api/exam/result-excel-template?group=' + location?.state?.id)
+                                                                    // window.open('/api/exam/result-excel-template?group=' + data?.id)
                                                                 }}>{translations(locale)?.teacher?.journalExcelTemplate}</button>
                                                         </th>
                                                     </tr>
@@ -745,46 +745,49 @@ const add = () => {
                         <Col md={4}/>
                     </Row>
                 </div>
-                <div className="m-portlet__foot d-flex justify-content-center">
-                    <button className='btn btn-link' onClick={() => navigate(-1)}>
-                        {translations(locale)?.back}
-                    </button>
-                    {
-                        getMethodCode(result?.method) !== 'EXCEL'
-                            ?
-                            <button onClick={handleSubmit} className="btn m-btn--pill btn-publish text-uppercase">
-                                {translations(locale)?.exam?.insert_score}
-                            </button>
-                            :
-                            <>
-                                <input
-                                    ref={fileInputRef}
-                                    style={{display: 'none'}}
-                                    accept=".xls, .xlsx, application/excel, application/vnd.msexcel, text/anytext, application/vnd. ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                    id="fileInput"
-                                    onChange={uploadFile}
-                                    type="file"
-                                />
-                                {
-                                    file
-                                        ?
-                                        <button onClick={submitExcel}
-                                                className="btn m-btn--pill btn-publish text-uppercase">
-                                            {translations(locale)?.exam?.insert_score}
-                                        </button>
-                                        :
-                                        <button onClick={() => {
-                                            fileInputRef?.current?.click();
-                                        }}
-                                                className="btn m-btn--pill btn-publish text-uppercase">
-                                            {translations(locale)?.excel_import}
-                                        </button>
-                                }
-                            </>
-                    }
+            </Modal.Body>
 
-                </div>
-            </div>
+            <Modal.Footer>
+                <button 
+                    className='btn btn-link'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.back}
+                </button>
+                {
+                    getMethodCode(result?.method) !== 'EXCEL'
+                        ?
+                        <button onClick={handleSubmit} className="btn m-btn--pill btn-publish text-uppercase">
+                            {translations(locale)?.exam?.insert_score}
+                        </button>
+                        :
+                        <>
+                            <input
+                                ref={fileInputRef}
+                                style={{display: 'none'}}
+                                accept=".xls, .xlsx, application/excel, application/vnd.msexcel, text/anytext, application/vnd. ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                id="fileInput"
+                                onChange={uploadFile}
+                                type="file"
+                            />
+                            {
+                                file
+                                    ?
+                                    <button onClick={submitExcel}
+                                            className="btn m-btn--pill btn-publish text-uppercase">
+                                        {translations(locale)?.exam?.insert_score}
+                                    </button>
+                                    :
+                                    <button onClick={() => {
+                                        fileInputRef?.current?.click();
+                                    }}
+                                            className="btn m-btn--pill btn-publish text-uppercase">
+                                        {translations(locale)?.excel_import}
+                                    </button>
+                            }
+                        </>
+                }
+            </Modal.Footer>
             {
                 loading &&
                 <>
@@ -794,8 +797,8 @@ const add = () => {
                     </div>
                 </>
             }
-        </div>
+        </Modal>
     )
 }
 
-export default add
+export default YearAdd

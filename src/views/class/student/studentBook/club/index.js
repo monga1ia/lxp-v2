@@ -136,15 +136,16 @@ const club = ({student}) => {
                     </div>
                 </>
             }
-            {showClubModal &&
-            <ClubModal
-                onClose={closeModal}
-                season={selectedTreeData}
-                group={selectedGroupId}
-                type={selectedTypeId}
-                studentId={student?.id}
-                studentCode={student?.studentCode}
-            />
+            {
+                showClubModal &&
+                    <ClubModal
+                        onClose={closeModal}
+                        season={selectedTreeData}
+                        group={selectedGroupId}
+                        type={selectedTypeId}
+                        studentId={student?.id}
+                        studentCode={student?.studentCode}
+                    />
             }
         </div>
     )

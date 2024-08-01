@@ -8,7 +8,6 @@ import ResultInformation from './components/resultInformation'
 import secureLocalStorage from 'react-secure-storage'
 import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
-import {useLocation, useNavigate} from 'react-router'
 
 // import {
 //     teacherJournalExamEdit,
@@ -18,12 +17,11 @@ import {useLocation, useNavigate} from 'react-router'
 // } from 'Utilities/url'
 import ExamOptions from "./components/examOptions";
 import Skills from "./components/skill";
+import { Modal } from 'react-bootstrap'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const edit = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
+const YearEdit = ({onClose, data, show}) => {
 
     const [loading, setLoading] = useState(false)
 
@@ -35,10 +33,10 @@ const edit = () => {
 
     const [updateView, setUpdateView] = useState(false)
 
-    const title = location?.state?.title || ''
+    const title = data?.title || ''
 
     useEffect(() => {
-    }, [location])
+    }, [data])
 
     useEffect(() => {
         init()
@@ -57,7 +55,7 @@ const edit = () => {
         console.log('handleSkillSubmit')
 
         // setLoading(true)
-        // fetchRequest(teacherJournalSeasonResultSkillSubmit, 'POST', { selectedSkills, exam: location?.state?.exam, group: location?.state?.group })
+        // fetchRequest(teacherJournalSeasonResultSkillSubmit, 'POST', { selectedSkills, exam: data?.exam, group: data?.group })
         //     .then((res) => {
         //         if (res.success) {
         //             message(res.data.message, res.success)
@@ -81,9 +79,9 @@ const edit = () => {
         console.log('init')
         // setLoading(true)
         // fetchRequest(teacherYearResultEdit, 'POST', {
-        //     exam: location?.state?.exam,
-        //     group: location?.state?.group,
-        //     season: location?.state?.season
+        //     exam: data?.exam,
+        //     group: data?.group,
+        //     season: data?.season
         // })
         //     .then((res) => {
         //         if (res.success) {
@@ -107,8 +105,8 @@ const edit = () => {
         //                         <Scores
         //                             items={templateDetails}
         //                             exam={res?.data?.exam}
-        //                             group={location?.state?.group}
-        //                             season={location?.state?.season}
+        //                             group={data?.group}
+        //                             season={data?.season}
         //                             onSubmit={handleScoreSubmit}
         //                             hasTestimonial={res?.data?.exam?.hasTestimonial}
         //                         />
@@ -159,7 +157,7 @@ const edit = () => {
 
         console.log('handleExamSubmit')
         // setLoading(true)
-        // fetchRequest(teacherJournalSeasonResultExamSubmit, 'POST', { selectedExams: params, submit: 1, exam: location?.state?.exam, group: location?.state?.group })
+        // fetchRequest(teacherJournalSeasonResultExamSubmit, 'POST', { selectedExams: params, submit: 1, exam: data?.exam, group: data?.group })
         //     .then((res) => {
         //         if (res.success) {
         //             message(res.data.message, res.success)
@@ -228,17 +226,21 @@ const edit = () => {
     }
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-portlet'>
-                <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-11 pinnacle-bold' style={{color: '#ff5b1d'}}>{title}</span>
-                    {/* <Link
-                        to='/teacher/year'
-                        className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                    >
-                        {translations(locale)?.back_to_list}
-                    </Link> */}
-                </div>
+        <Modal
+            show={show}
+            size='xl'
+            onHide={onClose}
+            dimmer='blurring'
+            className='doubleModal'
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{color: '#212529'}}>
                 <Tab
                     panes={tabs}
                     activeIndex={activeTab}
@@ -260,7 +262,15 @@ const edit = () => {
                 {/*        :*/}
                 {/*        */}
                 {/*}*/}
-            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <button
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.back_to_list}
+                </button>
+            </Modal.Footer>
             {
                 loading &&
                 <>
@@ -270,8 +280,8 @@ const edit = () => {
                     </div>
                 </>
             }
-        </div>
+        </Modal>
     )
 }
 
-export default edit
+export default YearEdit

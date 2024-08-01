@@ -52,8 +52,8 @@ const index = () => {
 
     const localSchool = secureLocalStorage.getItem('selectedSchool')
     const [tableData, setTableData] = useState([
-        {id: 19, code: 2323, firstName: "AAA", lastName: "SS", relationCount:2}, 
-        {id: 20, code: 1232, firstName: "Julia", lastName: "Julie", relationCount:1}
+        {id: 19, studentCode: 2323, firstName: "AAA", lastName: "SS", relationCount:2}, 
+        {id: 20, studentCode: 1232, firstName: "Julia", lastName: "Julie", relationCount:1}
     ]);
 
     const config = {
@@ -149,6 +149,7 @@ const index = () => {
     const handleCellClick = id => {
         setSelectedStudentId(id)
         setShowParentsModal(true)
+
     }
 
     const closeModal = () => {

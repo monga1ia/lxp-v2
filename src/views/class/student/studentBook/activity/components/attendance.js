@@ -61,7 +61,7 @@ const attendance = ({id}) => {
     }
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         // fetchRequest(studentBookAttendance, 'POST', {id})
         //     .then(res => {
         //         if (res.success) {
@@ -151,7 +151,6 @@ const attendance = ({id}) => {
                     </Col>
                 ))}
             </Row>
-
             {loading &&
             <>
                 <div className='blockUI blockOverlay'/>

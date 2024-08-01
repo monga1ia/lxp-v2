@@ -20,6 +20,9 @@ import { useTranslation } from 'react-i18next';
 import StudentModal from './pages/modal/studentModal';
 import YearModal from './pages/modal/yearModal';
 import JournalModal from './pages/modal/journalModal';
+import YearAdd from './pages/add';
+import YearEdit from './pages/edit';
+import ResultModal from './pages/result';
 
 const TeacherYear = () => {
 
@@ -36,13 +39,217 @@ const TeacherYear = () => {
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
     const [studentModal, setStudentModal] = useState(false);
+
     const [yearModal, setYearModal] = useState(false);
+    const [showYearAddModal, setShowYearAddModal] = useState(false)
+    const [showYearEditModal, setShowYearEditModal] = useState(false)
+    const [showYearResultModal, setShowYearResultModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const [yearTypes, setYearTypes] = useState([])
+    const [yearInteractionState, setYearInteractionState] = useState({
+        id: null,
+        season: null,
+        yearType: null,
+        urlData: null,
+    })
+
+    const [yearTypes, setYearTypes] = useState([
+        {
+            id: '123',
+            name: 'year 1'
+        },
+        {
+            id: '1243',
+            name: 'year 2'
+        },
+        {
+            id: '1243',
+            name: 'year 3',
+        },
+
+    ])
     const [group, setGroup] = useState(null);
-    const [exams, setExams] = useState(null);
-    const [lists, setLists] = useState([]);
+    const [exams, setExams] = useState([
+        {
+            id: '12312',
+            name: '2',
+            isPublish: true,
+        },
+        {
+            id: '123124',
+            name: '2',
+            isPublish: false,
+        },
+    ]);
+    const [lists, setLists] = useState([
+        {
+            classList: [
+                {
+                    className: 'class 1',
+                },
+                {
+                    className: 'class 2',
+                },
+                {
+                    className: 'class 5',
+                },
+                {
+                    className: 'last 1',
+                },
+            ],
+            yearTypeExams: [
+                {
+                    yearType: '123',
+                    isCreated: 1,
+                },
+                {
+                    yearType: '1243',
+                },
+                {
+                    yearType: '123',
+                },
+            ]
+        },
+        {}
+    ]);
+
+    const yearColumns = [
+        {
+            dataField: 'isPublish',
+            text: translations(locale)?.status,
+            align: 'center',
+            style: {verticalAlign: 'middle'},
+            formatter: cell => 
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={`table-circle ${cell === true && "active"}`} />
+                </div>
+            // <i className='fas fa-circle' style={{color: cell ? '#6dd400' : '#d8d8d8'}}/>
+        },
+        {
+            dataField: 'name',
+            text: translations(locale)?.exam?.name,
+        },
+        {
+            dataField: 'createdDate',
+            text: translations(locale)?.exam?.date,
+        },
+        {
+            dataField: 'action',
+            text: '',
+            align: 'center',
+            style: {verticalAlign: 'middle'},
+            headerStyle: {width: 100},
+            formatter: (cell, row) => {
+                if (!row?.isPublish) return (
+                    <div>
+                        <button
+                            className='btn btn-primary m-btn--icon btn-sm m-btn--icon-only m-btn--pill mr-2'
+                            disabled={journalHasDownloaded}
+                            onClick={() => {
+                                if (row?.calcCode && row?.calcCode !== 'MANUAL') {
+                                    if (row?.calcCode !== 'EXCEL') {
+                                        if (row?.calcCode !== 'SEASON_MIX') {
+                                            resultYearHandler({
+                                                group: row?.groupId,
+                                                id: row?.id,
+                                                urlData: {backUrl: '/teacher/year'},
+                                                season: selectedYearId,
+                                                title: row.subjectName + ', ' + row.groupName
+                                            })
+                                            // navigate('/teacher/year/result', {
+                                            //     state: {
+                                            //         group: row?.groupId,
+                                            //         id: row?.id,
+                                            //         urlData: {backUrl: '/teacher/year'},
+                                            //         season: selectedYearId,
+                                            //         title: row.subjectName + ', ' + row.groupName
+                                            //     }
+                                            // })
+                                        } else {
+                                            editYearHandler({
+                                                group: row?.groupId,
+                                                exam: row?.id,
+                                                season: selectedYearId,
+                                                title: row.subjectName + ', ' + row.groupName
+                                            })
+                                            // navigate('/teacher/year/edit', {
+                                            //     state: {
+                                            //         group: row?.groupId,
+                                            //         exam: row?.id,
+                                            //         season: selectedYearId,
+                                            //         title: row.subjectName + ', ' + row.groupName
+                                            //     }
+                                            // })
+                                        }
+                                    } else {
+                                        editYearHandler({
+                                            group: row?.groupId,
+                                            exam: row?.id,
+                                            season: selectedYearId,
+                                            title: row.subjectName + ', ' + row.groupName
+                                        })
+                                        // navigate('/teacher/year/edit', {
+                                        //     state: {
+                                        //         group: row?.groupId,
+                                        //         exam: row?.id,
+                                        //         season: selectedYearId,
+                                        //         title: row.subjectName + ', ' + row.groupName
+                                        //     }
+                                        // })
+                                    }
+                                } else {
+                                    editYearHandler({
+                                        group: row?.groupId,
+                                        exam: row?.id,
+                                        season: selectedYearId,
+                                        title: row.subjectName + ', ' + row.groupName
+                                    })
+                                    // navigate('/teacher/year/edit', {
+                                    //     state: {
+                                    //         group: row?.groupId,
+                                    //         exam: row?.id,
+                                    //         season: selectedYearId,
+                                    //         title: row.subjectName + ', ' + row.groupName
+                                    //     }
+                                    // })
+                                }
+                            }}
+                        >
+                            <i className='fa flaticon-edit-1'/>
+                        </button>
+                        <button
+                            className='btn btn-danger m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                            disabled={journalHasDownloaded}
+                            onClick={() => handleDeleteButtonClick(row?.id)}
+                        >
+                            <i className='fa flaticon-delete-1'/>
+                        </button>
+                    </div>
+                )
+                else return (
+                    <button
+                        className='btn btn-secondary m-btn--icon btn-sm m-btn--icon-only m-btn--pill'
+                        onClick={() => {
+                            resultYearHandler({
+                                id: row?.id,
+                                urlData: {backUrl: '/teacher/year'}
+                            })
+                        }}
+                        // onClick={() => 
+                        //     navigate('/teacher/year/result', {
+                        //     state: {
+                        //         id: row?.id,
+                        //         urlData: {backUrl: '/teacher/year'}
+                        //     }
+                        // })}
+                    >
+                        <i className='fa flaticon-eye text-white'/>
+                    </button>
+                )
+            }
+        },
+    ];
+
     const [yearOptions, setYearOptions] = useState([]);
     const [selectedYearId, setSelectedYearId] = useState(null);
     const [selectedTableId, setSelectedTableId] = useState(null);
@@ -53,6 +260,37 @@ const TeacherYear = () => {
     const [ableToDownloadJournalPDF, setAbleToDownloadJournalPDF] = useState(false)
     const [journalHasDownloaded, setJournalHasDownloaded] = useState(false)
     const [showJournalNoteModal, setShowJournalNoteModal] = useState(false)
+
+    const createYearHandler = (state) => {
+        setYearInteractionState({
+            id: state?.id,
+            season: state?.season,
+            yearType: state?.yearType || null,
+            urlData: state?.urlData
+        })
+        setShowYearAddModal(true)
+    }
+
+    const editYearHandler = (state) => {
+        setYearInteractionState({
+            group: state?.group,
+            exam: state?.exam,
+            season: state?.season,
+            title: state?.title,
+        })
+        setShowYearEditModal(true)
+    }
+
+    const resultYearHandler = (state) => {
+        setYearInteractionState({
+            group: state?.group,
+            id: state?.id,
+            urlData: state?.urlData,
+            season: state?.season,
+            title: state?.title
+        })
+        setShowYearResultModal(true)
+    }
 
     const init = () => {
         console.log('init')
@@ -142,6 +380,7 @@ const TeacherYear = () => {
 
     const _handlerIsCreateClick = (groupId, yearTypeId = null) => {
         console.log('_handlerIsCreateClick')
+        setYearModal(true)
         // setLoading(true)
         // fetchRequest(teacherYearResultList, 'POST', {group: groupId, season: selectedYearId, yearType: yearTypeId})
         //     .then((res) => {
@@ -201,7 +440,7 @@ const TeacherYear = () => {
 
     const closeYearModal = () => {
         setYearModal(false);
-        setExams([]);
+        // setExams([]);
     }
 
     const closeModal = () => {
@@ -430,6 +669,7 @@ const TeacherYear = () => {
                                                                     }
                                                                 }
                                                             }
+                                                            console.log(groupYearTypeObj)
                                                             return <Col key={'year_type_' + yearTypeObj?.id}
                                                                         className='border-grey br-08 d-flex flex-column justify-content-center align-items-center'>
                                                                 <p className="text-uppercase bolder" style={{
@@ -467,14 +707,12 @@ const TeacherYear = () => {
                                                                                     key={key}
                                                                                     type='button'
                                                                                     disabled={journalHasDownloaded}
-                                                                                    // onClick={() => navigate('/teacher/year/create', {
-                                                                                    //     state: {
-                                                                                    //         id: list?.id,
-                                                                                    //         season: selectedYearId,
-                                                                                    //         yearType: yearTypeObj?.id,
-                                                                                    //         urlData: {backUrl: '/teacher/year'},
-                                                                                    //     }
-                                                                                    // })}
+                                                                                    onClick={() => {createYearHandler({
+                                                                                        id: list?.id,
+                                                                                        season: selectedYearId,
+                                                                                        yearType: yearTypeObj?.id,
+                                                                                        urlData: {backUrl: '/teacher/year'},                              
+                                                                                    })}}
                                                                                     className={`btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center`}>
                                                                                     <AddIcon/>
                                                                                 </button>
@@ -521,13 +759,11 @@ const TeacherYear = () => {
                                                                             key={key}
                                                                             type='button'
                                                                             disabled={journalHasDownloaded}
-                                                                            // onClick={() => navigate('/teacher/year/create', {
-                                                                            //     state: {
-                                                                            //         id: list?.id,
-                                                                            //         season: selectedYearId,
-                                                                            //         urlData: {backUrl: '/teacher/year'},
-                                                                            //     }
-                                                                            // })}
+                                                                            onClick={() => {createYearHandler({
+                                                                                id: list?.id,
+                                                                                season: selectedYearId,
+                                                                                urlData: {backUrl: '/teacher/year'},                              
+                                                                            })}}
                                                                             className={`btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center`}>
                                                                             <AddIcon/>
                                                                         </button>
@@ -571,6 +807,29 @@ const TeacherYear = () => {
                     show={yearModal}
                     onClose={closeYearModal}
                     data={exams}
+                    journalHasDownloaded={journalHasDownloaded}
+                    columns={yearColumns}
+                />
+            }
+            {
+                <YearAdd
+                    show={showYearAddModal}
+                    onClose={() => setShowYearAddModal(false)}
+                    data={yearInteractionState}
+                />
+            }
+            {
+                <YearEdit
+                    show={showYearEditModal}
+                    onClose={() => setShowYearEditModal(false)}
+                    data={yearInteractionState}
+                />
+            }
+            {
+                <ResultModal
+                    show={showYearResultModal}
+                    onClose={() => setShowYearResultModal(false)}
+                    data={yearInteractionState}
                 />
             }
             {
@@ -588,6 +847,7 @@ const TeacherYear = () => {
                     onClose={closeModal}
                     onDelete={handleDelete}
                     locale={locale}
+                    className='doubleModal'
                     title={translations(locale)?.delete}
                 >
                     {translations(locale)?.delete_confirmation}

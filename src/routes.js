@@ -49,11 +49,6 @@ const school = {
     group: lazy(() => import("views/school/groups/index")),
 }
 
-// const classes = {
-//     // student: lazy(() => import("views/class/student/studentBook/index")),
-//     studentBook: lazy(() => import("views/class/student/studentBook"))
-// }
-
 const esis = {
     employee: lazy(() => import("views/esis/employee/index")),
     class: lazy(() => import("views/esis/class/index")),
@@ -552,7 +547,7 @@ const routesAndMenuItems = {
                 {
                     path: "/calendar",
                     label: "menu.teacher.school_calendar",
-                    component: teacher.calendar,
+                    component: school.calendar,
                 },
             ],
         },
@@ -832,6 +827,13 @@ const routesAndMenuItems = {
         {
             path: `${appRoot}/user/profile`,
             component: user.index,
+        },
+        {
+            path: `${appRoot}/student/book`,
+            component: schoolClass.studentBook,
+            hideSideBar: true,
+            menuHidden: true,
+            exact: true
         }
     ],
     //student web

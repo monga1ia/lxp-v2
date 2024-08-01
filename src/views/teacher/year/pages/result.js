@@ -4,9 +4,8 @@ import React, {useEffect} from 'react'
 import secureLocalStorage from 'react-secure-storage'
 import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
-import {useLocation, useNavigate} from 'react-router'
 // import {teacherJournalExamPublish, teacherJournalExamResult} from 'utils/url'
-import {Col, Row} from "react-bootstrap";
+import {Col, Modal, Row} from "react-bootstrap";
 import DTable from 'modules/DataTable/DTable'
 import {NDropdown as Dropdown} from 'widgets/Dropdown'
 import PublishModal from './modal/publish'
@@ -14,7 +13,7 @@ import {Checkbox} from "semantic-ui-react";
 
 import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 import {styled} from '@mui/material/styles';
-import CustomInlineEdit from "Src/CustomInlineEdit";
+// import CustomInlineEdit from "Src/CustomInlineEdit";
 
 const HtmlTooltip = styled(({className, ...props}) => (
     <Tooltip {...props} classes={{popper: className}} arrow/>
@@ -31,9 +30,7 @@ const HtmlTooltip = styled(({className, ...props}) => (
     },
 }));
 
-const result = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
+const ResultModal = ({onClose, show, data}) => {
 
     const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
     const [loading, setLoading] = useState(false)
@@ -47,7 +44,7 @@ const result = () => {
     const [exam, setExam] = useState(null)
     const [isPublish, setIsPublish] = useState(null)
     const [isRank, setIsRank] = useState(true)
-    const [urlData] = useState(location?.state?.urlData || null)
+    const [urlData] = useState(data?.urlData || null)
     const [showPublishModal, setShowPublishModal] = useState(false)
     const [seasons, setSeasons] = useState([])
     const [canEdit, setCanEdit] = useState(false)
@@ -58,7 +55,7 @@ const result = () => {
         showPagination: false,
         excelExport: true,
         excelFileRemote: true,
-        excelFileRemoteUrl: `/api/exam/result-export?exam=${location?.state?.id}`,
+        excelFileRemoteUrl: `/api/exam/result-export?exam=${data?.id}`,
         defaultSort: [{dataField: 'firstName', order: 'asc'}],
     }
 
@@ -262,16 +259,16 @@ const result = () => {
         return cols;
     }
 
-    useEffect(() => {
-        if (!location?.state?.id) {
-            message(translations(locale)?.exam?.notFound)
-            navigate(urlData ? urlData.backUrl : -1, {replace: true})
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!data?.id) {
+    //         message(translations(locale)?.exam?.notFound)
+    //         onClose()
+    //     }
+    // }, [])
 
     // useEffect(() => {
     //     setLoading(true)
-    //     fetchRequest(teacherJournalExamResult, 'POST', {exam: location?.state?.id})
+    //     fetchRequest(teacherJournalExamResult, 'POST', {exam: data?.id})
     //         .then((res) => {
     //             if (res.success) {
     //                 const {title, studentList, examList} = res.data
@@ -303,7 +300,7 @@ const result = () => {
     const handlePublish = () => {
         console.log('handlePublish')
         // setLoading(true)
-        // fetchRequest(teacherJournalExamPublish, 'POST', {exam: location?.state?.id})
+        // fetchRequest(teacherJournalExamPublish, 'POST', {exam: data?.id})
         //     .then((res) => {
         //         if (res.success) {
         //             navigate('/teacher/year', {
@@ -360,18 +357,21 @@ const result = () => {
     }
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-portlet'>
-                <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-11 pinnacle-bold' style={{color: '#ff5b1d'}}>{title}</span>
-                    <button className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                            onClick={() => navigate(urlData ? urlData.backUrl : '/teacher/journals', {
-                                replace: true,
-                                state: {parameters: urlData?.parameters, group: urlData?.group}
-                            })}>
-                        {translations(locale)?.back_to_list}
-                    </button>
-                </div>
+        <Modal
+            show={show}
+            size='xl'
+            onHide={onClose}
+            dimmer='blurring'
+            className='doubleModal'
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{color: '#212529'}}>
                 <div className='m-portlet__body'>
                     {
                         exam && <div className='border-orange br-08 p-4 mb-2'>
@@ -618,25 +618,28 @@ const result = () => {
                         />
                     </div>
                 </div>
-                <div className='m-portlet__foot text-center'>
-                    <button className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                            onClick={() => navigate(urlData ? urlData.backUrl : '/teacher/journals', {
-                                replace: true,
-                                state: {parameters: urlData?.parameters, group: urlData?.group}
-                            })}>
-                        {translations(locale)?.back_to_list}
+            </Modal.Body>
+            <Modal.Footer>
+                <button 
+                    className='btn m-btn--pill btn-link m-btn m-btn--custom'
+                    onClick={onClose}
+                        // onClick={() => navigate(urlData ? urlData.backUrl : '/teacher/journals', {
+                        //     replace: true,
+                        //     state: {parameters: urlData?.parameters, group: urlData?.group}
+                        // })}
+                    >
+                    {translations(locale)?.back_to_list}
+                </button>
+                {
+                    canEdit === true && isPublish === false &&
+                    <button
+                        className='btn m-btn--pill btn-publish text-uppercase'
+                        onClick={() => handlePublishSubmit()}
+                    >
+                        {translations(locale)?.action?.publish}
                     </button>
-                    {
-                        canEdit === true && isPublish === false &&
-                        <button
-                            className='btn m-btn--pill btn-publish text-uppercase'
-                            onClick={() => handlePublishSubmit()}
-                        >
-                            {translations(locale)?.action?.publish}
-                        </button>
-                    }
-                </div>
-            </div>
+                }
+            </Modal.Footer>
             {
                 loading &&
                 <>
@@ -647,14 +650,14 @@ const result = () => {
                 </>
             }
             {
-                showPublishModal &&
                 <PublishModal
                     onSubmit={handlePublish}
                     onClose={() => setShowPublishModal(false)}
+                    show={showPublishModal}
                 />
             }
-        </div>
+        </Modal>
     )
 }
 
-export default result
+export default ResultModal

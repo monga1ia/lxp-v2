@@ -54,7 +54,7 @@ const index = () => {
     const config = {
         excelExport: true,
         printButton: true,
-        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.out')}`,
+        excelFileName: `${secureLocalStorage.getItem('selectedSchool')?.text}-${t('movement.out_title')}`,
         defaultSort: [{
             dataField: sort,
             order: order

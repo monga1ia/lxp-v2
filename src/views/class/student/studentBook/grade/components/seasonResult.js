@@ -311,11 +311,11 @@ const seasonResult = ({id, studentCode}) => {
             </>
             }
             {showSeasonResultModal &&
-            <SeasonResultModal
-                onClose={closeModal}
-                studentId={id}
-                id={examDtlId}
-            />
+                <SeasonResultModal
+                    onClose={closeModal}
+                    studentId={id}
+                    id={examDtlId}
+                />
             }
         </>
     )

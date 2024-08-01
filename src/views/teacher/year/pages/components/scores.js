@@ -8,9 +8,9 @@ import {translations} from 'utils/translations'
 import {Checkbox, Dropdown} from "semantic-ui-react";
 import {fetchRequest} from "utils/fetchRequest";
 // import {teacherYearResultEdit} from "Utilities/url";
-import ResultInformation from "Src/Components/teacher/year/pages/components/resultInformation";
-import ExamOptions from "Src/Components/teacher/year/pages/components/examOptions";
-import Skills from "Src/Components/teacher/year/pages/components/skill";
+// import ResultInformation from "Src/Components/teacher/year/pages/components/resultInformation";
+// import ExamOptions from "Src/Components/teacher/year/pages/components/examOptions";
+// import Skills from "Src/Components/teacher/year/pages/components/skill";
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 const decimalRegex = /^\d+(\.\d{1,2})?$/
