@@ -341,7 +341,7 @@ const Item = ({
                 }
             }}
         >
-            <div className='m-portlet br-12 m-portlet--rounded newsfeed-item-style' key={'item_' + data.id}>
+            <div className='m-portlet m-portlet--rounded newsfeed-item-style' key={'item_' + data.id}>
                 <div className="m-portlet__head">
                     <div className="m-portlet__head-caption">
                         <div className="m-portlet__head-title">

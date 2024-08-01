@@ -1600,7 +1600,7 @@ const index = () => {
                             onChange={(e) => handleSearch(e.target.value)}
                             value={searchValue}
                         />
-                        <div className="m-portlet br-12">
+                        <div className="m-portlet">
                             <div className="m-portlet__body">
                                 <TreeView
                                     treeData={filteredTreeData}
@@ -1624,7 +1624,7 @@ const index = () => {
                             <AddCircleOutlineRoundedIcon className='MuiSvg-customSize'/>
                             <span className='ml-2'>{translations(locale)?.newsfeedConfig?.addRecipient || null}</span>
                         </button>
-                        <div className="m-portlet br-12 tab">
+                        <div className="m-portlet tab">
                             <div className="m-portlet-header">
                                 <Tab
                                     menu={{ secondary: true, pointing: true, className: 'primaryColor' }}

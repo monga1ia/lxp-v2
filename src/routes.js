@@ -528,11 +528,11 @@ const routesAndMenuItems = {
                     label: "menu.teacher.excuses",
                     component: teacher.excuses,
                 },
-                {
-                    path: '/online-lessons',
-                    label: "menu.teacher.online_lessons",
-                    component: teacher.onlineLessons,
-                },
+                // {
+                //     path: '/online-lessons',
+                //     label: "menu.teacher.online_lessons",
+                //     component: teacher.onlineLessons,
+                // },
                 {
                     path: "/year",
                     label: "menu.teacher.years_end",

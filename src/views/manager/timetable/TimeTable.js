@@ -550,7 +550,7 @@ const TimeTable = ({
     }
 
     return (
-        <div className='m-portlet br-12 tab'>
+        <div className='m-portlet tab'>
             <div className='m-portlet__head'>
                 {
                     tabIndex !== null && <Tab

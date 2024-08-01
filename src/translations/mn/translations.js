@@ -2896,6 +2896,7 @@ export const TRANSLATIONS_MN = {
         behavior: 'Хүмүүжил',
         notification: 'Сонордуулга',
         noNotification: 'Одоогоор Таньд мэдэгдэл ирээгүй байна.',
+        downloadJournal: 'Журнал татах',
         regular: 'Ээлжит',
         hw_assigned: 'ГД өгсөн',
         hw_reviewed: 'ГД шалгасан',

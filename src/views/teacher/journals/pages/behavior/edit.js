@@ -5,7 +5,6 @@ import DTable from 'modules/DataTable/DTable'
 import secureLocalStorage from 'react-secure-storage'
 import { translations } from 'utils/translations'
 import { fetchRequest } from 'utils/fetchRequest'
-import { useLocation, useNavigate } from 'react-router'
 import { teacherJournalBehaviorInit } from 'Utilities/url'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 
@@ -18,8 +17,6 @@ const config = {
 }
 
 const edit = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -84,28 +81,28 @@ const edit = () => {
         }
     ]
 
-    useEffect(() => {
-        if (!location?.state?.group) {
-            message(translations(locale)?.group?.group_not_found)
-            navigate(-1, { replace: true })
-        }
-        setLoading(true)
-        fetchRequest(teacherJournalBehaviorInit, 'POST', { group: location?.state?.group, season: location?.state?.season })
-            .then((res) => {
-                if (res.success) {
-                    const { students, title } = res.data
-                    setTableData(students || [])
-                    setTitle(title || '')
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [location])
+    // useEffect(() => {
+    //     if (!location?.state?.group) {
+    //         message(translations(locale)?.group?.group_not_found)
+    //         navigate(-1, { replace: true })
+    //     }
+    //     setLoading(true)
+    //     fetchRequest(teacherJournalBehaviorInit, 'POST', { group: location?.state?.group, season: location?.state?.season })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const { students, title } = res.data
+    //                 setTableData(students || [])
+    //                 setTitle(title || '')
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [location])
 
     const handleInputChange = (id, name, value) => {
         const clone = [...tableData]
@@ -142,7 +139,7 @@ const edit = () => {
                     <span className='fs-11 pinnacle-bold color-brand'>{title}</span>
                     <button
                         className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                        onClick={() => navigate('/teacher/journals', { replace: true })}
+                        // onClick={() => navigate('/teacher/journals', { replace: true })}
                     >
                         {translations(locale)?.back}
                     </button>
@@ -165,7 +162,7 @@ const edit = () => {
                 <div className="m-portlet__foot d-flex justify-content-center gap-05">
                     <button
                         className='btn btn-link'
-                        onClick={() => navigate(-1, { replace: true })}
+                        // onClick={() => navigate(-1, { replace: true })}
                     >
                         {translations(locale)?.back}
                     </button>

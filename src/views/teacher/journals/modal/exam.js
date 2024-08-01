@@ -1,6 +1,5 @@
 import message from 'modules/message'
 import { Link } from 'react-router-dom'
-// import { useNavigate } from 'react-router'
 import { Modal } from 'react-bootstrap'
 import DeleteModal from 'utils/deleteModal'
 import React, { useEffect, useState } from 'react'
@@ -17,7 +16,6 @@ import EditExam from '../pages/exam/edit'
 import ResultExam from '../pages/exam/result'
 
 const exam = ({ onClose, group, rerender }) => {
-    // const navigate = useNavigate()
 
     const { t } = useTranslation()
 

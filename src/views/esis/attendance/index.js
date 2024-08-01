@@ -586,7 +586,7 @@ const index = () => {
         switch (tabIndex) {
             case 0:
                 return <>
-                    <div className='m-portlet br-12' style={{marginTop: 20}}>
+                    <div className='m-portlet' style={{marginTop: 20}}>
                         <div className='m-portlet__body'>
                             <Row>
                                 <Col>
@@ -665,7 +665,7 @@ const index = () => {
 
                     {
                         classList && classList.length > 0
-                        && <div className='m-portlet br-12 mt5'>
+                        && <div className='m-portlet mt5'>
                             <div className='m-portlet__body'>
                                 {/*<DTable*/}
                                 {/*    config={classConfig}*/}
@@ -864,7 +864,7 @@ const index = () => {
                     }
                 </>
             case 1:
-                return <div className='m-portlet br-12' style={{marginTop: 20}}>
+                return <div className='m-portlet' style={{marginTop: 20}}>
                     <div className='m-portlet__body'>
                         <DTable
                             remote

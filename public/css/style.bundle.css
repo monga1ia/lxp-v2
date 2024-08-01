@@ -25297,7 +25297,8 @@ button:active, button:focus {
 }
 
 .m-portlet {
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
+    border-radius: 12px;
 }
 
 .m-portlet.m-portlet--bottom-fit {

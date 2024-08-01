@@ -5,7 +5,6 @@ import ExamModal from './modal/exam'
 import SkillModal from './modal/skill'
 import GroupModal from './modal/group'
 import React, { useEffect } from 'react'
-// import { useNavigate } from 'react-router'
 // import { teacherJournalInit } from 'utils/fetchRequest/Urls'
 import SeasonResultModal from './modal/seasonResult'
 import secureLocalStorage from 'react-secure-storage'
@@ -21,6 +20,7 @@ import NoteModal from './pages/note/noteTemp'
 import AttendanceModal from './pages/attendance'
 import HomeworkModal from './pages/homework'
 import AddExam from './pages/exam/add'
+import CreateSeasonResult from './pages/seasonResult/add'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
@@ -46,7 +46,6 @@ const styles = {
 }
 
 const index = () => {
-    // const navigate = useNavigate()
 
     const { t } = useTranslation()
 
@@ -223,6 +222,7 @@ const index = () => {
     const [showHomeworkModal, setShowHomeworkModal] = useState(false)
     const [showCreateSkillModal, setShowCreateSkillModal] = useState(false)
     const [showCreateExamModal, setShowCreateExamModal] = useState(false)
+    const [showCreateSeasonResultModal, setShowCreateSeasonResultModal]= useState(false)
 
     const [noteModalState, setNoteModalState] = useState({
         group: null,
@@ -240,6 +240,11 @@ const index = () => {
     })
 
     const [createSkillState, setCreateSkillState] = useState({
+        group: null,
+        season: null,
+    })
+
+    const [createSeasonResultState, setCreateSeasonResultState] = useState({
         group: null,
         season: null,
     })
@@ -279,6 +284,14 @@ const index = () => {
             season: selectedSeason
         })
         setShowCreateSkillModal(true)
+    }
+
+    const seasonResultCreateHandler = (state) => {
+        setCreateSeasonResultState({
+            group: state?.group,
+            season: selectedSeason
+        })
+        setShowCreateSeasonResultModal(true)
     }
 
     const createExamHandler = (state) => {
@@ -419,6 +432,7 @@ const index = () => {
                                                     ? <button
                                                         className='btn btn-info m-btn--icon m-btn--icon-only m-btn--pill d-inline-flex align-items-center justify-content-center my-4'
                                                         // onClick={() => navigate('/teacher/journals/season-result/create', { state: { group: el?.id, season: selectedSeason } })}
+                                                        onClick={() => seasonResultCreateHandler({group: el?.id, season: selectedSeason})}
                                                     >
                                                         <AddRoundedIcon />
                                                     </button>
@@ -514,6 +528,14 @@ const index = () => {
                     onClose={() => setShowCreateExamModal(false)}
                     show={showCreateExamModal}
                     data={createExamState}
+                />
+            }
+            {
+                createSeasonResultState?.group && createSeasonResultState?.season &&
+                <CreateSeasonResult
+                    onClose={() => setShowCreateSeasonResultModal(false)}
+                    show={showCreateSeasonResultModal}
+                    data={createSeasonResultState}
                 />
             }
         </div>

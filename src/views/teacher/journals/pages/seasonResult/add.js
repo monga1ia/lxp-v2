@@ -6,15 +6,13 @@ import {Checkbox} from 'semantic-ui-react'
 import secureLocalStorage from 'react-secure-storage'
 import {fetchRequest} from 'utils/fetchRequest'
 import {translations} from 'utils/translations'
-import {useLocation, useNavigate} from 'react-router'
 import {NDropdown as Dropdown} from 'widgets/Dropdown'
-import {teacherJournalSeasonResultSubmit} from 'Utilities/url'
+// import {teacherJournalSeasonResultSubmit} from 'Utilities/url'
+import { Modal } from 'react-bootstrap'
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 
-const add = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
+const CreateSeasonResult = ({onClose, data, show}) => {
 
     const [loading, setLoading] = useState(false)
 
@@ -26,69 +24,70 @@ const add = () => {
 
     const [hasTestimonial, setHasTestimonial] = useState(false)
 
-    useEffect(() => {
-        if (!location?.state?.group || !location?.state?.season) {
-            message(translations(locale)?.exam?.notFound)
-            navigate(-1, {replace: true})
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!location?.state?.group || !location?.state?.season) {
+    //         message(translations(locale)?.exam?.notFound)
+    //         navigate(-1, {replace: true})
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        setLoading(true)
-        fetchRequest(teacherJournalSeasonResultSubmit, 'POST', {
-            group: location?.state?.group,
-            season: location?.state?.season
-        })
-            .then((res) => {
-                if (res.success) {
-                    const {templates, scoreTypes, group} = res.data
-                    setGroup(group || {})
-                    setScoreTypeOptions(scoreTypes || [])
-                    setTemplateOptions(templates?.map(el => ({value: el?.id, text: el?.name})) || [])
-                    setTitle(`${group?.subjectName}, ${group?.name}, ${group?.classes?.map(el => el?.name)?.join(', ')}` || '')
-                } else {
-                    message(res.data.message)
-                }
-                setLoading(false)
-            })
-            .catch(() => {
-                message(translations(locale)?.err?.error_occurred)
-                setLoading(false)
-            })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetchRequest(teacherJournalSeasonResultSubmit, 'POST', {
+    //         group: location?.state?.group,
+    //         season: location?.state?.season
+    //     })
+    //         .then((res) => {
+    //             if (res.success) {
+    //                 const {templates, scoreTypes, group} = res.data
+    //                 setGroup(group || {})
+    //                 setScoreTypeOptions(scoreTypes || [])
+    //                 setTemplateOptions(templates?.map(el => ({value: el?.id, text: el?.name})) || [])
+    //                 setTitle(`${group?.subjectName}, ${group?.name}, ${group?.classes?.map(el => el?.name)?.join(', ')}` || '')
+    //             } else {
+    //                 message(res.data.message)
+    //             }
+    //             setLoading(false)
+    //         })
+    //         .catch(() => {
+    //             message(translations(locale)?.err?.error_occurred)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     const handleSubmit = () => {
-        if (validateFields()) {
-            setLoading(true)
-            fetchRequest(teacherJournalSeasonResultSubmit, 'POST', {
-                submit: 1,
-                scoreType: result?.scoreType,
-                stTemplate: result?.template,
-                group: location?.state?.group,
-                season: location?.state?.season,
-                rank: result?.isCalculateRank ? 1 : 0,
-                testimonial: hasTestimonial ? 1 : 0
-            })
-                .then((res) => {
-                    if (res.success) {
-                        message(res.data.message, res.success)
-                        navigate('/teacher/journals/season-result/edit', {
-                            state: {
-                                exam: res.data.exam,
-                                group: location?.state?.group,
-                                title
-                            }
-                        })
-                    } else {
-                        message(res.data.message)
-                    }
-                    setLoading(false)
-                })
-                .catch(() => {
-                    message(translations(locale)?.err?.error_occurred)
-                    setLoading(false)
-                })
-        }
+        console.log('handleSubmit')
+        // if (validateFields()) {
+        //     setLoading(true)
+        //     fetchRequest(teacherJournalSeasonResultSubmit, 'POST', {
+        //         submit: 1,
+        //         scoreType: result?.scoreType,
+        //         stTemplate: result?.template,
+        //         group: location?.state?.group,
+        //         season: location?.state?.season,
+        //         rank: result?.isCalculateRank ? 1 : 0,
+        //         testimonial: hasTestimonial ? 1 : 0
+        //     })
+        //         .then((res) => {
+        //             if (res.success) {
+        //                 message(res.data.message, res.success)
+        //                 navigate('/teacher/journals/season-result/edit', {
+        //                     state: {
+        //                         exam: res.data.exam,
+        //                         group: location?.state?.group,
+        //                         title
+        //                     }
+        //                 })
+        //             } else {
+        //                 message(res.data.message)
+        //             }
+        //             setLoading(false)
+        //         })
+        //         .catch(() => {
+        //             message(translations(locale)?.err?.error_occurred)
+        //             setLoading(false)
+        //         })
+        // }
     }
 
     const validateFields = () => {
@@ -100,19 +99,21 @@ const add = () => {
     const handleChange = (name, value) => setResult({...result, [name]: value})
 
     return (
-        <div className='m-grid__item m-grid__item--fluid m-wrapper'>
-            <div className='m-portlet'>
-                <div className='m-portlet__head justify-content-between align-items-center pr-0 pl-4'>
-                    <span className='fs-11 pinnacle-bold' style={{color: '#ff5b1d'}}>
-                        {title}
-                    </span>
-                    <button
-                        className='btn m-btn--pill btn-link m-btn m-btn--custom'
-                        onClick={() => navigate('/teacher/journals', {replace: true})}
-                    >
-                        {translations(locale)?.back}
-                    </button>
-                </div>
+        <Modal
+            size='xl'
+            dimmer='blurring'
+            show={show}
+            onHide={onClose}
+            className='doubleModal'
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton style={{padding: '1rem'}}>
+                <Modal.Title className="modal-title d-flex flex-row justify-content-between w-100">
+                    {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className='m-portlet__body'>
                     <Row className='mt-4'>
                         <Col md={2}/>
@@ -197,15 +198,21 @@ const add = () => {
                         <Col md={4}/>
                     </Row>
                 </div>
-                <div className="m-portlet__foot d-flex justify-content-center">
-                    <button className='btn btn-link' onClick={() => navigate(-1)}>
-                        {translations(locale)?.back}
-                    </button>
-                    <button onClick={handleSubmit} className="btn m-btn--pill btn-publish text-uppercase">
-                        {translations(locale)?.exam?.insert_score}
-                    </button>
-                </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <button 
+                    className='btn btn-link'
+                    onClick={onClose}
+                >
+                    {translations(locale)?.back}
+                </button>
+                <button 
+                    onClick={handleSubmit} 
+                    className="btn m-btn--pill btn-publish text-uppercase"
+                >
+                    {translations(locale)?.exam?.insert_score}
+                </button>
+            </Modal.Footer>
             {
                 loading &&
                 <>
@@ -215,8 +222,8 @@ const add = () => {
                     </div>
                 </>
             }
-        </div>
+        </Modal>
     )
 }
 
-export default add
+export default CreateSeasonResult

@@ -9,7 +9,7 @@ import message from "modules/message";
 
 const locale = secureLocalStorage?.getItem('selectedLang') || 'mn'
 import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded'
-// import {fetchRequest} from "Utilities/fetchRequest";
+// import {fetchRequest} from "utils/fetchRequest";
 // import {managerCurriculumProgress, managerCurriculumProgressExcel} from "Utilities/url";
 
 const progress = () => {
@@ -540,7 +540,7 @@ const progress = () => {
                 title={translations(locale).manager?.teacher_progress}
                 locale={locale}
             /> */}
-            <div className="m-portlet br-12 mt-2">
+            <div className="m-portlet mt-2">
                 <div className="m-portlet__body">
                     <div className={'ml-5 d-flex py-4'} style={{
                         textAlign: 'center',
@@ -625,7 +625,7 @@ const progress = () => {
 
             {
                 showResult && <>
-                    <div className="m-portlet br-12 mt-2">
+                    <div className="m-portlet mt-2">
                         <div className="m-portlet__body">
                             {
                                 teachers && teachers?.length > 0 && <>
