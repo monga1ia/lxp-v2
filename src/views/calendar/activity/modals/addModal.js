@@ -538,7 +538,7 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
                     </div>
                 }
                 <button
-                    className="btn m-btn--pill btn-link m-btn margin-right-5"
+                    className="btn btn-link m-btn pinnacle-bold margin-right-5"
                     onClick={() => onClose(closeWithReload)}
                 >
                     {t('back') || null}

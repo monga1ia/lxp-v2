@@ -1632,7 +1632,7 @@ const Forms = (({
                                                     </div>
                                                     :
                                                     <Checkbox
-                                                        className='custom-cbox eschool-checkbox'
+                                                        className='custom-cbox form-checkbox'
                                                         checked={!!field.value}
                                                         style={{ marginLeft: '10px' }}
                                                         onChange={() => handleCheckboxClick(!!field.value, index)}

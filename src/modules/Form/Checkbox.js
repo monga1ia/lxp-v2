@@ -36,7 +36,7 @@ const Checkbox = ({
                 <span
                     htmlFor="test"
                     onClick={handleClick}
-                    style={{ cursor: "pointer", userSelect: "none", paddingLeft: 5 }}
+                    style={{ cursor: "pointer", userSelect: "none", paddingLeft: 10 }}
                 >
                     {label}
                 </span>

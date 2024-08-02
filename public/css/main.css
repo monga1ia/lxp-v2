@@ -571,12 +571,12 @@ a {
     width: 100vw;
 }
 
-.eschool-checkbox input {
+/* .eschool-checkbox input {
     bottom: 0;
     top: -2px;
     margin-right: 0.5rem;
     vertical-align: inherit;
-}
+} */
 
 /************ datetime picker css ***********/
 .react-datepicker-wrapper {
@@ -3976,6 +3976,10 @@ select.form-control:focus::-ms-value {
     box-shadow: none !important;
 }
 
+.form-check-input:focus {
+    border-color: #ff5b1d !important;
+}
+
 .form-check-input:disabled ~ .form-check-label {
     color: #6c757d
 }
@@ -6068,4 +6072,9 @@ select.form-control:focus::-ms-value {
     position: relative;
     top: 5px;
     right: 1px;
+}
+
+.form-checkbox input {
+    margin-top: -0.5rem;
+    margin-left: -0.7rem;
 }
