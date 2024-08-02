@@ -236,8 +236,21 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
             type: 'dropdown',
             options: [],
             multiple: false,
-            disabled: true,
             errorMessage: t('errorMessage.selectCurriculum'),
+            labelStyle: {
+                fontFamily: 'PinnacleDemiBold',
+                fontSize: 12,
+                fontWeight: 800,
+                color: '#575962',
+            },
+        },
+        {
+            key: 'name',
+            label: t('menu.groupName') + '*',
+            value: '',
+            type: 'text',
+            required: true,
+            errorMessage: t('errorMessage.enterName'),
             labelStyle: {
                 fontFamily: 'PinnacleDemiBold',
                 fontSize: 12,
@@ -249,11 +262,8 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
             key: 'grade',
             label: t('curriculum.grade') + '*',
             value: null,
-            type: 'dropdown',
+            type: 'daterange',
             options: [],
-            required: true,
-            multiple: false,
-            disabled: true,
             errorMessage: t('errorMessage.selectGrade'),
             labelStyle: {
                 fontFamily: 'PinnacleDemiBold',
@@ -263,15 +273,18 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
             },
         },
         {
+            key: 'isActive',
+            label: t('menu.isActive'),
+            value: false,
+            type: 'checkbox',
+        },
+        {
             key: 'subject',
             label: `${t('menu.curriculumSubject')}*`,
             value: null,
-            type: 'dropdown',
+            type: 'timerange',
             clearable: true,
             searchable: true,
-            options: [],
-            required: true,
-            multiple: false,
             errorMessage: t('errorMessage.selectSubject'),
             labelStyle: {
                 fontFamily: 'PinnacleDemiBold',
@@ -469,20 +482,15 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div>
-                    <Forms 
-                        ref={formRef}
-                        fields={fields}
-                    />
-                </div>
                 <div className="myTimetable-addNewSubjectStyle">
-                    {/* <Tab
+                    <Tab
                         onTabChange={_onTabChange}
                         activeIndex={modalTabIndex}
                         menu={{ attached: false }}
                         panes={[
                             {
-                                menuItem: t('calendar.activity').toUpperCase(),
+                                index: 0,
+                                menuItem: t('calendar.activities').toUpperCase(),
                                 render: () => <Tab.Pane>
                                     {
                                         <div>
@@ -494,6 +502,7 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
                                 </Tab.Pane>
                             },
                             {
+                                index: 1,
                                 menuItem: t('calendar.exam').toUpperCase(),
                                 render: () => <Tab.Pane>
                                     {
@@ -506,6 +515,7 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
                                 </Tab.Pane>
                             },
                             {
+                                index: 2,
                                 menuItem: t('calendar.event').toUpperCase(),
                                 render: () => <Tab.Pane>
                                     {
@@ -518,7 +528,7 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
                                 </Tab.Pane>
                             }
                         ]}
-                    /> */}
+                    />
                 </div>
             </Modal.Body>
             <Modal.Footer className='text-center'>

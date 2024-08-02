@@ -1847,7 +1847,7 @@ const Forms = (({
                                     ?
                                     <div key={index} />
                                     :
-                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                    <div key={index} className={checkContainer(formContainerClassName, field.invisible)} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
                                         // style={{
                                         //     display: 'flex',
@@ -1906,14 +1906,14 @@ const Forms = (({
                                     ?
                                     <div key={index} />
                                     :
-                                    <div key={index} className={formContainerClassName} style={{ display: 'flex', marginTop: '0.8rem' }}>
+                                    <div key={index} className={checkContainer(formContainerClassName, field.invisible)} style={{ display: 'flex', marginTop: '0.8rem' }}>
                                         <label
                                             style={{
                                                 display: 'flex',
                                                 flex: field.labelWidth ? undefined : field?.labelFlex || 1,
                                                 justifyContent: 'flex-end',
                                                 alignItems: field.alignItems ? field.alignItems : 'center',
-                                                marginRight: 10,
+                                                marginRight: 20,
                                                 marginBottom: 0,
                                                 width: field?.labelWidth || 'auto',
                                                 ...field.labelStyle

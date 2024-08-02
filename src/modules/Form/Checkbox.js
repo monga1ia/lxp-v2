@@ -26,21 +26,21 @@ const Checkbox = ({
         >
             <FormCheck
                 id="test"
-                // label={label}
+                label={label}
                 checked={checked}
                 {...rest}
                 onChange={handleClick}
                 className="custom-cbox"
             />
-            {label && (
+            {/* {label && (
                 <span
                     htmlFor="test"
                     onClick={handleClick}
-                    style={{ cursor: "pointer", userSelect: "none", paddingLeft: 10 }}
+                    style={{ cursor: "pointer", userSelect: "none", paddingLeft: 15 }}
                 >
                     {label}
                 </span>
-            )}
+            )} */}
         </div>
     );
 };

@@ -6075,6 +6075,9 @@ select.form-control:focus::-ms-value {
 }
 
 .form-checkbox input {
+    border-color: #FF5B1D;
+    width: 18px;
+    height: 18px;
     margin-top: -0.5rem;
     margin-left: -0.7rem;
 }
