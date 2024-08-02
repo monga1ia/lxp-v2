@@ -223,7 +223,7 @@ div.vertical-tab>a {
     text-align: center;
 }
 
-.myTimetable-addNewSubjectStyle .menu a {
+.myTimetable-addNewSubjectStyle>div>.menu a {
     display: inline-block !important;
     border: solid 1px #ff5b1d;
     color: #ff5b1d !important;
@@ -232,13 +232,13 @@ div.vertical-tab>a {
     font-family: 'MulishBold';
 }
 
-.myTimetable-addNewSubjectStyle .menu a.active {
+.myTimetable-addNewSubjectStyle>div>.menu a.active {
     background-color: #ff5b1d !important;
     color: #fff !important;
 }
 
-.myTimetable-addNewSubjectStyle .menu a.active::before,
-.myTimetable-addNewSubjectStyle .menu a::before {
+.myTimetable-addNewSubjectStyle>div>.menu a.active::before,
+.myTimetable-addNewSubjectStyle>div>.menu a::before {
     width: 0px !important;
 }
 
@@ -251,7 +251,7 @@ div.vertical-tab>a {
     border: none;
 }
 
-.myTimetable-addNewSubjectStyle .menu a:hover {
+.myTimetable-addNewSubjectStyle>div>.menu a:hover {
     background-color: #ff5b1d !important;
     color: #fff !important;
 }

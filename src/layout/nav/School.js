@@ -234,6 +234,7 @@ const Schools = () => {
                             dispatch(setSelectedSchool(schools.find(obj => obj?.id == e)))
                             window.location.reload()
                         }}
+                        isArrow={false}
                     />
                 </div>
                 <div
@@ -243,6 +244,7 @@ const Schools = () => {
                         clearable={false}
                         fillArrow={true}
                         searchable={true}
+                        isArrow={false}
                         className="hideSelectArrow class"
                         classNamePrefix='my-className-prefix'
                         placeholder={t("food.choose_class")}

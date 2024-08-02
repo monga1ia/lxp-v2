@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactSelect, { type DropdownIndicatorProps, components, createFilter } from "react-select";
 import { useTranslation } from "react-i18next";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export const Checkbox = ({ children, ...props }) => (
     <label style={{ marginRight: "1em" }}>
@@ -23,6 +24,7 @@ const Select = ({
     options = [],
     fillArrow = false,
     labelEntity = false,
+    isArrow = true,
     style,
     ...rest
 }) => {
@@ -93,7 +95,7 @@ const Select = ({
     const DropdownIndicator: React.FC<DropdownIndicatorProps> = props => {
         return (
             <components.DropdownIndicator {...props}>
-                <ArrowDropDownIcon />
+                <KeyboardArrowDownIcon />
             </components.DropdownIndicator>
         );
     };
@@ -126,7 +128,17 @@ const Select = ({
                 }}
                 isOptionSelected={getIsSelected}
                 placeholder={rest?.placeholder || `${t("common.select")}...`}
-                components={{DropdownIndicator:() => null, IndicatorSeperator: () => null}}
+                components={
+                    isArrow
+                    ?
+                        {
+                            IndicatorSeparator: () => null, DropdownIndicator,
+                        }
+                    :
+                        {  
+                            DropdownIndicator:() => null, IndicatorSeperator: () => null
+                        }
+                }
                 filterOption={createFilter(filterConfig)}
                 {...rest}
             />

@@ -11,14 +11,14 @@ import { useHistory } from 'react-router-dom'
 import DeleteModal from 'utils/deleteModal'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import CalendarIcon from 'cs-line-icons/custom/CalendarIcon';
-import UserProfileIcon from 'cs-line-icons/custom/UserProfileIcon';
+import PersonsIcon from 'cs-line-icons/custom/PersonsIcon';
 import ClockIcon from 'cs-line-icons/custom/ClockIcon';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import message from 'modules/message'
 
-// import AddModal from './modals/add'
-// import EditModal from './modals/edit'
+import AddModal from './modals/addModal'
+import EditModal from './modals/editModal'
 // import ViewModal from './modals/view'
 
 const index = () => {
@@ -41,6 +41,10 @@ const index = () => {
             typeName: 'Эцэг эхийн хурал',
             color: '#FF5B1D',
             name: '1-р улирлын эцэг эхийн хурал 1-р улирлын эцэг эхийн хурал',
+            startTime: '09:00',
+            endTime: '11:00',
+            link: 'https://www.youtube.com/watch?v=-Xu3WXJsbCI',
+            userCount: 120
         },
         {
             id: 2,
@@ -48,16 +52,29 @@ const index = () => {
             typeName: 'Эцэг эхийн хурал',
             color: '#3EBFA3',
             name: '2-р улирлын эцэг эхийн хурал',
+            startTime: '09:00',
+            endTime: '11:00',
+            link: 'https://www.youtube.com/watch?v=-Xu3WXJsbCI',
+            userCount: 150
         },
         {
             id: 3,
             type: 'exam',
             color: '#4037D7',
+            name: 'Математик явцын шалгалт',
+            startTime: '09:00',
+            endTime: '11:00',
+            classNames: '9А, 9Б',
+            userCount: 70
         },
         {
             id: 3,
             type: 'event',
             color: '#505050',
+            startTime: '09:00',
+            endTime: '11:00',
+            name: 'Үйл ажиллагааны нэр',
+            userCount: 90
         }
     ])
     const [events, setEvents] = useState([])
@@ -522,11 +539,29 @@ const index = () => {
                                                                 <div>
                                                                     {todayEvent?.typeName || ''}
                                                                 </div>
+                                                                <div className='d-flex mt-1'>
+                                                                    <ClockIcon stroke={todayEvent.color + '80'} width={17} height={17} /> <div className='ml-1' style={{position: 'relative', top: 1}}>{todayEvent.startTime + ' - ' + todayEvent.endTime}</div>
+                                                                </div>
+                                                                {
+                                                                    todayEvent.link &&
+                                                                    <div className='mt-1'>
+                                                                        <a href={todayEvent.link} target="_blank" style={{color: '#4037D7'}}>meeting link: short.bitly</a>
+                                                                    </div>
+                                                                }
+                                                                <div className='d-flex justify-content-between'>
+                                                                    <div className='d-flex mt-1'>
+                                                                        {
+                                                                            todayEvent.userCount && 
+                                                                            <>
+                                                                                <PersonsIcon stroke={todayEvent.color + '80' } width={17} height={17} /> <div className='ml-1' style={{position: 'relative', top: 1}}>{todayEvent.userCount + ' ' + t('menu.user')}</div>
+                                                                            </>
+                                                                        }
+                                                                    </div>
+                                                                    <div>
+                                                                        <img src={todayEvent?.avatar || '/img/profile/avatar.png'} width={15} height={15} style={{position: 'relative', top: 3}}/>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="m-portlet__body padding-01rem"> 
-                                                            <ClockIcon />
-                                                            <UserProfileIcon />
                                                         </div>
                                                     </div>
                                                 )
@@ -543,13 +578,29 @@ const index = () => {
                                                             <div className='fs-12p'>
                                                                 <b>{todayEvent?.name || ''}</b>
                                                             </div>
-                                                            <div>
-                                                                {todayEvent?.typeName || ''}
+                                                            {
+                                                                todayEvent?.type == 'exam' && 
+                                                                <div>
+                                                                    {todayEvent?.classNames || ''}
+                                                                </div>
+                                                            }
+                                                            <div className='d-flex mt-1'>
+                                                                <ClockIcon stroke={todayEvent.color + '80'} width={17} height={17} /> <div className='ml-1' style={{position: 'relative', top: 1}}>{todayEvent.startTime + ' - ' + todayEvent.endTime}</div>
+                                                            </div>
+                                                            <div className='d-flex justify-content-between'>
+                                                                <div className='d-flex mt-1'>
+                                                                    {
+                                                                        todayEvent.userCount && 
+                                                                        <>
+                                                                            <PersonsIcon stroke={todayEvent.color + '80' } width={17} height={17} /> <div className='ml-1' style={{position: 'relative', top: 1}}>{todayEvent.userCount + ' ' + t('menu.user')}</div>
+                                                                        </>
+                                                                    }
+                                                                </div>
+                                                                <div>
+                                                                    <img src={todayEvent?.avatar || '/img/profile/avatar.png'} width={15} height={15} style={{position: 'relative', top: 3}}/>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="m-portlet__body padding-01rem"> 
-                                                        1234
                                                     </div>
                                                 </div>
                                             )
@@ -609,9 +660,12 @@ const index = () => {
                     </div>
                 </div>
             </div>
-            {/* {
+            {
                 showAddModal &&
                 <AddModal
+                    className='modalContainer'
+                    childName='modalChildContainer'
+                    additionalClassName='modalChildContainer'
                     onSubmit={handleAdd}
                     onClose={closeModal}
                 />
@@ -624,7 +678,7 @@ const index = () => {
                     onClose={() => { setShowEditModal(false), setShowViewModal(true) }}
                 />
             }
-            {
+            {/* {
                 showViewModal && selectedEvent &&
                 <ViewModal
                     event={selectedEvent}
