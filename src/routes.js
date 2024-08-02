@@ -251,6 +251,7 @@ const routesAndMenuItems = {
             icon: "diamond",
             exact: true,
             redirect: true,
+            
             to: `${appRoot}/school/teacher`,
             subs: [
                 {
