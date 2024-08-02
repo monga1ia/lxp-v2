@@ -25,10 +25,10 @@ const Checkbox = ({
             }}
         >
             <FormCheck
+                {...rest}
                 id="test"
                 label={label}
                 checked={checked}
-                {...rest}
                 onChange={handleClick}
                 className="custom-cbox"
             />

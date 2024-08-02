@@ -1616,7 +1616,6 @@ const Forms = (({
                                                 display: 'flex',
                                                 flex: field.inputWidth ? undefined : field?.inputFlex || 1,
                                                 flexDirection: 'column',
-                                                marginLeft: 10,
                                                 width: field?.inputWidth || 'auto',
                                             }}
                                             className={fieldContainerClassName}
@@ -1632,7 +1631,7 @@ const Forms = (({
                                                     </div>
                                                     :
                                                     <Checkbox
-                                                        className='custom-cbox form-checkbox'
+                                                        className='custom-cbox form-component-checkbox'
                                                         checked={!!field.value}
                                                         style={{ marginLeft: '10px' }}
                                                         onChange={() => handleCheckboxClick(!!field.value, index)}

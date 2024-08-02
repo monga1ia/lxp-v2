@@ -336,10 +336,10 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
     const _renderGroup = () => {
         return (
             <>
-                <Forms 
+                {/* <Forms 
                     ref={formRef}
                     fields={fields}
-                />
+                /> */}
                 {
                     <Tab
                         renderActiveOnly
@@ -482,6 +482,10 @@ const AddModal = ({ onClose, subjectList = [], classList = [] }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <Forms 
+                    ref={formRef}
+                    fields={fields}
+                />
                 <div className="myTimetable-addNewSubjectStyle">
                     <Tab
                         onTabChange={_onTabChange}

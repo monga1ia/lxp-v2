@@ -3920,12 +3920,6 @@ select.form-control:focus::-ms-value {
     padding-left: 5px
 }
 
-.form-check {
-    position: relative;
-    display: block;
-    padding-left: 1.25rem
-}
-
 .login-copyright {
     font-size: 14px;
     font-family: MulishRegular;
@@ -4016,10 +4010,6 @@ select.form-control:focus::-ms-value {
     border: 1px solid #ff5b1d;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-}
-
-.form-check-label {
-    margin-bottom: 0
 }
 
 .form-check-inline {
@@ -6074,10 +6064,10 @@ select.form-control:focus::-ms-value {
     right: 1px;
 }
 
-.form-checkbox input {
+.form-component-checkbox input {
     border-color: #FF5B1D;
     width: 18px;
     height: 18px;
-    margin-top: -0.5rem;
-    margin-left: -0.7rem;
+    /* margin-top: -0.5rem; */
+    /* margin-left: -0.7rem; */
 }
